@@ -1,37 +1,29 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 980 220' role='img' aria-label='Clever Agent logo dark'>
-  <title>Clever Agent Dark</title>
   <defs>
-    <linearGradient id='ca-frame-dark' x1='52' y1='20' x2='172' y2='174' gradientUnits='userSpaceOnUse'>
-      <stop offset='0' stop-color='#85F2A0'/>
-      <stop offset='0.45' stop-color='#41A650'/>
-      <stop offset='1' stop-color='#85F2A0'/>
-    </linearGradient>
+    <linearGradient id='fd' x1='52' y1='22' x2='172' y2='176' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#85F2A0'/><stop offset='0.45' stop-color='#41A650'/><stop offset='1' stop-color='#85F2A0'/></linearGradient>
     <style>.wm{font-family:"Poppins","Montserrat","Segoe UI",Arial,sans-serif;font-size:104px;font-weight:700;letter-spacing:-2px;}</style>
   </defs>
   <g id='icon'>
-    <g id='frame' fill='none' stroke='url(#ca-frame-dark)' stroke-width='11.5' stroke-linecap='round' stroke-linejoin='round'>
-      <path d='M111 31 L58 61' />
-      <path d='M113 31 L166 61' />
-      <path d='M52 70 L52 126' />
-      <path d='M172 70 L172 126' />
-      <path d='M63 147 L112 175 L161 147' />
+    <g id='frame' fill='none' stroke='url(#fd)' stroke-width='11' stroke-linecap='round' stroke-linejoin='round'>
+      <line x1='112' y1='34' x2='60' y2='64'/>
+      <line x1='112' y1='34' x2='164' y2='64'/>
+      <line x1='52' y1='74' x2='52' y2='126'/>
+      <line x1='172' y1='74' x2='172' y2='126'/>
+      <polyline points='64,146 112,174 160,146'/>
     </g>
     <g id='nodes'>
-      <circle cx='112' cy='24' r='13.5' fill='#85F2A0' />
-      <circle cx='42' cy='138' r='13.5' fill='#F7F9F8' />
-      <circle cx='182' cy='138' r='13.5' fill='#F2CB05' />
+      <circle cx='112' cy='24' r='12' fill='#85F2A0'/>
+      <circle cx='42' cy='138' r='12' fill='#F7F9F8'/>
+      <circle cx='182' cy='138' r='12' fill='#F2CB05'/>
     </g>
     <g id='bubble'>
-      <rect x='68' y='76' width='88' height='58' rx='25' fill='#F7F9F8' />
-      <path d='M107 132 L126 132 L114 151 Z' fill='#F7F9F8' />
+      <rect x='68' y='76' width='88' height='58' rx='24' fill='#F7F9F8'/>
+      <path d='M106 132 L124 132 L114 150 Z' fill='#F7F9F8'/>
     </g>
     <g id='eyes'>
-      <rect x='92.5' y='99' width='13' height='19' rx='6.5' fill='#255938' />
-      <rect x='120.5' y='99' width='13' height='19' rx='6.5' fill='#255938' />
+      <rect x='92' y='98' width='14' height='20' rx='7' fill='#255938'/>
+      <rect x='120' y='98' width='14' height='20' rx='7' fill='#255938'/>
     </g>
   </g>
-  <g id='wordmark' transform='translate(244,0)'>
-    <text id='text-clever' class='wm' x='0' y='140' fill='#F7F9F8'>Clever</text>
-    <text id='text-agent' class='wm' x='347' y='140' fill='#85F2A0'>Agent</text>
-  </g>
+  <g id='wordmark' transform='translate(244,0)'><text class='wm' x='0' y='140' fill='#F7F9F8'>Clever</text><text class='wm' x='347' y='140' fill='#85F2A0'>Agent</text></g>
 </svg>
