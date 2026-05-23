@@ -10,11 +10,11 @@
   </defs>
   <g id="icon">
     <g id="frame" fill="none" stroke="url(#ca-icon-light-frame-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M112 30 L48 66"/>
-      <path d="M112 30 L176 66"/>
-      <path d="M42 74 L42 130"/>
-      <path d="M182 74 L182 130"/>
-      <path d="M54 154 L112 186 L170 154"/>
+      <path d="M103 38 L56 65"/>
+      <path d="M121 38 L168 65"/>
+      <path d="M42 74 L42 128"/>
+      <path d="M182 74 L182 128"/>
+      <path d="M58 150 L112 180 L166 150"/>
     </g>
     <g id="nodes">
       <circle cx="112" cy="26" r="14" fill="#85F2A0"/>

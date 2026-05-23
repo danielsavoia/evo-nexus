@@ -14,11 +14,11 @@
   <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#ca-app-bg)"/>
   <g id="icon" transform="translate(0,6)">
     <g id="frame" fill="none" stroke="url(#ca-app-frame)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M256 84 L132 154"/>
-      <path d="M256 84 L380 154"/>
-      <path d="M120 172 L120 280"/>
-      <path d="M392 172 L392 280"/>
-      <path d="M144 326 L256 390 L368 326"/>
+      <path d="M239 105 L150 155"/>
+      <path d="M273 105 L362 155"/>
+      <path d="M120 172 L120 274"/>
+      <path d="M392 172 L392 274"/>
+      <path d="M152 322 L256 382 L360 322"/>
     </g>
     <circle cx="256" cy="75" r="26" fill="#85F2A0"/>
     <circle cx="120" cy="294" r="24" fill="#F7F9F8"/>

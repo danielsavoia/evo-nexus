@@ -14,18 +14,15 @@
       <stop offset="0" stop-color="#41A650"/>
       <stop offset="1" stop-color="#41A650"/>
     </linearGradient>
-    <style>
-      .wm { font-family: "Poppins", "Montserrat", "Segoe UI", Arial, sans-serif; font-size: 108px; font-weight: 700; letter-spacing: -2px; }
-    </style>
+    <style>.wm { font-family: "Poppins", "Montserrat", "Segoe UI", Arial, sans-serif; font-size: 108px; font-weight: 700; letter-spacing: -2px; }</style>
   </defs>
-
-  <g id="icon" transform="translate(0,0)">
+  <g id="icon">
     <g id="frame" fill="none" stroke="url(#ca-frame-grad-light)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M112 30 L48 66"/>
-      <path d="M112 30 L176 66"/>
-      <path d="M42 74 L42 130"/>
-      <path d="M182 74 L182 130"/>
-      <path d="M54 154 L112 186 L170 154"/>
+      <path d="M103 38 L56 65"/>
+      <path d="M121 38 L168 65"/>
+      <path d="M42 74 L42 128"/>
+      <path d="M182 74 L182 128"/>
+      <path d="M58 150 L112 180 L166 150"/>
     </g>
     <g id="nodes">
       <circle cx="112" cy="26" r="14" fill="#85F2A0"/>
@@ -41,10 +38,8 @@
       <rect x="118" y="95" width="16" height="20" rx="8" fill="#85F2A0"/>
     </g>
   </g>
-
   <g id="wordmark" transform="translate(248,0)">
     <text id="text-clever" class="wm" x="0" y="140" fill="url(#ca-clever-grad-light)">Clever</text>
     <text id="text-agent" class="wm" x="353" y="140" fill="url(#ca-agent-grad-light)">Agent</text>
   </g>
 </svg>
-
