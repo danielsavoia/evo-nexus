@@ -55,8 +55,8 @@ Composicao horizontal:
 ## Icone isolado
 Arquivos:
 - `icon.svg`
-- `icon-light.svg`
-- `icon-dark.svg`
+- `icon-light.svg` / `icon-white.svg`
+- `icon-dark.svg` / `icon-green.svg`
 
 Estrutura obrigatoria do simbolo:
 - Frame conectado tipo hexagono
@@ -124,3 +124,4 @@ Grupos nomeados padrao:
 - `text-agent`
 
 Todos os arquivos sao vetoriais, com `viewBox`, sem raster embutido e prontos para web.
+

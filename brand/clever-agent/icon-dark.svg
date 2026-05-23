@@ -1,33 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" role="img" aria-label="Clever Agent icon dark">
-  <title>Clever Agent Icon Dark</title>
-  <rect x="8" y="8" width="208" height="208" rx="44" fill="#19402A"/>
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 224 224' role='img' aria-label='Clever Agent icon dark green bg'>
+  <title>Clever Agent Icon Dark Green</title>
   <defs>
-    <linearGradient id="ca-icon-dark-frame-grad" x1="40" y1="18" x2="180" y2="180" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#85F2A0"/>
-      <stop offset="0.48" stop-color="#41A650"/>
-      <stop offset="1" stop-color="#85F2A0"/>
+    <linearGradient id='ca-bg-dark' x1='14' y1='10' x2='198' y2='210' gradientUnits='userSpaceOnUse'>
+      <stop offset='0' stop-color='#0f4f35'/>
+      <stop offset='1' stop-color='#19402A'/>
+    </linearGradient>
+    <linearGradient id='ca-frame-on-dark' x1='52' y1='20' x2='172' y2='174' gradientUnits='userSpaceOnUse'>
+      <stop offset='0' stop-color='#85F2A0'/>
+      <stop offset='0.45' stop-color='#41A650'/>
+      <stop offset='1' stop-color='#85F2A0'/>
     </linearGradient>
   </defs>
-  <g id="icon">
-    <g id="frame" fill="none" stroke="url(#ca-icon-dark-frame-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M103 38 L56 65"/>
-      <path d="M121 38 L168 65"/>
-      <path d="M42 74 L42 128"/>
-      <path d="M182 74 L182 128"/>
-      <path d="M58 150 L112 180 L166 150"/>
+  <rect x='8' y='8' width='208' height='208' rx='44' fill='url(#ca-bg-dark)' />
+  <g id='icon'>
+    <g id='frame' fill='none' stroke='url(#ca-frame-on-dark)' stroke-width='11.5' stroke-linecap='round' stroke-linejoin='round'>
+      <path d='M111 31 L58 61' />
+      <path d='M113 31 L166 61' />
+      <path d='M52 70 L52 126' />
+      <path d='M172 70 L172 126' />
+      <path d='M63 147 L112 175 L161 147' />
     </g>
-    <g id="nodes">
-      <circle cx="112" cy="26" r="14" fill="#85F2A0"/>
-      <circle cx="42" cy="138" r="14" fill="#F7F9F8"/>
-      <circle cx="182" cy="138" r="14" fill="#F2CB05"/>
+    <g id='nodes'>
+      <circle cx='112' cy='24' r='13.5' fill='#85F2A0' />
+      <circle cx='42' cy='138' r='13.5' fill='#F7F9F8' />
+      <circle cx='182' cy='138' r='13.5' fill='#F2CB05' />
     </g>
-    <g id="bubble">
-      <rect x="64" y="72" width="96" height="62" rx="28" fill="#F7F9F8"/>
-      <path d="M106 132 L124 132 L112 151 Z" fill="#F7F9F8"/>
+    <g id='bubble'>
+      <rect x='68' y='76' width='88' height='58' rx='25' fill='#85F2A0' />
+      <path d='M107 132 L126 132 L114 151 Z' fill='#85F2A0' />
     </g>
-    <g id="eyes">
-      <rect x="90" y="95" width="16" height="20" rx="8" fill="#255938"/>
-      <rect x="118" y="95" width="16" height="20" rx="8" fill="#255938"/>
+    <g id='eyes'>
+      <rect x='92.5' y='99' width='13' height='19' rx='6.5' fill='#19402A' />
+      <rect x='120.5' y='99' width='13' height='19' rx='6.5' fill='#19402A' />
     </g>
   </g>
 </svg>
