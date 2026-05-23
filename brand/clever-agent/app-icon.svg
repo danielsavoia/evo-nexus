@@ -1,42 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Clever Agent App Icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Clever Agent app icon">
   <title>Clever Agent App Icon</title>
   <defs>
-    <linearGradient id="ca-app-bg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#255938"/>
-      <stop offset="100%" stop-color="#19402A"/>
+    <linearGradient id="ca-app-bg" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#41A650"/>
+      <stop offset="1" stop-color="#19402A"/>
     </linearGradient>
-    <linearGradient id="ca-app-hex" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#85F2A0"/>
-      <stop offset="100%" stop-color="#41A650"/>
+    <linearGradient id="ca-app-frame" x1="130" y1="76" x2="386" y2="392" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#85F2A0"/>
+      <stop offset="0.45" stop-color="#41A650"/>
+      <stop offset="1" stop-color="#F7F9F8"/>
     </linearGradient>
   </defs>
-
-  <!-- App icon background with gradient -->
-  <rect width="100" height="100" rx="22" fill="url(#ca-app-bg)"/>
-
-  <!-- Network connection lines -->
-  <line x1="50" y1="13" x2="18" y2="68" stroke="#85F2A0" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
-  <line x1="50" y1="13" x2="82" y2="68" stroke="#85F2A0" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
-
-  <!-- Hexagonal frame -->
-  <polygon
-    points="50,13 82,31 82,68 50,86 18,68 18,31"
-    stroke="url(#ca-app-hex)"
-    stroke-width="3"
-    stroke-linejoin="round"
-    fill="none"
-  />
-
-  <!-- Chat bubble (mint on dark bg) -->
-  <rect x="29" y="33" width="42" height="27" rx="7.5" fill="#85F2A0"/>
-  <path d="M 39,60 L 33,69 L 48,60 Z" fill="#85F2A0"/>
-
-  <!-- Robot eyes (dark on mint bubble) -->
-  <rect x="37" y="41" width="9" height="10" rx="3" fill="#19402A"/>
-  <rect x="54" y="41" width="9" height="10" rx="3" fill="#19402A"/>
-
-  <!-- Network nodes -->
-  <circle cx="50" cy="13" r="5"   fill="#85F2A0"/>
-  <circle cx="18" cy="68" r="4.5" fill="#41A650"/>
-  <circle cx="82" cy="68" r="6"   fill="#F2CB05"/>
+  <rect x="24" y="24" width="464" height="464" rx="108" fill="url(#ca-app-bg)"/>
+  <g id="icon" transform="translate(0,6)">
+    <g id="frame" fill="none" stroke="url(#ca-app-frame)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M256 84 L132 154"/>
+      <path d="M256 84 L380 154"/>
+      <path d="M120 172 L120 280"/>
+      <path d="M392 172 L392 280"/>
+      <path d="M144 326 L256 390 L368 326"/>
+    </g>
+    <circle cx="256" cy="75" r="26" fill="#85F2A0"/>
+    <circle cx="120" cy="294" r="24" fill="#F7F9F8"/>
+    <circle cx="392" cy="294" r="24" fill="#F2CB05"/>
+    <rect x="168" y="168" width="176" height="114" rx="52" fill="#F7F9F8"/>
+    <path d="M243 278 L269 278 L256 308 Z" fill="#F7F9F8"/>
+    <rect x="216" y="211" width="28" height="38" rx="14" fill="#255938"/>
+    <rect x="268" y="211" width="28" height="38" rx="14" fill="#255938"/>
+  </g>
 </svg>

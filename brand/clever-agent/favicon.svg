@@ -1,18 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Clever Agent">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Clever Agent favicon">
   <title>Clever Agent Favicon</title>
-
-  <!-- Circular dark background -->
-  <circle cx="50" cy="50" r="50" fill="#19402A"/>
-
-  <!-- Chat bubble (mint, fills most of the circle) -->
-  <rect x="14" y="24" width="72" height="44" rx="11" fill="#85F2A0"/>
-  <!-- Bubble tail -->
-  <path d="M 26,68 L 16,82 L 40,68 Z" fill="#85F2A0"/>
-
-  <!-- Robot eyes (dark on mint bubble) -->
-  <rect x="24" y="37" width="17" height="19" rx="5" fill="#19402A"/>
-  <rect x="59" y="37" width="17" height="19" rx="5" fill="#19402A"/>
-
-  <!-- Yellow accent node -->
-  <circle cx="80" cy="78" r="9" fill="#F2CB05"/>
+  <rect width="64" height="64" rx="14" fill="#F7F9F8"/>
+  <g id="icon" transform="translate(0,2)">
+    <g id="frame" fill="none" stroke="#41A650" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 8 L16 17"/>
+      <path d="M32 8 L48 17"/>
+      <path d="M14 19 L14 33"/>
+      <path d="M50 19 L50 33"/>
+      <path d="M17 39 L32 47 L46 39"/>
+    </g>
+    <circle cx="32" cy="7" r="4" fill="#85F2A0"/>
+    <circle cx="14" cy="35" r="4" fill="#19402A"/>
+    <circle cx="50" cy="35" r="4" fill="#F2CB05"/>
+    <rect x="20" y="18" width="24" height="16" rx="7" fill="#19402A"/>
+    <path d="M30 33 L34 33 L32 37 Z" fill="#19402A"/>
+    <rect x="26" y="23" width="4" height="6" rx="2" fill="#85F2A0"/>
+    <rect x="34" y="23" width="4" height="6" rx="2" fill="#85F2A0"/>
+  </g>
 </svg>

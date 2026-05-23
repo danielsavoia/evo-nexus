@@ -1,38 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Clever Agent">
-  <title>Clever Agent (Dark)</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 224" role="img" aria-label="Clever Agent icon dark">
+  <title>Clever Agent Icon Dark</title>
+  <rect x="8" y="8" width="208" height="208" rx="44" fill="#19402A"/>
   <defs>
-    <linearGradient id="ca-hex-gd" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#85F2A0"/>
-      <stop offset="100%" stop-color="#41A650"/>
+    <linearGradient id="ca-icon-dark-frame-grad" x1="40" y1="18" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#85F2A0"/>
+      <stop offset="0.48" stop-color="#41A650"/>
+      <stop offset="1" stop-color="#85F2A0"/>
     </linearGradient>
   </defs>
-
-  <!-- Dark background -->
-  <rect width="100" height="100" rx="20" fill="#19402A"/>
-
-  <!-- Network connection lines -->
-  <line x1="50" y1="12" x2="17.1" y2="69" stroke="#85F2A0" stroke-width="2" stroke-linecap="round" opacity="0.28"/>
-  <line x1="50" y1="12" x2="82.9" y2="69" stroke="#85F2A0" stroke-width="2" stroke-linecap="round" opacity="0.28"/>
-
-  <!-- Hexagonal frame -->
-  <polygon
-    points="50,12 82.9,31 82.9,69 50,88 17.1,69 17.1,31"
-    stroke="url(#ca-hex-gd)"
-    stroke-width="3.5"
-    stroke-linejoin="round"
-    fill="none"
-  />
-
-  <!-- Chat bubble body (lighter on dark bg) -->
-  <rect x="28" y="34" width="44" height="28" rx="8" fill="#255938"/>
-  <path d="M 38,62 L 31,72 L 49,62 Z" fill="#255938"/>
-
-  <!-- Robot eyes -->
-  <rect x="36" y="41.5" width="10" height="11" rx="3.5" fill="#85F2A0"/>
-  <rect x="54" y="41.5" width="10" height="11" rx="3.5" fill="#85F2A0"/>
-
-  <!-- Network nodes -->
-  <circle cx="50"  cy="12"  r="5.5" fill="#85F2A0"/>
-  <circle cx="17.1" cy="69" r="5"   fill="#41A650"/>
-  <circle cx="82.9" cy="69" r="6.5" fill="#F2CB05"/>
+  <g id="icon">
+    <g id="frame" fill="none" stroke="url(#ca-icon-dark-frame-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M112 30 L48 66"/>
+      <path d="M112 30 L176 66"/>
+      <path d="M42 74 L42 130"/>
+      <path d="M182 74 L182 130"/>
+      <path d="M54 154 L112 186 L170 154"/>
+    </g>
+    <g id="nodes">
+      <circle cx="112" cy="26" r="14" fill="#85F2A0"/>
+      <circle cx="42" cy="138" r="14" fill="#F7F9F8"/>
+      <circle cx="182" cy="138" r="14" fill="#F2CB05"/>
+    </g>
+    <g id="bubble">
+      <rect x="64" y="72" width="96" height="62" rx="28" fill="#F7F9F8"/>
+      <path d="M106 132 L124 132 L112 151 Z" fill="#F7F9F8"/>
+    </g>
+    <g id="eyes">
+      <rect x="90" y="95" width="16" height="20" rx="8" fill="#255938"/>
+      <rect x="118" y="95" width="16" height="20" rx="8" fill="#255938"/>
+    </g>
+  </g>
 </svg>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clever Agent - Brand Preview</title>
+  <style>
+    :root {
+      --g900: #19402A;
+      --g800: #255938;
+      --g600: #41A650;
+      --g300: #85F2A0;
+      --y500: #F2CB05;
+      --bg: #F7F9F8;
+      --text: #153a27;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 28px; font-family: "Segoe UI", Arial, sans-serif; color: var(--text); background: linear-gradient(135deg,#fff,#f3f5f4); }
+    h1,h2 { margin: 0 0 14px; }
+    .section { background: #fff; border: 1px solid #dce4df; border-radius: 16px; padding: 18px; margin-bottom: 16px; }
+    .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+    .card { border: 1px solid #e4ebe7; border-radius: 14px; padding: 12px; }
+    .bg-light { background: var(--bg); }
+    .bg-dark { background: var(--g900); color: #fff; }
+    .checker { background-image: linear-gradient(45deg,#e3e7e4 25%,transparent 25%),linear-gradient(-45deg,#e3e7e4 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e3e7e4 75%),linear-gradient(-45deg,transparent 75%,#e3e7e4 75%); background-size: 14px 14px; background-position: 0 0,0 7px,7px -7px,-7px 0; }
+    .asset { width: 100%; max-width: 430px; display:block; }
+    .icon { width: 124px; height: 124px; }
+    .palette { display: flex; flex-wrap: wrap; gap: 12px; }
+    .swatch { width: 120px; }
+    .chip { width: 72px; height: 72px; border-radius: 999px; border: 1px solid #d6ddd9; }
+    .small { font-size: 13px; color:#4b6256; margin-top: 8px; }
+    .ok { color: #255938; font-weight: 600; }
+    .no { color: #a84030; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Clever Agent - Brand Assets Preview</h1>
+
+  <section class="section">
+    <h2>Secao 1 - Logo horizontal</h2>
+    <div class="grid">
+      <div class="card"><p>Padrao (fundo branco)</p><img class="asset" src="./logo-horizontal.svg" alt="logo" /></div>
+      <div class="card bg-light"><p>Padrao em fundo #F7F9F8</p><img class="asset" src="./logo-horizontal-light.svg" alt="logo light" /></div>
+      <div class="card bg-dark"><p>Versao dark em fundo escuro</p><img class="asset" src="./logo-horizontal-dark.svg" alt="logo dark" /></div>
+      <div class="card checker"><p>Fundo transparente/checker</p><img class="asset" src="./logo-horizontal.svg" alt="logo checker" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Secao 2 - Icone</h2>
+    <div class="grid">
+      <div class="card"><p>Icone transparente</p><img class="icon" src="./icon.svg" alt="icon" /></div>
+      <div class="card bg-light"><p>Icone em fundo branco</p><img class="icon" src="./icon-light.svg" alt="icon light" /></div>
+      <div class="card bg-dark"><p>Icone em fundo escuro</p><img class="icon" src="./icon-dark.svg" alt="icon dark" /></div>
+      <div class="card"><p>Favicon</p><img class="icon" src="./favicon.svg" alt="favicon" /></div>
+      <div class="card"><p>App icon</p><img class="icon" src="./app-icon.svg" alt="app icon" /></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Secao 3 - Paleta</h2>
+    <div class="palette">
+      <div class="swatch"><div class="chip" style="background:#19402A"></div><div class="small">#19402A</div></div>
+      <div class="swatch"><div class="chip" style="background:#255938"></div><div class="small">#255938</div></div>
+      <div class="swatch"><div class="chip" style="background:#41A650"></div><div class="small">#41A650</div></div>
+      <div class="swatch"><div class="chip" style="background:#85F2A0"></div><div class="small">#85F2A0</div></div>
+      <div class="swatch"><div class="chip" style="background:#F2CB05"></div><div class="small">#F2CB05</div></div>
+      <div class="swatch"><div class="chip" style="background:#F7F9F8"></div><div class="small">#F7F9F8</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Secao 4 - Diretrizes rapidas</h2>
+    <p><strong>Respiro minimo:</strong> 0.5x do diametro do no superior ao redor da marca.</p>
+    <p><strong>Tamanho minimo:</strong> logo horizontal 160px; icone 24px; favicon 16px.</p>
+    <p class="ok">Uso correto: manter proporcao, paleta oficial e contraste adequado (light/dark).</p>
+    <p class="no">Uso incorreto: distorcer, alterar nos, trocar tipografia, mexer na geometria do simbolo.</p>
+  </section>
+</body>
+</html>
