@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" role="img" aria-label="Clever Agent App Icon">
+  <title>Clever Agent App Icon</title>
+  <defs>
+    <linearGradient id="ca-app-bg" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#255938"/>
+      <stop offset="100%" stop-color="#19402A"/>
+    </linearGradient>
+    <linearGradient id="ca-app-hex" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#85F2A0"/>
+      <stop offset="100%" stop-color="#41A650"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App icon background with gradient -->
+  <rect width="100" height="100" rx="22" fill="url(#ca-app-bg)"/>
+
+  <!-- Network connection lines -->
+  <line x1="50" y1="13" x2="18" y2="68" stroke="#85F2A0" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+  <line x1="50" y1="13" x2="82" y2="68" stroke="#85F2A0" stroke-width="1.5" stroke-linecap="round" opacity="0.22"/>
+
+  <!-- Hexagonal frame -->
+  <polygon
+    points="50,13 82,31 82,68 50,86 18,68 18,31"
+    stroke="url(#ca-app-hex)"
+    stroke-width="3"
+    stroke-linejoin="round"
+    fill="none"
+  />
+
+  <!-- Chat bubble (mint on dark bg) -->
+  <rect x="29" y="33" width="42" height="27" rx="7.5" fill="#85F2A0"/>
+  <path d="M 39,60 L 33,69 L 48,60 Z" fill="#85F2A0"/>
+
+  <!-- Robot eyes (dark on mint bubble) -->
+  <rect x="37" y="41" width="9" height="10" rx="3" fill="#19402A"/>
+  <rect x="54" y="41" width="9" height="10" rx="3" fill="#19402A"/>
+
+  <!-- Network nodes -->
+  <circle cx="50" cy="13" r="5"   fill="#85F2A0"/>
+  <circle cx="18" cy="68" r="4.5" fill="#41A650"/>
+  <circle cx="82" cy="68" r="6"   fill="#F2CB05"/>
+</svg>

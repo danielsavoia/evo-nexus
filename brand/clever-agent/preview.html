@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clever Agent — Brand Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --clever-900: #19402A;
+      --clever-800: #255938;
+      --clever-600: #41A650;
+      --clever-300: #85F2A0;
+      --clever-yellow: #F2CB05;
+      --clever-bg:    #F7F9F8;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f0f0f0;
+      padding: 40px 32px;
+      color: #111;
+    }
+
+    h1 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #666; margin-bottom: 32px; }
+    h2 { font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #999; margin-bottom: 14px; }
+
+    .section { margin-bottom: 48px; }
+
+    /* ---- canvas tiles ---- */
+    .tiles { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+
+    .tile {
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .tile span { font-size: 11px; color: #999; }
+    .tile.white  { background: #fff;     border: 1px solid #e5e5e5; }
+    .tile.light  { background: var(--clever-bg); border: 1px solid #dde5dc; }
+    .tile.dark   { background: var(--clever-900); }
+    .tile.darker { background: #0d2419; }
+    .tile.checker {
+      background-image:
+        linear-gradient(45deg, #ccc 25%, transparent 25%),
+        linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%),
+        linear-gradient(-45deg, transparent 75%, #ccc 75%);
+      background-size: 12px 12px;
+      background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    }
+    .tile.white span, .tile.light span, .tile.checker span { color: #999; }
+    .tile.dark span, .tile.darker span { color: rgba(255,255,255,.4); }
+
+    /* icon sizes */
+    .sz-xl  img { width: 120px; height: 120px; }
+    .sz-lg  img { width:  80px; height:  80px; }
+    .sz-md  img { width:  48px; height:  48px; }
+    .sz-sm  img { width:  32px; height:  32px; }
+    .sz-xs  img { width:  16px; height:  16px; }
+
+    /* horizontal logos */
+    .logo-tile { min-width: 360px; }
+    .logo-tile img { width: 100%; max-width: 340px; height: auto; }
+
+    /* palette */
+    .palette { display: flex; gap: 12px; flex-wrap: wrap; }
+    .swatch {
+      width: 80px; text-align: center;
+    }
+    .swatch-color {
+      width: 80px; height: 80px; border-radius: 12px;
+      margin-bottom: 6px;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .swatch span { font-size: 11px; color: #666; display: block; }
+    .swatch code { font-size: 10px; color: #999; font-family: monospace; }
+
+    /* divider */
+    hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
+  </style>
+</head>
+<body>
+
+<h1>Clever Agent — Brand Asset Preview</h1>
+
+<!-- ===================== LOGOS HORIZONTAIS ===================== -->
+<div class="section">
+  <h2>Logo Horizontal</h2>
+  <div class="tiles">
+    <div class="tile white logo-tile">
+      <img src="logo-horizontal.svg" alt="Logo Horizontal">
+      <span>Padrão — fundo branco</span>
+    </div>
+    <div class="tile light logo-tile">
+      <img src="logo-horizontal.svg" alt="Logo Horizontal">
+      <span>Padrão — fundo claro #F7F9F8</span>
+    </div>
+    <div class="tile dark logo-tile">
+      <img src="logo-horizontal-dark.svg" alt="Logo Dark">
+      <span style="color:rgba(255,255,255,.4)">Versão escura</span>
+    </div>
+    <div class="tile checker logo-tile">
+      <img src="logo-horizontal.svg" alt="Logo Horizontal">
+      <span>Transparente (checker)</span>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===================== ÍCONE VARIAÇÕES ===================== -->
+<div class="section">
+  <h2>Ícone — Variações de fundo</h2>
+  <div class="tiles">
+
+    <div class="tile checker sz-xl">
+      <img src="icon.svg" alt="Icon">
+      <span>Transparente 120px</span>
+    </div>
+    <div class="tile white sz-xl">
+      <img src="icon.svg" alt="Icon">
+      <span>Fundo branco 120px</span>
+    </div>
+    <div class="tile light sz-xl">
+      <img src="icon-light.svg" alt="Icon Light">
+      <span>Fundo claro (card)</span>
+    </div>
+    <div class="tile dark sz-xl">
+      <img src="icon-dark.svg" alt="Icon Dark">
+      <span style="color:rgba(255,255,255,.4)">Fundo escuro</span>
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+<!-- ===================== APP ICON ===================== -->
+<div class="section">
+  <h2>App Icon</h2>
+  <div class="tiles">
+    <div class="tile checker sz-xl">
+      <img src="app-icon.svg" alt="App Icon">
+      <span>App Icon 120px</span>
+    </div>
+    <div class="tile checker sz-lg">
+      <img src="app-icon.svg" alt="App Icon">
+      <span>80px</span>
+    </div>
+    <div class="tile checker sz-md">
+      <img src="app-icon.svg" alt="App Icon">
+      <span>48px</span>
+    </div>
+    <div class="tile checker sz-sm">
+      <img src="app-icon.svg" alt="App Icon">
+      <span>32px</span>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===================== FAVICON ===================== -->
+<div class="section">
+  <h2>Favicon</h2>
+  <div class="tiles">
+    <div class="tile checker sz-xl">
+      <img src="favicon.svg" alt="Favicon">
+      <span>Favicon 120px</span>
+    </div>
+    <div class="tile checker sz-lg">
+      <img src="favicon.svg" alt="Favicon">
+      <span>80px</span>
+    </div>
+    <div class="tile checker sz-md">
+      <img src="favicon.svg" alt="Favicon">
+      <span>48px</span>
+    </div>
+    <div class="tile checker sz-sm">
+      <img src="favicon.svg" alt="Favicon">
+      <span>32px</span>
+    </div>
+    <div class="tile checker sz-xs">
+      <img src="favicon.svg" alt="Favicon">
+      <span>16px</span>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===================== SIDEBAR SIMULATION ===================== -->
+<div class="section">
+  <h2>Simulação — Sidebar Dashboard</h2>
+  <div style="width:220px; background:#0a0f1a; border-radius:12px; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
+    <img src="icon-dark.svg" alt="Logo Sidebar" style="width:36px; height:36px;">
+    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px; background:#182230; border-radius:8px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#85F2A0;"></div>
+      <span style="font-size:13px;color:#F9FAFB;font-family:Inter,sans-serif;">Agentes</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#344054;"></div>
+      <span style="font-size:13px;color:#667085;font-family:Inter,sans-serif;">Workspace</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#344054;"></div>
+      <span style="font-size:13px;color:#667085;font-family:Inter,sans-serif;">Configurações</span>
+    </div>
+    <div style="margin-top:auto; font-size:10px; color:#2d4a38; font-family:Inter,sans-serif; padding-top:16px; border-top:1px solid #182230;">
+      Built on EvoNexus
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ===================== PALETA ===================== -->
+<div class="section">
+  <h2>Paleta de Cores</h2>
+  <div class="palette">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#19402A;"></div>
+      <span>Green 900</span>
+      <code>#19402A</code>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#255938;"></div>
+      <span>Green 800</span>
+      <code>#255938</code>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#41A650;"></div>
+      <span>Green 600</span>
+      <code>#41A650</code>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#85F2A0;"></div>
+      <span>Green 300</span>
+      <code>#85F2A0</code>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F2CB05;"></div>
+      <span>Yellow 500</span>
+      <code>#F2CB05</code>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F7F9F8;"></div>
+      <span>BG Light</span>
+      <code>#F7F9F8</code>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
