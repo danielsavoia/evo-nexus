@@ -212,7 +212,7 @@ const translations = {
 
     login: {
       title: 'Sign in',
-      subtitle: 'Access your EvoNexus dashboard',
+      subtitle: 'Access your Clever Agent dashboard',
       username: 'Username',
       password: 'Password',
       submit: 'Sign in',
@@ -222,7 +222,7 @@ const translations = {
     },
 
     setup: {
-      title: 'Welcome to EvoNexus',
+      title: 'Welcome to Clever Agent',
       subtitle: 'Let\'s set up your workspace',
       appSubtitle: 'AI Workspace Platform',
       stepOf: 'Step {{current}} of {{total}}',
@@ -770,7 +770,7 @@ const translations = {
 
     plugins: {
       title: 'Plugins',
-      subtitle: 'Extend EvoNexus with community and official plugins',
+      subtitle: 'Extend Clever Agent with community and official plugins',
       installed: 'Installed',
       marketplace: 'Marketplace',
       install: 'Install plugin',
@@ -919,12 +919,12 @@ const translations = {
         step3of3: 'Step 3 of 3',
       },
       welcome: {
-        title: 'Welcome to EvoNexus',
+        title: 'Welcome to Clever Agent',
         subtitle: "Let's get your workspace set up",
         chooseHowToStart: "Choose how you'd like to start:",
         configureFromScratch: 'Configure from scratch',
         restoreBrainRepo: 'Restore brain repo',
-        restoreHint: "If you've previously set up EvoNexus with a brain repo, use \"Restore\" to recover your configuration.",
+        restoreHint: "If you've previously set up Clever Agent with a brain repo, use \"Restore\" to recover your configuration.",
       },
       provider: {
         title: 'Choose your AI provider',

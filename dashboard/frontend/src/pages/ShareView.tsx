@@ -281,9 +281,9 @@ function PoweredByFooter() {
         cursor: 'pointer',
       }}
     >
-      <img src="/EVO_NEXUS.webp" alt="EvoNexus" style={{ height: '16px', width: 'auto', opacity: 0.7 }} />
+      <img src="/clever-agent-icon.svg" alt="Clever Agent" style={{ height: '16px', width: 'auto', opacity: 0.7 }} />
       <span style={{ fontSize: '11px', color: 'var(--text-muted, #667085)' }}>
-        Powered by EvoNexus
+        Powered by Clever Agent
       </span>
     </a>
   )

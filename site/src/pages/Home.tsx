@@ -14,7 +14,7 @@ import {
 } from "react-icons/si";
 
 import MainLogo from "@assets/logo.webp";
-import EvoNexusLogo from "@assets/EVO_NEXUS.webp";
+import CleverAgentLogo from "@assets/clever-agent.svg";
 import printOverview from "@assets/print-overview.webp";
 import printAgents from "@assets/print-agents.webp";
 import printIntegrations from "@assets/print-integrations.webp";
@@ -140,7 +140,7 @@ export default function Home() {
       <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-background/80 backdrop-blur-md border-border' : 'bg-transparent border-transparent'}`} style={{ top: '36px' }}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={EvoNexusLogo} alt="EvoNexus" className="h-8" />
+            <img src={CleverAgentLogo} alt="Clever Agent" className="h-8" />
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -583,7 +583,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <img src={MainLogo} alt="Evolution Foundation" className="h-8" />
+                <img src={CleverAgentLogo} alt="Clever Agent" className="h-8" />
               </div>
               <p className="text-muted-foreground text-sm">{t("footer.tagline")}</p>
             </div>

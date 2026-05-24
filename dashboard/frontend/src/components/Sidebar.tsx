@@ -243,7 +243,7 @@ export default function Sidebar() {
   const sidebarContent = (
     <>
       <div className="px-5 py-6 flex items-center justify-between">
-        <img src="/EVO_NEXUS.webp" alt="EvoNexus" className="h-8 w-auto" />
+        <img src="/clever-agent.svg" alt="Clever Agent" className="h-8 w-auto" />
         <div className="flex items-center gap-1">
           <NotificationBell />
           <button onClick={() => setMobileOpen(false)} className="lg:hidden p-1 rounded hover:bg-white/10 text-[#667085]">
@@ -389,7 +389,7 @@ export default function Sidebar() {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-1.5 text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors"
         >
-          by <span className="font-semibold text-[#00FFA7]/60">Evolution Foundation</span>
+          Built on <span className="font-semibold text-[#00FFA7]/60">EvoNexus</span>
         </a>
       </div>
     </>

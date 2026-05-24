@@ -1,261 +1,383 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clever Agent — Brand Preview</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --clever-900: #19402A;
-      --clever-800: #255938;
-      --clever-600: #41A650;
-      --clever-300: #85F2A0;
-      --clever-yellow: #F2CB05;
-      --clever-bg:    #F7F9F8;
+      --green-900: #19402A;
+      --green-800: #255938;
+      --green-600: #41A650;
+      --green-300: #85F2A0;
+      --yellow-500: #F2CB05;
+      --bg-light: #F7F9F8;
+      --font: 'DM Sans', system-ui, sans-serif;
     }
 
     body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #f0f0f0;
-      padding: 40px 32px;
+      font-family: var(--font);
+      background: #EBEBEB;
       color: #111;
+      padding: 40px 24px 80px;
     }
 
-    h1 { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #666; margin-bottom: 32px; }
-    h2 { font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: #999; margin-bottom: 14px; }
+    h1 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 32px;
+    }
 
-    .section { margin-bottom: 48px; }
+    h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 16px;
+    }
 
-    /* ---- canvas tiles ---- */
-    .tiles { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    .section {
+      margin-bottom: 48px;
+    }
 
-    .tile {
+    /* ---- Cards ---- */
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .card {
       border-radius: 12px;
-      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px 20px;
+      gap: 14px;
+      min-width: 180px;
+    }
+
+    .card.light { background: #FFFFFF; border: 1px solid #E0E0E0; }
+    .card.neutral { background: var(--bg-light); border: 1px solid #D8DCD9; }
+    .card.dark  { background: var(--green-800); }
+    .card.darker { background: var(--green-900); }
+    .card.black { background: #111111; }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .card.light .card-label,
+    .card.neutral .card-label { color: #AAA; }
+    .card.dark .card-label,
+    .card.darker .card-label,
+    .card.black .card-label { color: rgba(255,255,255,.35); }
+
+    /* ---- Logo section ---- */
+    .logo-card {
+      border-radius: 12px;
+      padding: 40px 48px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      flex: 1 1 calc(50% - 8px);
+      min-width: 280px;
+    }
+    .logo-card.light  { background: #FFFFFF; border: 1px solid #E0E0E0; }
+    .logo-card.neutral{ background: var(--bg-light); border: 1px solid #D8DCD9; }
+    .logo-card.dark   { background: var(--green-800); }
+    .logo-card.darker { background: var(--green-900); }
+    .logo-card.black  { background: #111111; }
+    .logo-card .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .logo-card.light .card-label,
+    .logo-card.neutral .card-label { color: #AAA; }
+    .logo-card.dark .card-label,
+    .logo-card.darker .card-label,
+    .logo-card.black .card-label { color: rgba(255,255,255,.35); }
+
+    /* ---- Sizes section ---- */
+    .sizes-card {
+      background: #FFFFFF;
+      border: 1px solid #E0E0E0;
+      border-radius: 12px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .size-item {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
     }
-    .tile span { font-size: 11px; color: #999; }
-    .tile.white  { background: #fff;     border: 1px solid #e5e5e5; }
-    .tile.light  { background: var(--clever-bg); border: 1px solid #dde5dc; }
-    .tile.dark   { background: var(--clever-900); }
-    .tile.darker { background: #0d2419; }
-    .tile.checker {
-      background-image:
-        linear-gradient(45deg, #ccc 25%, transparent 25%),
-        linear-gradient(-45deg, #ccc 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, #ccc 75%),
-        linear-gradient(-45deg, transparent 75%, #ccc 75%);
-      background-size: 12px 12px;
-      background-position: 0 0, 0 6px, 6px -6px, -6px 0px;
+    .size-item span {
+      font-size: 11px;
+      color: #AAA;
+      font-weight: 500;
     }
-    .tile.white span, .tile.light span, .tile.checker span { color: #999; }
-    .tile.dark span, .tile.darker span { color: rgba(255,255,255,.4); }
 
-    /* icon sizes */
-    .sz-xl  img { width: 120px; height: 120px; }
-    .sz-lg  img { width:  80px; height:  80px; }
-    .sz-md  img { width:  48px; height:  48px; }
-    .sz-sm  img { width:  32px; height:  32px; }
-    .sz-xs  img { width:  16px; height:  16px; }
-
-    /* horizontal logos */
-    .logo-tile { min-width: 360px; }
-    .logo-tile img { width: 100%; max-width: 340px; height: auto; }
-
-    /* palette */
-    .palette { display: flex; gap: 12px; flex-wrap: wrap; }
+    /* ---- Color Palette ---- */
+    .palette {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
     .swatch {
-      width: 80px; text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
-    .swatch-color {
-      width: 80px; height: 80px; border-radius: 12px;
-      margin-bottom: 6px;
+    .swatch-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
       border: 1px solid rgba(0,0,0,.08);
     }
-    .swatch span { font-size: 11px; color: #666; display: block; }
-    .swatch code { font-size: 10px; color: #999; font-family: monospace; }
+    .swatch-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: .04em;
+    }
+    .swatch-hex {
+      font-size: 10px;
+      color: #999;
+      font-family: monospace;
+    }
 
-    /* divider */
-    hr { border: none; border-top: 1px solid #ddd; margin: 40px 0; }
+    /* ---- Favicon row ---- */
+    .favicon-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .fav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .fav-item span { font-size: 11px; color: #AAA; font-weight: 500; }
+
+    img.svg-asset { display: block; }
   </style>
 </head>
 <body>
 
-<h1>Clever Agent — Brand Asset Preview</h1>
+  <h1>Clever Agent — Brand Preview</h1>
 
-<!-- ===================== LOGOS HORIZONTAIS ===================== -->
-<div class="section">
-  <h2>Logo Horizontal</h2>
-  <div class="tiles">
-    <div class="tile white logo-tile">
-      <img src="logo-horizontal.svg" alt="Logo Horizontal">
-      <span>Padrão — fundo branco</span>
-    </div>
-    <div class="tile light logo-tile">
-      <img src="logo-horizontal.svg" alt="Logo Horizontal">
-      <span>Padrão — fundo claro #F7F9F8</span>
-    </div>
-    <div class="tile dark logo-tile">
-      <img src="logo-horizontal-dark.svg" alt="Logo Dark">
-      <span style="color:rgba(255,255,255,.4)">Versão escura</span>
-    </div>
-    <div class="tile checker logo-tile">
-      <img src="logo-horizontal.svg" alt="Logo Horizontal">
-      <span>Transparente (checker)</span>
+  <!-- LOGO HORIZONTAL -->
+  <div class="section">
+    <h2>Logo Horizontal</h2>
+    <div class="cards" style="flex-wrap:wrap;">
+      <div class="logo-card light">
+        <img src="logo-horizontal.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Padrão — fundo claro</span>
+      </div>
+      <div class="logo-card neutral">
+        <img src="logo-horizontal-light.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Light — fundo neutro #F7F9F8</span>
+      </div>
+      <div class="logo-card dark">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo #255938</span>
+      </div>
+      <div class="logo-card darker">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo #19402A</span>
+      </div>
+      <div class="logo-card black">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo preto</span>
+      </div>
     </div>
   </div>
-</div>
 
-<hr>
-
-<!-- ===================== ÍCONE VARIAÇÕES ===================== -->
-<div class="section">
-  <h2>Ícone — Variações de fundo</h2>
-  <div class="tiles">
-
-    <div class="tile checker sz-xl">
-      <img src="icon.svg" alt="Icon">
-      <span>Transparente 120px</span>
-    </div>
-    <div class="tile white sz-xl">
-      <img src="icon.svg" alt="Icon">
-      <span>Fundo branco 120px</span>
-    </div>
-    <div class="tile light sz-xl">
-      <img src="icon-light.svg" alt="Icon Light">
-      <span>Fundo claro (card)</span>
-    </div>
-    <div class="tile dark sz-xl">
-      <img src="icon-dark.svg" alt="Icon Dark">
-      <span style="color:rgba(255,255,255,.4)">Fundo escuro</span>
-    </div>
-
-  </div>
-</div>
-
-<hr>
-
-<!-- ===================== APP ICON ===================== -->
-<div class="section">
-  <h2>App Icon</h2>
-  <div class="tiles">
-    <div class="tile checker sz-xl">
-      <img src="app-icon.svg" alt="App Icon">
-      <span>App Icon 120px</span>
-    </div>
-    <div class="tile checker sz-lg">
-      <img src="app-icon.svg" alt="App Icon">
-      <span>80px</span>
-    </div>
-    <div class="tile checker sz-md">
-      <img src="app-icon.svg" alt="App Icon">
-      <span>48px</span>
-    </div>
-    <div class="tile checker sz-sm">
-      <img src="app-icon.svg" alt="App Icon">
-      <span>32px</span>
+  <!-- ÍCONE ISOLADO -->
+  <div class="section">
+    <h2>Ícone Isolado</h2>
+    <div class="cards">
+      <div class="card light">
+        <img src="icon.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Padrão</span>
+      </div>
+      <div class="card neutral">
+        <img src="icon-light.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Light bg</span>
+      </div>
+      <div class="card dark">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Dark #255938</span>
+      </div>
+      <div class="card darker">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Dark #19402A</span>
+      </div>
+      <div class="card black">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Preto</span>
+      </div>
     </div>
   </div>
-</div>
 
-<hr>
-
-<!-- ===================== FAVICON ===================== -->
-<div class="section">
-  <h2>Favicon</h2>
-  <div class="tiles">
-    <div class="tile checker sz-xl">
-      <img src="favicon.svg" alt="Favicon">
-      <span>Favicon 120px</span>
-    </div>
-    <div class="tile checker sz-lg">
-      <img src="favicon.svg" alt="Favicon">
-      <span>80px</span>
-    </div>
-    <div class="tile checker sz-md">
-      <img src="favicon.svg" alt="Favicon">
-      <span>48px</span>
-    </div>
-    <div class="tile checker sz-sm">
-      <img src="favicon.svg" alt="Favicon">
-      <span>32px</span>
-    </div>
-    <div class="tile checker sz-xs">
-      <img src="favicon.svg" alt="Favicon">
-      <span>16px</span>
+  <!-- APP ICON -->
+  <div class="section">
+    <h2>App Icon</h2>
+    <div class="cards">
+      <div class="card light">
+        <img src="app-icon.svg" width="80" class="svg-asset" style="border-radius:18px;"/>
+        <span class="card-label">80 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="60" class="svg-asset" style="border-radius:14px;"/>
+        <span class="card-label">60 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="48" class="svg-asset" style="border-radius:11px;"/>
+        <span class="card-label">48 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="32" class="svg-asset" style="border-radius:7px;"/>
+        <span class="card-label">32 px</span>
+      </div>
+      <div class="card dark">
+        <img src="app-icon.svg" width="80" class="svg-asset" style="border-radius:18px;"/>
+        <span class="card-label">Sobre dark</span>
+      </div>
     </div>
   </div>
-</div>
 
-<hr>
-
-<!-- ===================== SIDEBAR SIMULATION ===================== -->
-<div class="section">
-  <h2>Simulação — Sidebar Dashboard</h2>
-  <div style="width:220px; background:#0a0f1a; border-radius:12px; padding:20px 16px; display:flex; flex-direction:column; gap:16px;">
-    <img src="icon-dark.svg" alt="Logo Sidebar" style="width:36px; height:36px;">
-    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px; background:#182230; border-radius:8px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:#85F2A0;"></div>
-      <span style="font-size:13px;color:#F9FAFB;font-family:Inter,sans-serif;">Agentes</span>
-    </div>
-    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:#344054;"></div>
-      <span style="font-size:13px;color:#667085;font-family:Inter,sans-serif;">Workspace</span>
-    </div>
-    <div style="display:flex; align-items:center; gap:10px; padding: 8px 12px;">
-      <div style="width:8px;height:8px;border-radius:50%;background:#344054;"></div>
-      <span style="font-size:13px;color:#667085;font-family:Inter,sans-serif;">Configurações</span>
-    </div>
-    <div style="margin-top:auto; font-size:10px; color:#2d4a38; font-family:Inter,sans-serif; padding-top:16px; border-top:1px solid #182230;">
-      Built on EvoNexus
+  <!-- FAVICON -->
+  <div class="section">
+    <h2>Favicon</h2>
+    <div class="cards">
+      <div class="card light">
+        <div class="favicon-row">
+          <div class="fav-item">
+            <img src="favicon.svg" width="32" class="svg-asset"/>
+            <span>32 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="24" class="svg-asset"/>
+            <span>24 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="16" class="svg-asset"/>
+            <span>16 px</span>
+          </div>
+        </div>
+        <span class="card-label">Fundo claro</span>
+      </div>
+      <div class="card dark">
+        <div class="favicon-row">
+          <div class="fav-item">
+            <img src="favicon.svg" width="32" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">32 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="24" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">24 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="16" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">16 px</span>
+          </div>
+        </div>
+        <span class="card-label">Fundo dark</span>
+      </div>
     </div>
   </div>
-</div>
 
-<hr>
-
-<!-- ===================== PALETA ===================== -->
-<div class="section">
-  <h2>Paleta de Cores</h2>
-  <div class="palette">
-    <div class="swatch">
-      <div class="swatch-color" style="background:#19402A;"></div>
-      <span>Green 900</span>
-      <code>#19402A</code>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#255938;"></div>
-      <span>Green 800</span>
-      <code>#255938</code>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#41A650;"></div>
-      <span>Green 600</span>
-      <code>#41A650</code>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#85F2A0;"></div>
-      <span>Green 300</span>
-      <code>#85F2A0</code>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#F2CB05;"></div>
-      <span>Yellow 500</span>
-      <code>#F2CB05</code>
-    </div>
-    <div class="swatch">
-      <div class="swatch-color" style="background:#F7F9F8;"></div>
-      <span>BG Light</span>
-      <code>#F7F9F8</code>
+  <!-- ESCALA DO ÍCONE -->
+  <div class="section">
+    <h2>Escala do Ícone</h2>
+    <div class="sizes-card">
+      <div class="size-item">
+        <img src="icon.svg" width="120" class="svg-asset"/>
+        <span>120 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="80" class="svg-asset"/>
+        <span>80 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="48" class="svg-asset"/>
+        <span>48 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="32" class="svg-asset"/>
+        <span>32 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="24" class="svg-asset"/>
+        <span>24 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="16" class="svg-asset"/>
+        <span>16 px</span>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- PALETA -->
+  <div class="section">
+    <h2>Paleta de Cores</h2>
+    <div class="card light" style="align-items:flex-start; padding:28px 32px;">
+      <div class="palette">
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#19402A;"></div>
+          <span class="swatch-name">Green 900</span>
+          <span class="swatch-hex">#19402A</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#255938;"></div>
+          <span class="swatch-name">Green 800</span>
+          <span class="swatch-hex">#255938</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#41A650;"></div>
+          <span class="swatch-name">Green 600</span>
+          <span class="swatch-hex">#41A650</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#85F2A0;"></div>
+          <span class="swatch-name">Green 300</span>
+          <span class="swatch-hex">#85F2A0</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#F2CB05;"></div>
+          <span class="swatch-name">Yellow 500</span>
+          <span class="swatch-hex">#F2CB05</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#F7F9F8; border:1px solid #D8DCD9;"></div>
+          <span class="swatch-name">BG Light</span>
+          <span class="swatch-hex">#F7F9F8</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

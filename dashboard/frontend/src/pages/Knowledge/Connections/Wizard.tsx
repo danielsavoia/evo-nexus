@@ -324,7 +324,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
 
               <div className="bg-[#182230] border border-[#344054] rounded-lg px-4 py-3 text-xs text-[#667085]">
                 <strong className="text-[#D0D5DD]">Prerequisites:</strong> Postgres ≥ 14 with pgvector ≥ 0.5 installed.
-                EvoNexus does not provision Postgres — bring your own.
+                Clever Agent does not provision Postgres — bring your own.
               </div>
 
               {configError && (

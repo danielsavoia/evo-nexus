@@ -251,7 +251,7 @@ export default function ConnectionDetail() {
         <div className="border border-red-500/20 rounded-xl p-4">
           <h3 className="text-sm font-semibold text-red-400 mb-2">{t('knowledge.dangerZone')}</h3>
           <p className="text-xs text-[#667085] mb-4">
-            Deleting this connection removes it from EvoNexus only.{' '}
+            Deleting this connection removes it from Clever Agent only.{' '}
             <strong className="text-[#D0D5DD]">Data on your Postgres remains untouched.</strong>
           </p>
           {!confirmDelete ? (
