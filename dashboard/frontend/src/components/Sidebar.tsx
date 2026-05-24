@@ -384,7 +384,7 @@ export default function Sidebar() {
       {/* Credits */}
       <div className="px-4 py-3 border-t border-[#344054]/50">
         <p className="flex items-center justify-center gap-1.5 text-[10px] text-[#667085]">
-          Clever Agent · Open source
+          Built on EvoNexus
         </p>
       </div>
     </>

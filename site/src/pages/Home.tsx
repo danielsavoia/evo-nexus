@@ -13,7 +13,6 @@ import {
   SiFigma, SiWhatsapp, SiIntercom, SiHubspot
 } from "react-icons/si";
 
-import MainLogo from "@assets/logo.webp";
 import CleverAgentLogo from "@assets/clever-agent.svg";
 import printOverview from "@assets/print-overview.webp";
 import printAgents from "@assets/print-agents.webp";
@@ -67,12 +66,11 @@ export default function Home() {
   }, [lightboxImg]);
 
   const copyCode = useCallback(() => {
-    navigator.clipboard.writeText(`npx @evoapi/evo-nexus`);
+    navigator.clipboard.writeText(`Instalacao guiada disponivel na implantacao Clever Agent.`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const GITHUB_URL = "https://github.com/danielsavoia/evo-nexus";
   const DOCS_URL = "/docs";
   const DISCORD_URL = "https://discord.gg/evolution-api";
 
@@ -131,12 +129,12 @@ export default function Home() {
       <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-background/80 backdrop-blur-md border-border' : 'bg-transparent border-transparent'}`} style={{ top: '36px' }}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={CleverAgentLogo} alt="Clever Agent" className="h-9" />
+            <img src={CleverAgentLogo} alt="Clever Agent" className="w-[150px] h-auto" />
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-github">{t("nav.github")}</a>
-            <a href={DOCS_URL} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-docs">{t("nav.docs")}</a>
+            <button onClick={() => scrollTo("quickstart")} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-quickstart">Quickstart</button>
+            <button onClick={() => scrollTo("screenshots")} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-screenshots">Screenshots</button>
             <div className="flex items-center gap-1 border border-border rounded-lg px-1 py-0.5">
               {LANGUAGES.map((lang) => (
                 <button
@@ -173,8 +171,8 @@ export default function Home() {
               className="md:hidden overflow-hidden bg-background/95 backdrop-blur-md border-b border-border"
             >
               <div className="flex flex-col gap-4 px-6 py-6">
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-foreground font-medium" onClick={() => setMobileMenuOpen(false)}>{t("nav.github")}</a>
-                <a href={DOCS_URL} className="text-foreground font-medium" onClick={() => setMobileMenuOpen(false)}>{t("nav.docs")}</a>
+                <button className="text-left text-foreground font-medium" onClick={() => scrollTo("quickstart")}>Quickstart</button>
+                <button className="text-left text-foreground font-medium" onClick={() => scrollTo("screenshots")}>Screenshots</button>
                 <div className="flex items-center gap-1 border border-border rounded-lg px-1 py-0.5 w-fit">
                   {LANGUAGES.map((lang) => (
                     <button
@@ -237,11 +235,8 @@ export default function Home() {
               >
                 {t("hero.cta")}
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-muted text-foreground font-medium text-lg px-8 h-14" data-testid="button-github-hero" asChild>
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-                  <SiGithub className="w-5 h-5 mr-2" />
-                  {t("hero.viewGithub")}
-                </a>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-muted text-foreground font-medium text-lg px-8 h-14" data-testid="button-learn-hero" onClick={() => scrollTo("screenshots")}>
+                {t("banner.cta")}
               </Button>
             </div>
 
@@ -266,7 +261,7 @@ export default function Home() {
                 <div className="mx-auto text-xs text-muted-foreground font-mono">bash</div>
               </div>
               <div className="p-6 pt-12 font-mono text-sm leading-relaxed text-gray-300">
-                <div className="flex gap-2"><span className="text-primary">$</span> <span>npx @evoapi/evo-nexus</span></div>
+                <div className="flex gap-2"><span className="text-primary">$</span> <span>Ambiente provisionado pela equipe Clever.</span></div>
                 <div className="text-emerald-400 mt-2">&#10003; Claude Code CLI detected</div>
                 <div className="text-emerald-400">&#10003; Dependencies installed</div>
                 <div className="text-emerald-400">&#10003; Dashboard built</div>
@@ -278,7 +273,7 @@ export default function Home() {
         </section>
 
         {/* How Work Gets Done — 4-beat narrative */}
-        <section className="max-w-7xl mx-auto px-6">
+        <section id="screenshots" className="max-w-7xl mx-auto px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading">{t("howWorkGetsDone.sectionTitle")}</h2>
@@ -515,7 +510,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 mb-8 relative">
               <div className="hidden sm:block absolute top-6 left-[16%] right-[16%] h-[2px] bg-border z-0"></div>
               {[
-                { step: 1, title: t("howItWorks.step1.title"), code: "npx @evoapi/evo-nexus", desc: t("howItWorks.step1.desc") },
+                { step: 1, title: t("howItWorks.step1.title"), code: "Instalacao guiada", desc: t("howItWorks.step1.desc") },
                 { step: 2, title: t("howItWorks.step2.title"), code: "make dashboard-app", desc: t("howItWorks.step2.desc") },
                 { step: 3, title: t("howItWorks.step3.title"), code: t("howItWorks.step3.code"), desc: t("howItWorks.step3.desc") },
               ].map((item, i) => (
@@ -551,7 +546,7 @@ export default function Home() {
                 </Button>
               </div>
               <div className="p-6 md:p-8 font-mono text-base md:text-lg leading-loose">
-                <div className="flex gap-3"><span className="text-primary select-none">$</span> <span className="text-gray-300"><span className="text-blue-400">npx</span> @evoapi/evo-nexus</span></div>
+                <div className="flex gap-3"><span className="text-primary select-none">$</span> <span className="text-gray-300">Instalacao guiada disponivel na implantacao Clever Agent.</span></div>
                 <div className="mt-4 text-muted-foreground text-sm">{t("quickstart.comment")}</div>
               </div>
             </div>
@@ -574,7 +569,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <img src={CleverAgentLogo} alt="Clever Agent" className="h-9" />
+                <img src={CleverAgentLogo} alt="Clever Agent" className="w-[150px] h-auto" />
               </div>
               <p className="text-muted-foreground text-sm">{t("footer.tagline")}</p>
             </div>
@@ -582,10 +577,7 @@ export default function Home() {
             <div className="flex flex-col md:items-center gap-4">
               <h4 className="font-bold mb-2">{t("footer.links")}</h4>
               <div className="flex flex-wrap gap-6">
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-github">GitHub</a>
                 <a href={DOCS_URL} className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-docs">{t("footer.documentation")}</a>
-                <a href={`${GITHUB_URL}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-contributing">{t("footer.contributing")}</a>
-                <a href={`${GITHUB_URL}/blob/main/CHANGELOG.md`} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-changelog">{t("footer.changelog")}</a>
               </div>
             </div>
 

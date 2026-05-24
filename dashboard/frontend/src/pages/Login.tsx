@@ -153,7 +153,7 @@ export default function Login() {
         </div>
 
         <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
-          Clever Agent · Open source
+          Built on EvoNexus
         </p>
       </div>
     </div>

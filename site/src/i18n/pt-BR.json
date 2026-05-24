@@ -8,7 +8,7 @@
     "badge": "v{{version}} já disponível",
     "title": "Seu time de IA,",
     "titleHighlight": "já montado.",
-    "subtitle": "38 agentes que lembram, agendam e batem metas. De finanças a engenharia — tudo já conectado. Open source. Um comando.",
+    "subtitle": "38 agentes que lembram, agendam e batem metas. De finanças a engenharia — tudo já conectado.",
     "cta": "Começar agora, é grátis",
     "viewGithub": "Ver no GitHub",
     "discord": "Junte-se a mais de 17.000 devs no Discord",
@@ -143,7 +143,7 @@
     "label": "Conecta com o que você já usa"
   },
   "banner": {
-    "text": "Clever Agent — orquestração de agentes de IA, open source.",
+    "text": "Clever Agent — IA orquestrada para operações inteligentes.",
     "cta": "Saiba mais"
   },
   "footer": {
