@@ -134,7 +134,7 @@ export default function ConnectionDetail() {
   const StatusIcon = conn.status === 'ready' ? CheckCircle :
     conn.status === 'needs_migration' ? AlertTriangle :
     conn.status === 'error' ? XCircle : Wifi
-  const statusColor = conn.status === 'ready' ? 'text-[#00FFA7]' :
+  const statusColor = conn.status === 'ready' ? 'text-[#85F2A0]' :
     conn.status === 'needs_migration' ? 'text-yellow-400' :
     conn.status === 'error' ? 'text-red-400' : 'text-[#667085]'
 
@@ -179,7 +179,7 @@ export default function ConnectionDetail() {
               <button
                 onClick={handleReconnect}
                 disabled={actionLoading === 'reconnect'}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#00FFA7]/10 text-[#00FFA7] rounded-lg text-xs font-medium hover:bg-[#00FFA7]/20 transition-colors disabled:opacity-50"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#41A650]/10 text-[#85F2A0] rounded-lg text-xs font-medium hover:bg-[#41A650]/20 transition-colors disabled:opacity-50"
               >
                 {actionLoading === 'reconnect' ? <RefreshCw size={10} className="animate-spin" /> : null}
                 Reconnect

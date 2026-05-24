@@ -43,11 +43,11 @@ function SnapshotItem({
       onClick={onClick}
       className={`w-full flex items-center gap-3 p-2.5 rounded-lg border text-left transition-all ${
         selected
-          ? 'border-[#00FFA7]/60 bg-[#00FFA7]/8'
+          ? 'border-[#41A650]/60 bg-[#41A650]/8'
           : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
       }`}
     >
-      <GitCommit size={12} className={selected ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'} />
+      <GitCommit size={12} className={selected ? 'text-[#85F2A0]' : 'text-[#5a6b7f]'} />
       <div className="flex-1 min-w-0">
         <p className="text-[12px] font-medium text-[#e2e8f0] truncate">{snapshot.label}</p>
         {snapshot.date && (
@@ -149,7 +149,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
                     type="checkbox"
                     checked={includeKb}
                     onChange={(e) => setIncludeKb(e.target.checked)}
-                    className="mt-0.5 accent-[#00FFA7]"
+                    className="mt-0.5 accent-[#85F2A0]"
                   />
                   <div>
                     <p className="text-[12px] font-medium text-[#e2e8f0]">{t('restore.selectSnapshot.includeKb')}</p>
@@ -171,14 +171,14 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('restore.back')}
               </button>
               <button
                 onClick={handleNext}
                 disabled={!selected}
-                className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
               >
                 {t('restore.next')}
               </button>

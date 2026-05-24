@@ -117,7 +117,7 @@ export default function PluginPageHost() {
           </p>
           <button
             onClick={() => navigate('/plugins')}
-            className="text-xs text-[#00FFA7] hover:underline"
+            className="text-xs text-[#85F2A0] hover:underline"
           >
             Go to Plugins
           </button>

@@ -221,7 +221,7 @@ function ConfirmDialogUI({
                 padding: '7px 16px',
                 borderRadius: 6,
                 border: 'none',
-                background: '#00FFA7',
+                background: '#85F2A0',
                 color: '#000',
                 fontSize: 13,
                 fontWeight: 600,

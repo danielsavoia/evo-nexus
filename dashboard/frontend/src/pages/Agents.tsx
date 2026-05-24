@@ -262,9 +262,9 @@ const AGENT_META: Record<string, AgentMeta> = {
 
 const DEFAULT_META: AgentMeta = {
   icon: Bot,
-  color: '#00FFA7',
-  colorMuted: 'rgba(0,255,167,0.12)',
-  glowColor: 'rgba(0,255,167,0.15)',
+  color: '#85F2A0',
+  colorMuted: 'rgba(133, 242, 160,0.12)',
+  glowColor: 'rgba(133, 242, 160,0.15)',
   command: '',
   label: 'Agent',
 }
@@ -373,10 +373,10 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
         {/* Status dot + running badge */}
         <div className="flex items-center gap-2">
           {isRunning && (
-            <span className="flex items-center gap-1 rounded-full bg-[#00FFA7]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#00FFA7] border border-[#00FFA7]/20">
+            <span className="flex items-center gap-1 rounded-full bg-[#41A650]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#85F2A0] border border-[#41A650]/20">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00FFA7] opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00FFA7]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#41A650] opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#41A650]" />
               </span>
               Running
             </span>
@@ -384,8 +384,8 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
           <span
             className="inline-block h-2 w-2 rounded-full"
             style={{
-              backgroundColor: isActive ? '#22C55E' : '#3F3F46',
-              boxShadow: isActive ? '0 0 6px rgba(34,197,94,0.5)' : 'none',
+              backgroundColor: isActive ? '#41A650' : '#3F3F46',
+              boxShadow: isActive ? '0 0 6px rgba(65, 166, 80,0.5)' : 'none',
             }}
           />
         </div>
@@ -408,7 +408,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
               custom
             </span>
           ) : (
-            <span className="rounded-full bg-[#22C55E]/10 px-1.5 py-0.5 text-[9px] font-medium text-[#22C55E] border border-[#22C55E]/20">
+            <span className="rounded-full bg-[#41A650]/10 px-1.5 py-0.5 text-[9px] font-medium text-[#85F2A0] border border-[#41A650]/20">
               core
             </span>
           )}
@@ -513,10 +513,10 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
               Start Here
             </span>
             {isRunning && (
-              <span className="flex items-center gap-1 rounded-full bg-[#00FFA7]/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#00FFA7] border border-[#00FFA7]/20">
+              <span className="flex items-center gap-1 rounded-full bg-[#41A650]/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#85F2A0] border border-[#41A650]/20">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00FFA7] opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00FFA7]" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#41A650] opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#41A650]" />
                 </span>
                 Running
               </span>
@@ -553,7 +553,7 @@ const FILTERS: { value: FilterValue; label: string; icon: LucideIcon }[] = [
 const CATEGORY_META: Record<Category, { label: string; color: string; description: string }> = {
   business: {
     label: 'Business',
-    color: '#00FFA7',
+    color: '#85F2A0',
     description: 'Operations, finance, marketing, HR, legal, product, data',
   },
   engineering: {
@@ -744,8 +744,8 @@ export default function Agents() {
           <div className="mt-4 flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
               <span
-                className="inline-block h-2 w-2 rounded-full bg-[#22C55E]"
-                style={{ boxShadow: '0 0 6px rgba(34,197,94,0.5)' }}
+                className="inline-block h-2 w-2 rounded-full bg-[#41A650]"
+                style={{ boxShadow: '0 0 6px rgba(65, 166, 80,0.5)' }}
               />
               <span className="text-[#8b949e]">
                 <span className="font-medium text-[#e6edf3]">{activeCount}</span> active
@@ -758,7 +758,7 @@ export default function Agents() {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Building2 size={14} className="text-[#00FFA7]" />
+              <Building2 size={14} className="text-[#85F2A0]" />
               <span className="text-[#8b949e]">
                 <span className="font-medium text-[#e6edf3]">{counts.business}</span> business
               </span>
@@ -805,7 +805,7 @@ export default function Agents() {
                       {running && (
                         <span
                           className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#161b22]"
-                          style={{ backgroundColor: '#22C55E', boxShadow: '0 0 6px rgba(34,197,94,0.5)' }}
+                          style={{ backgroundColor: '#41A650', boxShadow: '0 0 6px rgba(65, 166, 80,0.5)' }}
                         />
                       )}
                     </div>
@@ -838,7 +838,7 @@ export default function Agents() {
                   onClick={() => setFilter(f.value)}
                   className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] font-medium transition-all ${
                     active
-                      ? 'border-[#00FFA7]/40 bg-[#00FFA7]/10 text-[#00FFA7]'
+                      ? 'border-[#41A650]/40 bg-[#41A650]/10 text-[#85F2A0]'
                       : 'border-[#21262d] bg-[#161b22] text-[#8b949e] hover:border-[#30363d] hover:text-[#e6edf3]'
                   }`}
                 >
@@ -862,7 +862,7 @@ export default function Agents() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search agents..."
-              className="w-full rounded-full border border-[#21262d] bg-[#161b22] py-1.5 pl-9 pr-3 text-[12px] text-[#e6edf3] placeholder:text-[#667085] focus:border-[#00FFA7]/40 focus:outline-none"
+              className="w-full rounded-full border border-[#21262d] bg-[#161b22] py-1.5 pl-9 pr-3 text-[12px] text-[#e6edf3] placeholder:text-[#667085] focus:border-[#41A650]/40 focus:outline-none"
             />
           </div>
         </div>

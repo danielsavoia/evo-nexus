@@ -144,9 +144,9 @@ export default function KnowledgeApiKeys() {
 
       {/* Plain token reveal (shown once after creation) */}
       {createdToken && (
-        <div className="bg-[#00FFA7]/5 border border-[#00FFA7]/30 rounded-xl p-5">
+        <div className="bg-[#41A650]/5 border border-[#41A650]/30 rounded-xl p-5">
           <div className="flex items-start gap-3">
-            <CheckCircle size={20} className="text-[#00FFA7] shrink-0 mt-0.5" />
+            <CheckCircle size={20} className="text-[#85F2A0] shrink-0 mt-0.5" />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-[#F9FAFB] mb-1">API Key created</p>
               <p className="text-xs text-yellow-400 mb-3 flex items-center gap-1.5">
@@ -154,12 +154,12 @@ export default function KnowledgeApiKeys() {
                 Save this token now — it won&apos;t be shown again.
               </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#00FFA7] font-mono break-all">
+                <code className="flex-1 bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#85F2A0] font-mono break-all">
                   {createdToken}
                 </code>
                 <button
                   onClick={copyToken}
-                  className="flex items-center gap-1.5 px-3 py-2 bg-[#00FFA7]/10 text-[#00FFA7] rounded-lg text-xs font-medium hover:bg-[#00FFA7]/20 transition-colors shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-2 bg-[#41A650]/10 text-[#85F2A0] rounded-lg text-xs font-medium hover:bg-[#41A650]/20 transition-colors shrink-0"
                 >
                   {copied ? <CheckCircle size={12} /> : <Copy size={12} />}
                   {copied ? 'Copied!' : 'Copy'}
@@ -175,7 +175,7 @@ export default function KnowledgeApiKeys() {
         <div className="flex justify-end">
           <button
             onClick={() => { setForm(defaultForm); setShowModal(true) }}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={14} /> New API Key
           </button>
@@ -207,7 +207,7 @@ export default function KnowledgeApiKeys() {
                     {k.revoked && <span className="text-[10px] text-red-400 ml-4">revoked</span>}
                   </td>
                   <td className="px-4 py-3">
-                    <code className="text-xs text-[#00FFA7] bg-[#00FFA7]/5 px-1.5 py-0.5 rounded font-mono">{k.prefix}...</code>
+                    <code className="text-xs text-[#85F2A0] bg-[#41A650]/5 px-1.5 py-0.5 rounded font-mono">{k.prefix}...</code>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1">
@@ -250,7 +250,7 @@ export default function KnowledgeApiKeys() {
           <div className="bg-[#0C111D] border border-[#344054] rounded-xl w-full max-w-md shadow-2xl">
             <div className="flex items-center justify-between px-5 py-4 border-b border-[#344054]">
               <div className="flex items-center gap-2">
-                <Key size={14} className="text-[#00FFA7]" />
+                <Key size={14} className="text-[#85F2A0]" />
                 <h3 className="text-sm font-semibold text-[#F9FAFB]">{t('knowledge.newApiKey')}</h3>
               </div>
               <button onClick={() => setShowModal(false)} className="p-1.5 rounded-lg text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5"><X size={14} /></button>
@@ -263,7 +263,7 @@ export default function KnowledgeApiKeys() {
                   placeholder="My app integration"
                   value={form.name}
                   onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                  className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none"
+                  className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none"
                 />
               </div>
 
@@ -276,7 +276,7 @@ export default function KnowledgeApiKeys() {
                       onClick={() => toggleScope(s)}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
                         form.scopes.includes(s)
-                          ? 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/30'
+                          ? 'bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/30'
                           : 'bg-white/5 text-[#667085] border border-[#344054] hover:border-[#667085]'
                       }`}
                     >
@@ -293,7 +293,7 @@ export default function KnowledgeApiKeys() {
                     type="number"
                     value={form.rate_limit_per_minute}
                     onChange={(e) => setForm((p) => ({ ...p, rate_limit_per_minute: e.target.value }))}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -302,7 +302,7 @@ export default function KnowledgeApiKeys() {
                     type="number"
                     value={form.rate_limit_per_day}
                     onChange={(e) => setForm((p) => ({ ...p, rate_limit_per_day: e.target.value }))}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none"
                   />
                 </div>
                 <div className="col-span-2">
@@ -311,14 +311,14 @@ export default function KnowledgeApiKeys() {
                     type="date"
                     value={form.expires_at}
                     onChange={(e) => setForm((p) => ({ ...p, expires_at: e.target.value }))}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="flex gap-3 pt-1">
                 <button onClick={() => setShowModal(false)} className="flex-1 px-4 py-2 bg-white/5 text-[#D0D5DD] rounded-lg text-sm hover:bg-white/10 transition-colors">Cancel</button>
-                <button onClick={handleCreate} disabled={saving || !form.name.trim()} className="flex-1 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50">
+                <button onClick={handleCreate} disabled={saving || !form.name.trim()} className="flex-1 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#41A650]/90 transition-colors disabled:opacity-50">
                   {saving ? <RefreshCw size={14} className="animate-spin mx-auto" /> : 'Create Key'}
                 </button>
               </div>

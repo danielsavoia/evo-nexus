@@ -86,7 +86,7 @@ export default function PluginWidgetsGrid({ mountPoint = 'overview' }: Props) {
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-3">
-        <Puzzle size={14} className="text-[#00FFA7]" />
+        <Puzzle size={14} className="text-[#85F2A0]" />
         <h3 className="text-xs font-medium text-[#667085] uppercase tracking-wider">Plugin Widgets</h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">

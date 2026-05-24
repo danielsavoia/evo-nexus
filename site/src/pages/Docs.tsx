@@ -128,11 +128,11 @@ export default function Docs() {
         }`}
       >
         <div className="p-4 border-b border-[#21262d]">
-          <a href="/" className="flex items-center gap-2 text-[#00FFA7] font-semibold text-sm mb-4 hover:underline">
+          <a href="/" className="flex items-center gap-2 text-[#85F2A0] font-semibold text-sm mb-4 hover:underline">
             <ArrowLeft className="w-4 h-4" /> Back to Home
           </a>
           <h2 className="text-lg font-bold text-white flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-[#00FFA7]" /> Documentation
+            <BookOpen className="w-5 h-5 text-[#85F2A0]" /> Documentation
           </h2>
           <div className="mt-3 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#484f58]" />
@@ -141,7 +141,7 @@ export default function Docs() {
               placeholder="Search docs..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-[#161b22] border border-[#30363d] rounded-lg text-sm text-[#e6edf3] placeholder-[#484f58] focus:outline-none focus:border-[#00FFA7]"
+              className="w-full pl-9 pr-3 py-2 bg-[#161b22] border border-[#30363d] rounded-lg text-sm text-[#e6edf3] placeholder-[#484f58] focus:outline-none focus:border-[#41A650]"
             />
           </div>
         </div>
@@ -165,7 +165,7 @@ export default function Docs() {
                       }}
                       className={`block px-3 py-1.5 rounded text-sm transition-colors ${
                         currentSlug === child.slug
-                          ? "bg-[#00FFA7]/10 text-[#00FFA7] font-medium"
+                          ? "bg-[#85F2A0]/10 text-[#85F2A0] font-medium"
                           : "text-[#8b949e] hover:text-[#e6edf3] hover:bg-[#161b22]"
                       }`}
                     >
@@ -181,7 +181,7 @@ export default function Docs() {
         <div className="p-4 border-t border-[#21262d] text-xs text-[#484f58]">
           <a
             href="/docs/llms-full.txt"
-            className="flex items-center gap-1 hover:text-[#00FFA7] transition-colors"
+            className="flex items-center gap-1 hover:text-[#85F2A0] transition-colors"
           >
             <FileText className="w-3 h-3" /> llms-full.txt
           </a>

@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-24
 **Branch:** `clever-dev`
-**Status:** Pre-aplicacao de paleta — documentacao de baseline
+**Status:** Paleta aplicada — Etapa 6.4 concluida
 
 ---
 
@@ -150,3 +150,47 @@ Escopo previsto:
 - Atualizar `site/tailwind.config.*` com paleta Clever
 - Build e validacao visual completa
 - Commit documentado
+
+---
+
+## Applied theme patch (Etapa 6.4)
+
+- **Commit:** (ver git log)
+- **Arquivos alterados:** 92 arquivos (dashboard src + site src)
+- **Tokens criados em `dashboard/frontend/src/index.css`:**
+  - `--clever-agent-green-900: #19402A`
+  - `--clever-agent-green-800: #255938`
+  - `--clever-agent-green-600: #41A650`
+  - `--clever-agent-green-300: #85F2A0`
+  - `--clever-agent-yellow-500: #F2CB05`
+  - `--clever-agent-bg-light: #F7F9F8`
+  - `--clever-agent-bg-deep: #07130D`
+  - `--clever-agent-bg-panel: #0B1711`
+  - `--clever-agent-border-soft: rgba(133, 242, 160, 0.16)`
+  - `--clever-agent-border-medium: rgba(133, 242, 160, 0.28)`
+  - `--clever-agent-text-primary: #F7F9F8`
+  - `--clever-agent-text-muted: rgba(247, 249, 248, 0.68)`
+  - `--evo-green: var(--clever-agent-green-300)` (alias retrocompat)
+  - `--evo-accent: var(--clever-agent-green-600)` (alias retrocompat)
+- **Fundos escuros atualizados:** `--bg-primary: #0D1B12`, `--bg-card: #122018`, `--bg-sidebar: #091410`, `--border: #1E3829`
+- **`#00FFA7` antes:** 597 ocorrencias
+- **`#00FFA7` depois:** 0 ocorrencias
+- **Regras de substituicao aplicadas:**
+  - Botoes CTA/background sólido → `#41A650`
+  - Texto accent / highlights → `#85F2A0`
+  - Bordas ativas / focus outlines → `#41A650`
+  - Glows / via gradients → `#41A650` com opacidade reduzida
+  - `rgba(0,255,167,...)` → `rgba(65,166,80,...)` (dashboard) / `rgba(65,166,80,...)` (site)
+  - Status semântico verde (#22C55E) → `#41A650` / `#85F2A0`
+  - Site `--primary: 159 100% 50%` → `129 44% 45%` (HSL #41A650)
+  - Site `--ring: 159 100% 50%` → `135 65% 62%` (HSL mint)
+  - Site `--primary-foreground` → branco (texto legível sobre verde médio)
+- **Observacoes de contraste:**
+  - `#85F2A0` sobre `#0D1B12` → excelente legibilidade (alto contraste)
+  - `#F7F9F8` sobre `#41A650` → contraste adequado para texto em botoes
+  - Fundos de cards `#122018` mais quentes que upstream — preserva dark mode premium
+  - Status semânticos (erro/warning/info) preservados com cores originais
+- **Pendencias:**
+  - Validacao visual completa no browser (Etapa 6.5)
+  - Ajustes finos de contraste se detectados visualmente
+  - `--evo-green` e `--evo-accent` podem ser removidos em etapa futura apos validacao

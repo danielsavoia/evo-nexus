@@ -174,8 +174,8 @@ export default function Sidebar() {
           item.desktopOnly ? 'hidden lg:flex' : 'flex'
         } ${
           isActive
-            ? 'text-[#00FFA7] bg-[#00FFA7]/10 border-l-2 border-[#00FFA7]'
-            : 'text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 border-l-2 border-transparent'
+            ? 'text-[#85F2A0] bg-[#85F2A0]/10 border-l-2 border-[#41A650]'
+            : 'text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 border-l-2 border-transparent'
         }`
       }
     >
@@ -209,19 +209,19 @@ export default function Sidebar() {
             onClick={() => toggleGroup(group.key)}
             className="w-full flex items-center justify-between px-3 py-1.5 mt-2 group cursor-pointer"
           >
-            <span className="text-[10px] uppercase tracking-wider text-[#667085] font-semibold select-none">
+            <span className="text-[10px] uppercase tracking-wider text-[#6B8A76] font-semibold select-none">
               {t(`nav.groups.${group.key}`)}
             </span>
             <ChevronDown
               size={12}
-              className={`text-[#667085] transition-transform duration-200 group-hover:text-[#D0D5DD] ${
+              className={`text-[#6B8A76] transition-transform duration-200 group-hover:text-[#C8D5CE] ${
                 isCollapsed ? '-rotate-90' : ''
               }`}
             />
           </button>
         ) : (
           <div className="px-3 py-1.5">
-            <span className="text-[10px] uppercase tracking-wider text-[#667085] font-semibold">
+            <span className="text-[10px] uppercase tracking-wider text-[#6B8A76] font-semibold">
               {t(`nav.groups.${group.key}`)}
             </span>
           </div>
@@ -246,7 +246,7 @@ export default function Sidebar() {
         <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[140px] h-auto" />
         <div className="flex items-center gap-1">
           <NotificationBell />
-          <button onClick={() => setMobileOpen(false)} className="lg:hidden p-1 rounded hover:bg-white/10 text-[#667085]">
+          <button onClick={() => setMobileOpen(false)} className="lg:hidden p-1 rounded hover:bg-white/10 text-[#6B8A76]">
             <X size={20} />
           </button>
         </div>
@@ -270,19 +270,19 @@ export default function Sidebar() {
                   onClick={() => toggleGroup(storageKey)}
                   className="w-full flex items-center justify-between px-3 py-1.5 mt-2 group cursor-pointer"
                 >
-                  <span className="text-[10px] uppercase tracking-wider text-[#667085] font-semibold select-none">
+                  <span className="text-[10px] uppercase tracking-wider text-[#6B8A76] font-semibold select-none">
                     {group.label}
                   </span>
                   <ChevronDown
                     size={12}
-                    className={`text-[#667085] transition-transform duration-200 group-hover:text-[#D0D5DD] ${
+                    className={`text-[#6B8A76] transition-transform duration-200 group-hover:text-[#C8D5CE] ${
                       isCollapsed ? '-rotate-90' : ''
                     }`}
                   />
                 </button>
               ) : (
                 <div className="px-3 py-1.5">
-                  <span className="text-[10px] uppercase tracking-wider text-[#667085] font-semibold">
+                  <span className="text-[10px] uppercase tracking-wider text-[#6B8A76] font-semibold">
                     {group.label}
                   </span>
                 </div>
@@ -303,8 +303,8 @@ export default function Sidebar() {
                         className={({ isActive }) =>
                           `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors border-l-2 ${
                             isActive
-                              ? 'text-[#00FFA7] bg-[#00FFA7]/10 border-[#00FFA7]'
-                              : 'text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 border-transparent'
+                              ? 'text-[#85F2A0] bg-[#85F2A0]/10 border-[#41A650]'
+                              : 'text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 border-transparent'
                           }`
                         }
                       >
@@ -326,8 +326,8 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                 isActive
-                  ? 'text-[#00FFA7] bg-[#00FFA7]/10 border-l-2 border-[#00FFA7]'
-                  : 'text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 border-l-2 border-transparent'
+                  ? 'text-[#85F2A0] bg-[#85F2A0]/10 border-l-2 border-[#41A650]'
+                  : 'text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 border-l-2 border-transparent'
               }`
             }
           >
@@ -338,20 +338,20 @@ export default function Sidebar() {
       </nav>
 
       {user && (
-        <div className="px-4 py-4 border-t border-[#344054]">
+        <div className="px-4 py-4 border-t border-[#1E3829]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-[#00FFA7]/20 text-[#00FFA7] flex items-center justify-center text-sm font-bold shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#255938] text-[#85F2A0] flex items-center justify-center text-sm font-bold shrink-0">
               {(user.display_name || user.username).charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-white font-medium truncate">{user.display_name || user.username}</p>
+              <p className="text-sm text-[#F7F9F8] font-medium truncate">{user.display_name || user.username}</p>
               <span className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium ${roleBadgeClass[user.role] || roleBadgeClass.viewer}`}>
                 {user.role}
               </span>
             </div>
             <button
               onClick={logout}
-              className="p-1.5 rounded-lg text-[#667085] hover:text-red-400 hover:bg-red-500/10 transition-colors shrink-0"
+              className="p-1.5 rounded-lg text-[#6B8A76] hover:text-red-400 hover:bg-red-500/10 transition-colors shrink-0"
               title={t('nav.logout')}
             >
               <LogOut size={16} />
@@ -362,15 +362,15 @@ export default function Sidebar() {
 
       {/* Version indicator */}
       {versionInfo && (
-        <div className="px-4 py-2 border-t border-[#344054]/50">
+        <div className="px-4 py-2 border-t border-[#1E3829]/70">
           <div className="flex items-center justify-between text-[11px]">
-            <span className="text-[#667085]">v{versionInfo.current}</span>
+            <span className="text-[#6B8A76]">v{versionInfo.current}</span>
             {versionInfo.update_available && versionInfo.release_url && (
               <a
                 href={versionInfo.release_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[#00FFA7] hover:text-[#00FFA7]/80 transition-colors"
+                className="flex items-center gap-1 text-[#85F2A0] hover:text-[#85F2A0]/80 transition-colors"
                 title={t('nav.updateAvailable', { version: versionInfo.latest })}
               >
                 <ArrowUpCircle size={12} />
@@ -382,8 +382,8 @@ export default function Sidebar() {
       )}
 
       {/* Credits */}
-      <div className="px-4 py-3 border-t border-[#344054]/50">
-        <p className="flex items-center justify-center gap-1.5 text-[10px] text-[#667085]">
+      <div className="px-4 py-3 border-t border-[#1E3829]/50">
+        <p className="flex items-center justify-center gap-1.5 text-[10px] text-[#2d4a38]">
           Built on EvoNexus
         </p>
       </div>
@@ -395,7 +395,7 @@ export default function Sidebar() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-[#182230] border border-[#344054] text-[#D0D5DD] hover:text-[#00FFA7] transition-colors"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-[#122018] border border-[#1E3829] text-[#C8D5CE] hover:text-[#85F2A0] transition-colors"
       >
         <Menu size={20} />
       </button>
@@ -407,7 +407,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside className={`
-        fixed left-0 top-0 bottom-0 w-60 bg-[#0a0f1a] border-r border-[#344054] flex flex-col z-50
+        fixed left-0 top-0 bottom-0 w-60 bg-[#091410] border-r border-[#1E3829] flex flex-col z-50
         transition-transform duration-200 ease-in-out
         lg:translate-x-0
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}

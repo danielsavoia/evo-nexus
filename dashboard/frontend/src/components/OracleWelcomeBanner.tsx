@@ -38,7 +38,7 @@ export default function OracleWelcomeBanner() {
 
   return (
     <div
-      className="mb-5 flex items-center gap-4 px-4 py-3 rounded-xl border border-[#00FFA7]/20"
+      className="mb-5 flex items-center gap-4 px-4 py-3 rounded-xl border border-[#41A650]/20"
       style={{ backgroundColor: '#0b1a12' }}
     >
       {/* Icon */}
@@ -53,7 +53,7 @@ export default function OracleWelcomeBanner() {
         </p>
         <p className="text-[11px] text-[#5a7a5a] mt-0.5 leading-snug">
           {t('agents.welcomeBanner.descriptionPart1')}
-          <span className="inline-flex items-center gap-1 font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0f2010] border border-[#00FFA7]/15 text-[#00FFA7]/80">
+          <span className="inline-flex items-center gap-1 font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0f2010] border border-[#41A650]/15 text-[#85F2A0]/80">
             <Terminal size={9} />
             /oracle
           </span>

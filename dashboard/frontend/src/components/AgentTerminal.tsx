@@ -73,7 +73,7 @@ const CC_WEB_WS = override
 
 type Status = 'connecting' | 'ready' | 'starting' | 'running' | 'error' | 'exited'
 
-export default function AgentTerminal({ agent, sessionId: externalSessionId, workingDir, accentColor = '#00FFA7' }: AgentTerminalProps) {
+export default function AgentTerminal({ agent, sessionId: externalSessionId, workingDir, accentColor = '#85F2A0' }: AgentTerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const termRef = useRef<Terminal | null>(null)
   const fitRef = useRef<FitAddon | null>(null)

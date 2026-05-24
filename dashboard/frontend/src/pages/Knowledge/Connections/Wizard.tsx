@@ -171,7 +171,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#344054]">
           <div className="flex items-center gap-2">
-            <Database size={16} className="text-[#00FFA7]" />
+            <Database size={16} className="text-[#85F2A0]" />
             <h2 className="text-sm font-semibold text-[#F9FAFB]">{t('knowledge.newConnection')}</h2>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 transition-colors">
@@ -184,11 +184,11 @@ export default function Wizard({ onClose, onCreated }: Props) {
           {[1, 2, 3].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium ${
-                step === s ? 'bg-[#00FFA7] text-[#0C111D]' :
-                step > s ? 'bg-[#00FFA7]/20 text-[#00FFA7]' :
+                step === s ? 'bg-[#41A650] text-[#0C111D]' :
+                step > s ? 'bg-[#41A650]/20 text-[#85F2A0]' :
                 'bg-white/5 text-[#667085]'
               }`}>{s}</div>
-              {s < 3 && <div className={`h-px w-8 ${step > s ? 'bg-[#00FFA7]/40' : 'bg-[#344054]'}`} />}
+              {s < 3 && <div className={`h-px w-8 ${step > s ? 'bg-[#41A650]/40' : 'bg-[#344054]'}`} />}
             </div>
           ))}
           <span className="text-xs text-[#667085] ml-2">
@@ -208,7 +208,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                     placeholder="e.g. Academy - Supabase"
                     value={form.name}
                     onChange={(e) => set('name', e.target.value)}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -218,7 +218,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                     placeholder="academy-supabase"
                     value={form.slug}
                     onChange={(e) => set('slug', e.target.value)}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none font-mono"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none font-mono"
                   />
                 </div>
                 <div>
@@ -226,7 +226,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                   <select
                     value={form.ssl_mode}
                     onChange={(e) => set('ssl_mode', e.target.value)}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none"
                   >
                     <option value="disable">disable</option>
                     <option value="require">require</option>
@@ -241,7 +241,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                   onClick={() => set('useConnectionString', !form.useConnectionString)}
                   className="flex items-center gap-2 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
                 >
-                  <div className={`w-8 h-4 rounded-full transition-colors relative ${form.useConnectionString ? 'bg-[#00FFA7]' : 'bg-[#344054]'}`}>
+                  <div className={`w-8 h-4 rounded-full transition-colors relative ${form.useConnectionString ? 'bg-[#41A650]' : 'bg-[#344054]'}`}>
                     <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-white transition-transform ${form.useConnectionString ? 'translate-x-4' : 'translate-x-0.5'}`} />
                   </div>
                   Use connection string
@@ -256,7 +256,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                     placeholder="postgresql://user:password@host:5432/database"
                     value={form.connection_string}
                     onChange={(e) => set('connection_string', e.target.value)}
-                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none font-mono"
+                    className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none font-mono"
                   />
                   <p className="mt-2 text-[11px] text-[#667085] leading-relaxed">
                     Using <strong>Supabase / Neon / Railway</strong>? Use the <em>direct</em>{' '}
@@ -276,7 +276,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                       placeholder="db.example.com"
                       value={form.host}
                       onChange={(e) => set('host', e.target.value)}
-                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -286,7 +286,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                       placeholder="5432"
                       value={form.port}
                       onChange={(e) => set('port', e.target.value)}
-                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -296,7 +296,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                       placeholder="postgres"
                       value={form.username}
                       onChange={(e) => set('username', e.target.value)}
-                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                     />
                   </div>
                   <div>
@@ -306,7 +306,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                       placeholder="••••••••"
                       value={form.password}
                       onChange={(e) => set('password', e.target.value)}
-                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                     />
                   </div>
                   <div className="col-span-2">
@@ -316,7 +316,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                       placeholder="mydb"
                       value={form.database_name}
                       onChange={(e) => set('database_name', e.target.value)}
-                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+                      className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -340,7 +340,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
                 <button
                   onClick={handleConfigure}
                   disabled={configuring}
-                  className="flex-1 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50"
+                  className="flex-1 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
                 >
                   Connect & Configure
                 </button>
@@ -357,8 +357,8 @@ export default function Wizard({ onClose, onCreated }: Props) {
                   <div key={i} className="flex items-center gap-3">
                     <div className="shrink-0">
                       {phase.status === 'pending' && <div className="w-4 h-4 rounded-full bg-white/10" />}
-                      {phase.status === 'running' && <RefreshCw size={16} className="text-[#00FFA7] animate-spin" />}
-                      {phase.status === 'done' && <CheckCircle size={16} className="text-[#00FFA7]" />}
+                      {phase.status === 'running' && <RefreshCw size={16} className="text-[#85F2A0] animate-spin" />}
+                      {phase.status === 'done' && <CheckCircle size={16} className="text-[#85F2A0]" />}
                       {phase.status === 'error' && <XCircle size={16} className="text-red-400" />}
                     </div>
                     <div className="flex-1">
@@ -392,8 +392,8 @@ export default function Wizard({ onClose, onCreated }: Props) {
           {step === 3 && (
             <div className="space-y-4">
               <div className="text-center py-4">
-                <div className="w-14 h-14 rounded-2xl bg-[#00FFA7]/10 flex items-center justify-center mx-auto mb-3">
-                  <CheckCircle size={28} className="text-[#00FFA7]" />
+                <div className="w-14 h-14 rounded-2xl bg-[#41A650]/10 flex items-center justify-center mx-auto mb-3">
+                  <CheckCircle size={28} className="text-[#85F2A0]" />
                 </div>
                 <p className="text-[#F9FAFB] font-semibold mb-1">Connection ready!</p>
                 <p className="text-[#667085] text-sm">
@@ -403,7 +403,7 @@ export default function Wizard({ onClose, onCreated }: Props) {
               <div className="flex gap-3">
                 <button
                   onClick={() => onCreated()}
-                  className="flex-1 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#00FFA7]/90 transition-colors"
+                  className="flex-1 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#41A650]/90 transition-colors"
                 >
                   Done
                 </button>

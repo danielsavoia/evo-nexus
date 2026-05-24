@@ -20,7 +20,7 @@ interface Document {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  ready: 'bg-[#00FFA7]/10 text-[#00FFA7]',
+  ready: 'bg-[#41A650]/10 text-[#85F2A0]',
   processing: 'bg-blue-500/10 text-blue-400',
   pending: 'bg-white/5 text-[#667085]',
   error: 'bg-red-500/10 text-red-400',
@@ -107,20 +107,20 @@ export default function KnowledgeBrowse() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && load()}
-            className="w-full bg-[#182230] border border-[#344054] rounded-lg pl-9 pr-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+            className="w-full bg-[#182230] border border-[#344054] rounded-lg pl-9 pr-3 py-2 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
           />
         </div>
-        <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+        <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
           <option value="">All spaces</option>
           {spaces.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
-        <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+        <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
           <option value="">All types</option>
           {['lesson', 'tutorial', 'faq', 'reference', 'transcript', 'article', 'decision', 'note'].map((t) => (
             <option key={t} value={t}>{t}</option>
           ))}
         </select>
-        <select value={status} onChange={(e) => setStatus(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+        <select value={status} onChange={(e) => setStatus(e.target.value)} className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
           <option value="">All statuses</option>
           {['ready', 'processing', 'pending', 'error'].map((s) => (
             <option key={s} value={s}>{s}</option>
@@ -160,7 +160,7 @@ export default function KnowledgeBrowse() {
                   </td>
                   <td className="px-4 py-3">
                     {doc.content_type && (
-                      <span className="text-xs px-1.5 py-0.5 rounded bg-[#00FFA7]/10 text-[#00FFA7]">{doc.content_type}</span>
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-[#41A650]/10 text-[#85F2A0]">{doc.content_type}</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-xs text-[#667085]">{doc.difficulty_level || '—'}</td>

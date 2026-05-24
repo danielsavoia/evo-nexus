@@ -51,7 +51,7 @@ function ServerCard({ server }: { server: McpServer }) {
           <div
             className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
               server.source === 'plugin'
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7]'
+                ? 'bg-[#41A650]/10 text-[#85F2A0]'
                 : 'bg-[#21262d] text-[#667085]'
             }`}
           >
@@ -66,7 +66,7 @@ function ServerCard({ server }: { server: McpServer }) {
                 <Link
                   to={`/plugins/${server.source_plugin}`}
                   onClick={(e) => e.stopPropagation()}
-                  className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20"
+                  className="shrink-0 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20"
                 >
                   {server.source_plugin}
                 </Link>
@@ -122,7 +122,7 @@ function ServerCard({ server }: { server: McpServer }) {
                     key={k}
                     className="text-xs text-[#D0D5DD] font-mono bg-[#161b22] px-2 py-1 rounded border border-[#21262d] break-all"
                   >
-                    <span className="text-[#00FFA7]">{k}</span>
+                    <span className="text-[#85F2A0]">{k}</span>
                     <span className="text-[#667085]">=</span>
                     <span>{'•'.repeat(Math.min(8, server.env[k].length || 1))}</span>
                   </li>
@@ -189,7 +189,7 @@ export default function McpServers() {
       <div className="flex items-start justify-between mb-6">
         <div>
           <h1 className="text-2xl font-semibold text-[#e6edf3] flex items-center gap-2">
-            <Terminal size={22} className="text-[#00FFA7]" />
+            <Terminal size={22} className="text-[#85F2A0]" />
             {t('nav.mcpServers', 'MCP Servers')}
           </h1>
           <p className="text-sm text-[#667085] mt-1">

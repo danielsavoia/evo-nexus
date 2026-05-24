@@ -29,7 +29,7 @@ interface Props {
 }
 
 function StatusIcon({ status }: { status: Plugin['status'] }) {
-  if (status === 'active') return <CheckCircle size={14} className="text-[#00FFA7]" />
+  if (status === 'active') return <CheckCircle size={14} className="text-[#85F2A0]" />
   if (status === 'broken') return <XCircle size={14} className="text-red-400" />
   if (status === 'installing' || status === 'uninstalling') return <Loader2 size={14} className="text-yellow-400 animate-spin" />
   return <AlertTriangle size={14} className="text-[#667085]" />
@@ -65,14 +65,14 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
 
   return (
     <div
-      className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]"
+      className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]"
       onClick={onClick}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
 
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15 shrink-0">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15 shrink-0">
             {showIcon ? (
               <img
                 src={plugin.icon_url!}
@@ -81,7 +81,7 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
                 onError={() => setIconError(true)}
               />
             ) : (
-              <Package size={18} className="text-[#00FFA7]" />
+              <Package size={18} className="text-[#85F2A0]" />
             )}
           </div>
           <div className="min-w-0">
@@ -99,7 +99,7 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
           disabled={busy}
           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors shrink-0 ${
             busy ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
-          } ${isEnabled ? 'bg-[#00FFA7]' : 'bg-[#344054]'}`}
+          } ${isEnabled ? 'bg-[#41A650]' : 'bg-[#344054]'}`}
           title={isEnabled ? t('common.disable') : t('common.enable')}
         >
           <span
@@ -118,7 +118,7 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
         <div className="flex items-center gap-1.5">
           <StatusIcon status={plugin.status} />
           <span className={`text-xs font-medium ${
-            plugin.status === 'active' ? 'text-[#00FFA7]' :
+            plugin.status === 'active' ? 'text-[#85F2A0]' :
             plugin.status === 'broken' ? 'text-red-400' :
             'text-[#667085]'
           }`}>

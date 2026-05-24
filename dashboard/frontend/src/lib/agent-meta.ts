@@ -90,7 +90,7 @@ let _hydrated = false
 
 const DEFAULT_META: AgentMeta = {
   icon: Bot,
-  color: '#00FFA7',
+  color: '#85F2A0',
   command: '',
   label: 'Agent',
 }
@@ -123,7 +123,7 @@ export async function hydrateAgentMeta(force = false): Promise<void> {
         // Set both avatar_url (Wave 2.0 field) and avatar (AgentAvatar.tsx reads this).
         _registry[slug] = {
           icon: Bot,
-          color: '#00FFA7',
+          color: '#85F2A0',
           command: `/${slug}`,
           label: entry.label || slug,
           avatar_url: entry.avatar_url,

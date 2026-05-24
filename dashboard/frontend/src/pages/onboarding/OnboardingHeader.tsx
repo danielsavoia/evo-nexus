@@ -20,7 +20,7 @@ interface OnboardingHeaderProps {
 export default function OnboardingHeader({ step, filled }: OnboardingHeaderProps) {
   const { t } = useTranslation()
   const dot = (active: boolean) => (
-    <span className={`h-1.5 w-8 rounded-full ${active ? 'bg-[#00FFA7]' : 'bg-[#152030]'}`} />
+    <span className={`h-1.5 w-8 rounded-full ${active ? 'bg-[#41A650]' : 'bg-[#152030]'}`} />
   )
   return (
     <div className="flex flex-col items-center gap-4 mb-6">

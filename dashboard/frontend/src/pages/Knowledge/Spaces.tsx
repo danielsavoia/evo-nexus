@@ -34,7 +34,7 @@ const defaultForm: SpaceForm = {
 }
 
 function VisibilityIcon({ v }: { v: Space['visibility'] }) {
-  if (v === 'public') return <Globe size={12} className="text-[#00FFA7]" />
+  if (v === 'public') return <Globe size={12} className="text-[#85F2A0]" />
   if (v === 'shared') return <Users size={12} className="text-blue-400" />
   return <Lock size={12} className="text-[#667085]" />
 }
@@ -182,7 +182,7 @@ export default function KnowledgeSpaces() {
         <div className="flex justify-end">
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={14} /> New Space
           </button>
@@ -249,19 +249,19 @@ export default function KnowledgeSpaces() {
             <div className="px-5 py-4 space-y-3">
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Name *</label>
-                <input type="text" value={form.name} onChange={(e) => setField('name', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none" placeholder="Academy 2026" />
+                <input type="text" value={form.name} onChange={(e) => setField('name', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none" placeholder="Academy 2026" />
               </div>
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Slug *</label>
-                <input type="text" value={form.slug} onChange={(e) => setField('slug', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:border-[#00FFA7] focus:outline-none" placeholder="academy-2026" />
+                <input type="text" value={form.slug} onChange={(e) => setField('slug', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:border-[#41A650] focus:outline-none" placeholder="academy-2026" />
               </div>
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Description</label>
-                <textarea value={form.description} onChange={(e) => setField('description', e.target.value)} rows={2} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none resize-none" />
+                <textarea value={form.description} onChange={(e) => setField('description', e.target.value)} rows={2} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none resize-none" />
               </div>
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Visibility</label>
-                <select value={form.visibility} onChange={(e) => setField('visibility', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+                <select value={form.visibility} onChange={(e) => setField('visibility', e.target.value)} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
                   <option value="private">private</option>
                   <option value="shared">shared</option>
                   <option value="public">public</option>
@@ -273,13 +273,13 @@ export default function KnowledgeSpaces() {
                   value={form.content_type_boosts_raw}
                   onChange={(e) => setField('content_type_boosts_raw', e.target.value)}
                   rows={3}
-                  className={`w-full bg-[#182230] border rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:outline-none resize-none ${boostsError ? 'border-red-500/50' : 'border-[#344054] focus:border-[#00FFA7]'}`}
+                  className={`w-full bg-[#182230] border rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:outline-none resize-none ${boostsError ? 'border-red-500/50' : 'border-[#344054] focus:border-[#41A650]'}`}
                 />
                 {boostsError && <p className="text-xs text-red-400 mt-1">{boostsError}</p>}
               </div>
               <div className="flex gap-3 pt-2">
                 <button onClick={() => setShowModal(false)} className="flex-1 px-4 py-2 bg-white/5 text-[#D0D5DD] rounded-lg text-sm hover:bg-white/10 transition-colors">Cancel</button>
-                <button onClick={handleSave} disabled={saving || !form.name} className="flex-1 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50">
+                <button onClick={handleSave} disabled={saving || !form.name} className="flex-1 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#41A650]/90 transition-colors disabled:opacity-50">
                   {saving ? <RefreshCw size={14} className="animate-spin mx-auto" /> : (editingSpace ? 'Save' : 'Create')}
                 </button>
               </div>

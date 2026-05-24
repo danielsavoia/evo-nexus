@@ -43,7 +43,7 @@ export function PluginErrorBoundary({ slug, children }: PluginErrorBoundaryProps
               </button>
               <a
                 href={`/plugins/${slug}`}
-                className="text-xs text-[#00FFA7] hover:underline flex items-center"
+                className="text-xs text-[#85F2A0] hover:underline flex items-center"
               >
                 Plugin settings
               </a>

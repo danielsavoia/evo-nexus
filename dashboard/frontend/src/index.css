@@ -2,20 +2,40 @@
 @import "@evoapi/evonexus-ui/tokens.css";
 
 :root {
-  --evo-green: #00FFA7;
-  --bg-primary: #0C111D;
-  --bg-card: #182230;
-  --bg-sidebar: #0a0f1a;
-  --border: #344054;
-  --text-primary: #F9FAFB;
-  --text-secondary: #D0D5DD;
-  --text-muted: #667085;
+  /* ── Clever Agent brand tokens ──────────────────────────────────── */
+  --clever-agent-green-900: #19402A;
+  --clever-agent-green-800: #255938;
+  --clever-agent-green-600: #41A650;
+  --clever-agent-green-300: #85F2A0;
+  --clever-agent-yellow-500: #F2CB05;
+  --clever-agent-bg-light: #F7F9F8;
+
+  --clever-agent-bg-deep:       #07130D;
+  --clever-agent-bg-panel:      #0B1711;
+  --clever-agent-border-soft:   rgba(133, 242, 160, 0.16);
+  --clever-agent-border-medium: rgba(133, 242, 160, 0.28);
+  --clever-agent-text-primary:  #F7F9F8;
+  --clever-agent-text-muted:    rgba(247, 249, 248, 0.68);
+
+  /* ── Evo aliases → Clever Agent (backward-compat) ───────────────── */
+  --evo-green: var(--clever-agent-green-300);
+  --evo-accent: var(--clever-agent-green-600);
+
+  /* ── Dashboard surface tokens ───────────────────────────────────── */
+  --bg-primary:  #0D1B12;
+  --bg-card:     #122018;
+  --bg-sidebar:  #091410;
+  --border:      #1E3829;
+  --text-primary:   #F7F9F8;
+  --text-secondary: #C8D5CE;
+  --text-muted:     #6B8A76;
+  --border-accent: var(--clever-agent-green-300);
+
   /* Workspace File Manager tokens */
-  --danger: #EF4444;
+  --danger:  #EF4444;
   --warning: #F59E0B;
-  --surface-hover: #1e2d3d;
-  --surface-active: #1a2744;
-  --border-accent: #00FFA7;
+  --surface-hover:  #162B1E;
+  --surface-active: #1A3324;
 }
 
 * {
@@ -44,7 +64,7 @@ body {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475467;
+  background: #2E5040;
 }
 
 /* Markdown content styling */
@@ -55,14 +75,14 @@ body {
 .markdown-content ul, .markdown-content ol { margin: 0.5rem 0; padding-left: 1.5rem; color: var(--text-secondary); }
 .markdown-content li { margin: 0.25rem 0; }
 .markdown-content code {
-  background: #1e293b;
+  background: #122018;
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   font-size: 0.875rem;
-  color: #00FFA7;
+  color: var(--clever-agent-green-300);
 }
 .markdown-content pre {
-  background: #1e293b;
+  background: #0D1B12;
   padding: 1rem;
   border-radius: 8px;
   overflow-x: auto;
@@ -84,7 +104,7 @@ body {
   text-align: left;
 }
 .markdown-content th {
-  background: #1e293b;
+  background: #122018;
   font-weight: 600;
   color: var(--text-primary);
 }
@@ -92,17 +112,17 @@ body {
   color: var(--text-secondary);
 }
 .markdown-content a {
-  color: #00FFA7;
+  color: var(--clever-agent-green-300);
   text-decoration: none;
 }
 .markdown-content a:hover {
   text-decoration: underline;
 }
 .markdown-content blockquote {
-  border-left: 3px solid #00FFA7;
+  border-left: 3px solid var(--clever-agent-green-600);
   margin: 0.75rem 0;
   padding: 0.5rem 1rem;
-  background: rgba(0, 255, 167, 0.05);
+  background: rgba(65, 166, 80, 0.08);
   color: var(--text-secondary);
 }
 .markdown-content hr {
@@ -117,7 +137,7 @@ body {
   100% { background-position: 200% 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #182230 25%, #1e293b 50%, #182230 75%);
+  background: linear-gradient(90deg, #122018 25%, #1A3324 50%, #122018 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 8px;

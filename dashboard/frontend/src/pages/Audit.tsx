@@ -14,7 +14,7 @@ interface AuditEntry {
 }
 
 const ACTION_STYLE: Record<string, { bg: string; text: string; border: string }> = {
-  login: { bg: 'rgba(0,255,167,0.10)', text: '#00FFA7', border: 'rgba(0,255,167,0.25)' },
+  login: { bg: 'rgba(133, 242, 160,0.10)', text: '#85F2A0', border: 'rgba(133, 242, 160,0.25)' },
   login_failed: { bg: 'rgba(248,113,113,0.10)', text: '#F87171', border: 'rgba(248,113,113,0.25)' },
   logout: { bg: 'rgba(251,191,36,0.10)', text: '#FBBF24', border: 'rgba(251,191,36,0.25)' },
   create: { bg: 'rgba(96,165,250,0.10)', text: '#60A5FA', border: 'rgba(96,165,250,0.25)' },
@@ -74,7 +74,7 @@ export default function Audit() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center">
-            <ScrollText size={20} className="text-[#00FFA7]" />
+            <ScrollText size={20} className="text-[#85F2A0]" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-[#e6edf3]">{t('audit.title')}</h1>

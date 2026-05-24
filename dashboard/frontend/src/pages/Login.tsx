@@ -44,7 +44,7 @@ function NetworkCanvas() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(0, 255, 167, 0.25)'
+        ctx.fillStyle = 'rgba(133, 242, 160, 0.18)'
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -56,7 +56,7 @@ function NetworkCanvas() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(q.x, q.y)
-            ctx.strokeStyle = `rgba(0, 255, 167, ${0.06 * (1 - dist / maxDist)})`
+            ctx.strokeStyle = `rgba(133, 242, 160, ${0.05 * (1 - dist / maxDist)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -102,21 +102,21 @@ export default function Login() {
     }
   }
 
-  const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20"
-  const lbl = "block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase"
+  const inp = "w-full px-4 py-3 rounded-lg bg-[#091410] border border-[#1E3829] text-[#F7F9F8] placeholder-[#4a6a56] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/70 focus:ring-1 focus:ring-[#41A650]/20"
+  const lbl = "block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase"
 
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
       <NetworkCanvas />
 
       <div className="w-full max-w-[380px] relative z-10">
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0B1711] shadow-[0_4px_40px_rgba(0,0,0,0.5)]">
 
           {/* Header */}
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <div className="flex flex-col items-center gap-3">
               <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[180px] h-auto" />
-              <p className="text-[11px] text-[#4a5a6e]">{t('login.subtitle')}</p>
+              <p className="text-[11px] text-[#6B8A76]">{t('login.subtitle')}</p>
             </div>
           </div>
 
@@ -143,8 +143,8 @@ export default function Login() {
               <button type="submit" disabled={submitting}
                 className={`w-full py-3 mt-1 rounded-lg text-sm font-semibold transition-colors disabled:opacity-40 ${
                   submitting
-                    ? 'bg-[#00FFA7]/60 text-[#080c14]'
-                    : 'bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] active:bg-[#00cc88]'
+                    ? 'bg-[#41A650]/70 text-[#F7F9F8]'
+                    : 'bg-[#41A650] text-[#F7F9F8] hover:bg-[#4DBF5E] active:bg-[#368C43]'
                 }`}>
                 {submitting ? t('login.signingIn') : t('login.submit')}
               </button>
@@ -152,7 +152,7 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
+        <p className="text-center mt-4 text-[10px] text-[#2d4a38]">
           Built on EvoNexus
         </p>
       </div>

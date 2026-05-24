@@ -193,7 +193,7 @@ export default function Roles() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center">
-            <Shield size={20} className="text-[#00FFA7]" />
+            <Shield size={20} className="text-[#85F2A0]" />
           </div>
           <div>
             <h1 className="text-xl font-bold text-[#e6edf3]">{t('roles.title')}</h1>
@@ -203,7 +203,7 @@ export default function Roles() {
         {!isEditing && (
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00FFA7] text-[#0d1117] font-semibold text-sm hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#41A650] text-[#0d1117] font-semibold text-sm hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={16} /> New Role
           </button>
@@ -216,7 +216,7 @@ export default function Roles() {
           {roles.map(role => {
             const permCount = countPermissions(role.permissions)
             return (
-              <div key={role.id} className="bg-[#161b22] rounded-xl border border-[#21262d] p-5 hover:border-[#00FFA7]/30 transition-all group">
+              <div key={role.id} className="bg-[#161b22] rounded-xl border border-[#21262d] p-5 hover:border-[#41A650]/30 transition-all group">
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <h3 className="font-semibold text-[#e6edf3]">{role.name}</h3>
@@ -225,7 +225,7 @@ export default function Roles() {
                         <Lock size={8} /> built-in
                       </span>
                     ) : (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#00FFA7]/8 border-[#00FFA7]/20 text-[#00FFA7]">custom</span>
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#41A650]/8 border-[#41A650]/20 text-[#85F2A0]">custom</span>
                     )}
                   </div>
                   <div className="flex items-center gap-1">
@@ -253,7 +253,7 @@ export default function Roles() {
                 <div className="flex items-center justify-between">
                   <div className="flex flex-wrap gap-1">
                     {Object.entries(role.permissions).slice(0, 4).map(([resource, actions]) => (
-                      <span key={resource} className="text-[10px] px-2 py-0.5 rounded-full bg-[#00FFA7]/8 text-[#00FFA7] border border-[#00FFA7]/15">
+                      <span key={resource} className="text-[10px] px-2 py-0.5 rounded-full bg-[#41A650]/8 text-[#85F2A0] border border-[#41A650]/15">
                         {resource} ({actions.length})
                       </span>
                     ))}
@@ -298,7 +298,7 @@ export default function Roles() {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 disabled={editingRole?.is_builtin}
-                className="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#21262d] text-[#e6edf3] text-sm focus:outline-none focus:border-[#00FFA7] disabled:opacity-50 transition-colors"
+                className="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#21262d] text-[#e6edf3] text-sm focus:outline-none focus:border-[#41A650] disabled:opacity-50 transition-colors"
                 placeholder="e.g. moderator"
               />
             </div>
@@ -308,7 +308,7 @@ export default function Roles() {
                 type="text"
                 value={newDesc}
                 onChange={(e) => setNewDesc(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#21262d] text-[#e6edf3] text-sm focus:outline-none focus:border-[#00FFA7] transition-colors"
+                className="w-full px-3 py-2 rounded-lg bg-[#0d1117] border border-[#21262d] text-[#e6edf3] text-sm focus:outline-none focus:border-[#41A650] transition-colors"
                 placeholder="Brief description"
               />
             </div>
@@ -345,7 +345,7 @@ export default function Roles() {
                                   onClick={() => togglePerm(resource, action)}
                                   className={`w-6 h-6 rounded border-2 flex items-center justify-center mx-auto transition-colors ${
                                     checked
-                                      ? 'bg-[#00FFA7] border-[#00FFA7]'
+                                      ? 'bg-[#41A650] border-[#41A650]'
                                       : 'border-[#21262d] hover:border-[#667085]'
                                   }`}
                                 >
@@ -362,7 +362,7 @@ export default function Roles() {
                             onClick={() => toggleAllResource(resource)}
                             className={`w-6 h-6 rounded border-2 flex items-center justify-center mx-auto transition-colors ${
                               allChecked
-                                ? 'bg-[#00FFA7] border-[#00FFA7]'
+                                ? 'bg-[#41A650] border-[#41A650]'
                                 : 'border-[#21262d] hover:border-[#667085]'
                             }`}
                           >
@@ -394,7 +394,7 @@ export default function Roles() {
                   onClick={() => setEditAgentAccess({ mode: value })}
                   className={`px-3 py-1.5 rounded-lg border text-sm transition-colors ${
                     editAgentAccess.mode === value
-                      ? 'bg-[#00FFA7]/10 border-[#00FFA7]/40 text-[#00FFA7]'
+                      ? 'bg-[#41A650]/10 border-[#41A650]/40 text-[#85F2A0]'
                       : 'border-[#21262d] text-[#667085] hover:text-[#e6edf3] hover:border-[#30363d]'
                   }`}
                 >
@@ -421,7 +421,7 @@ export default function Roles() {
                       }}
                       className={`flex items-center gap-2 px-4 py-3 rounded-xl border transition-all ${
                         active
-                          ? 'bg-[#00FFA7]/10 border-[#00FFA7]/40 text-[#00FFA7]'
+                          ? 'bg-[#41A650]/10 border-[#41A650]/40 text-[#85F2A0]'
                           : 'border-[#21262d] text-[#667085] hover:border-[#30363d] hover:text-[#e6edf3]'
                       }`}
                     >
@@ -463,7 +463,7 @@ export default function Roles() {
                               : [...new Set([...current, ...layerAgents])]
                             setEditAgentAccess({ mode: 'selected', agents: next })
                           }}
-                          className="text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors"
+                          className="text-[10px] text-[#667085] hover:text-[#85F2A0] transition-colors"
                         >
                           {allSelected ? 'Desmarcar todos' : 'Selecionar todos'}
                         </button>
@@ -487,13 +487,13 @@ export default function Roles() {
                               }}
                               className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-left transition-colors ${
                                 isSelected
-                                  ? 'bg-[#00FFA7]/8 border-[#00FFA7]/20 text-[#e6edf3]'
+                                  ? 'bg-[#41A650]/8 border-[#41A650]/20 text-[#e6edf3]'
                                   : 'border-[#21262d] text-[#667085] hover:border-[#30363d] hover:text-[#e6edf3]'
                               }`}
                             >
                               <div
                                 className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                                  isSelected ? 'bg-[#00FFA7] border-[#00FFA7]' : 'border-[#21262d]'
+                                  isSelected ? 'bg-[#41A650] border-[#41A650]' : 'border-[#21262d]'
                                 }`}
                               >
                                 {isSelected && <Check size={10} className="text-[#0d1117]" />}
@@ -513,7 +513,7 @@ export default function Roles() {
           {/* Workspace Folders section */}
           <div className="mb-6">
             <h3 className="text-sm font-semibold text-[#e6edf3] mb-1 flex items-center gap-2">
-              <FolderOpen size={14} className="text-[#00FFA7]" />
+              <FolderOpen size={14} className="text-[#85F2A0]" />
               Pastas do Workspace
             </h3>
             <p className="text-xs text-[#667085] mb-3">Define quais pastas de primeiro nível do workspace este role pode acessar.</p>
@@ -530,7 +530,7 @@ export default function Roles() {
                   onClick={() => setEditWorkspaceFolders({ mode: value })}
                   className={`px-3 py-1.5 rounded-lg border text-sm transition-colors ${
                     editWorkspaceFolders.mode === value
-                      ? 'bg-[#00FFA7]/10 border-[#00FFA7]/40 text-[#00FFA7]'
+                      ? 'bg-[#41A650]/10 border-[#41A650]/40 text-[#85F2A0]'
                       : 'border-[#21262d] text-[#667085] hover:text-[#e6edf3] hover:border-[#30363d]'
                   }`}
                 >
@@ -555,7 +555,7 @@ export default function Roles() {
                         folders: allSelected ? [] : [...workspaceFolderList],
                       })
                     }}
-                    className="text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors"
+                    className="text-[10px] text-[#667085] hover:text-[#85F2A0] transition-colors"
                   >
                     {workspaceFolderList.every(f => (editWorkspaceFolders.folders || []).includes(f))
                       ? 'Desmarcar todas'
@@ -581,13 +581,13 @@ export default function Roles() {
                         }}
                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-left transition-colors ${
                           isSelected
-                            ? 'bg-[#00FFA7]/8 border-[#00FFA7]/20 text-[#e6edf3]'
+                            ? 'bg-[#41A650]/8 border-[#41A650]/20 text-[#e6edf3]'
                             : 'border-[#21262d] text-[#667085] hover:border-[#30363d] hover:text-[#e6edf3]'
                         }`}
                       >
                         <div
                           className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                            isSelected ? 'bg-[#00FFA7] border-[#00FFA7]' : 'border-[#21262d]'
+                            isSelected ? 'bg-[#41A650] border-[#41A650]' : 'border-[#21262d]'
                           }`}
                         >
                           {isSelected && <Check size={10} className="text-[#0d1117]" />}
@@ -612,7 +612,7 @@ export default function Roles() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="px-4 py-2 rounded-lg bg-[#00FFA7] text-[#0d1117] font-semibold text-sm hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50"
+              className="px-4 py-2 rounded-lg bg-[#41A650] text-[#0d1117] font-semibold text-sm hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
             >
               {saving ? 'Saving...' : creating ? 'Create Role' : 'Save Changes'}
             </button>

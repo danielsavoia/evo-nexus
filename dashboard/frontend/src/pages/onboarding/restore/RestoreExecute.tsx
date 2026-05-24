@@ -160,7 +160,7 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
                   className="h-full rounded-full transition-all duration-300"
                   style={{
                     width: `${progress}%`,
-                    backgroundColor: failed ? '#ef4444' : done ? '#00FFA7' : '#00FFA7',
+                    backgroundColor: failed ? '#ef4444' : done ? '#85F2A0' : '#85F2A0',
                   }}
                 />
               </div>
@@ -171,7 +171,7 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
               <div className="space-y-1.5 max-h-52 overflow-y-auto">
                 {steps.map((s) => (
                   <div key={s.id} className="flex items-center gap-2.5 py-1.5">
-                    {s.status === 'done' && <CheckCircle size={14} className="text-[#00FFA7] flex-shrink-0" />}
+                    {s.status === 'done' && <CheckCircle size={14} className="text-[#85F2A0] flex-shrink-0" />}
                     {s.status === 'error' && <XCircle size={14} className="text-[#f87171] flex-shrink-0" />}
                     {s.status === 'running' && <Loader2 size={14} className="text-[#5a6b7f] animate-spin flex-shrink-0" />}
                     {s.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border border-[#2d3d4f] flex-shrink-0" />}
@@ -196,8 +196,8 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
 
             {/* Done message */}
             {done && (
-              <div className="flex items-center gap-2 p-3 rounded-lg bg-[#0a1a12] border border-[#00FFA7]/20">
-                <CheckCircle size={16} className="text-[#00FFA7]" />
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-[#0a1a12] border border-[#41A650]/20">
+                <CheckCircle size={16} className="text-[#85F2A0]" />
                 <p className="text-[12px] text-[#4a9a6a]">{t('restore.execute.redirecting')}</p>
               </div>
             )}
@@ -206,7 +206,7 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
             {failed && (
               <button
                 onClick={onRetry}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 <RefreshCw size={14} />
                 {t('restore.execute.tryAgain')}

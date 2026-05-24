@@ -158,24 +158,32 @@ Resumo:
 
 ## 12. Theme / color overlay
 
-**STATUS: PENDENTE — Etapa 6.4**
+**STATUS: APLICADO — Etapa 6.4 concluida em 2026-05-24**
 
-Paleta oficial Clever Agent (definida em `brand/clever-agent/design-system.md`):
+Paleta oficial Clever Agent aplicada (definida em `brand/clever-agent/design-system.md`):
 
-| Token | Valor |
-|---|---|
-| `--clever-agent-green-900` | `#19402A` |
-| `--clever-agent-green-800` | `#255938` |
-| `--clever-agent-green-600` | `#41A650` |
-| `--clever-agent-green-300` | `#85F2A0` |
-| `--clever-agent-yellow-500` | `#F2CB05` |
-| `--clever-agent-bg-light` | `#F7F9F8` |
+| Token | Valor | Status |
+|---|---|---|
+| `--clever-agent-green-900` | `#19402A` | Aplicado — `--bg-sidebar: #091410` (variante) |
+| `--clever-agent-green-800` | `#255938` | Aplicado — surfaces secundarias |
+| `--clever-agent-green-600` | `#41A650` | Aplicado — botoes CTA, bordas ativas |
+| `--clever-agent-green-300` | `#85F2A0` | Aplicado — texto accent, highlights |
+| `--clever-agent-yellow-500` | `#F2CB05` | Definido em token, uso reservado |
+| `--clever-agent-bg-light` | `#F7F9F8` | Aplicado — texto primario claro |
 
-Cores atuais a substituir (ver `docs/clever-agent/theme-color-audit.md`):
-- `#00FFA7` — verde neon upstream (597 ocorrencias) — candidato principal
-- `--evo-green` — token CSS (10 ocorrencias)
-- `--evo` prefixo — 8 ocorrencias
-- Fundos escuros `#0C111D`, `#182230`, `#344054` — avaliar compatibilidade
+Substituicoes realizadas:
+- `#00FFA7` — **597 ocorrencias → 0** (dashboard + site)
+- `--evo-green` — alias retrocompat: `var(--clever-agent-green-300)` (intencional)
+- `--evo-accent` — alias retrocompat: `var(--clever-agent-green-600)` (intencional)
+- Fundos escuros migrados: `--bg-primary: #0D1B12`, `--bg-card: #122018`, `--bg-sidebar: #091410`
+- Site HSL tokens: `--primary: 129 44% 45%`, `--ring: 135 65% 62%`
+
+Arquivos alterados: 92 (dashboard/frontend/src + site/src). Ver `docs/clever-agent/theme-color-audit.md` para auditoria completa.
+
+Pendencias pos-aplicacao:
+- Validacao visual completa no browser (Etapa 6.5)
+- Ajustes finos de contraste se detectados visualmente
+- `--evo-green` e `--evo-accent` podem ser removidos apos validacao
 
 ---
 
@@ -196,6 +204,9 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 - [ ] `dashboard/frontend/public/clever-agent/avatars/` — confirmar 38 PNGs
 - [ ] `dashboard/frontend/public/avatar/` — confirmar NAO alterada
 - [ ] `brand/clever-agent/` — confirmar assets intactos
+- [ ] `index.css` (dashboard) — confirmar tokens `--clever-agent-*` e aliases `--evo-green`, `--evo-accent`
+- [ ] Verificar `#00FFA7` ausente: `Select-String -Pattern '#00FFA7'` retorna 0 ocorrencias
+- [ ] `site/src/index.css` — confirmar `--primary: 129 44% 45%` e `--ring: 135 65% 62%`
 - [ ] Build: `npm run build` em `dashboard/frontend` passa sem erros
 - [ ] Build: `npm run build` em `site` passa sem erros
 - [ ] Validar visualmente no dashboard local
@@ -206,7 +217,7 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
 | Item | Etapa |
 |---|---|
-| Aplicar paleta Clever Agent no dashboard e site | Etapa 6.4 |
+| ~~Aplicar paleta Clever Agent no dashboard e site~~ | ~~Etapa 6.4~~ — CONCLUIDO |
 | `Home.tsx`: `npx @evoapi/evo-nexus` -> comando Clever | Etapa 6.1 |
 | `site/` auditoria completa de textos | Etapa 6.1 |
 | Validacao visual completa com login | Pendente |

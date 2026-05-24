@@ -61,7 +61,7 @@ const AREA_COLORS: Record<string, { bg: string; text: string; border: string }> 
 
 function getAreaStyle(area: string) {
   const key = Object.keys(AREA_COLORS).find((k) => area.toLowerCase().includes(k.toLowerCase()))
-  return key ? AREA_COLORS[key] : { bg: 'rgba(0,255,167,0.08)', text: '#00FFA7', border: 'rgba(0,255,167,0.20)' }
+  return key ? AREA_COLORS[key] : { bg: 'rgba(133, 242, 160,0.08)', text: '#85F2A0', border: 'rgba(133, 242, 160,0.20)' }
 }
 
 // --- Metric card icon mapping ---
@@ -127,13 +127,13 @@ function StatCard({
   icon: LucideIcon
 }) {
   const deltaColor = {
-    up: 'text-[#00FFA7]',
+    up: 'text-[#85F2A0]',
     down: 'text-red-400',
     neutral: 'text-[#667085]',
   }[deltaType]
 
   const deltaBg = {
-    up: 'bg-[#00FFA7]/10',
+    up: 'bg-[#41A650]/10',
     down: 'bg-red-400/10',
     neutral: 'bg-[#667085]/10',
   }[deltaType]
@@ -145,13 +145,13 @@ function StatCard({
   }[deltaType]
 
   return (
-    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]">
+    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
       {/* Subtle top gradient accent */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
 
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-          <Icon size={18} className="text-[#00FFA7]" />
+        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15">
+          <Icon size={18} className="text-[#85F2A0]" />
         </div>
         {delta && (
           <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${deltaColor} ${deltaBg}`}>
@@ -191,8 +191,8 @@ function ActiveAgentsBar({ agents, loading }: { agents: ActiveAgent[]; loading: 
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-[#161b22] border border-[#21262d] text-[#e6edf3]"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FFA7] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FFA7]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#41A650] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#41A650]" />
             </span>
             {agent.name}
           </span>
@@ -294,15 +294,15 @@ export default function Overview() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Recent Reports */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <FileText size={14} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <FileText size={14} className="text-[#85F2A0]" />
               </div>
               Recent Reports
             </h2>
-            <Link to="/workspace" className="text-xs font-medium text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1">
+            <Link to="/workspace" className="text-xs font-medium text-[#667085] hover:text-[#85F2A0] transition-colors flex items-center gap-1">
               View all <ArrowRight size={12} />
             </Link>
           </div>
@@ -351,15 +351,15 @@ export default function Overview() {
         </div>
 
         {/* Routines */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <Clock size={14} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <Clock size={14} className="text-[#85F2A0]" />
               </div>
               Routines
             </h2>
-            <Link to="/activity" className="text-xs font-medium text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1">
+            <Link to="/activity" className="text-xs font-medium text-[#667085] hover:text-[#85F2A0] transition-colors flex items-center gap-1">
               View all <ArrowRight size={12} />
             </Link>
           </div>
@@ -419,10 +419,10 @@ export default function Overview() {
               <Link
                 key={action.label}
                 to={action.to}
-                className="group flex items-center gap-3 bg-[#161b22] border border-[#21262d] rounded-xl px-4 py-3 transition-all duration-200 hover:border-[#00FFA7]/30 hover:bg-[#00FFA7]/[0.03]"
+                className="group flex items-center gap-3 bg-[#161b22] border border-[#21262d] rounded-xl px-4 py-3 transition-all duration-200 hover:border-[#41A650]/30 hover:bg-[#41A650]/[0.03]"
               >
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04] group-hover:bg-[#00FFA7]/10 transition-colors">
-                  <Icon size={15} className="text-[#667085] group-hover:text-[#00FFA7] transition-colors" />
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04] group-hover:bg-[#41A650]/10 transition-colors">
+                  <Icon size={15} className="text-[#667085] group-hover:text-[#85F2A0] transition-colors" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-[13px] font-medium text-[#e6edf3] group-hover:text-white truncate">{action.label}</p>

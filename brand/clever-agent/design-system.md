@@ -259,15 +259,22 @@ The Clever Agent brand assets and avatars are already applied:
 - 38 persona avatars (PNG) — applied in `dashboard/frontend/public/clever-agent/avatars/`
 - `agent-meta.ts` and `agent_meta_seed.py` — paths updated to `.png`
 
-The full UI color/theme overlay is **pending** and must be applied in a separate controlled phase (Etapa 6.4).
+The full UI color/theme overlay has been **applied** in Etapa 6.4 (2026-05-24).
 
-Current upstream color tokens to replace:
-- `#00FFA7` (--evo-green, 597 occurrences) → `--clever-agent-green-300: #85F2A0` or accent
-- `--evo-green` CSS variable (10 occurrences) → `--clever-agent-green-300`
-- Background `#0C111D` (65 occurrences) → evaluate against Clever dark palette
-- Border `#344054` (80 occurrences) → evaluate compatibility
+Changes applied:
+- `#00FFA7` (597 occurrences) → `#41A650` (CTA/borders) and `#85F2A0` (text/highlights) — **0 remaining**
+- `--evo-green` → alias `var(--clever-agent-green-300)` (intentional backward compat)
+- `--evo-accent` → alias `var(--clever-agent-green-600)` (intentional backward compat)
+- Dark backgrounds migrated to green-tinted palette: `--bg-primary: #0D1B12`, `--bg-card: #122018`, `--bg-sidebar: #091410`
+- Site HSL tokens updated: `--primary: 129 44% 45%` (#41A650), `--ring: 135 65% 62%`
+- Total files modified: 92 (dashboard/frontend/src + site/src)
 
-See `docs/clever-agent/theme-color-audit.md` for full audit.
+Pending:
+- Visual validation in browser (Etapa 6.5)
+- Fine contrast adjustments if detected visually
+- `--evo-green` / `--evo-accent` aliases may be removed after full validation
+
+See `docs/clever-agent/theme-color-audit.md` for complete audit report.
 
 ---
 
@@ -277,3 +284,4 @@ See `docs/clever-agent/theme-color-audit.md` for full audit.
 |------------|--------|-----------------------------------------------------------------|
 | 2026-05-24 | 1.0.0  | Criacao inicial — 8 assets SVG + design system                  |
 | 2026-05-24 | 1.1.0  | Add theme application status + pending color overlay reference  |
+| 2026-05-24 | 1.2.0  | Update theme status to APPLIED — Etapa 6.4 complete, 597 #00FFA7 replaced |

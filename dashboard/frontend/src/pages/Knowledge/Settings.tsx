@@ -248,7 +248,7 @@ export default function KnowledgeSettings() {
               key={opt.value}
               className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                 embedder === opt.value
-                  ? 'border-[#00FFA7]/40 bg-[#00FFA7]/5'
+                  ? 'border-[#41A650]/40 bg-[#41A650]/5'
                   : 'border-[#344054] hover:border-[#344054]/80'
               } ${providerLocked || !canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
@@ -266,7 +266,7 @@ export default function KnowledgeSettings() {
                   setEmbedderModel(recommended || fallback || opt.defaultModel || '')
                 }}
                 disabled={providerLocked || !canManage}
-                className="mt-0.5 accent-[#00FFA7]"
+                className="mt-0.5 accent-[#85F2A0]"
               />
               <div className="flex-1">
                 <p className="text-sm font-medium text-[#D0D5DD]">{opt.label}</p>
@@ -286,7 +286,7 @@ export default function KnowledgeSettings() {
               value={embedderModel}
               onChange={(e) => setEmbedderModel(e.target.value)}
               disabled={!canManage || providerLocked}
-              className="w-full px-3 py-2 bg-[#0C111D] border border-[#344054] rounded-lg text-sm text-[#F9FAFB] focus:outline-none focus:border-[#00FFA7]/60 disabled:opacity-60 cursor-pointer"
+              className="w-full px-3 py-2 bg-[#0C111D] border border-[#344054] rounded-lg text-sm text-[#F9FAFB] focus:outline-none focus:border-[#41A650]/60 disabled:opacity-60 cursor-pointer"
             >
               {(models?.[embedder] || []).map((m) => (
                 <option key={m.id} value={m.id}>
@@ -331,7 +331,7 @@ export default function KnowledgeSettings() {
                   disabled={providerLocked || !canManage}
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     geminiDim === d
-                      ? 'bg-[#00FFA7]/15 text-[#00FFA7] border border-[#00FFA7]/40'
+                      ? 'bg-[#41A650]/15 text-[#85F2A0] border border-[#41A650]/40'
                       : 'bg-[#0C111D] text-[#98A2B3] border border-[#344054] hover:border-[#344054]/80'
                   } ${providerLocked || !canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
                 >
@@ -355,7 +355,7 @@ export default function KnowledgeSettings() {
                 OpenAI API Key
               </label>
               {openaiKeySet && (
-                <span className="flex items-center gap-1 text-xs text-[#00FFA7]">
+                <span className="flex items-center gap-1 text-xs text-[#85F2A0]">
                   <CheckCircle size={12} /> Configured
                 </span>
               )}
@@ -371,7 +371,7 @@ export default function KnowledgeSettings() {
               className={`w-full px-3 py-2 bg-[#0C111D] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#667085] focus:outline-none disabled:opacity-60 font-mono ${
                 openaiKeyInvalid
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-[#344054] focus:border-[#00FFA7]/60'
+                  : 'border-[#344054] focus:border-[#41A650]/60'
               }`}
             />
             {openaiKeyInvalid && (
@@ -391,7 +391,7 @@ export default function KnowledgeSettings() {
                 Gemini API Key
               </label>
               {geminiKeySet && (
-                <span className="flex items-center gap-1 text-xs text-[#00FFA7]">
+                <span className="flex items-center gap-1 text-xs text-[#85F2A0]">
                   <CheckCircle size={12} /> Configured
                 </span>
               )}
@@ -407,7 +407,7 @@ export default function KnowledgeSettings() {
               className={`w-full px-3 py-2 bg-[#0C111D] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#667085] focus:outline-none disabled:opacity-60 font-mono ${
                 geminiKeyInvalid
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-[#344054] focus:border-[#00FFA7]/60'
+                  : 'border-[#344054] focus:border-[#41A650]/60'
               }`}
             />
             {geminiKeyInvalid && (
@@ -416,7 +416,7 @@ export default function KnowledgeSettings() {
               </p>
             )}
             <p className="text-xs text-[#667085] mt-1.5">
-              Get one at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="text-[#00FFA7]/80 hover:text-[#00FFA7] underline">aistudio.google.com/apikey</a>.
+              Get one at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="text-[#85F2A0]/80 hover:text-[#85F2A0] underline">aistudio.google.com/apikey</a>.
               Stored in <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">.env</code> as <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">GEMINI_API_KEY</code>. Only used by the Knowledge embedder.
             </p>
           </div>
@@ -440,7 +440,7 @@ export default function KnowledgeSettings() {
               key={opt.value}
               className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                 parser === opt.value
-                  ? 'border-[#00FFA7]/40 bg-[#00FFA7]/5'
+                  ? 'border-[#41A650]/40 bg-[#41A650]/5'
                   : 'border-[#344054] hover:border-[#344054]/80'
               } ${!canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
@@ -451,7 +451,7 @@ export default function KnowledgeSettings() {
                 checked={parser === opt.value}
                 onChange={() => canManage && setParser(opt.value)}
                 disabled={!canManage}
-                className="mt-0.5 accent-[#00FFA7]"
+                className="mt-0.5 accent-[#85F2A0]"
               />
               <div>
                 <p className="text-sm font-medium text-[#D0D5DD]">{opt.label}</p>
@@ -476,7 +476,7 @@ export default function KnowledgeSettings() {
               <button
                 onClick={handleInstallMarker}
                 disabled={installing}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#00FFA7]/10 text-[#00FFA7] rounded-lg text-xs font-medium hover:bg-[#00FFA7]/20 transition-colors disabled:opacity-50"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#41A650]/10 text-[#85F2A0] rounded-lg text-xs font-medium hover:bg-[#41A650]/20 transition-colors disabled:opacity-50"
               >
                 {installing ? (
                   <><RefreshCw size={10} className="animate-spin" /> Installing...</>
@@ -486,7 +486,7 @@ export default function KnowledgeSettings() {
               </button>
             )}
             {(parserStatus?.marker_installed || installDone) && (
-              <span className="flex items-center gap-1 text-xs text-[#00FFA7]">
+              <span className="flex items-center gap-1 text-xs text-[#85F2A0]">
                 <CheckCircle size={12} /> Ready
               </span>
             )}
@@ -494,7 +494,7 @@ export default function KnowledgeSettings() {
           {installing && (
             <div className="mt-3">
               <div className="h-1.5 bg-[#0C111D] rounded-full overflow-hidden">
-                <div className="h-full bg-[#00FFA7] animate-pulse w-2/3" />
+                <div className="h-full bg-[#41A650] animate-pulse w-2/3" />
               </div>
               <p className="text-xs text-[#667085] mt-1">Downloading Surya models (~500 MB)...</p>
             </div>
@@ -508,12 +508,12 @@ export default function KnowledgeSettings() {
           <button
             onClick={handleSave}
             disabled={saving || !dirty || geminiKeyInvalid || openaiKeyInvalid}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : null}
             {saved ? 'Saved!' : 'Save Settings'}
           </button>
-          {saved && <CheckCircle size={14} className="text-[#00FFA7]" />}
+          {saved && <CheckCircle size={14} className="text-[#85F2A0]" />}
           {dirty && !saving && !saved && (
             <span className="text-xs text-[#667085]">Unsaved changes</span>
           )}

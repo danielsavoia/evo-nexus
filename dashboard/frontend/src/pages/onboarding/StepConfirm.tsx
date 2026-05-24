@@ -34,19 +34,19 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
               </p>
 
               <div className="flex items-center gap-3 p-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a]">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/10">
-                  <Cpu size={14} className="text-[#00FFA7]" />
+                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/10">
+                  <Cpu size={14} className="text-[#85F2A0]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[11px] text-[#5a6b7f]">{t('onboarding.confirm.aiProvider')}</p>
                   <p className="text-[13px] font-medium text-[#e2e8f0]">{providerLabel}</p>
                 </div>
-                <Check size={14} className="text-[#00FFA7] flex-shrink-0" />
+                <Check size={14} className="text-[#85F2A0] flex-shrink-0" />
               </div>
 
               <div className="flex items-center gap-3 p-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a]">
-                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/10">
-                  <GitBranch size={14} className="text-[#00FFA7]" />
+                <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/10">
+                  <GitBranch size={14} className="text-[#85F2A0]" />
                 </div>
                 <div className="flex-1">
                   <p className="text-[11px] text-[#5a6b7f]">{t('onboarding.confirm.brainRepoLabel')}</p>
@@ -55,17 +55,17 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
                   </p>
                 </div>
                 {wantBrainRepo ? (
-                  <Check size={14} className="text-[#00FFA7] flex-shrink-0" />
+                  <Check size={14} className="text-[#85F2A0] flex-shrink-0" />
                 ) : (
                   <span className="text-[10px] text-[#5a6b7f]">{t('onboarding.confirm.optional')}</span>
                 )}
               </div>
             </div>
 
-            <div className="p-3 rounded-lg bg-[#0a1a12] border border-[#00FFA7]/15">
+            <div className="p-3 rounded-lg bg-[#0a1a12] border border-[#41A650]/15">
               <p className="text-[11px] text-[#4a7a5a] leading-relaxed">
                 {t('onboarding.confirm.settingsHintPart1')}
-                <span className="text-[#00FFA7]/70">{t('onboarding.confirm.settingsHintPath')}</span>
+                <span className="text-[#85F2A0]/70">{t('onboarding.confirm.settingsHintPath')}</span>
                 {t('onboarding.confirm.settingsHintPart2')}
               </p>
             </div>
@@ -73,13 +73,13 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>
               <button
                 onClick={onComplete}
-                className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
               >
                 {t('onboarding.confirm.finish')}
               </button>

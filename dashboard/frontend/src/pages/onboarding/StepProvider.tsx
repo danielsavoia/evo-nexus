@@ -22,7 +22,7 @@ const PROVIDERS: Provider[] = [
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
 const OPENROUTER_DEFAULT_MODEL = 'anthropic/claude-sonnet-4'
 
-const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20"
+const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
 const lbl = "block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase"
 
 interface StepProviderProps {
@@ -103,7 +103,7 @@ function ProviderSelect({ shell, onPick, onBack }: { shell: string; onPick: (id:
             <button
               key={p.id}
               onClick={() => onPick(p.id)}
-              className="p-3 rounded-lg border text-left transition-all duration-200 border-[#1e2a3a] bg-[#0f1520] hover:border-[#00FFA7]/60 hover:bg-[#00FFA7]/5"
+              className="p-3 rounded-lg border text-left transition-all duration-200 border-[#1e2a3a] bg-[#0f1520] hover:border-[#41A650]/60 hover:bg-[#41A650]/5"
             >
               <div className="flex items-center gap-2 mb-1">
                 <span
@@ -120,7 +120,7 @@ function ProviderSelect({ shell, onPick, onBack }: { shell: string; onPick: (id:
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBack}
-            className="flex-1 py-3 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-1 py-3 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -137,7 +137,7 @@ function BackLink({ onClick }: { onClick: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="text-[11px] text-[#5a6b7f] hover:text-[#00FFA7] transition-colors"
+      className="text-[11px] text-[#5a6b7f] hover:text-[#85F2A0] transition-colors"
     >
       {t('onboarding.backToProviders')}
     </button>
@@ -180,7 +180,7 @@ function AnthropicSubStep({ shell, onBackToProviders, onDone }: { shell: string;
 
         <p className="text-[12px] text-[#8a9aae] leading-relaxed">
           {t('onboarding.providerAnthropic.bodyPart1')}
-          <code className="inline-flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded bg-[#0f1520] border border-[#00FFA7]/20 text-[#00FFA7] mx-1">
+          <code className="inline-flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded bg-[#0f1520] border border-[#41A650]/20 text-[#85F2A0] mx-1">
             <Terminal size={10} />
             {t('onboarding.providerAnthropic.codeChip')}
           </code>
@@ -196,14 +196,14 @@ function AnthropicSubStep({ shell, onBackToProviders, onDone }: { shell: string;
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
           <button
             onClick={handleContinue}
             disabled={saving}
-            className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+            className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
           >
             {saving ? t('onboarding.provider.saving') : t('onboarding.providerAnthropic.continue')}
           </button>
@@ -309,7 +309,7 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
         <button
           onClick={handleValidate}
           disabled={validating || !apiKey.trim()}
-          className="w-full py-2.5 rounded-lg border border-[#00FFA7]/30 text-[#00FFA7] hover:bg-[#00FFA7]/10 text-xs font-semibold tracking-[0.08em] uppercase transition-colors disabled:opacity-40"
+          className="w-full py-2.5 rounded-lg border border-[#41A650]/30 text-[#85F2A0] hover:bg-[#41A650]/10 text-xs font-semibold tracking-[0.08em] uppercase transition-colors disabled:opacity-40"
         >
           {validating ? (
             <span className="inline-flex items-center gap-2"><RefreshCw size={12} className="animate-spin" /> {t('onboarding.providerOpenAI.validating')}</span>
@@ -322,7 +322,7 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
           <div>
             <label className={lbl}>
               {t('onboarding.providerOpenAI.modelLabel')}
-              <span className="ml-2 text-[#00FFA7] normal-case tracking-normal font-normal">
+              <span className="ml-2 text-[#85F2A0] normal-case tracking-normal font-normal">
                 <CheckCircle2 size={10} className="inline mr-1" />{models.length} models
               </span>
             </label>
@@ -348,14 +348,14 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !apiKey.trim() || !model}
-            className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+            className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
           >
             {saving ? t('onboarding.providerOpenAI.saving') : t('onboarding.providerOpenAI.save')}
           </button>
@@ -461,14 +461,14 @@ function OpenRouterSubStep({ shell, onBackToProviders, onDone }: { shell: string
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
           <button
             onClick={handleSave}
             disabled={saving || !apiKey.trim() || !model.trim()}
-            className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+            className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
           >
             {saving ? t('onboarding.providerOpenAI.saving') : t('onboarding.providerOpenAI.save')}
           </button>
@@ -615,13 +615,13 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
       <div className="flex border-b border-[#152030]">
         <button
           onClick={() => setTab('browser')}
-          className={`flex-1 py-2.5 text-[11px] font-medium tracking-wide uppercase transition-colors ${tab === 'browser' ? 'text-[#00FFA7] border-b-2 border-[#00FFA7]' : 'text-[#5a6b7f]'}`}
+          className={`flex-1 py-2.5 text-[11px] font-medium tracking-wide uppercase transition-colors ${tab === 'browser' ? 'text-[#85F2A0] border-b-2 border-[#41A650]' : 'text-[#5a6b7f]'}`}
         >
           {t('onboarding.providerCodex.tabBrowser')}
         </button>
         <button
           onClick={() => setTab('device')}
-          className={`flex-1 py-2.5 text-[11px] font-medium tracking-wide uppercase transition-colors ${tab === 'device' ? 'text-[#00FFA7] border-b-2 border-[#00FFA7]' : 'text-[#5a6b7f]'}`}
+          className={`flex-1 py-2.5 text-[11px] font-medium tracking-wide uppercase transition-colors ${tab === 'device' ? 'text-[#85F2A0] border-b-2 border-[#41A650]' : 'text-[#5a6b7f]'}`}
         >
           {t('onboarding.providerCodex.tabDevice')}
         </button>
@@ -637,7 +637,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
                   href={authUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center py-2.5 rounded-md bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20 transition-colors text-sm font-medium"
+                  className="block text-center py-2.5 rounded-md bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20 transition-colors text-sm font-medium"
                 >
                   {t('onboarding.providerCodex.generateLink')}
                 </a>
@@ -668,7 +668,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
                   href={deviceCode.verification_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#00FFA7] underline"
+                  className="text-[#85F2A0] underline"
                 >
                   {deviceCode.verification_url}
                 </a>
@@ -693,7 +693,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
         )}
 
         {authMessage && (
-          <div className={`rounded-lg p-3 text-xs ${authMessage.type === 'success' ? 'bg-[#00FFA7]/5 text-[#00FFA7]' : 'bg-[#1a0a0a] text-[#f87171]'}`}>
+          <div className={`rounded-lg p-3 text-xs ${authMessage.type === 'success' ? 'bg-[#41A650]/5 text-[#85F2A0]' : 'bg-[#1a0a0a] text-[#f87171]'}`}>
             {authMessage.text}
             {authMessage.type === 'error' && tab === 'device' && (
               <p className="text-[10px] text-[#3d4f65] mt-1">{t('onboarding.providerCodex.deviceOrgWarning')}</p>
@@ -704,7 +704,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -712,7 +712,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
             <button
               onClick={completeBrowserAuth}
               disabled={!callbackUrl || authLoading}
-              className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+              className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
             >
               {authLoading ? t('onboarding.providerCodex.verifying') : t('onboarding.providerCodex.confirm')}
             </button>

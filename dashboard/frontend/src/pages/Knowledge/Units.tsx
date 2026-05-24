@@ -156,15 +156,15 @@ export default function KnowledgeUnits() {
         <select
           value={selectedSpaceId}
           onChange={(e) => setSelectedSpaceId(e.target.value)}
-          className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none"
+          className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none"
         >
           {spaces.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
         </select>
-        {reordering && <RefreshCw size={14} className="text-[#00FFA7] animate-spin" />}
+        {reordering && <RefreshCw size={14} className="text-[#85F2A0] animate-spin" />}
         {canManage && (
           <button
             onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors ml-auto"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors ml-auto"
           >
             <Plus size={14} /> New Unit
           </button>
@@ -192,7 +192,7 @@ export default function KnowledgeUnits() {
               className={`bg-[#182230] border border-[#344054] rounded-xl px-4 py-3 flex items-center gap-3 transition-colors ${canManage ? 'cursor-grab active:cursor-grabbing' : ''} ${dragIdx === idx ? 'opacity-50' : ''}`}
             >
               {canManage && <GripVertical size={14} className="text-[#344054] shrink-0" />}
-              <div className="w-6 h-6 rounded-full bg-[#00FFA7]/10 flex items-center justify-center text-xs font-mono text-[#00FFA7] shrink-0">
+              <div className="w-6 h-6 rounded-full bg-[#41A650]/10 flex items-center justify-center text-xs font-mono text-[#85F2A0] shrink-0">
                 {idx + 1}
               </div>
               <div className="flex-1 min-w-0">
@@ -227,19 +227,19 @@ export default function KnowledgeUnits() {
                 <input type="text" value={form.title} onChange={(e) => {
                   const v = e.target.value
                   setForm((p) => ({ ...p, title: v, slug: v.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') }))
-                }} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none" placeholder="Module 1 — Introduction" />
+                }} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none" placeholder="Module 1 — Introduction" />
               </div>
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Slug *</label>
-                <input type="text" value={form.slug} onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:border-[#00FFA7] focus:outline-none" />
+                <input type="text" value={form.slug} onChange={(e) => setForm((p) => ({ ...p, slug: e.target.value }))} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] font-mono focus:border-[#41A650] focus:outline-none" />
               </div>
               <div>
                 <label className="block text-xs text-[#667085] mb-1">Description</label>
-                <textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} rows={2} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#00FFA7] focus:outline-none resize-none" />
+                <textarea value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} rows={2} className="w-full bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#F9FAFB] focus:border-[#41A650] focus:outline-none resize-none" />
               </div>
               <div className="flex gap-3 pt-2">
                 <button onClick={() => setShowModal(false)} className="flex-1 px-4 py-2 bg-white/5 text-[#D0D5DD] rounded-lg text-sm hover:bg-white/10 transition-colors">Cancel</button>
-                <button onClick={handleSave} disabled={saving || !form.title} className="flex-1 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50">
+                <button onClick={handleSave} disabled={saving || !form.title} className="flex-1 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-semibold hover:bg-[#41A650]/90 transition-colors disabled:opacity-50">
                   {saving ? <RefreshCw size={14} className="animate-spin mx-auto" /> : (editingUnit ? 'Save' : 'Create')}
                 </button>
               </div>

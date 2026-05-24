@@ -50,7 +50,7 @@ function ConnectionLayoutInner() {
         </p>
         <button
           onClick={() => navigate('/knowledge')}
-          className="text-sm text-[#00FFA7] hover:underline"
+          className="text-sm text-[#85F2A0] hover:underline"
         >
           ← Back to Connections
         </button>
@@ -60,7 +60,7 @@ function ConnectionLayoutInner() {
 
   const statusColor =
     connection.status === 'ready'
-      ? 'text-[#00FFA7] bg-[#00FFA7]/10'
+      ? 'text-[#85F2A0] bg-[#41A650]/10'
       : connection.status === 'error'
       ? 'text-red-400 bg-red-400/10'
       : 'text-yellow-400 bg-yellow-400/10'
@@ -77,7 +77,7 @@ function ConnectionLayoutInner() {
           All connections
         </Link>
         <div className="flex items-center gap-3 flex-wrap">
-          <Database size={20} className="text-[#00FFA7]" />
+          <Database size={20} className="text-[#85F2A0]" />
           <h1 className="text-xl font-bold text-[#F9FAFB]">{connection.name}</h1>
           <span className={`text-[10px] px-2 py-0.5 rounded uppercase font-semibold ${statusColor}`}>
             {connection.status}
@@ -98,7 +98,7 @@ function ConnectionLayoutInner() {
             className={({ isActive }) =>
               `px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px whitespace-nowrap ${
                 isActive
-                  ? 'text-[#00FFA7] border-[#00FFA7]'
+                  ? 'text-[#85F2A0] border-[#41A650]'
                   : 'text-[#667085] border-transparent hover:text-[#D0D5DD]'
               }`
             }

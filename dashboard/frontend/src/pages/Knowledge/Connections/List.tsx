@@ -8,7 +8,7 @@ import Wizard from './Wizard'
 
 function StatusBadge({ status }: { status: KnowledgeConnection['status'] }) {
   if (status === 'ready')
-    return <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[#00FFA7]/10 text-[#00FFA7]"><CheckCircle size={10} /> ready</span>
+    return <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[#41A650]/10 text-[#85F2A0]"><CheckCircle size={10} /> ready</span>
   if (status === 'needs_migration')
     return <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400"><AlertTriangle size={10} /> needs migration</span>
   if (status === 'error')
@@ -68,7 +68,7 @@ export default function KnowledgeConnections() {
         <div className="flex justify-end">
           <button
             onClick={() => setShowWizard(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={14} /> New Connection
           </button>
@@ -77,15 +77,15 @@ export default function KnowledgeConnections() {
 
       {connections.length === 0 ? (
         <div className="text-center py-16 bg-[#182230] border border-[#344054] rounded-xl">
-          <div className="w-16 h-16 rounded-2xl bg-[#00FFA7]/10 flex items-center justify-center mx-auto mb-4">
-            <Wifi size={28} className="text-[#00FFA7]" />
+          <div className="w-16 h-16 rounded-2xl bg-[#41A650]/10 flex items-center justify-center mx-auto mb-4">
+            <Wifi size={28} className="text-[#85F2A0]" />
           </div>
           <p className="text-[#F9FAFB] font-medium mb-1">No connections yet</p>
           <p className="text-[#667085] text-sm mb-6">Bring your own Postgres with pgvector to get started.</p>
           {canManage && (
             <button
               onClick={() => setShowWizard(true)}
-              className="px-5 py-2 bg-[#00FFA7] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#00FFA7]/90 transition-colors"
+              className="px-5 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors"
             >
               Add First Connection
             </button>
@@ -96,7 +96,7 @@ export default function KnowledgeConnections() {
           {connections.map((c) => (
             <div
               key={c.id}
-              className="bg-[#182230] border border-[#344054] rounded-xl p-4 hover:border-[#00FFA7]/30 transition-colors"
+              className="bg-[#182230] border border-[#344054] rounded-xl p-4 hover:border-[#41A650]/30 transition-colors"
             >
               <div className="flex items-center gap-4">
                 <div className="flex-1 min-w-0">

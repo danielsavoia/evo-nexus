@@ -134,7 +134,7 @@ export default function PluginUninstall({
                 key={s}
                 className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
                   step === s
-                    ? 'bg-[#00FFA7] text-black'
+                    ? 'bg-[#41A650] text-black'
                     : step > s
                     ? 'bg-green-700 text-white'
                     : 'bg-neutral-700 text-neutral-400'
@@ -163,7 +163,7 @@ export default function PluginUninstall({
                   </p>
                   <ul className="mt-2 list-inside list-disc space-y-0.5">
                     {preservedTables.map((t) => (
-                      <li key={t} className="font-mono text-[#00FFA7]">
+                      <li key={t} className="font-mono text-[#85F2A0]">
                         {t} → _orphan_{slug}_{t}
                       </li>
                     ))}
@@ -176,7 +176,7 @@ export default function PluginUninstall({
                   type="checkbox"
                   checked={checkboxChecked}
                   onChange={(e) => setCheckboxChecked(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 accent-[#00FFA7]"
+                  className="mt-0.5 h-4 w-4 accent-[#41A650]"
                 />
                 <span className="text-sm text-neutral-200">{checkboxLabel}</span>
               </label>
@@ -223,7 +223,7 @@ export default function PluginUninstall({
                     value={zipPassword}
                     onChange={(e) => setZipPassword(e.target.value)}
                     placeholder="Senha do ZIP de export"
-                    className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#41A650] focus:outline-none"
                   />
                 </div>
                 <div>
@@ -235,7 +235,7 @@ export default function PluginUninstall({
                     value={zipPasswordConfirm}
                     onChange={(e) => setZipPasswordConfirm(e.target.value)}
                     placeholder="Repita a senha"
-                    className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#00FFA7] focus:outline-none"
+                    className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#41A650] focus:outline-none"
                   />
                   {zipPassword && zipPasswordConfirm && !passwordsMatch && (
                     <p className="mt-1 text-xs text-red-400">
@@ -274,7 +274,7 @@ export default function PluginUninstall({
                   <p>
                     Digite exatamente a frase abaixo para confirmar a desinstalação:
                   </p>
-                  <p className="mt-2 rounded bg-neutral-900 px-3 py-1.5 font-mono text-[#00FFA7]">
+                  <p className="mt-2 rounded bg-neutral-900 px-3 py-1.5 font-mono text-[#85F2A0]">
                     {requiredPhrase}
                   </p>
                 </div>
@@ -285,7 +285,7 @@ export default function PluginUninstall({
                 value={typedPhrase}
                 onChange={(e) => setTypedPhrase(e.target.value)}
                 placeholder={requiredPhrase}
-                className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#00FFA7] focus:outline-none"
+                className="w-full rounded border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white placeholder-neutral-500 focus:border-[#41A650] focus:outline-none"
               />
               {typedPhrase && !phraseMatches && (
                 <p className="text-xs text-red-400">

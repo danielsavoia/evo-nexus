@@ -82,7 +82,7 @@ function CapabilitySwitch({
         disabled={loading}
         className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors border ${
           item.enabled
-            ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
+            ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20 hover:bg-[#41A650]/20'
             : 'bg-[#21262d] text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
         } disabled:opacity-50`}
         title={item.enabled ? 'Disable' : 'Enable'}
@@ -280,7 +280,7 @@ export default function PluginDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 size={24} className="text-[#00FFA7] animate-spin" />
+        <Loader2 size={24} className="text-[#85F2A0] animate-spin" />
       </div>
     )
   }
@@ -523,7 +523,7 @@ export default function PluginDetail() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#41A650]/8 border border-[#41A650]/15">
             {!iconError && plugin.icon_url ? (
               <img
                 src={plugin.icon_url}
@@ -532,7 +532,7 @@ export default function PluginDetail() {
                 onError={() => setIconError(true)}
               />
             ) : (
-              <Package size={24} className="text-[#00FFA7]" />
+              <Package size={24} className="text-[#85F2A0]" />
             )}
           </div>
           <div>
@@ -548,7 +548,7 @@ export default function PluginDetail() {
             onClick={handleToggle}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border ${
               Boolean(plugin.enabled)
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
+                ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20 hover:bg-[#41A650]/20'
                 : 'bg-[#21262d] text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
             }`}
           >
@@ -557,7 +557,7 @@ export default function PluginDetail() {
           <button
             onClick={() => setPreviewOpen(true)}
             disabled={removing}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#00FFA7] border border-[#00FFA7]/20 rounded-lg hover:bg-[#00FFA7]/10 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#85F2A0] border border-[#41A650]/20 rounded-lg hover:bg-[#41A650]/10 disabled:opacity-50 transition-colors"
           >
             <Download size={12} />
             Atualizar
@@ -634,7 +634,7 @@ export default function PluginDetail() {
               <p className="text-xs text-[#667085] mb-2">{t('plugins.capabilities')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {capabilities.map((cap) => (
-                  <span key={cap} className="text-xs bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 px-2 py-0.5 rounded-full">
+                  <span key={cap} className="text-xs bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 px-2 py-0.5 rounded-full">
                     {cap}
                   </span>
                 ))}
@@ -647,7 +647,7 @@ export default function PluginDetail() {
         {hasAnyCapabilities && (
           <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
             <h2 className="text-sm font-semibold text-[#e6edf3] mb-1 flex items-center gap-2">
-              <Layers size={14} className="text-[#00FFA7]" />
+              <Layers size={14} className="text-[#85F2A0]" />
               Capabilities
             </h2>
             <p className="text-xs text-[#667085] mb-4">
@@ -671,7 +671,7 @@ export default function PluginDetail() {
         <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-sm font-semibold text-[#e6edf3] flex items-center gap-2">
-              <ShieldCheck size={14} className="text-[#00FFA7]" />
+              <ShieldCheck size={14} className="text-[#85F2A0]" />
               {t('plugins.health')}
             </h2>
             <button
@@ -687,11 +687,11 @@ export default function PluginDetail() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 {health.status === 'active' ? (
-                  <CheckCircle size={14} className="text-[#00FFA7]" />
+                  <CheckCircle size={14} className="text-[#85F2A0]" />
                 ) : (
                   <XCircle size={14} className="text-red-400" />
                 )}
-                <span className={`text-sm font-medium ${health.status === 'active' ? 'text-[#00FFA7]' : 'text-red-400'}`}>
+                <span className={`text-sm font-medium ${health.status === 'active' ? 'text-[#85F2A0]' : 'text-red-400'}`}>
                   {health.status}
                 </span>
               </div>
@@ -726,7 +726,7 @@ export default function PluginDetail() {
                   <span className="text-[#667085] w-32 shrink-0">
                     {new Date(entry.created_at).toLocaleString()}
                   </span>
-                  <span className={`font-medium ${entry.success ? 'text-[#00FFA7]' : 'text-red-400'}`}>
+                  <span className={`font-medium ${entry.success ? 'text-[#85F2A0]' : 'text-red-400'}`}>
                     {entry.action}
                   </span>
                   {!entry.success && (

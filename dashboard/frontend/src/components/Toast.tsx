@@ -50,8 +50,8 @@ const VARIANT_CONFIG: Record<
 > = {
   success: {
     icon: <CheckCircle2 size={16} />,
-    borderColor: '#00FFA7',
-    iconColor: '#00FFA7',
+    borderColor: '#85F2A0',
+    iconColor: '#85F2A0',
   },
   error: {
     icon: <AlertCircle size={16} />,

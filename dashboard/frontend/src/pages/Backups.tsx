@@ -150,7 +150,7 @@ function S3ConfigPanel({ config, onSaved }: { config: BackupConfig; onSaved: () 
           <Cloud size={16} className={config.s3_configured ? 'text-blue-400' : 'text-[#5a6b7f]'} />
           <span className="text-[#e2e8f0] font-medium">{t('backups.s3Config.title')}</span>
           {config.s3_configured ? (
-            <span className="text-xs px-2 py-0.5 rounded-full bg-[#00FFA7]/10 text-[#00FFA7]">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-[#41A650]/10 text-[#85F2A0]">
               S3: {config.s3_bucket}
             </span>
           ) : (
@@ -195,7 +195,7 @@ function S3ConfigPanel({ config, onSaved }: { config: BackupConfig; onSaved: () 
                       value={values[field.envKey] ?? ''}
                       onChange={e => setValues(prev => ({ ...prev, [field.envKey]: e.target.value }))}
                       placeholder={field.hint}
-                      className="w-full px-3 py-2 rounded-lg text-sm font-mono bg-[#0d1117] border border-[#21262d] text-[#e6edf3] placeholder-[#667085]/50 focus:outline-none focus:border-[#00FFA7] transition-colors"
+                      className="w-full px-3 py-2 rounded-lg text-sm font-mono bg-[#0d1117] border border-[#21262d] text-[#e6edf3] placeholder-[#667085]/50 focus:outline-none focus:border-[#41A650] transition-colors"
                     />
                     {field.sensitive && (
                       <button
@@ -221,8 +221,8 @@ function S3ConfigPanel({ config, onSaved }: { config: BackupConfig; onSaved: () 
               disabled={saving}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                 saved
-                  ? 'bg-[#00FFA7]/20 text-[#00FFA7] border border-[#00FFA7]/30'
-                  : 'bg-[#00FFA7] text-[#0d1117] hover:bg-[#00FFA7]/90'
+                  ? 'bg-[#41A650]/20 text-[#85F2A0] border border-[#41A650]/30'
+                  : 'bg-[#41A650] text-[#0d1117] hover:bg-[#41A650]/90'
               } disabled:opacity-50`}
             >
               <Save size={14} />
@@ -267,7 +267,7 @@ type BackupsTab = 'local' | 's3' | 'brain'
  */
 /**
  * 3-card panel showing the explicit status of every backup destination.
- * Same palette as /onboarding (#0b1018 cards on #152030 borders, #00FFA7 accent).
+ * Same palette as /onboarding (#0b1018 cards on #152030 borders, #41A650 accent).
  *
  * S3 card "Configure" button toggles the S3ConfigPanel below (parent owns the
  * state) so the env-var form is never shown unsolicited — it only appears
@@ -305,10 +305,10 @@ function DestinationsPanel({
   }
 
   const cardBase = "rounded-xl border bg-[#0b1018] p-5 transition-colors"
-  const cardConnected = "border-[#152030] hover:border-[#00FFA7]/30"
+  const cardConnected = "border-[#152030] hover:border-[#41A650]/30"
   const cardOff = "border-[#152030] hover:border-[#1e2a3a]"
 
-  const badgeOk = "inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 uppercase tracking-wider"
+  const badgeOk = "inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 uppercase tracking-wider"
   const badgeOff = "inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#152030] text-[#5a6b7f] border border-[#1e2a3a] uppercase tracking-wider"
   const pillBtn = "text-[11px] font-medium px-3 py-1.5 rounded-md transition-colors inline-flex items-center gap-1.5"
 
@@ -318,8 +318,8 @@ function DestinationsPanel({
       <div className={`${cardBase} ${cardConnected}`}>
         <div className="flex items-start justify-between gap-2 mb-3">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#00FFA7]/10 border border-[#00FFA7]/20 flex items-center justify-center">
-              <HardDrive size={16} className="text-[#00FFA7]" />
+            <div className="w-9 h-9 rounded-xl bg-[#41A650]/10 border border-[#41A650]/20 flex items-center justify-center">
+              <HardDrive size={16} className="text-[#85F2A0]" />
             </div>
             <div>
               <div className="text-[14px] font-semibold text-[#e2e8f0]">{t('backups.destinations.local')}</div>
@@ -327,7 +327,7 @@ function DestinationsPanel({
             </div>
           </div>
           <span className={badgeOk}>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#00FFA7]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#41A650]" />
             {t('backups.destinations.available')}
           </span>
         </div>
@@ -374,7 +374,7 @@ function DestinationsPanel({
             className={`${pillBtn} ${
               s3Connected
                 ? 'border border-[#152030] text-[#5a6b7f] hover:text-[#e2e8f0] hover:border-[#1e2a3a]'
-                : 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
+                : 'bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20'
             }`}
           >
             {s3Connected ? t('backups.destinations.manage') : t('backups.destinations.configure')}
@@ -396,12 +396,12 @@ function DestinationsPanel({
             <div className={`w-9 h-9 rounded-xl flex items-center justify-center border ${
               cryptoBroken || (brainConfigured && brain?.last_error)
                 ? 'bg-[#3a1515]/40 border-[#5a2020]'
-                : brainConfigured ? 'bg-[#00FFA7]/10 border-[#00FFA7]/20'
+                : brainConfigured ? 'bg-[#41A650]/10 border-[#41A650]/20'
                 : 'bg-[#152030] border-[#1e2a3a]'
             }`}>
               <GitBranch size={16} className={
                 cryptoBroken || (brainConfigured && brain?.last_error) ? 'text-[#f87171]'
-                : brainConfigured ? 'text-[#00FFA7]'
+                : brainConfigured ? 'text-[#85F2A0]'
                 : 'text-[#5a6b7f]'
               } />
             </div>
@@ -422,7 +422,7 @@ function DestinationsPanel({
             </span>
           ) : brainConfigured ? (
             <span className={badgeOk}>
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00FFA7]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#41A650]" />
               {t('backups.destinations.connected')}
             </span>
           ) : (
@@ -435,7 +435,7 @@ function DestinationsPanel({
               href={brain!.repo_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] text-[#00FFA7]/80 hover:text-[#00FFA7] font-mono inline-flex items-center gap-1 truncate"
+              className="text-[11px] text-[#85F2A0]/80 hover:text-[#85F2A0] font-mono inline-flex items-center gap-1 truncate"
             >
               {brain!.repo_owner}/{brain!.repo_name}
               <ExternalLink size={10} />
@@ -466,7 +466,7 @@ function DestinationsPanel({
               <button
                 onClick={onMilestone}
                 disabled={brainBusy}
-                className={`${pillBtn} bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20 disabled:opacity-50`}
+                className={`${pillBtn} bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20 disabled:opacity-50`}
                 title={brainBusy ? t('backups.destinations.syncInProgress') : undefined}
               >
                 {brainBusy ? <Loader2 size={11} className="animate-spin" /> : <Tag size={11} />}
@@ -504,7 +504,7 @@ function DestinationsPanel({
           <div className="mt-1">
             <Link
               to="/onboarding?reconfigure=brain"
-              className={`${pillBtn} bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20`}
+              className={`${pillBtn} bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20`}
             >
               {t('backups.destinations.configure')}
             </Link>
@@ -556,7 +556,7 @@ function ImportMenu({
             onClick={() => { setOpen(false); onPickZip() }}
             className="w-full flex items-start gap-3 px-3 py-2.5 text-left hover:bg-[#0f1520] transition-colors"
           >
-            <FileArchive size={14} className="text-[#00FFA7] flex-shrink-0 mt-0.5" />
+            <FileArchive size={14} className="text-[#85F2A0] flex-shrink-0 mt-0.5" />
             <div>
               <div className="text-[12px] text-[#e2e8f0] font-medium">{t('backups.importMenu.zipTitle')}</div>
               <div className="text-[10px] text-[#5a6b7f]">{t('backups.importMenu.zipDesc')}</div>
@@ -567,7 +567,7 @@ function ImportMenu({
             disabled={!brainConfigured}
             className="w-full flex items-start gap-3 px-3 py-2.5 text-left hover:bg-[#0f1520] transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-t border-[#152030]"
           >
-            <GitBranch size={14} className={`flex-shrink-0 mt-0.5 ${brainConfigured ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'}`} />
+            <GitBranch size={14} className={`flex-shrink-0 mt-0.5 ${brainConfigured ? 'text-[#85F2A0]' : 'text-[#5a6b7f]'}`} />
             <div>
               <div className="text-[12px] text-[#e2e8f0] font-medium">{t('backups.importMenu.brainTitle')}</div>
               <div className="text-[10px] text-[#5a6b7f]">
@@ -591,7 +591,7 @@ function TabButton({
       onClick={onClick}
       className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px ${
         active
-          ? 'text-[#00FFA7] border-[#00FFA7]'
+          ? 'text-[#85F2A0] border-[#41A650]'
           : dimmed
             ? 'text-[#3d4f65] border-transparent hover:text-[#667085]'
             : 'text-[#8a9aae] border-transparent hover:text-[#e2e8f0]'
@@ -601,7 +601,7 @@ function TabButton({
       <span>{label}</span>
       {typeof count === 'number' && (
         <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-          active ? 'bg-[#00FFA7]/15 text-[#00FFA7]' : 'bg-[#152030] text-[#5a6b7f]'
+          active ? 'bg-[#41A650]/15 text-[#85F2A0]' : 'bg-[#152030] text-[#5a6b7f]'
         }`}>{count}</span>
       )}
     </button>
@@ -661,7 +661,7 @@ function BrainRepoSnapshots({
           {repoUrl && (
             <button
               onClick={() => viewOnGitHub(s)}
-              className="p-1.5 rounded-lg text-[#667085] hover:text-[#00FFA7] hover:bg-[#00FFA7]/10 transition-colors"
+              className="p-1.5 rounded-lg text-[#667085] hover:text-[#85F2A0] hover:bg-[#41A650]/10 transition-colors"
               title={t('backups.action.viewOnGithub')}
             ><ExternalLink size={14} /></button>
           )}
@@ -717,7 +717,7 @@ function BrainRepoSnapshots({
 
   return (
     <div className="space-y-3">
-      {data.head && section(t('backups.brainSnapshots.head'), [data.head], <GitBranch size={14} />, 'text-[#00FFA7]')}
+      {data.head && section(t('backups.brainSnapshots.head'), [data.head], <GitBranch size={14} />, 'text-[#85F2A0]')}
       {section(t('backups.brainSnapshots.milestones'), data.milestones, <Tag size={14} />, 'text-[#F59E0B]')}
       {section(
         t('backups.brainSnapshots.weekly'),
@@ -1040,8 +1040,8 @@ export default function Backups() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#00FFA7]/10 flex items-center justify-center">
-            <HardDriveDownload size={20} className="text-[#00FFA7]" />
+          <div className="w-10 h-10 rounded-xl bg-[#41A650]/10 flex items-center justify-center">
+            <HardDriveDownload size={20} className="text-[#85F2A0]" />
           </div>
           <div>
             <h1 className="text-xl font-semibold text-[#e6edf3]">{t('backups.title')}</h1>
@@ -1089,7 +1089,7 @@ export default function Backups() {
           <button
             onClick={() => handleBackup('local')}
             disabled={jobStatus === 'running'}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00FFA7]/10 border border-[#00FFA7]/20 text-[#00FFA7] hover:bg-[#00FFA7]/20 transition-colors font-medium text-sm disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#41A650]/10 border border-[#41A650]/20 text-[#85F2A0] hover:bg-[#41A650]/20 transition-colors font-medium text-sm disabled:opacity-50"
           >
             {jobStatus === 'running' ? <Loader2 size={16} className="animate-spin" /> : <Plus size={16} />}
             {jobStatus === 'running' ? t('backups.headerBtn.running') : t('backups.headerBtn.newLocal')}
@@ -1099,7 +1099,7 @@ export default function Backups() {
 
       {/* Status banner */}
       {jobStatus === 'done' && (
-        <div className="flex items-center gap-2 px-4 py-3 mb-4 rounded-lg bg-[#00FFA7]/10 border border-[#00FFA7]/20 text-[#00FFA7] text-sm">
+        <div className="flex items-center gap-2 px-4 py-3 mb-4 rounded-lg bg-[#41A650]/10 border border-[#41A650]/20 text-[#85F2A0] text-sm">
           <CheckCircle size={16} />
           {t('backups.statusBanner.success')}
           <button onClick={() => setJobStatus('idle')} className="ml-auto text-xs opacity-60 hover:opacity-100">{t('backups.statusBanner.dismiss')}</button>
@@ -1218,7 +1218,7 @@ export default function Backups() {
                     <tr key={b.filename} className="border-b border-[#152030] last:border-0 hover:bg-[#0f1520]/60 transition-colors">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <FileArchive size={16} className="text-[#00FFA7] shrink-0" />
+                          <FileArchive size={16} className="text-[#85F2A0] shrink-0" />
                           <span className="text-[#e6edf3] font-mono text-xs truncate max-w-[200px] lg:max-w-none">
                             {b.filename}
                           </span>
@@ -1232,7 +1232,7 @@ export default function Backups() {
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => handleDownload(b.filename)}
-                            className="p-1.5 rounded-lg text-[#667085] hover:text-[#00FFA7] hover:bg-[#00FFA7]/10 transition-colors"
+                            className="p-1.5 rounded-lg text-[#667085] hover:text-[#85F2A0] hover:bg-[#41A650]/10 transition-colors"
                             title={t('backups.action.download')}
                           ><Download size={14} /></button>
                           <button
@@ -1266,7 +1266,7 @@ export default function Backups() {
               <p className="text-xs mt-1">{t('backups.s3Tab.notConfiguredHint')}</p>
               <button
                 onClick={() => setS3ConfigOpen(true)}
-                className="mt-4 px-4 py-2 rounded-lg bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20 text-sm font-medium transition-colors"
+                className="mt-4 px-4 py-2 rounded-lg bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20 text-sm font-medium transition-colors"
               >{t('backups.destinations.configure')}</button>
             </div>
           ) : s3Error && !s3Loading && s3Backups.length === 0 ? (
@@ -1307,7 +1307,7 @@ export default function Backups() {
                               const base = import.meta.env.DEV ? 'http://localhost:8080' : ''
                               window.open(`${base}/api/backups/s3/${encodeURIComponent(b.key)}/download`, '_blank')
                             }}
-                            className="p-1.5 rounded-lg text-[#667085] hover:text-[#00FFA7] hover:bg-[#00FFA7]/10 transition-colors"
+                            className="p-1.5 rounded-lg text-[#667085] hover:text-[#85F2A0] hover:bg-[#41A650]/10 transition-colors"
                             title={t('backups.action.downloadFromS3')}
                           ><Download size={14} /></button>
                         </div>
@@ -1331,7 +1331,7 @@ export default function Backups() {
               <p className="text-xs mt-1">{t('backups.brainTab.notConnectedHint')}</p>
               <Link
                 to="/onboarding?reconfigure=brain"
-                className="mt-4 px-4 py-2 rounded-lg bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20 text-sm font-medium transition-colors"
+                className="mt-4 px-4 py-2 rounded-lg bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20 text-sm font-medium transition-colors"
               >{t('backups.destinations.configure')}</Link>
             </div>
           ) : brainLoading ? (
@@ -1364,8 +1364,8 @@ export default function Backups() {
           <div className="bg-[#0b1018] border border-[#152030] rounded-xl w-full max-w-md p-6 shadow-[0_4px_40px_rgba(0,0,0,0.4)]"
             onClick={e => e.stopPropagation()}>
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-xl bg-[#00FFA7]/10 border border-[#00FFA7]/20 flex items-center justify-center">
-                <GitBranch size={16} className="text-[#00FFA7]" />
+              <div className="w-9 h-9 rounded-xl bg-[#41A650]/10 border border-[#41A650]/20 flex items-center justify-center">
+                <GitBranch size={16} className="text-[#85F2A0]" />
               </div>
               <div>
                 <h2 className="text-[16px] font-semibold text-[#e2e8f0]">{t('backups.brainRestore.title')}</h2>
@@ -1389,7 +1389,7 @@ export default function Backups() {
                     type="checkbox"
                     checked={brainRestoreIncludeKb}
                     onChange={e => setBrainRestoreIncludeKb(e.target.checked)}
-                    className="mt-0.5 accent-[#00FFA7]"
+                    className="mt-0.5 accent-[#41A650]"
                   />
                   <div>
                     <div className="text-[12px] text-[#e2e8f0] font-medium">{t('backups.brainRestore.includeKb')}</div>
@@ -1403,7 +1403,7 @@ export default function Backups() {
                       type="checkbox"
                       checked={brainRestoreKeyMatches}
                       onChange={e => setBrainRestoreKeyMatches(e.target.checked)}
-                      className="mt-0.5 accent-[#00FFA7]"
+                      className="mt-0.5 accent-[#41A650]"
                     />
                     <div>
                       <div className="text-[12px] text-[#e2e8f0] font-medium">{t('backups.brainRestore.keyMatches')}</div>
@@ -1419,7 +1419,7 @@ export default function Backups() {
                   >{t('backups.modal.cancel')}</button>
                   <button
                     onClick={() => runBrainRestore(brainRestoreModal)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
                   >
                     <RotateCcw size={14} />
                     {t('backups.brainRestore.btn')}
@@ -1440,7 +1440,7 @@ export default function Backups() {
                       className="h-full rounded-full transition-all duration-300"
                       style={{
                         width: `${brainRestoreProgress.progress}%`,
-                        backgroundColor: brainRestoreProgress.error ? '#ef4444' : '#00FFA7',
+                        backgroundColor: brainRestoreProgress.error ? '#ef4444' : '#85F2A0',
                       }}
                     />
                   </div>
@@ -1470,7 +1470,7 @@ export default function Backups() {
             <div className="space-y-2 mb-6">
               <label className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                 restoreMode === 'merge'
-                  ? 'border-[#00FFA7]/40 bg-[#00FFA7]/5'
+                  ? 'border-[#41A650]/40 bg-[#41A650]/5'
                   : 'border-[#152030] hover:border-[#1e2a3a]'
               }`}>
                 <input
@@ -1478,7 +1478,7 @@ export default function Backups() {
                   name="mode"
                   checked={restoreMode === 'merge'}
                   onChange={() => setRestoreMode('merge')}
-                  className="mt-0.5 accent-[#00FFA7]"
+                  className="mt-0.5 accent-[#41A650]"
                 />
                 <div>
                   <div className="text-sm font-medium text-[#e2e8f0]">{t('backups.modal.merge')}</div>
@@ -1513,7 +1513,7 @@ export default function Backups() {
               </button>
               <button
                 onClick={() => handleRestore(showRestoreModal)}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00FFA7]/10 border border-[#00FFA7]/20 text-[#00FFA7] hover:bg-[#00FFA7]/20 transition-colors font-medium text-sm"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#41A650]/10 border border-[#41A650]/20 text-[#85F2A0] hover:bg-[#41A650]/20 transition-colors font-medium text-sm"
               >
                 <RotateCcw size={14} />
                 {t('backups.modal.restoreBtn')} ({restoreMode === 'merge' ? t('backups.modal.merge') : t('backups.modal.replace')})

@@ -52,7 +52,7 @@ const AGENT_META: Record<string, AgentMeta> = {
   'sage-strategy': { icon: Compass, color: '#818CF8', colorMuted: 'rgba(129,140,248,0.12)', glowColor: 'rgba(129,140,248,0.15)', label: 'Strategy' },
 }
 
-const DEFAULT_META: AgentMeta = { icon: Bot, color: '#00FFA7', colorMuted: 'rgba(0,255,167,0.12)', glowColor: 'rgba(0,255,167,0.15)', label: 'Agent' }
+const DEFAULT_META: AgentMeta = { icon: Bot, color: '#85F2A0', colorMuted: 'rgba(133, 242, 160,0.12)', glowColor: 'rgba(133, 242, 160,0.15)', label: 'Agent' }
 
 function getMeta(name: string): AgentMeta {
   return AGENT_META[name] || DEFAULT_META
@@ -139,24 +139,24 @@ export default function Memory() {
         {!loading && data && (
           <div className="mt-4 flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#00FFA7]/10">
-                <Database size={12} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#41A650]/10">
+                <Database size={12} className="text-[#85F2A0]" />
               </div>
               <span className="text-[#8b949e]">
                 <span className="font-medium text-[#e6edf3]">{totalEntries}</span> total entries
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#00FFA7]/10">
-                <Brain size={12} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#41A650]/10">
+                <Brain size={12} className="text-[#85F2A0]" />
               </div>
               <span className="text-[#8b949e]">
                 <span className="font-medium text-[#e6edf3]">{globalFiles.length}</span> global files
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#00FFA7]/10">
-                <Bot size={12} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-5 h-5 rounded bg-[#41A650]/10">
+                <Bot size={12} className="text-[#85F2A0]" />
               </div>
               <span className="text-[#8b949e]">
                 <span className="font-medium text-[#e6edf3]">{agentCount}</span> agents with memory
@@ -183,11 +183,11 @@ export default function Memory() {
           {globalFiles.length > 0 && (
             <div>
               <h2 className="text-xs font-medium text-[#667085] uppercase tracking-wider mb-3 flex items-center gap-2">
-                <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                  <Brain size={12} className="text-[#00FFA7]" />
+                <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                  <Brain size={12} className="text-[#85F2A0]" />
                 </div>
                 Global Memory
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 normal-case">
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 normal-case">
                   {globalFiles.length}
                 </span>
               </h2>
@@ -195,7 +195,7 @@ export default function Memory() {
                 {globalFiles.map((file) => (
                   <div
                     key={file.path}
-                    className="group bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]"
+                    className="group bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]"
                   >
                     <button onClick={() => toggleGlobal(file)} className="w-full flex items-center justify-between p-4 text-left">
                       <div className="flex items-center gap-3">
@@ -233,11 +233,11 @@ export default function Memory() {
           {/* Agent Memory */}
           <div>
             <h2 className="text-xs font-medium text-[#667085] uppercase tracking-wider mb-3 flex items-center gap-2">
-              <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <Bot size={12} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <Bot size={12} className="text-[#85F2A0]" />
               </div>
               Agent Memory
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 normal-case">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 normal-case">
                 {agentCount}
               </span>
             </h2>

@@ -22,7 +22,7 @@ interface BrainRepoStatus {
   cancel_requested?: boolean
 }
 
-const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20"
+const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
 
 export default function BrainRepo() {
   const { t } = useTranslation()
@@ -162,10 +162,10 @@ export default function BrainRepo() {
           <div className="flex items-center gap-3">
             <div className={`flex items-center justify-center w-9 h-9 rounded-xl border ${
               status?.connected
-                ? 'bg-[#00FFA7]/10 border-[#00FFA7]/20'
+                ? 'bg-[#41A650]/10 border-[#41A650]/20'
                 : 'bg-[#5a6b7f]/10 border-[#5a6b7f]/20'
             }`}>
-              <GitBranch size={16} className={status?.connected ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'} />
+              <GitBranch size={16} className={status?.connected ? 'text-[#85F2A0]' : 'text-[#5a6b7f]'} />
             </div>
             <div>
               <p className="text-[14px] font-semibold text-[#e2e8f0]">
@@ -176,7 +176,7 @@ export default function BrainRepo() {
                   href={status.repo_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] text-[#00FFA7]/70 hover:text-[#00FFA7] transition-colors truncate max-w-xs block"
+                  className="text-[11px] text-[#85F2A0]/70 hover:text-[#85F2A0] transition-colors truncate max-w-xs block"
                 >
                   {status.repo_url}
                 </a>
@@ -184,8 +184,8 @@ export default function BrainRepo() {
             </div>
           </div>
           {status?.connected && (
-            <span className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-[#00FFA7]/10 border border-[#00FFA7]/20 text-[10px] font-semibold uppercase tracking-wider text-[#00FFA7]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00FFA7]" />
+            <span className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-[#41A650]/10 border border-[#41A650]/20 text-[10px] font-semibold uppercase tracking-wider text-[#85F2A0]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#41A650]" />
               {t('brainRepoSettings.status.active')}
             </span>
           )}
@@ -208,7 +208,7 @@ export default function BrainRepo() {
             </div>
             <div>
               <p className="text-[10px] font-semibold text-[#5a6b7f] uppercase tracking-[0.08em]">{t('brainRepoSettings.status.autoSync')}</p>
-              <p className={`text-[13px] mt-1 ${status.sync_enabled ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'}`}>
+              <p className={`text-[13px] mt-1 ${status.sync_enabled ? 'text-[#85F2A0]' : 'text-[#5a6b7f]'}`}>
                 {status.sync_enabled ? t('brainRepoSettings.status.enabled') : t('brainRepoSettings.status.disabled')}
               </p>
             </div>
@@ -229,7 +229,7 @@ export default function BrainRepo() {
                 <button
                   onClick={handleSync}
                   disabled={busy}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
                 >
                   {busy ? <Loader2 size={14} className="animate-spin" /> : <RefreshCw size={14} />}
                   {busy
@@ -251,7 +251,7 @@ export default function BrainRepo() {
             {syncMsg && (
               <div className={`mt-3 flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${
                 syncMsg.type === 'ok'
-                  ? 'bg-[#0a1a12] border-[#00FFA7]/20 text-[#4a9a6a]'
+                  ? 'bg-[#0a1a12] border-[#41A650]/20 text-[#4a9a6a]'
                   : 'bg-[#1a0a0a] border-[#3a1515] text-[#f87171]'
               }`}>
                 {syncMsg.type === 'ok' ? <CheckCircle size={12} /> : <AlertTriangle size={12} />}
@@ -276,7 +276,7 @@ export default function BrainRepo() {
               <button
                 onClick={handleMilestone}
                 disabled={busy || !milestoneInput.trim()}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors disabled:opacity-40 flex-shrink-0"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors disabled:opacity-40 flex-shrink-0"
                 title={busy ? t('brainRepoSettings.sync.running') : undefined}
               >
                 {busy ? <Loader2 size={14} className="animate-spin" /> : <Tag size={14} />}
@@ -290,7 +290,7 @@ export default function BrainRepo() {
             {milestoneMsg && (
               <div className={`mt-3 flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${
                 milestoneMsg.type === 'ok'
-                  ? 'bg-[#0a1a12] border-[#00FFA7]/20 text-[#4a9a6a]'
+                  ? 'bg-[#0a1a12] border-[#41A650]/20 text-[#4a9a6a]'
                   : 'bg-[#1a0a0a] border-[#3a1515] text-[#f87171]'
               }`}>
                 {milestoneMsg.type === 'ok' ? <CheckCircle size={12} /> : <AlertTriangle size={12} />}
@@ -350,7 +350,7 @@ export default function BrainRepo() {
           </p>
           <a
             href="/onboarding?reconfigure=brain"
-            className="inline-block mt-4 px-4 py-2 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+            className="inline-block mt-4 px-4 py-2 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
           >
             {t('brainRepoSettings.empty.btn')}
           </a>

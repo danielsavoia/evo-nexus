@@ -148,7 +148,7 @@ export default function Home() {
               ))}
             </div>
             <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-[0_0_15px_rgba(0,255,167,0.3)]"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-[0_0_15px_rgba(65, 166, 80, 0.3)]"
               onClick={() => scrollTo("quickstart")}
               data-testid="button-get-started-nav"
             >
@@ -205,7 +205,7 @@ export default function Home() {
               <span>{t("hero.badge", { version: __APP_VERSION__ })}</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter max-w-4xl mx-auto leading-tight mb-6 font-heading">
-              {t("hero.title")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-300">{t("hero.titleHighlight")}</span>
+              {t("hero.title")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#85F2A0]">{t("hero.titleHighlight")}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               {t("hero.subtitle")}
@@ -229,7 +229,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-8 h-14 shadow-[0_0_20px_rgba(0,255,167,0.4)]"
+                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-8 h-14 shadow-[0_0_20px_rgba(65, 166, 80, 0.4)]"
                 onClick={() => scrollTo("quickstart")}
                 data-testid="button-get-started-hero"
               >
@@ -257,14 +257,14 @@ export default function Home() {
               <div className="absolute top-0 inset-x-0 h-8 bg-muted flex items-center px-4 gap-2 border-b border-border">
                 <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 <div className="mx-auto text-xs text-muted-foreground font-mono">bash</div>
               </div>
               <div className="p-6 pt-12 font-mono text-sm leading-relaxed text-gray-300">
                 <div className="flex gap-2"><span className="text-primary">$</span> <span>Ambiente provisionado pela equipe Clever.</span></div>
-                <div className="text-emerald-400 mt-2">&#10003; Claude Code CLI detected</div>
-                <div className="text-emerald-400">&#10003; Dependencies installed</div>
-                <div className="text-emerald-400">&#10003; Dashboard built</div>
+                <div className="text-[#85F2A0] mt-2">&#10003; Claude Code CLI detected</div>
+                <div className="text-[#85F2A0]">&#10003; Dependencies installed</div>
+                <div className="text-[#85F2A0]">&#10003; Dashboard built</div>
                 <div className="text-blue-400 mt-2 font-bold">&#8594; Open http://localhost:8080</div>
                 <div className="w-2 h-4 bg-primary animate-pulse mt-2"></div>
               </div>
@@ -454,7 +454,7 @@ export default function Home() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`group relative rounded-xl border border-border bg-card overflow-hidden shadow-lg transition-all hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,255,167,0.1)] cursor-pointer${i === 0 ? ' md:col-span-2' : ''}`}
+                  className={`group relative rounded-xl border border-border bg-card overflow-hidden shadow-lg transition-all hover:border-primary/50 hover:shadow-[0_0_30px_rgba(65, 166, 80, 0.1)] cursor-pointer${i === 0 ? ' md:col-span-2' : ''}`}
                   onClick={() => setLightboxImg(item.img)}
                   data-testid={`screenshot-${i}`}
                 >
@@ -482,7 +482,7 @@ export default function Home() {
               <SiLinear className="w-7 h-7 hover:text-purple-500 transition-colors" title="Linear" />
               <SiDiscord className="w-7 h-7 hover:text-indigo-400 transition-colors" title="Discord" />
               <SiTelegram className="w-7 h-7 hover:text-blue-400 transition-colors" title="Telegram" />
-              <SiWhatsapp className="w-7 h-7 hover:text-green-500 transition-colors" title="WhatsApp" />
+              <SiWhatsapp className="w-7 h-7 hover:text-[#41A650] transition-colors" title="WhatsApp" />
               <SiStripe className="w-7 h-7 hover:text-indigo-500 transition-colors" title="Stripe" />
               <SiTodoist className="w-7 h-7 hover:text-red-500 transition-colors" title="Todoist" />
               <SiYoutube className="w-7 h-7 hover:text-red-600 transition-colors" title="YouTube" />
@@ -515,7 +515,7 @@ export default function Home() {
                 { step: 3, title: t("howItWorks.step3.title"), code: t("howItWorks.step3.code"), desc: t("howItWorks.step3.desc") },
               ].map((item, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center text-center relative z-10">
-                  <div className="w-12 h-12 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center text-lg font-bold text-primary mb-3 shadow-[0_0_12px_rgba(0,255,167,0.15)]">
+                  <div className="w-12 h-12 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center text-lg font-bold text-primary mb-3 shadow-[0_0_12px_rgba(65, 166, 80, 0.15)]">
                     {item.step}
                   </div>
                   <h3 className="text-sm font-bold mb-1">{item.title}</h3>
@@ -532,7 +532,7 @@ export default function Home() {
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 </div>
                 <span className="text-xs text-muted-foreground font-mono">terminal</span>
                 <Button
@@ -552,7 +552,7 @@ export default function Home() {
             </div>
 
             <div className="text-center mt-8">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-10 h-14 shadow-[0_0_20px_rgba(0,255,167,0.4)]" data-testid="button-get-started-bottom" asChild>
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-10 h-14 shadow-[0_0_20px_rgba(65, 166, 80, 0.4)]" data-testid="button-get-started-bottom" asChild>
                 <a href={DOCS_URL}>
                   {t("quickstart.viewGuide")}
                 </a>

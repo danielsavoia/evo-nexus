@@ -25,7 +25,7 @@ interface SearchResponse {
 }
 
 const SCORE_COLOR = (score: number) =>
-  score > 0.8 ? 'bg-[#00FFA7]/10 text-[#00FFA7]' :
+  score > 0.8 ? 'bg-[#41A650]/10 text-[#85F2A0]' :
   score > 0.6 ? 'bg-yellow-500/10 text-yellow-400' :
   'bg-white/5 text-[#667085]'
 
@@ -77,13 +77,13 @@ export default function KnowledgeSearch() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              className="w-full bg-[#0C111D] border border-[#344054] rounded-lg pl-10 pr-3 py-2.5 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#00FFA7] focus:outline-none"
+              className="w-full bg-[#0C111D] border border-[#344054] rounded-lg pl-10 pr-3 py-2.5 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
             />
           </div>
           <button
             onClick={handleSearch}
             disabled={searching || !query.trim()}
-            className="px-5 py-2.5 bg-[#00FFA7] text-[#0C111D] rounded-lg font-medium text-sm hover:bg-[#00FFA7]/90 transition-colors disabled:opacity-50"
+            className="px-5 py-2.5 bg-[#41A650] text-[#0C111D] rounded-lg font-medium text-sm hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
           >
             {searching ? 'Searching...' : 'Search'}
           </button>
@@ -100,16 +100,16 @@ export default function KnowledgeSearch() {
 
         {showFilters && (
           <div className="flex items-center gap-3 mt-3 flex-wrap">
-            <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+            <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
               <option value="">All spaces</option>
             </select>
-            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
               <option value="">All content types</option>
               {['lesson', 'tutorial', 'faq', 'reference', 'transcript', 'article', 'decision', 'note'].map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
-            <select value={topK} onChange={(e) => setTopK(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#00FFA7] focus:outline-none">
+            <select value={topK} onChange={(e) => setTopK(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
               {['5', '10', '20', '50'].map((k) => <option key={k} value={k}>Top {k}</option>)}
             </select>
           </div>
@@ -137,7 +137,7 @@ export default function KnowledgeSearch() {
               {results.results.map((r, i) => {
                 const score = r.rrf_score ?? r.similarity_score ?? 0
                 return (
-                  <div key={r.id ?? i} className="bg-[#182230] border border-[#344054] rounded-xl p-4 hover:border-[#00FFA7]/30 transition-colors">
+                  <div key={r.id ?? i} className="bg-[#182230] border border-[#344054] rounded-xl p-4 hover:border-[#41A650]/30 transition-colors">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="flex-1 min-w-0">
                         {r.document_title && (
@@ -152,7 +152,7 @@ export default function KnowledgeSearch() {
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
                         {r.content_type && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#00FFA7]/10 text-[#00FFA7]">{r.content_type}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#41A650]/10 text-[#85F2A0]">{r.content_type}</span>
                         )}
                         {score > 0 && (
                           <span className={`text-xs px-1.5 py-0.5 rounded ${SCORE_COLOR(score)}`}>

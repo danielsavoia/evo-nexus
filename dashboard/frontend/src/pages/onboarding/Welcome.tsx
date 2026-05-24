@@ -43,7 +43,7 @@ function NetworkCanvas() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(0, 255, 167, 0.25)'
+        ctx.fillStyle = 'rgba(133, 242, 160, 0.25)'
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -55,7 +55,7 @@ function NetworkCanvas() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(q.x, q.y)
-            ctx.strokeStyle = `rgba(0, 255, 167, ${0.06 * (1 - dist / maxDist)})`
+            ctx.strokeStyle = `rgba(133, 242, 160, ${0.06 * (1 - dist / maxDist)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -109,14 +109,14 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
 
             <button
               onClick={onFirstTime}
-              className="w-full py-3 px-4 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+              className="w-full py-3 px-4 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
             >
               {t('onboarding.welcome.configureFromScratch')}
             </button>
 
             <button
               onClick={onRestore}
-              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
             >
               {t('onboarding.welcome.restoreBrainRepo')}
             </button>

@@ -78,7 +78,7 @@ type AssistantBlock =
 
 type Status = 'idle' | 'connecting' | 'running' | 'error'
 
-export default function AgentChat({ agent, sessionId, accentColor = '#00FFA7', externalLoading = false, externalError = null, onPendingCountChange, onNeedsAttention, workingDir: _workingDir, threadTicketId: _threadTicketId, onTurnCompleted }: AgentChatProps) {
+export default function AgentChat({ agent, sessionId, accentColor = '#85F2A0', externalLoading = false, externalError = null, onPendingCountChange, onNeedsAttention, workingDir: _workingDir, threadTicketId: _threadTicketId, onTurnCompleted }: AgentChatProps) {
   const { dismissBySession } = useNotifications()
   const toast = useToast()
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -1107,7 +1107,7 @@ export default function AgentChat({ agent, sessionId, accentColor = '#00FFA7', e
                     className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-md text-[#667085] hover:text-[#e6edf3] hover:bg-[#21262d]"
                     title={copiedIndex === i ? 'Copied' : 'Copy message'}
                   >
-                    {copiedIndex === i ? <Check size={12} className="text-[#00FFA7]" /> : <Copy size={12} />}
+                    {copiedIndex === i ? <Check size={12} className="text-[#85F2A0]" /> : <Copy size={12} />}
                   </button>
                   {msg.uuid && status !== 'running' && !editingUuid && (
                     <button
@@ -1187,7 +1187,7 @@ export default function AgentChat({ agent, sessionId, accentColor = '#00FFA7', e
                         className="flex items-center justify-center w-6 h-6 rounded-md text-[#667085] hover:text-[#e6edf3] hover:bg-[#21262d]"
                         title={copiedIndex === i ? 'Copied' : 'Copy message'}
                       >
-                        {copiedIndex === i ? <Check size={12} className="text-[#00FFA7]" /> : <Copy size={12} />}
+                        {copiedIndex === i ? <Check size={12} className="text-[#85F2A0]" /> : <Copy size={12} />}
                       </button>
                     </div>
                   )}
@@ -1511,7 +1511,7 @@ function ToolCard({ block, accentColor }: { block: Extract<AssistantBlock, { typ
               </span>
             )}
             {isDone ? (
-              <CheckCircle2 size={13} className={block.subagentStatus === 'failed' ? 'text-[#ef4444]' : 'text-[#22C55E]'} />
+              <CheckCircle2 size={13} className={block.subagentStatus === 'failed' ? 'text-[#ef4444]' : 'text-[#85F2A0]'} />
             ) : (
               <TypingIndicatorMini accentColor={accentColor} />
             )}
@@ -1569,7 +1569,7 @@ function ToolCard({ block, accentColor }: { block: Extract<AssistantBlock, { typ
           <span className="text-[#667085] text-[11px]">{completedCount}/{todos.length} done</span>
           <span className="ml-auto flex-shrink-0">
             {block.done ? (
-              <CheckCircle2 size={13} className="text-[#22C55E]" />
+              <CheckCircle2 size={13} className="text-[#85F2A0]" />
             ) : (
               <TypingIndicatorMini accentColor={accentColor} />
             )}
@@ -1585,7 +1585,7 @@ function ToolCard({ block, accentColor }: { block: Extract<AssistantBlock, { typ
               <div key={i} className="flex items-start gap-2 text-[12px]">
                 <span
                   className="flex-shrink-0 mt-0.5 font-mono text-[13px]"
-                  style={{ color: isPending ? '#667085' : '#00FFA7' }}
+                  style={{ color: isPending ? '#667085' : '#85F2A0' }}
                 >
                   {icon}
                 </span>
@@ -1622,7 +1622,7 @@ function ToolCard({ block, accentColor }: { block: Extract<AssistantBlock, { typ
         )}
         <span className="ml-auto flex-shrink-0">
           {block.done ? (
-            <CheckCircle2 size={13} className="text-[#22C55E]" />
+            <CheckCircle2 size={13} className="text-[#85F2A0]" />
           ) : (
             <TypingIndicatorMini accentColor={accentColor} />
           )}

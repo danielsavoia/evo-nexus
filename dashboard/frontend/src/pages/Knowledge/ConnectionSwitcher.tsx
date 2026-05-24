@@ -4,7 +4,7 @@ import { useKnowledge, type KnowledgeConnection } from '../../context/KnowledgeC
 
 function StatusIcon({ status }: { status: KnowledgeConnection['status'] }) {
   if (status === 'ready')
-    return <Circle size={8} className="fill-[#00FFA7] text-[#00FFA7]" />
+    return <Circle size={8} className="fill-[#85F2A0] text-[#85F2A0]" />
   if (status === 'needs_migration')
     return <AlertTriangle size={10} className="text-yellow-400" />
   if (status === 'error')
@@ -44,7 +44,7 @@ export default function ConnectionSwitcher() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-3 py-1.5 bg-[#182230] border border-[#344054] rounded-lg text-sm font-medium text-[#D0D5DD] hover:border-[#00FFA7]/50 transition-colors min-w-[180px]"
+        className="flex items-center gap-2 px-3 py-1.5 bg-[#182230] border border-[#344054] rounded-lg text-sm font-medium text-[#D0D5DD] hover:border-[#41A650]/50 transition-colors min-w-[180px]"
       >
         {active ? (
           <>
@@ -64,13 +64,13 @@ export default function ConnectionSwitcher() {
               key={c.id}
               onClick={() => { setActiveConnectionId(c.id); setOpen(false) }}
               className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors hover:bg-white/5 ${
-                c.id === activeConnectionId ? 'text-[#00FFA7]' : 'text-[#D0D5DD]'
+                c.id === activeConnectionId ? 'text-[#85F2A0]' : 'text-[#D0D5DD]'
               }`}
             >
               <StatusIcon status={c.status} />
               <span className="flex-1 text-left truncate">{c.name}</span>
               {c.id === activeConnectionId && (
-                <span className="text-[10px] text-[#00FFA7]">active</span>
+                <span className="text-[10px] text-[#85F2A0]">active</span>
               )}
             </button>
           ))}

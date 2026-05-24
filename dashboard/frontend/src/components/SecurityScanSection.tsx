@@ -5,7 +5,7 @@
  * install modal). Runs POST /api/plugins/scan on mount and propagates the
  * verdict upward via onVerdict / onOverride callbacks.
  *
- * Dark theme: bg-[#161b22], border-[#344054], accent #00FFA7
+ * Dark theme: bg-[#161b22], border-[#344054], accent #41A650
  */
 
 import { useEffect, useRef, useState } from 'react'
@@ -114,8 +114,8 @@ function verdictColors(v: ScanVerdict) {
   switch (v) {
     case 'APPROVE':
       return {
-        badge: 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/30',
-        icon: <ShieldCheck size={14} className="text-[#00FFA7]" />,
+        badge: 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/30',
+        icon: <ShieldCheck size={14} className="text-[#85F2A0]" />,
       }
     case 'WARN':
       return {
@@ -221,7 +221,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
     <div className="border border-[#344054] rounded-xl overflow-hidden">
       {/* Section header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-white/3 border-b border-[#21262d]">
-        <Shield size={14} className="text-[#00FFA7] shrink-0" />
+        <Shield size={14} className="text-[#85F2A0] shrink-0" />
         <span className="text-xs font-semibold text-[#D0D5DD]">Security Scan</span>
         {result?.cache_hit && (
           <span className="ml-auto text-[10px] text-[#667085] bg-white/5 rounded px-1.5 py-0.5">

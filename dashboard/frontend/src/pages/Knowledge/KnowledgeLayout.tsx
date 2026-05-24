@@ -29,7 +29,7 @@ export default function KnowledgeLayout() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-[#F9FAFB] flex items-center gap-2">
-            <Database size={22} className="text-[#00FFA7]" />
+            <Database size={22} className="text-[#85F2A0]" />
             {t('knowledge.title')}
           </h1>
           <p className="text-[#667085] mt-1 text-sm">
@@ -47,7 +47,7 @@ export default function KnowledgeLayout() {
               className={({ isActive }) =>
                 `px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px whitespace-nowrap ${
                   isActive
-                    ? 'text-[#00FFA7] border-[#00FFA7]'
+                    ? 'text-[#85F2A0] border-[#41A650]'
                     : 'text-[#667085] border-transparent hover:text-[#D0D5DD]'
                 }`
               }

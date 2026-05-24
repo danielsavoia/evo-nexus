@@ -55,7 +55,7 @@ function MarketplaceTab() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48">
-        <Loader2 size={20} className="text-[#00FFA7] animate-spin" />
+        <Loader2 size={20} className="text-[#85F2A0] animate-spin" />
       </div>
     )
   }
@@ -81,7 +81,7 @@ function MarketplaceTab() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t('plugins.searchMarketplace')}
-          className="w-full bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#00FFA7]/40 transition-colors"
+          className="w-full bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/40 transition-colors"
         />
       </div>
 
@@ -95,14 +95,14 @@ function MarketplaceTab() {
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="group bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/30 hover:shadow-[0_0_20px_rgba(0,255,167,0.04)]"
+              className="group bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/30 hover:shadow-[0_0_20px_rgba(133, 242, 160,0.04)]"
             >
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/15 to-transparent rounded-t-2xl" />
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/12 to-transparent rounded-t-2xl" />
 
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15 shrink-0">
-                    <Package size={16} className="text-[#00FFA7]" />
+                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15 shrink-0">
+                    <Package size={16} className="text-[#85F2A0]" />
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-semibold text-[#e6edf3] truncate">{item.name}</p>
@@ -110,7 +110,7 @@ function MarketplaceTab() {
                   </div>
                 </div>
                 {item.verified ? (
-                  <span className="flex items-center gap-1 text-[10px] font-medium text-[#00FFA7] bg-[#00FFA7]/10 px-2 py-0.5 rounded-full border border-[#00FFA7]/20 shrink-0">
+                  <span className="flex items-center gap-1 text-[10px] font-medium text-[#85F2A0] bg-[#41A650]/10 px-2 py-0.5 rounded-full border border-[#41A650]/20 shrink-0">
                     <CheckCircle size={10} />
                     {t('plugins.verified')}
                   </span>
@@ -137,7 +137,7 @@ function MarketplaceTab() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1"
+                    className="text-[10px] text-[#667085] hover:text-[#85F2A0] transition-colors flex items-center gap-1"
                   >
                     <Star size={10} />
                     {t('plugins.viewRepo')}
@@ -219,7 +219,7 @@ export default function Plugins() {
           </button>
           <button
             onClick={() => setShowInstall(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#00FFA7] text-black rounded-lg hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#41A650] text-black rounded-lg hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={16} />
             {t('plugins.install')}
@@ -235,7 +235,7 @@ export default function Plugins() {
             onClick={() => setTab(key)}
             className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${
               tab === key
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20'
+                ? 'bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20'
                 : 'text-[#667085] hover:text-[#D0D5DD]'
             }`}
           >
@@ -260,7 +260,7 @@ export default function Plugins() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('plugins.searchInstalled')}
-              className="w-full max-w-sm bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#00FFA7]/40 transition-colors"
+              className="w-full max-w-sm bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/40 transition-colors"
             />
           </div>
 
@@ -273,7 +273,7 @@ export default function Plugins() {
 
           {loading ? (
             <div className="flex items-center justify-center h-48">
-              <Loader2 size={20} className="text-[#00FFA7] animate-spin" />
+              <Loader2 size={20} className="text-[#85F2A0] animate-spin" />
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-16">
@@ -286,7 +286,7 @@ export default function Plugins() {
               {plugins.length === 0 && (
                 <button
                   onClick={() => setShowInstall(true)}
-                  className="text-sm text-[#00FFA7] hover:text-[#00FFA7]/80 transition-colors"
+                  className="text-sm text-[#85F2A0] hover:text-[#85F2A0]/80 transition-colors"
                 >
                   {t('plugins.installFirst')}
                 </button>

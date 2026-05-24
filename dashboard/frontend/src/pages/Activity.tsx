@@ -107,7 +107,7 @@ function getDateRange(period: 'today' | '7d' | '30d' | 'all'): Date | null {
 function StatusPill({ status }: { status: RunStatus }) {
   const norm = normalizeStatus(status)
   const cls = {
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    success: 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20',
     error: 'bg-red-500/10 text-red-400 border-red-500/20',
     running: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
   }[norm]
@@ -136,8 +136,8 @@ function TypeBadge({ type }: { type: ItemType }) {
 
 function RowIcon({ type }: { type: ItemType }) {
   if (type === 'heartbeat') return (
-    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-emerald-500/8 border border-emerald-500/15 shrink-0">
-      <Activity size={16} className="text-emerald-400" />
+    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15 shrink-0">
+      <Activity size={16} className="text-[#85F2A0]" />
     </div>
   )
   if (type === 'trigger') return (
@@ -271,7 +271,7 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
                 {hasCost && (
                   <div>
                     <p className="text-[10px] text-[#667085] mb-0.5">Cost</p>
-                    <p className="text-sm text-[#00FFA7] font-mono">${item.cost_usd!.toFixed(4)}</p>
+                    <p className="text-sm text-[#85F2A0] font-mono">${item.cost_usd!.toFixed(4)}</p>
                   </div>
                 )}
               </div>
@@ -302,7 +302,7 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
           <Link
             to={dedicatedHref}
             onClick={onClose}
-            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-[#161b22] border border-[#21262d] text-sm text-[#667085] hover:text-[#e6edf3] hover:border-[#00FFA7]/30 transition-all"
+            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-[#161b22] border border-[#21262d] text-sm text-[#667085] hover:text-[#e6edf3] hover:border-[#41A650]/30 transition-all"
           >
             <ExternalLink size={14} />
             Open in dedicated page
@@ -558,7 +558,7 @@ export default function ActivityPage() {
                     onClick={() => toggleType(type)}
                     className={`flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full border transition-all ${
                       active
-                        ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/30'
+                        ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/30'
                         : 'bg-transparent text-[#667085] border-[#344054] hover:border-[#667085] hover:text-[#D0D5DD]'
                     }`}
                   >
@@ -578,7 +578,7 @@ export default function ActivityPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#00FFA7]/40 cursor-pointer"
+              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#41A650]/40 cursor-pointer"
             >
               <option value="all">All statuses</option>
               <option value="success">Success</option>
@@ -594,7 +594,7 @@ export default function ActivityPage() {
                   onClick={() => setPeriod(p.key)}
                   className={`text-[12px] px-3 py-1.5 transition-colors ${
                     period === p.key
-                      ? 'bg-[#00FFA7]/10 text-[#00FFA7]'
+                      ? 'bg-[#41A650]/10 text-[#85F2A0]'
                       : 'text-[#667085] hover:text-[#D0D5DD]'
                   }`}
                 >
@@ -609,7 +609,7 @@ export default function ActivityPage() {
               value={displaySearch}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="Search by name..."
-              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 w-48 focus:outline-none focus:border-[#00FFA7]/40 placeholder-[#667085]"
+              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 w-48 focus:outline-none focus:border-[#41A650]/40 placeholder-[#667085]"
             />
 
             {/* Pause */}
@@ -689,7 +689,7 @@ export default function ActivityPage() {
                 <div className="px-4 py-3 border-t border-[#21262d]/60">
                   <button
                     onClick={() => setPage((p) => p + 1)}
-                    className="text-[12px] text-[#667085] hover:text-[#00FFA7] transition-colors"
+                    className="text-[12px] text-[#667085] hover:text-[#85F2A0] transition-colors"
                   >
                     Load more ({filtered.length - paginated.length} remaining)
                   </button>

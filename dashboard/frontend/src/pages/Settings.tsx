@@ -19,8 +19,8 @@ function Toggle({ on, onChange, disabled }: { on: boolean; onChange: (v: boolean
       aria-checked={on}
       disabled={disabled}
       onClick={() => onChange(!on)}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00FFA7] disabled:opacity-40 disabled:cursor-not-allowed ${
-        on ? 'bg-[#00FFA7]' : 'bg-[#1e2a3a]'
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#41A650] disabled:opacity-40 disabled:cursor-not-allowed ${
+        on ? 'bg-[#41A650]' : 'bg-[#1e2a3a]'
       }`}
     >
       <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 translate-y-0.5 ${
@@ -53,7 +53,7 @@ function getAgentMeta(agentName: string) {
 }
 
 // ── Input / label class strings (same as Providers.tsx) ────────────────────
-const inp = 'w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20'
+const inp = 'w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20'
 const lbl = 'block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase'
 
 // ── Toast notification ──────────────────────────────────────────────────────
@@ -82,7 +82,7 @@ function ToastStack({ toasts }: { toasts: Toast[] }) {
           key={t.id}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium shadow-lg border transition-all ${
             t.type === 'success'
-              ? 'bg-[#0b1018] border-[#00FFA7]/30 text-[#00FFA7]'
+              ? 'bg-[#0b1018] border-[#41A650]/30 text-[#85F2A0]'
               : t.type === 'error'
               ? 'bg-[#0b1018] border-red-500/30 text-red-400'
               : 'bg-[#0b1018] border-[#21262d] text-[#667085]'
@@ -98,7 +98,7 @@ function ToastStack({ toasts }: { toasts: Toast[] }) {
 // ── Frequency badge ─────────────────────────────────────────────────────────
 function FreqBadge({ freq }: { freq: string }) {
   const styles: Record<string, string> = {
-    daily: 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20',
+    daily: 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20',
     weekly: 'bg-[#818CF8]/10 text-[#818CF8] border-[#818CF8]/20',
     monthly: 'bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/20',
   }
@@ -293,7 +293,7 @@ function WorkspaceTab({ showToast }: { showToast: (msg: string, type?: ToastType
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#00FFA7] text-[#080c14] font-semibold text-sm hover:bg-[#00e69a] transition-colors disabled:opacity-40"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#41A650] text-[#080c14] font-semibold text-sm hover:bg-[#00e69a] transition-colors disabled:opacity-40"
         >
           <Save size={14} />
           {saving ? t('common.saving') : t('settings.saveWorkspace')}
@@ -472,9 +472,9 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                                       if (e.key === 'Enter') commitEdit(key, r.slug)
                                       if (e.key === 'Escape') setEditingSlug(null)
                                     }}
-                                    className="w-28 px-2 py-1 rounded bg-[#0f1520] border border-[#00FFA7]/40 text-[#e6edf3] text-[12px] focus:outline-none font-mono"
+                                    className="w-28 px-2 py-1 rounded bg-[#0f1520] border border-[#41A650]/40 text-[#e6edf3] text-[12px] focus:outline-none font-mono"
                                   />
-                                  <button onClick={() => commitEdit(key, r.slug)} className="text-[#00FFA7] hover:text-[#00e69a] p-0.5 transition-colors">
+                                  <button onClick={() => commitEdit(key, r.slug)} className="text-[#85F2A0] hover:text-[#00e69a] p-0.5 transition-colors">
                                     <Check size={13} />
                                   </button>
                                   <button onClick={() => setEditingSlug(null)} className="text-[#667085] hover:text-red-400 p-0.5 transition-colors">
@@ -569,7 +569,7 @@ function ReferenceTab() {
             onClick={() => setActiveRef(tab.key)}
             className={`px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
               activeRef === tab.key
-                ? 'text-[#00FFA7] border-[#00FFA7]'
+                ? 'text-[#85F2A0] border-[#41A650]'
                 : 'text-[#667085] border-transparent hover:text-[#e6edf3] hover:border-[#21262d]'
             }`}
           >
@@ -740,7 +740,7 @@ export default function Settings() {
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
         <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d]">
-          <SettingsIcon size={20} className="text-[#00FFA7]" />
+          <SettingsIcon size={20} className="text-[#85F2A0]" />
         </div>
         <div>
           <h1 className="text-xl font-bold text-white tracking-tight">{t('settings.title')}</h1>
@@ -756,7 +756,7 @@ export default function Settings() {
             onClick={() => setActiveTab(tab.key)}
             className={`px-5 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
               activeTab === tab.key
-                ? 'text-[#00FFA7] border-[#00FFA7]'
+                ? 'text-[#85F2A0] border-[#41A650]'
                 : 'text-[#667085] border-transparent hover:text-[#e6edf3] hover:border-[#21262d]'
             }`}
           >

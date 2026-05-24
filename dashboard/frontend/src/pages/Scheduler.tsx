@@ -189,7 +189,7 @@ export default function Scheduler() {
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center">
-            <Clock size={20} className="text-[#00FFA7]" />
+            <Clock size={20} className="text-[#85F2A0]" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-[#e6edf3]">{t('scheduler.title')}</h1>
@@ -211,7 +211,7 @@ export default function Scheduler() {
           </button>
           <button
             onClick={() => { setLoading(true); fetchData() }}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#21262d] bg-[#161b22] text-[#667085] hover:text-[#00FFA7] hover:border-[#00FFA7]/30 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#21262d] bg-[#161b22] text-[#667085] hover:text-[#85F2A0] hover:border-[#41A650]/30 transition-colors"
           >
             <RefreshCw size={16} /> Refresh
           </button>
@@ -231,7 +231,7 @@ export default function Scheduler() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
               {sectionServices.map((svc) => (
-                <div key={svc.name} className="bg-[#161b22] border border-[#21262d] rounded-xl p-5 hover:border-[#00FFA7]/30 transition-all">
+                <div key={svc.name} className="bg-[#161b22] border border-[#21262d] rounded-xl p-5 hover:border-[#41A650]/30 transition-all">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2.5">
                       <StatusDot status={svc.running ? 'ok' : 'error'} />
@@ -239,10 +239,10 @@ export default function Scheduler() {
                     </div>
                     <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-0.5 rounded-full ${
                       svc.running
-                        ? 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20'
+                        ? 'bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20'
                         : 'bg-red-500/10 text-red-400 border border-red-500/20'
                     }`}>
-                      <span className={`w-1.5 h-1.5 rounded-full ${svc.running ? 'bg-[#00FFA7] animate-pulse' : 'bg-red-400'}`} />
+                      <span className={`w-1.5 h-1.5 rounded-full ${svc.running ? 'bg-[#41A650] animate-pulse' : 'bg-red-400'}`} />
                       {svc.running ? 'Running' : 'Stopped'}
                     </span>
                   </div>
@@ -253,7 +253,7 @@ export default function Scheduler() {
                       {svc.running && svc.id !== 'dashboard' && (
                         <button
                           onClick={() => openTerminal(svc.id)}
-                          className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-[#21262d] bg-[#0d1117] text-[#667085] hover:text-[#00FFA7] hover:border-[#00FFA7]/30 transition-colors"
+                          className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-[#21262d] bg-[#0d1117] text-[#667085] hover:text-[#85F2A0] hover:border-[#41A650]/30 transition-colors"
                         >
                           <Terminal size={12} /> Logs
                         </button>
@@ -265,7 +265,7 @@ export default function Scheduler() {
                           className={`flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
                             svc.running
                               ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border-red-500/20'
-                              : 'bg-[#00FFA7]/10 text-[#00FFA7] hover:bg-[#00FFA7]/20 border-[#00FFA7]/20'
+                              : 'bg-[#41A650]/10 text-[#85F2A0] hover:bg-[#41A650]/20 border-[#41A650]/20'
                           } ${actionLoading === svc.id ? 'opacity-50' : ''}`}
                         >
                           {actionLoading === svc.id ? (
@@ -292,7 +292,7 @@ export default function Scheduler() {
           <div className="bg-[#0d1117] border border-[#21262d] rounded-xl overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 bg-black/30 border-b border-[#21262d]">
               <div className="flex items-center gap-2">
-                <Terminal size={14} className="text-[#00FFA7]" />
+                <Terminal size={14} className="text-[#85F2A0]" />
                 <span className="text-sm font-medium text-[#e6edf3]">
                   {services.find(s => s.id === terminalService)?.name || terminalService} — Logs
                 </span>
@@ -362,7 +362,7 @@ export default function Scheduler() {
                     {task.custom ? (
                       <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#21262d]/60 border-[#21262d] text-[#667085]">custom</span>
                     ) : (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#00FFA7]/8 border-[#00FFA7]/20 text-[#00FFA7]">core</span>
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full border bg-[#41A650]/8 border-[#41A650]/20 text-[#85F2A0]">core</span>
                     )}
                   </div>
                 </td>
@@ -375,7 +375,7 @@ export default function Scheduler() {
                       systematic
                     </span>
                   ) : task.agent ? (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#00FFA7]/8 border border-[#00FFA7]/20 text-[#00FFA7]">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-[#41A650]/8 border border-[#41A650]/20 text-[#85F2A0]">
                       @{task.agent}
                     </span>
                   ) : (
@@ -384,7 +384,7 @@ export default function Scheduler() {
                 </td>
                 <td className="p-4">
                   {task.command ? (
-                    <code className="text-[11px] bg-[#0d1117] border border-[#21262d] px-2 py-1 rounded text-[#00FFA7] font-mono">{task.command}</code>
+                    <code className="text-[11px] bg-[#0d1117] border border-[#21262d] px-2 py-1 rounded text-[#85F2A0] font-mono">{task.command}</code>
                   ) : (
                     <span className="text-[#667085]">--</span>
                   )}

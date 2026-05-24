@@ -57,7 +57,7 @@ function ThreadItem({
       className={`
         w-full text-left px-3 py-2 flex flex-col gap-0.5 transition-colors
         ${isActive
-          ? 'border-l-2 border-[#00FFA7] bg-[#00FFA7]/5'
+          ? 'border-l-2 border-[#41A650] bg-[#41A650]/5'
           : 'border-l-2 border-transparent hover:bg-white/[0.03]'}
       `}
     >
@@ -161,7 +161,7 @@ function CollapsedAgentList({
             title={getAgentMeta(group.agent).label}
             className={`
               relative rounded p-0.5
-              ${hasActive ? 'ring-1 ring-[#00FFA7]/50' : ''}
+              ${hasActive ? 'ring-1 ring-[#85F2A0]/50' : ''}
             `}
           >
             <AgentIcon agent={group.agent} size={28} />
