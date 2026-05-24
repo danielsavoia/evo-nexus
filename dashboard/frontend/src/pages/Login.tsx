@@ -153,10 +153,7 @@ export default function Login() {
         </div>
 
         <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
-          <a href="https://evolutionfoundation.com.br" target="_blank" rel="noopener noreferrer"
-            className="hover:text-[#4a5a6e] transition-colors">
-            Built on EvoNexus · Evolution Foundation
-          </a>
+          Clever Agent · Open source
         </p>
       </div>
     </div>

@@ -737,7 +737,7 @@ export default function Agents() {
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#e6edf3]">{t('agents.title')}</h1>
-        <p className="text-[#667085] mt-1">{t('agents.headerSubtitle')}</p>
+        <p className="text-[#667085] mt-1">{t('agents.subtitle')}</p>
 
         {/* Stats bar */}
         {!loading && agents.length > 0 && (

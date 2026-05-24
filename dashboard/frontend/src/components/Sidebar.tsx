@@ -383,14 +383,9 @@ export default function Sidebar() {
 
       {/* Credits */}
       <div className="px-4 py-3 border-t border-[#344054]/50">
-        <a
-          href="https://evolutionfoundation.com.br"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1.5 text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors"
-        >
-          Built on <span className="font-semibold text-[#00FFA7]/60">EvoNexus</span>
-        </a>
+        <p className="flex items-center justify-center gap-1.5 text-[10px] text-[#667085]">
+          Clever Agent · Open source
+        </p>
       </div>
     </>
   )

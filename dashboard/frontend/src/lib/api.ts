@@ -1,4 +1,4 @@
-const API = import.meta.env.DEV ? 'http://localhost:8080' : '';
+const API = '';
 
 // Sent on all mutating requests for CSRF mitigation (backend checks this header).
 // Browsers cannot forge custom headers cross-origin without a CORS preflight,

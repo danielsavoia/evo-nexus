@@ -153,7 +153,7 @@ function AppContent() {
   if (isDocs) {
     // Redirect .txt files to API directly
     if (location.pathname.endsWith('.txt')) {
-      const apiBase = import.meta.env.DEV ? 'http://localhost:8080' : ''
+      const apiBase = ''
       window.location.replace(`${apiBase}/api/docs/llms-full.txt`)
       return null
     }
