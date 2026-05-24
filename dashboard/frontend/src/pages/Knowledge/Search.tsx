@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+﻿import { useState, useCallback } from 'react'
 import { Search as SearchIcon, ChevronDown, ChevronUp } from 'lucide-react'
 import { api } from '../../lib/api'
 import { useKnowledge } from '../../context/KnowledgeContext'
@@ -27,7 +27,7 @@ interface SearchResponse {
 const SCORE_COLOR = (score: number) =>
   score > 0.8 ? 'bg-[#41A650]/10 text-[#85F2A0]' :
   score > 0.6 ? 'bg-yellow-500/10 text-yellow-400' :
-  'bg-white/5 text-[#667085]'
+  'bg-white/5 text-[#6B8A76]'
 
 export default function KnowledgeSearch() {
   const { activeConnectionId } = useKnowledge()
@@ -61,29 +61,29 @@ export default function KnowledgeSearch() {
   }, [query, activeConnectionId, spaceId, contentType, topK])
 
   if (!activeConnectionId) {
-    return <div className="text-center py-12 text-[#667085] text-sm">Select a connection using the switcher above.</div>
+    return <div className="text-center py-12 text-[#6B8A76] text-sm">Select a connection using the switcher above.</div>
   }
 
   return (
     <div className="space-y-6">
       {/* Search bar */}
-      <div className="bg-[#182230] border border-[#344054] rounded-xl p-5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5">
         <div className="flex gap-3">
           <div className="flex-1 relative">
-            <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#667085]" />
+            <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B8A76]" />
             <input
               type="text"
               placeholder="Search your knowledge base..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              className="w-full bg-[#0C111D] border border-[#344054] rounded-lg pl-10 pr-3 py-2.5 text-sm text-[#F9FAFB] placeholder-[#667085] focus:border-[#41A650] focus:outline-none"
+              className="w-full bg-[#091410] border border-[#1E3829] rounded-lg pl-10 pr-3 py-2.5 text-sm text-[#F9FAFB] placeholder-[#6B8A76] focus:border-[#41A650] focus:outline-none"
             />
           </div>
           <button
             onClick={handleSearch}
             disabled={searching || !query.trim()}
-            className="px-5 py-2.5 bg-[#41A650] text-[#0C111D] rounded-lg font-medium text-sm hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
+            className="px-5 py-2.5 bg-[#41A650] text-[#091410] rounded-lg font-medium text-sm hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
           >
             {searching ? 'Searching...' : 'Search'}
           </button>
@@ -92,7 +92,7 @@ export default function KnowledgeSearch() {
         {/* Filters toggle */}
         <button
           onClick={() => setShowFilters((v) => !v)}
-          className="flex items-center gap-1 mt-3 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+          className="flex items-center gap-1 mt-3 text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
         >
           {showFilters ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
           Advanced filters
@@ -100,16 +100,16 @@ export default function KnowledgeSearch() {
 
         {showFilters && (
           <div className="flex items-center gap-3 mt-3 flex-wrap">
-            <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
+            <select value={spaceId} onChange={(e) => setSpaceId(e.target.value)} className="bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-1.5 text-xs text-[#C8D5CE] focus:border-[#41A650] focus:outline-none">
               <option value="">All spaces</option>
             </select>
-            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
+            <select value={contentType} onChange={(e) => setContentType(e.target.value)} className="bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-1.5 text-xs text-[#C8D5CE] focus:border-[#41A650] focus:outline-none">
               <option value="">All content types</option>
               {['lesson', 'tutorial', 'faq', 'reference', 'transcript', 'article', 'decision', 'note'].map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}
             </select>
-            <select value={topK} onChange={(e) => setTopK(e.target.value)} className="bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-1.5 text-xs text-[#D0D5DD] focus:border-[#41A650] focus:outline-none">
+            <select value={topK} onChange={(e) => setTopK(e.target.value)} className="bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-1.5 text-xs text-[#C8D5CE] focus:border-[#41A650] focus:outline-none">
               {['5', '10', '20', '50'].map((k) => <option key={k} value={k}>Top {k}</option>)}
             </select>
           </div>
@@ -123,7 +123,7 @@ export default function KnowledgeSearch() {
       {/* Results */}
       {results && (
         <div>
-          <div className="flex items-center gap-3 mb-3 text-xs text-[#667085]">
+          <div className="flex items-center gap-3 mb-3 text-xs text-[#6B8A76]">
             <span>{results.total ?? results.results.length} result(s) for &quot;{results.query}&quot;</span>
             {results.query_time_ms != null && (
               <span>{results.query_time_ms.toFixed(0)} ms</span>
@@ -131,23 +131,23 @@ export default function KnowledgeSearch() {
           </div>
 
           {results.results.length === 0 ? (
-            <div className="text-center py-12 text-[#667085] text-sm">No results found. Try different terms or filters.</div>
+            <div className="text-center py-12 text-[#6B8A76] text-sm">No results found. Try different terms or filters.</div>
           ) : (
             <div className="space-y-3">
               {results.results.map((r, i) => {
                 const score = r.rrf_score ?? r.similarity_score ?? 0
                 return (
-                  <div key={r.id ?? i} className="bg-[#182230] border border-[#344054] rounded-xl p-4 hover:border-[#41A650]/30 transition-colors">
+                  <div key={r.id ?? i} className="bg-[#122018] border border-[#1E3829] rounded-xl p-4 hover:border-[#41A650]/30 transition-colors">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="flex-1 min-w-0">
                         {r.document_title && (
-                          <p className="text-sm font-medium text-[#D0D5DD] truncate">{r.document_title}</p>
+                          <p className="text-sm font-medium text-[#C8D5CE] truncate">{r.document_title}</p>
                         )}
                         {r.source_uri && (
-                          <p className="text-xs text-[#667085] truncate">{r.source_uri}</p>
+                          <p className="text-xs text-[#6B8A76] truncate">{r.source_uri}</p>
                         )}
                         {r.section && (
-                          <p className="text-xs text-[#667085] truncate">§ {r.section}</p>
+                          <p className="text-xs text-[#6B8A76] truncate">§ {r.section}</p>
                         )}
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
@@ -161,11 +161,11 @@ export default function KnowledgeSearch() {
                         )}
                       </div>
                     </div>
-                    <p className="text-sm text-[#D0D5DD] whitespace-pre-wrap line-clamp-4 leading-relaxed">{r.content}</p>
+                    <p className="text-sm text-[#C8D5CE] whitespace-pre-wrap line-clamp-4 leading-relaxed">{r.content}</p>
                     {(r.topics?.length ?? 0) > 0 && (
                       <div className="flex gap-1.5 mt-2 flex-wrap">
                         {r.topics!.slice(0, 4).map((t) => (
-                          <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-[#667085]">{t}</span>
+                          <span key={t} className="text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-[#6B8A76]">{t}</span>
                         ))}
                       </div>
                     )}
@@ -178,7 +178,7 @@ export default function KnowledgeSearch() {
       )}
 
       {!results && !error && (
-        <div className="text-center py-12 text-[#667085] text-sm">
+        <div className="text-center py-12 text-[#6B8A76] text-sm">
           Enter a query to search. Hybrid search combines vector similarity + BM25 keyword matching.
         </div>
       )}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../../../context/AuthContext'
@@ -26,7 +26,7 @@ export default function RestoreConfirm({ snapshot, onConfirm, onBack }: RestoreC
   const isMatch = confirm.trim().toLowerCase() === workspaceName.toLowerCase()
 
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
         <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
           <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
@@ -54,7 +54,7 @@ export default function RestoreConfirm({ snapshot, onConfirm, onBack }: RestoreC
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase">
+              <label className="block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase">
                 {t('restore.confirm.typeToConfirmPart1')}
                 <span className="text-[#e2e8f0]">{workspaceName}</span>
                 {t('restore.confirm.typeToConfirmPart2')}
@@ -72,7 +72,7 @@ export default function RestoreConfirm({ snapshot, onConfirm, onBack }: RestoreC
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('restore.back')}
               </button>

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, type ReactNode } from 'react'
+﻿import { lazy, Suspense, useEffect, type ReactNode } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { hydrateAgentMeta } from './lib/agent-meta'
@@ -71,7 +71,7 @@ function FullPageRoute({
   children: ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-[#0C111D]">
+    <div className="clever-app-shell min-h-screen">
       <SectionBoundary key={locationKey} sectionName={sectionName}>
         <Suspense fallback={<FullPageLoader label={`Loading ${sectionName}...`} />}>
           {children}
@@ -206,7 +206,7 @@ function AppContent() {
   // Allow direct access to /onboarding regardless
   if (isOnboarding) {
     return (
-      <Suspense fallback={<div className="min-h-screen bg-[#080c14] flex items-center justify-center"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+      <Suspense fallback={<div className="clever-app-shell min-h-screen flex items-center justify-center"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
         <Routes>
           <Route path="/onboarding/*" element={<OnboardingRouter />} />
         </Routes>
@@ -217,7 +217,7 @@ function AppContent() {
   return (
     <PluginNavigationProvider>
     <NotificationProvider>
-      <div className="flex min-h-screen bg-[#0C111D]">
+      <div className="clever-app-shell flex min-h-screen">
         <Sidebar />
 
         {/* Pages - responsive margin */}
@@ -233,12 +233,12 @@ function AppContent() {
               {/* Onboarding & Settings routes (lazy — keep their own suspense so they
                   can render even before Sidebar-scoped permissions load) */}
               <Route path="/onboarding/*" element={
-                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
                   <OnboardingRouter />
                 </Suspense>
               } />
               <Route path="/settings/brain-repo" element={
-                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
                   <BrainRepo />
                 </Suspense>
               } />

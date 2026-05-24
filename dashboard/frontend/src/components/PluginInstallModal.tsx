@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+﻿import { useState, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { X, Link2, Eye, Download, CheckCircle, AlertTriangle, Loader2, Lock, Upload, ChevronDown, ChevronUp, Terminal } from 'lucide-react'
 import { api } from '../lib/api'
@@ -167,33 +167,33 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="bg-[#161b22] border border-[#344054] rounded-2xl w-full max-w-lg shadow-2xl">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-2xl w-full max-w-lg shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#21262d]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#1E3829]">
           <div>
-            <h2 className="text-base font-semibold text-[#e6edf3]">{t('plugins.installPlugin')}</h2>
-            <p className="text-xs text-[#667085] mt-0.5">{t('plugins.stepOf', { current: step, total: 3 })}</p>
+            <h2 className="text-base font-semibold text-[#F7F9F8]">{t('plugins.installPlugin')}</h2>
+            <p className="text-xs text-[#6B8A76] mt-0.5">{t('plugins.stepOf', { current: step, total: 3 })}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 transition-colors"
+            className="p-1.5 rounded-lg text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 transition-colors"
           >
             <X size={16} />
           </button>
         </div>
 
         {/* Step indicators */}
-        <div className="flex items-center gap-2 px-6 py-3 border-b border-[#21262d]">
+        <div className="flex items-center gap-2 px-6 py-3 border-b border-[#1E3829]">
           {([1, 2, 3] as Step[]).map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-colors ${
                 s < step ? 'bg-[#41A650] text-black' :
                 s === step ? 'bg-[#41A650]/20 text-[#85F2A0] border border-[#41A650]/40' :
-                'bg-[#21262d] text-[#667085]'
+                'bg-[#1E3829] text-[#6B8A76]'
               }`}>
                 {s < step ? <CheckCircle size={12} /> : s}
               </div>
-              {s < 3 && <div className={`flex-1 h-px w-8 ${s < step ? 'bg-[#41A650]/40' : 'bg-[#21262d]'}`} />}
+              {s < 3 && <div className={`flex-1 h-px w-8 ${s < step ? 'bg-[#41A650]/40' : 'bg-[#1E3829]'}`} />}
             </div>
           ))}
         </div>
@@ -204,7 +204,7 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
           {step === 1 && (
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#D0D5DD] mb-2 flex items-center gap-2">
+                <label className="block text-sm font-medium text-[#C8D5CE] mb-2 flex items-center gap-2">
                   <Link2 size={14} className="text-[#85F2A0]" />
                   {t('plugins.sourceUrl')}
                 </label>
@@ -213,18 +213,18 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                   value={sourceUrl}
                   onChange={(e) => { setSourceUrl(e.target.value); setUploadedPath(null) }}
                   placeholder="github:org/plugin-name or https://..."
-                  className="w-full bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/50 transition-colors"
+                  className="w-full bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2.5 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50 transition-colors"
                   onKeyDown={(e) => { if (e.key === 'Enter') handlePreview() }}
                 />
-                <p className="mt-2 text-xs text-[#667085]">Formatos: github:owner/repo[@ref] · https://…/arquivo.tar.gz</p>
+                <p className="mt-2 text-xs text-[#6B8A76]">Formatos: github:owner/repo[@ref] · https://…/arquivo.tar.gz</p>
               </div>
 
               {/* Upload alternative */}
               <div className="relative">
                 <div className="flex items-center gap-3 my-1">
-                  <div className="flex-1 h-px bg-[#21262d]" />
-                  <span className="text-[10px] text-[#667085] uppercase tracking-wider">ou</span>
-                  <div className="flex-1 h-px bg-[#21262d]" />
+                  <div className="flex-1 h-px bg-[#1E3829]" />
+                  <span className="text-[10px] text-[#6B8A76] uppercase tracking-wider">ou</span>
+                  <div className="flex-1 h-px bg-[#1E3829]" />
                 </div>
                 <input
                   ref={fileInputRef}
@@ -239,7 +239,7 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                 <button
                   onClick={() => fileInputRef.current?.click()}
                   disabled={uploading}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 border border-dashed border-[#344054] rounded-lg text-sm text-[#D0D5DD] hover:border-[#41A650]/40 hover:bg-[#41A650]/5 disabled:opacity-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2.5 border border-dashed border-[#1E3829] rounded-lg text-sm text-[#C8D5CE] hover:border-[#41A650]/40 hover:bg-[#41A650]/5 disabled:opacity-50 transition-colors"
                 >
                   {uploading ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
                   {uploadedPath ? 'Trocar arquivo' : 'Selecionar arquivo (.zip ou .tar.gz)'}
@@ -255,14 +255,14 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
               <div>
                 <button
                   onClick={() => setShowAdvanced(!showAdvanced)}
-                  className="flex items-center gap-1.5 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+                  className="flex items-center gap-1.5 text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
                 >
                   {showAdvanced ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
                   Opções avançadas
                 </button>
                 {showAdvanced && (
                   <div className="mt-3">
-                    <label className="block text-xs font-medium text-[#D0D5DD] mb-1.5 flex items-center gap-1.5">
+                    <label className="block text-xs font-medium text-[#C8D5CE] mb-1.5 flex items-center gap-1.5">
                       <Lock size={12} className="text-[#85F2A0]" />
                       Personal Access Token (repos privados)
                     </label>
@@ -271,10 +271,10 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                       value={authToken}
                       onChange={(e) => setAuthToken(e.target.value)}
                       placeholder="ghp_..."
-                      className="w-full bg-[#0C111D] border border-[#344054] rounded-lg px-3 py-2 text-xs text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/50 transition-colors"
+                      className="w-full bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2 text-xs text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50 transition-colors"
                       autoComplete="off"
                     />
-                    <p className="mt-1 text-[10px] text-[#667085]">Usado apenas para baixar o arquivo; não é armazenado.</p>
+                    <p className="mt-1 text-[10px] text-[#6B8A76]">Usado apenas para baixar o arquivo; não é armazenado.</p>
                   </div>
                 )}
               </div>
@@ -315,24 +315,24 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
               )}
 
               {/* Manifest preview */}
-              <div className="bg-[#0C111D] border border-[#21262d] rounded-xl p-4">
+              <div className="bg-[#091410] border border-[#1E3829] rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-3">
                   <Eye size={14} className="text-[#85F2A0]" />
-                  <span className="text-sm font-medium text-[#e6edf3]">{t('plugins.manifestPreview')}</span>
+                  <span className="text-sm font-medium text-[#F7F9F8]">{t('plugins.manifestPreview')}</span>
                 </div>
                 <dl className="space-y-1.5 text-xs">
                   {['name', 'version', 'author', 'license', 'description'].map((k) =>
                     manifest[k] ? (
                       <div key={k} className="flex gap-2">
-                        <dt className="text-[#667085] capitalize w-20 shrink-0">{k}</dt>
-                        <dd className="text-[#e6edf3] break-all">{String(manifest[k])}</dd>
+                        <dt className="text-[#6B8A76] capitalize w-20 shrink-0">{k}</dt>
+                        <dd className="text-[#F7F9F8] break-all">{String(manifest[k])}</dd>
                       </div>
                     ) : null
                   )}
                   {Array.isArray(manifest['capabilities']) && (manifest['capabilities'] as string[]).length > 0 && (
                     <div className="flex gap-2">
-                      <dt className="text-[#667085] capitalize w-20 shrink-0">capabilities</dt>
-                      <dd className="text-[#e6edf3]">{(manifest['capabilities'] as string[]).join(', ')}</dd>
+                      <dt className="text-[#6B8A76] capitalize w-20 shrink-0">capabilities</dt>
+                      <dd className="text-[#F7F9F8]">{(manifest['capabilities'] as string[]).join(', ')}</dd>
                     </div>
                   )}
                 </dl>
@@ -379,8 +379,8 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                 <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#41A650]/10 border border-[#41A650]/20 mx-auto mb-4">
                   <CheckCircle size={28} className="text-[#85F2A0]" />
                 </div>
-                <h3 className="text-base font-semibold text-[#e6edf3] mb-1">{t('plugins.installedSuccessTitle')}</h3>
-                <p className="text-sm text-[#667085]">
+                <h3 className="text-base font-semibold text-[#F7F9F8] mb-1">{t('plugins.installedSuccessTitle')}</h3>
+                <p className="text-sm text-[#6B8A76]">
                   {installedSlug && <code className="text-[#85F2A0]">{installedSlug}</code>} {t('plugins.installedDesc')}
                 </p>
               </div>
@@ -409,11 +409,11 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#21262d]">
+        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#1E3829]">
           {step < 3 && (
             <button
               onClick={onClose}
-              className="px-4 py-2 text-sm text-[#667085] hover:text-[#D0D5DD] transition-colors"
+              className="px-4 py-2 text-sm text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
             >
               {t('common.cancel')}
             </button>
@@ -434,7 +434,7 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
             <>
               <button
                 onClick={() => setStep(1)}
-                className="px-4 py-2 text-sm text-[#667085] hover:text-[#D0D5DD] transition-colors"
+                className="px-4 py-2 text-sm text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
               >
                 {t('common.back')}
               </button>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+﻿import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CheckCircle, Copy, Check, PanelLeftOpen } from 'lucide-react'
 import { api } from '../lib/api'
@@ -87,7 +87,7 @@ function NameDialog({ title, placeholder, defaultValue = '', onConfirm, onCancel
             className="px-3 py-1.5 text-sm font-medium rounded-lg transition-colors"
             style={{
               background: 'var(--evo-green)',
-              color: '#0C111D',
+              color: '#091410',
               opacity: value.trim() ? 1 : 0.5,
             }}
           >

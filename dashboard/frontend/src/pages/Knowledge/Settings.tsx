@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshCw, CheckCircle, Download, Info } from 'lucide-react'
 import { api } from '../../lib/api'
@@ -213,7 +213,7 @@ export default function KnowledgeSettings() {
     return (
       <div className="space-y-3">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-24 bg-[#182230] border border-[#344054] rounded-xl animate-pulse" />
+          <div key={i} className="h-24 bg-[#122018] border border-[#1E3829] rounded-xl animate-pulse" />
         ))}
       </div>
     )
@@ -228,11 +228,11 @@ export default function KnowledgeSettings() {
       )}
 
       {/* Embedder */}
-      <div className="bg-[#182230] border border-[#344054] rounded-xl p-5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5">
         <div className="flex items-start justify-between mb-4">
           <div>
             <h3 className="text-sm font-semibold text-[#F9FAFB]">{t('knowledge.settingsPage.embedderProvider')}</h3>
-            <p className="text-xs text-[#667085] mt-0.5">Global for all connections. Cannot change after first connection is added.</p>
+            <p className="text-xs text-[#6B8A76] mt-0.5">Global for all connections. Cannot change after first connection is added.</p>
           </div>
           {providerLocked && (
             <div className="flex items-center gap-1.5 px-2 py-1 bg-yellow-500/10 rounded-lg">
@@ -249,7 +249,7 @@ export default function KnowledgeSettings() {
               className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                 embedder === opt.value
                   ? 'border-[#41A650]/40 bg-[#41A650]/5'
-                  : 'border-[#344054] hover:border-[#344054]/80'
+                  : 'border-[#1E3829] hover:border-[#1E3829]/80'
               } ${providerLocked || !canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
               <input
@@ -269,8 +269,8 @@ export default function KnowledgeSettings() {
                 className="mt-0.5 accent-[#85F2A0]"
               />
               <div className="flex-1">
-                <p className="text-sm font-medium text-[#D0D5DD]">{opt.label}</p>
-                <p className="text-xs text-[#667085]">{opt.desc}</p>
+                <p className="text-sm font-medium text-[#C8D5CE]">{opt.label}</p>
+                <p className="text-xs text-[#6B8A76]">{opt.desc}</p>
               </div>
             </label>
           ))}
@@ -278,15 +278,15 @@ export default function KnowledgeSettings() {
 
         {/* Model selector — for openai and gemini */}
         {modelEditable && (
-          <div className="mt-4 pt-4 border-t border-[#344054]">
-            <label className="block text-xs font-medium text-[#D0D5DD] mb-1.5">
+          <div className="mt-4 pt-4 border-t border-[#1E3829]">
+            <label className="block text-xs font-medium text-[#C8D5CE] mb-1.5">
               Model
             </label>
             <select
               value={embedderModel}
               onChange={(e) => setEmbedderModel(e.target.value)}
               disabled={!canManage || providerLocked}
-              className="w-full px-3 py-2 bg-[#0C111D] border border-[#344054] rounded-lg text-sm text-[#F9FAFB] focus:outline-none focus:border-[#41A650]/60 disabled:opacity-60 cursor-pointer"
+              className="w-full px-3 py-2 bg-[#091410] border border-[#1E3829] rounded-lg text-sm text-[#F9FAFB] focus:outline-none focus:border-[#41A650]/60 disabled:opacity-60 cursor-pointer"
             >
               {(models?.[embedder] || []).map((m) => (
                 <option key={m.id} value={m.id}>
@@ -303,12 +303,12 @@ export default function KnowledgeSettings() {
               return (
                 <div className="mt-1.5 space-y-0.5">
                   {embedder === 'openai' && (
-                    <p className="text-xs text-[#667085]">
-                      Vector dimensions: <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">{current.dim}</code>
+                    <p className="text-xs text-[#6B8A76]">
+                      Vector dimensions: <code className="text-[#98A2B3] bg-[#091410] px-1 py-0.5 rounded">{current.dim}</code>
                     </p>
                   )}
                   {current.note && (
-                    <p className="text-xs text-[#667085]">{current.note}</p>
+                    <p className="text-xs text-[#6B8A76]">{current.note}</p>
                   )}
                 </div>
               )
@@ -318,8 +318,8 @@ export default function KnowledgeSettings() {
 
         {/* Gemini dim selector — MRL allows 768 / 1536 / 3072 */}
         {embedder === 'gemini' && (
-          <div className="mt-4 pt-4 border-t border-[#344054]">
-            <label className="block text-xs font-medium text-[#D0D5DD] mb-1.5">
+          <div className="mt-4 pt-4 border-t border-[#1E3829]">
+            <label className="block text-xs font-medium text-[#C8D5CE] mb-1.5">
               Vector Dimensions
             </label>
             <div className="flex gap-2">
@@ -332,7 +332,7 @@ export default function KnowledgeSettings() {
                   className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                     geminiDim === d
                       ? 'bg-[#41A650]/15 text-[#85F2A0] border border-[#41A650]/40'
-                      : 'bg-[#0C111D] text-[#98A2B3] border border-[#344054] hover:border-[#344054]/80'
+                      : 'bg-[#091410] text-[#98A2B3] border border-[#1E3829] hover:border-[#1E3829]/80'
                   } ${providerLocked || !canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
                 >
                   {d}
@@ -340,7 +340,7 @@ export default function KnowledgeSettings() {
                 </button>
               ))}
             </div>
-            <p className="text-xs text-[#667085] mt-1.5">
+            <p className="text-xs text-[#6B8A76] mt-1.5">
               Matryoshka Representation Learning — same model, selectable output size.
               768 aligns storage cost with the local provider. 3072 maximizes quality.
             </p>
@@ -349,9 +349,9 @@ export default function KnowledgeSettings() {
 
         {/* OpenAI API key — inline input (never displayed back) */}
         {embedder === 'openai' && (
-          <div className="mt-4 pt-4 border-t border-[#344054]">
+          <div className="mt-4 pt-4 border-t border-[#1E3829]">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-medium text-[#D0D5DD]">
+              <label className="block text-xs font-medium text-[#C8D5CE]">
                 OpenAI API Key
               </label>
               {openaiKeySet && (
@@ -368,26 +368,26 @@ export default function KnowledgeSettings() {
               disabled={!canManage}
               autoComplete="off"
               spellCheck={false}
-              className={`w-full px-3 py-2 bg-[#0C111D] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#667085] focus:outline-none disabled:opacity-60 font-mono ${
+              className={`w-full px-3 py-2 bg-[#091410] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#6B8A76] focus:outline-none disabled:opacity-60 font-mono ${
                 openaiKeyInvalid
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-[#344054] focus:border-[#41A650]/60'
+                  : 'border-[#1E3829] focus:border-[#41A650]/60'
               }`}
             />
             {openaiKeyInvalid && (
               <p className="text-xs text-red-400 mt-1.5">Key must start with <code>sk-</code>.</p>
             )}
-            <p className="text-xs text-[#667085] mt-1.5">
-              Stored in <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">.env</code> as <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">OPENAI_API_KEY</code>. Only used by the Knowledge embedder.
+            <p className="text-xs text-[#6B8A76] mt-1.5">
+              Stored in <code className="text-[#98A2B3] bg-[#091410] px-1 py-0.5 rounded">.env</code> as <code className="text-[#98A2B3] bg-[#091410] px-1 py-0.5 rounded">OPENAI_API_KEY</code>. Only used by the Knowledge embedder.
             </p>
           </div>
         )}
 
         {/* Gemini API key — inline input (never displayed back) */}
         {embedder === 'gemini' && (
-          <div className="mt-4 pt-4 border-t border-[#344054]">
+          <div className="mt-4 pt-4 border-t border-[#1E3829]">
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-medium text-[#D0D5DD]">
+              <label className="block text-xs font-medium text-[#C8D5CE]">
                 Gemini API Key
               </label>
               {geminiKeySet && (
@@ -404,10 +404,10 @@ export default function KnowledgeSettings() {
               disabled={!canManage}
               autoComplete="off"
               spellCheck={false}
-              className={`w-full px-3 py-2 bg-[#0C111D] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#667085] focus:outline-none disabled:opacity-60 font-mono ${
+              className={`w-full px-3 py-2 bg-[#091410] border rounded-lg text-sm text-[#F9FAFB] placeholder-[#6B8A76] focus:outline-none disabled:opacity-60 font-mono ${
                 geminiKeyInvalid
                   ? 'border-red-500/60 focus:border-red-500'
-                  : 'border-[#344054] focus:border-[#41A650]/60'
+                  : 'border-[#1E3829] focus:border-[#41A650]/60'
               }`}
             />
             {geminiKeyInvalid && (
@@ -415,24 +415,24 @@ export default function KnowledgeSettings() {
                 Key must match the Google AI Studio pattern <code>AIzaSy...</code> (39 chars total).
               </p>
             )}
-            <p className="text-xs text-[#667085] mt-1.5">
+            <p className="text-xs text-[#6B8A76] mt-1.5">
               Get one at <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="text-[#85F2A0]/80 hover:text-[#85F2A0] underline">aistudio.google.com/apikey</a>.
-              Stored in <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">.env</code> as <code className="text-[#98A2B3] bg-[#0C111D] px-1 py-0.5 rounded">GEMINI_API_KEY</code>. Only used by the Knowledge embedder.
+              Stored in <code className="text-[#98A2B3] bg-[#091410] px-1 py-0.5 rounded">.env</code> as <code className="text-[#98A2B3] bg-[#091410] px-1 py-0.5 rounded">GEMINI_API_KEY</code>. Only used by the Knowledge embedder.
             </p>
           </div>
         )}
 
         {providerLocked && (
-          <p className="text-xs text-[#667085] mt-3">
+          <p className="text-xs text-[#6B8A76] mt-3">
             Embedder provider is locked because connections exist. To change the provider, remove all connections and recreate them (reindex feature planned for v0.25.1).
           </p>
         )}
       </div>
 
       {/* Parser */}
-      <div className="bg-[#182230] border border-[#344054] rounded-xl p-5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5">
         <h3 className="text-sm font-semibold text-[#F9FAFB] mb-1">{t('knowledge.settingsPage.defaultParser')}</h3>
-        <p className="text-xs text-[#667085] mb-4">Used when uploading documents without explicit parser selection.</p>
+        <p className="text-xs text-[#6B8A76] mb-4">Used when uploading documents without explicit parser selection.</p>
 
         <div className="space-y-2">
           {PARSER_OPTIONS.map((opt) => (
@@ -441,7 +441,7 @@ export default function KnowledgeSettings() {
               className={`flex items-start gap-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                 parser === opt.value
                   ? 'border-[#41A650]/40 bg-[#41A650]/5'
-                  : 'border-[#344054] hover:border-[#344054]/80'
+                  : 'border-[#1E3829] hover:border-[#1E3829]/80'
               } ${!canManage ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
               <input
@@ -454,19 +454,19 @@ export default function KnowledgeSettings() {
                 className="mt-0.5 accent-[#85F2A0]"
               />
               <div>
-                <p className="text-sm font-medium text-[#D0D5DD]">{opt.label}</p>
-                <p className="text-xs text-[#667085]">{opt.desc}</p>
+                <p className="text-sm font-medium text-[#C8D5CE]">{opt.label}</p>
+                <p className="text-xs text-[#6B8A76]">{opt.desc}</p>
               </div>
             </label>
           ))}
         </div>
 
         {/* Marker install */}
-        <div className="mt-4 pt-4 border-t border-[#344054]">
+        <div className="mt-4 pt-4 border-t border-[#1E3829]">
           <div className="flex items-center justify-between flex-wrap gap-3">
             <div>
-              <p className="text-xs font-medium text-[#D0D5DD]">Marker Models</p>
-              <p className="text-xs text-[#667085]">
+              <p className="text-xs font-medium text-[#C8D5CE]">Marker Models</p>
+              <p className="text-xs text-[#6B8A76]">
                 {parserStatus?.marker_installed
                   ? `Installed${parserStatus.marker_version ? ` · v${parserStatus.marker_version}` : ''}`
                   : 'Not installed — ~500 MB download required'}
@@ -493,10 +493,10 @@ export default function KnowledgeSettings() {
           </div>
           {installing && (
             <div className="mt-3">
-              <div className="h-1.5 bg-[#0C111D] rounded-full overflow-hidden">
+              <div className="h-1.5 bg-[#091410] rounded-full overflow-hidden">
                 <div className="h-full bg-[#41A650] animate-pulse w-2/3" />
               </div>
-              <p className="text-xs text-[#667085] mt-1">Downloading Surya models (~500 MB)...</p>
+              <p className="text-xs text-[#6B8A76] mt-1">Downloading Surya models (~500 MB)...</p>
             </div>
           )}
         </div>
@@ -508,14 +508,14 @@ export default function KnowledgeSettings() {
           <button
             onClick={handleSave}
             disabled={saving || !dirty || geminiKeyInvalid || openaiKeyInvalid}
-            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#091410] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : null}
             {saved ? 'Saved!' : 'Save Settings'}
           </button>
           {saved && <CheckCircle size={14} className="text-[#85F2A0]" />}
           {dirty && !saving && !saved && (
-            <span className="text-xs text-[#667085]">Unsaved changes</span>
+            <span className="text-xs text-[#6B8A76]">Unsaved changes</span>
           )}
         </div>
       )}

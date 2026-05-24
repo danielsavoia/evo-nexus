@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+﻿import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 /* ── Animated mesh background (reused from Login.tsx) ── */
@@ -84,7 +84,7 @@ interface WelcomeProps {
 export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
   const { t } = useTranslation()
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
       <NetworkCanvas />
 
       <div className="w-full max-w-[480px] relative z-10">
@@ -103,20 +103,20 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
 
           {/* Content */}
           <div className="px-7 py-6 space-y-3">
-            <p className="text-[12px] text-[#5a6b7f] text-center mb-5">
+            <p className="text-[12px] text-[#6B8A76] text-center mb-5">
               {t('onboarding.welcome.chooseHowToStart')}
             </p>
 
             <button
               onClick={onFirstTime}
-              className="w-full py-3 px-4 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+              className="w-full py-3 px-4 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
             >
               {t('onboarding.welcome.configureFromScratch')}
             </button>
 
             <button
               onClick={onRestore}
-              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
             >
               {t('onboarding.welcome.restoreBrainRepo')}
             </button>

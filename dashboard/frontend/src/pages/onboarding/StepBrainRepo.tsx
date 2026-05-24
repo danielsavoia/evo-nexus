@@ -1,4 +1,4 @@
-import { GitBranch, History, RefreshCw, Shield } from 'lucide-react'
+﻿import { GitBranch, History, RefreshCw, Shield } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import OnboardingHeader from './OnboardingHeader'
 
@@ -16,7 +16,7 @@ export default function StepBrainRepo({ onYes, onNo, onBack }: StepBrainRepoProp
     { icon: Shield, label: t('onboarding.brainRepo.benefits.privacyLabel'), desc: t('onboarding.brainRepo.benefits.privacyDesc') },
   ]
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
         <OnboardingHeader step="step2of3" filled={2} />
 
@@ -45,7 +45,7 @@ export default function StepBrainRepo({ onYes, onNo, onBack }: StepBrainRepoProp
                   <Icon size={14} className="text-[#85F2A0] mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-[12px] font-medium text-[#e2e8f0]">{label}</p>
-                    <p className="text-[11px] text-[#5a6b7f]">{desc}</p>
+                    <p className="text-[11px] text-[#6B8A76]">{desc}</p>
                   </div>
                 </div>
               ))}
@@ -54,19 +54,19 @@ export default function StepBrainRepo({ onYes, onNo, onBack }: StepBrainRepoProp
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>
               <button
                 onClick={onNo}
-                className="flex-1 py-3 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-1 py-3 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.brainRepo.notNow')}
               </button>
               <button
                 onClick={onYes}
-                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
               >
                 {t('onboarding.brainRepo.yesVersion')}
               </button>

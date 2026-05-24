@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { X, Copy, Check, Share2, Loader2, RefreshCw, Eye, Clock } from 'lucide-react'
 import { api } from '../../lib/api'
 
@@ -303,7 +303,7 @@ export default function ShareDialog({ path, onClose }: ShareDialogProps) {
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-colors"
               style={{
                 background: loading ? 'rgba(133, 242, 160,0.5)' : 'var(--evo-green)',
-                color: '#0C111D',
+                color: '#091410',
                 opacity: loading ? 0.7 : 1,
                 cursor: loading ? 'not-allowed' : 'pointer',
               }}

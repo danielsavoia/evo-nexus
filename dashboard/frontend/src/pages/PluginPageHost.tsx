@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PluginPageHost — Step 2 (v2 host renderer).
  *
  * Serves plugin pages at /plugins-ui/:slug/*.  Each page bundle is a pre-built
@@ -92,7 +92,7 @@ export default function PluginPageHost() {
   if (!slug) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="text-[#5a6b7f] text-sm">Invalid plugin URL.</p>
+        <p className="text-[#6B8A76] text-sm">Invalid plugin URL.</p>
       </div>
     )
   }
@@ -101,16 +101,16 @@ export default function PluginPageHost() {
     if (!registryReady) {
       return (
         <div className="flex items-center justify-center h-full">
-          <div className="text-[#5a6b7f] text-sm">Loading plugin...</div>
+          <div className="text-[#6B8A76] text-sm">Loading plugin...</div>
         </div>
       )
     }
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center">
-          <p className="text-[#5a6b7f] text-sm mb-2">
+          <p className="text-[#6B8A76] text-sm mb-2">
             Plugin page{' '}
-            <code className="text-xs bg-[#21262d] px-1 rounded">
+            <code className="text-xs bg-[#1E3829] px-1 rounded">
               {slug}/{pageSubPath || '(index)'}
             </code>{' '}
             not found.
@@ -135,7 +135,7 @@ export default function PluginPageHost() {
         <Suspense
           fallback={
             <div className="flex items-center justify-center h-full">
-              <div className="text-[#5a6b7f] text-sm">Loading plugin...</div>
+              <div className="text-[#6B8A76] text-sm">Loading plugin...</div>
             </div>
           }
         >

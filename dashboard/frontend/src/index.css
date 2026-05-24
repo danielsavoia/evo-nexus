@@ -11,11 +11,17 @@
   --clever-agent-bg-light: #F7F9F8;
 
   --clever-agent-bg-deep:       #07130D;
-  --clever-agent-bg-panel:      #0B1711;
-  --clever-agent-border-soft:   rgba(133, 242, 160, 0.16);
-  --clever-agent-border-medium: rgba(133, 242, 160, 0.28);
+  --clever-agent-bg-app:        #091410;
+  --clever-agent-bg-panel:      #0D1B12;
+  --clever-agent-bg-elevated:   #122018;
+  --clever-agent-bg-card:       #101E16;
+  --clever-agent-border-soft:   rgba(133, 242, 160, 0.14);
+  --clever-agent-border-medium: rgba(133, 242, 160, 0.24);
   --clever-agent-text-primary:  #F7F9F8;
   --clever-agent-text-muted:    rgba(247, 249, 248, 0.68);
+  --clever-agent-accent:        #85F2A0;
+  --clever-agent-action:        #41A650;
+  --clever-agent-warning:       #F2CB05;
 
   /* ── Evo aliases → Clever Agent (backward-compat) ───────────────── */
   --evo-green: var(--clever-agent-green-300);
@@ -42,10 +48,20 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+  background: var(--clever-agent-bg-deep);
+  color: var(--clever-agent-text-primary);
+}
+
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg-primary);
+  background:
+    radial-gradient(ellipse at 10% 5%, rgba(133, 242, 160, 0.05), transparent 30%),
+    linear-gradient(160deg, #07130D 0%, #091410 55%, #07130D 100%);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -176,3 +192,43 @@ body {
 .dialog-enter {
   animation: dialogIn 160ms ease-out forwards;
 }
+
+/* ── Clever Agent layout utilities ───────────────────────────────── */
+
+/* App shell — full dark green gradient bg */
+.clever-app-shell {
+  background:
+    radial-gradient(ellipse at 10% 5%, rgba(133, 242, 160, 0.05), transparent 30%),
+    linear-gradient(160deg, var(--clever-agent-bg-deep) 0%, var(--clever-agent-bg-app) 55%, var(--clever-agent-bg-deep) 100%);
+  color: var(--clever-agent-text-primary);
+}
+
+/* Panel (cards, drawers, panels) */
+.clever-panel {
+  background: linear-gradient(180deg, rgba(18, 32, 24, 0.97), rgba(13, 27, 18, 0.97));
+  border: 1px solid var(--clever-agent-border-soft);
+}
+
+/* Elevated panel (modals, overlays) */
+.clever-panel-elevated {
+  background: linear-gradient(180deg, rgba(21, 38, 28, 0.97), rgba(13, 27, 18, 0.97));
+  border: 1px solid var(--clever-agent-border-medium);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* Active tab indicator */
+.clever-tab-active {
+  color: var(--clever-agent-warning) !important;
+  border-color: var(--clever-agent-warning) !important;
+}
+
+/* Focus ring */
+.clever-focus-ring {
+  outline: 2px solid rgba(133, 242, 160, 0.45);
+  outline-offset: 2px;
+}
+
+/* Prose inside agent panels */
+.prose-agent strong { color: var(--clever-agent-green-300); }
+.prose-agent code { color: var(--clever-agent-text-muted); background: rgba(13, 27, 18, 0.8); padding: 0.1em 0.3em; border-radius: 3px; }
+.prose-agent a { color: var(--clever-agent-green-300); }

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+﻿import { useState, useRef, useEffect } from 'react'
 import { Upload as UploadIcon, X, CheckCircle, XCircle, RefreshCw } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useKnowledge } from '../../context/KnowledgeContext'
@@ -34,7 +34,7 @@ function PhaseBar({ phase }: { phase: FilePhase }) {
   const idx = PHASES.indexOf(phase)
   const pct = Math.round(((idx + 1) / (PHASES.length - 1)) * 100)
   return (
-    <div className="h-1.5 bg-[#0C111D] rounded-full overflow-hidden">
+    <div className="h-1.5 bg-[#091410] rounded-full overflow-hidden">
       <div className="h-full bg-[#41A650] transition-all duration-500" style={{ width: `${pct}%` }} />
     </div>
   )
@@ -189,11 +189,11 @@ export default function KnowledgeUpload() {
   }
 
   if (!canManage) {
-    return <div className="text-center py-12 text-[#667085] text-sm">You don&apos;t have permission to upload documents.</div>
+    return <div className="text-center py-12 text-[#6B8A76] text-sm">You don&apos;t have permission to upload documents.</div>
   }
 
   if (!activeConnectionId) {
-    return <div className="text-center py-12 text-[#667085] text-sm">Select a connection using the switcher above.</div>
+    return <div className="text-center py-12 text-[#6B8A76] text-sm">Select a connection using the switcher above.</div>
   }
 
   const hasPending = files.some((f) => f.phase === 'queued')
@@ -203,22 +203,22 @@ export default function KnowledgeUpload() {
       {/* Space + Unit selectors */}
       <div className="flex items-center gap-3 flex-wrap">
         <div>
-          <label className="block text-xs text-[#667085] mb-1">Space *</label>
+          <label className="block text-xs text-[#6B8A76] mb-1">Space *</label>
           <select
             value={selectedSpaceId}
             onChange={(e) => setSelectedSpaceId(e.target.value)}
-            className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none"
+            className="bg-[#122018] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#C8D5CE] focus:border-[#41A650] focus:outline-none"
           >
             {spaces.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
           </select>
         </div>
         {units.length > 0 && (
           <div>
-            <label className="block text-xs text-[#667085] mb-1">Unit (optional)</label>
+            <label className="block text-xs text-[#6B8A76] mb-1">Unit (optional)</label>
             <select
               value={selectedUnitId}
               onChange={(e) => setSelectedUnitId(e.target.value)}
-              className="bg-[#182230] border border-[#344054] rounded-lg px-3 py-2 text-sm text-[#D0D5DD] focus:border-[#41A650] focus:outline-none"
+              className="bg-[#122018] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#C8D5CE] focus:border-[#41A650] focus:outline-none"
             >
               <option value="">No unit</option>
               {units.map((u) => <option key={u.id} value={u.id}>{u.title}</option>)}
@@ -234,12 +234,12 @@ export default function KnowledgeUpload() {
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
         className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-colors ${
-          dragging ? 'border-[#41A650] bg-[#41A650]/5' : 'border-[#344054] hover:border-[#41A650]/40 hover:bg-white/2'
+          dragging ? 'border-[#41A650] bg-[#41A650]/5' : 'border-[#1E3829] hover:border-[#41A650]/40 hover:bg-white/2'
         }`}
       >
-        <UploadIcon size={28} className={`mx-auto mb-3 ${dragging ? 'text-[#85F2A0]' : 'text-[#667085]'}`} />
-        <p className="text-sm font-medium text-[#D0D5DD]">Drag files here or click to browse</p>
-        <p className="text-xs text-[#667085] mt-1">PDF, DOCX, PPTX, XLSX, HTML, EPUB, TXT, MD, CSV, JSON, images · Max 100 MB per file</p>
+        <UploadIcon size={28} className={`mx-auto mb-3 ${dragging ? 'text-[#85F2A0]' : 'text-[#6B8A76]'}`} />
+        <p className="text-sm font-medium text-[#C8D5CE]">Drag files here or click to browse</p>
+        <p className="text-xs text-[#6B8A76] mt-1">PDF, DOCX, PPTX, XLSX, HTML, EPUB, TXT, MD, CSV, JSON, images · Max 100 MB per file</p>
         <input
           ref={fileInputRef}
           type="file"
@@ -259,11 +259,11 @@ export default function KnowledgeUpload() {
       {files.length > 0 && (
         <div className="space-y-2">
           {files.map((item) => (
-            <div key={item.id} className="bg-[#182230] border border-[#344054] rounded-xl p-4">
+            <div key={item.id} className="bg-[#122018] border border-[#1E3829] rounded-xl p-4">
               <div className="flex items-center gap-3 mb-2">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#D0D5DD] truncate">{item.file.name}</p>
-                  <p className="text-xs text-[#667085]">
+                  <p className="text-sm font-medium text-[#C8D5CE] truncate">{item.file.name}</p>
+                  <p className="text-xs text-[#6B8A76]">
                     {(item.file.size / 1024 / 1024).toFixed(1)} MB
                     {' · '}
                     {item.phase === 'done' ? (
@@ -283,7 +283,7 @@ export default function KnowledgeUpload() {
                   {(item.phase !== 'scanning' && item.phase !== 'parsing' && item.phase !== 'chunking' && item.phase !== 'embedding' && item.phase !== 'storing' && item.phase !== 'classifying') && (
                     <button
                       onClick={() => removeFile(item.id)}
-                      className="p-1 rounded text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 transition-colors"
+                      className="p-1 rounded text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 transition-colors"
                     >
                       <X size={12} />
                     </button>
@@ -298,14 +298,14 @@ export default function KnowledgeUpload() {
             <button
               onClick={handleUpload}
               disabled={uploading || !hasPending || !selectedSpaceId}
-              className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#0C111D] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-[#41A650] text-[#091410] rounded-lg text-sm font-medium hover:bg-[#41A650]/90 transition-colors disabled:opacity-50"
             >
               {uploading ? <RefreshCw size={14} className="animate-spin" /> : <UploadIcon size={14} />}
               Upload {hasPending ? `${files.filter((f) => f.phase === 'queued').length} file(s)` : ''}
             </button>
             <button
               onClick={() => setFiles([])}
-              className="px-4 py-2 bg-white/5 text-[#D0D5DD] rounded-lg text-sm hover:bg-white/10 transition-colors"
+              className="px-4 py-2 bg-white/5 text-[#C8D5CE] rounded-lg text-sm hover:bg-white/10 transition-colors"
             >
               Clear all
             </button>

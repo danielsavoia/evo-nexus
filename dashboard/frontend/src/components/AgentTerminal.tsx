@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { WebLinksAddon } from '@xterm/addon-web-links'
@@ -91,10 +91,10 @@ export default function AgentTerminal({ agent, sessionId: externalSessionId, wor
       fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
       fontSize: 13,
       theme: {
-        background: '#0C111D',
-        foreground: '#e6edf3',
+        background: '#091410',
+        foreground: '#F7F9F8',
         cursor: accentColor,
-        cursorAccent: '#0C111D',
+        cursorAccent: '#091410',
         black: '#484f58',
         red: '#ff7b72',
         green: '#7ee787',
@@ -358,7 +358,7 @@ export default function AgentTerminal({ agent, sessionId: externalSessionId, wor
   return (
     <div className="relative flex h-full w-full flex-col overflow-hidden">
       {/* Status bar */}
-      <div className="flex-shrink-0 h-8 flex items-center gap-3 px-4 border-b border-[#21262d] bg-[#0d1117]">
+      <div className="flex-shrink-0 h-8 flex items-center gap-3 px-4 border-b border-[#1E3829] bg-[#07130D]">
         <span
           className="inline-block h-1.5 w-1.5 rounded-full"
           style={{
@@ -366,11 +366,11 @@ export default function AgentTerminal({ agent, sessionId: externalSessionId, wor
             boxShadow: status === 'running' ? `0 0 6px ${accentColor}aa` : 'none',
           }}
         />
-        <code className="font-mono text-[10.5px] text-[#8b949e] truncate">
+        <code className="font-mono text-[10.5px] text-[#C8D5CE] truncate">
           @{agent}
         </code>
-        <span className="text-[#21262d]">·</span>
-        <span className="text-[10px] uppercase tracking-[0.12em] text-[#667085]">
+        <span className="text-[#1E3829]">·</span>
+        <span className="text-[10px] uppercase tracking-[0.12em] text-[#6B8A76]">
           {statusLabel}
         </span>
         {errorMsg && (
@@ -384,7 +384,7 @@ export default function AgentTerminal({ agent, sessionId: externalSessionId, wor
       </div>
 
       {/* xterm */}
-      <div ref={containerRef} className="flex-1 min-h-0 px-4 py-3 bg-[#0C111D]" />
+      <div ref={containerRef} className="flex-1 min-h-0 px-4 py-3 bg-[#091410]" />
     </div>
   )
 }

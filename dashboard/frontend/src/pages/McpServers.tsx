@@ -1,4 +1,4 @@
-/**
+﻿/**
  * McpServers.tsx — Wave 2.3 UI
  *
  * Read-only view of every MCP server registered in ~/.claude.json for the
@@ -42,7 +42,7 @@ function ServerCard({ server }: { server: McpServer }) {
   const envKeys = Object.keys(server.env)
 
   return (
-    <div className="border border-[#21262d] rounded-xl bg-[#0d1117] overflow-hidden">
+    <div className="border border-[#1E3829] rounded-xl bg-[#07130D] overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/5 transition-colors text-left"
@@ -52,14 +52,14 @@ function ServerCard({ server }: { server: McpServer }) {
             className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
               server.source === 'plugin'
                 ? 'bg-[#41A650]/10 text-[#85F2A0]'
-                : 'bg-[#21262d] text-[#667085]'
+                : 'bg-[#1E3829] text-[#6B8A76]'
             }`}
           >
             {server.source === 'plugin' ? <Package size={14} /> : <Terminal size={14} />}
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-[#e6edf3] font-mono truncate">
+              <span className="text-sm font-medium text-[#F7F9F8] font-mono truncate">
                 {server.name}
               </span>
               {server.source === 'plugin' && server.source_plugin && (
@@ -72,36 +72,36 @@ function ServerCard({ server }: { server: McpServer }) {
                 </Link>
               )}
             </div>
-            <p className="text-xs text-[#667085] font-mono truncate mt-0.5">
+            <p className="text-xs text-[#6B8A76] font-mono truncate mt-0.5">
               {server.command ?? '—'} {argsStr}
             </p>
           </div>
         </div>
-        <div className="shrink-0 text-[#667085]">
+        <div className="shrink-0 text-[#6B8A76]">
           {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </div>
       </button>
 
       {open && (
-        <div className="border-t border-[#21262d] px-4 py-3 space-y-3 bg-black/20">
+        <div className="border-t border-[#1E3829] px-4 py-3 space-y-3 bg-black/20">
           <div>
-            <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-1">Command</p>
-            <code className="block text-xs text-[#D0D5DD] font-mono bg-[#161b22] px-2 py-1.5 rounded border border-[#21262d]">
+            <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-1">Command</p>
+            <code className="block text-xs text-[#C8D5CE] font-mono bg-[#122018] px-2 py-1.5 rounded border border-[#1E3829]">
               {server.command ?? '(none)'}
             </code>
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-1">
+            <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-1">
               Args ({server.args.length})
             </p>
             {server.args.length === 0 ? (
-              <p className="text-xs text-[#5a6b7f] italic">none</p>
+              <p className="text-xs text-[#6B8A76] italic">none</p>
             ) : (
               <ul className="space-y-1">
                 {server.args.map((a, i) => (
                   <li
                     key={i}
-                    className="text-xs text-[#D0D5DD] font-mono bg-[#161b22] px-2 py-1 rounded border border-[#21262d] break-all"
+                    className="text-xs text-[#C8D5CE] font-mono bg-[#122018] px-2 py-1 rounded border border-[#1E3829] break-all"
                   >
                     {a}
                   </li>
@@ -110,20 +110,20 @@ function ServerCard({ server }: { server: McpServer }) {
             )}
           </div>
           <div>
-            <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-1">
+            <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-1">
               Environment ({envKeys.length})
             </p>
             {envKeys.length === 0 ? (
-              <p className="text-xs text-[#5a6b7f] italic">none</p>
+              <p className="text-xs text-[#6B8A76] italic">none</p>
             ) : (
               <ul className="space-y-1">
                 {envKeys.map((k) => (
                   <li
                     key={k}
-                    className="text-xs text-[#D0D5DD] font-mono bg-[#161b22] px-2 py-1 rounded border border-[#21262d] break-all"
+                    className="text-xs text-[#C8D5CE] font-mono bg-[#122018] px-2 py-1 rounded border border-[#1E3829] break-all"
                   >
                     <span className="text-[#85F2A0]">{k}</span>
-                    <span className="text-[#667085]">=</span>
+                    <span className="text-[#6B8A76]">=</span>
                     <span>{'•'.repeat(Math.min(8, server.env[k].length || 1))}</span>
                   </li>
                 ))}
@@ -188,18 +188,18 @@ export default function McpServers() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-[#e6edf3] flex items-center gap-2">
+          <h1 className="text-2xl font-semibold text-[#F7F9F8] flex items-center gap-2">
             <Terminal size={22} className="text-[#85F2A0]" />
             {t('nav.mcpServers', 'MCP Servers')}
           </h1>
-          <p className="text-sm text-[#667085] mt-1">
+          <p className="text-sm text-[#6B8A76] mt-1">
             {t('mcpServers.subtitle', 'MCP servers registered in your ~/.claude.json for this workspace.')}
           </p>
         </div>
         <button
           onClick={fetchServers}
           disabled={loading}
-          className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium bg-[#21262d] text-[#D0D5DD] rounded-lg hover:bg-[#2a3139] disabled:opacity-50 transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium bg-[#1E3829] text-[#C8D5CE] rounded-lg hover:bg-[#2a3139] disabled:opacity-50 transition-colors"
         >
           <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
           {t('common.refresh', 'Refresh')}
@@ -208,7 +208,7 @@ export default function McpServers() {
 
       {/* Loading */}
       {loading && !data && (
-        <div className="flex items-center justify-center gap-2 py-16 text-sm text-[#667085]">
+        <div className="flex items-center justify-center gap-2 py-16 text-sm text-[#6B8A76]">
           <Loader2 size={16} className="animate-spin" />
           {t('common.loading', 'Loading…')}
         </div>
@@ -224,25 +224,25 @@ export default function McpServers() {
 
       {/* Config file path */}
       {data && data.claude_json_path && (
-        <div className="mb-6 border border-[#21262d] rounded-xl px-4 py-3 bg-[#0d1117]">
+        <div className="mb-6 border border-[#1E3829] rounded-xl px-4 py-3 bg-[#07130D]">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-1">
+              <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-1">
                 {t('mcpServers.configFile', 'Config file')}
               </p>
-              <code className="text-xs text-[#D0D5DD] font-mono break-all">
+              <code className="text-xs text-[#C8D5CE] font-mono break-all">
                 {data.claude_json_path}
               </code>
             </div>
             <button
               onClick={copyPath}
-              className="shrink-0 flex items-center gap-1 px-2 py-1 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+              className="shrink-0 flex items-center gap-1 px-2 py-1 text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
             >
               <Copy size={11} />
               {copiedPath ? t('common.copied', 'Copied') : t('common.copy', 'Copy')}
             </button>
           </div>
-          <p className="text-[11px] text-[#5a6b7f] mt-2 flex items-center gap-1">
+          <p className="text-[11px] text-[#6B8A76] mt-2 flex items-center gap-1">
             <ExternalLink size={10} />
             {t('mcpServers.restartHint', 'Restart Claude Code CLI after any change.')}
           </p>
@@ -251,14 +251,14 @@ export default function McpServers() {
 
       {/* Not found */}
       {data && !data.claude_json_exists && (
-        <div className="text-center py-16 text-sm text-[#667085]">
+        <div className="text-center py-16 text-sm text-[#6B8A76]">
           <p>{t('mcpServers.noConfig', 'No ~/.claude.json found. Install Claude Code CLI to begin.')}</p>
         </div>
       )}
 
       {/* Empty */}
       {data && data.claude_json_exists && servers.length === 0 && (
-        <div className="text-center py-16 text-sm text-[#667085]">
+        <div className="text-center py-16 text-sm text-[#6B8A76]">
           <p>{t('mcpServers.empty', 'No MCP servers configured for this workspace yet.')}</p>
         </div>
       )}
@@ -267,14 +267,14 @@ export default function McpServers() {
       {Object.keys(pluginGroups).length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
-            <h2 className="text-sm font-medium text-[#D0D5DD]">
+            <h2 className="text-sm font-medium text-[#C8D5CE]">
               {t('mcpServers.fromPlugins', 'From plugins')}
             </h2>
-            <span className="text-xs text-[#667085]">({pluginServers.length})</span>
+            <span className="text-xs text-[#6B8A76]">({pluginServers.length})</span>
           </div>
           {Object.entries(pluginGroups).map(([pluginSlug, items]) => (
             <div key={pluginSlug} className="mb-4">
-              <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-2 font-medium">
+              <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-2 font-medium">
                 {pluginSlug}
               </p>
               <div className="space-y-2">
@@ -291,10 +291,10 @@ export default function McpServers() {
       {nativeServers.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <h2 className="text-sm font-medium text-[#D0D5DD]">
+            <h2 className="text-sm font-medium text-[#C8D5CE]">
               {t('mcpServers.native', 'Native / manual')}
             </h2>
-            <span className="text-xs text-[#667085]">({nativeServers.length})</span>
+            <span className="text-xs text-[#6B8A76]">({nativeServers.length})</span>
           </div>
           <div className="space-y-2">
             {nativeServers.map((s) => (

@@ -1,4 +1,4 @@
-import {
+﻿import {
   createContext,
   useCallback,
   useContext,
@@ -113,7 +113,7 @@ function ConfirmDialogUI({
         aria-labelledby="confirm-dialog-title"
         onClick={e => e.stopPropagation()}
         style={{
-          background: '#161b22',
+          background: '#122018',
           border: '1px solid rgba(255,255,255,0.05)',
           borderRadius: 8,
           padding: 24,
@@ -129,7 +129,7 @@ function ConfirmDialogUI({
             margin: '0 0 8px',
             fontSize: 15,
             fontWeight: 600,
-            color: '#e6edf3',
+            color: '#F7F9F8',
             lineHeight: 1.4,
           }}
         >

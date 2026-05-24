@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { DollarSign, Zap, Activity, Calculator, Image, type LucideIcon } from 'lucide-react'
 import { api } from '../lib/api'
 import { useTranslation } from 'react-i18next'
@@ -85,7 +85,7 @@ function StatCard({
   icon: LucideIcon
 }) {
   return (
-    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
+    <div className="group relative bg-[#122018] border border-[#1E3829] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
       {/* Subtle top gradient accent */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
 
@@ -95,9 +95,9 @@ function StatCard({
         </div>
       </div>
 
-      <p className="text-3xl font-bold text-[#e6edf3] tracking-tight">{value}</p>
-      <p className="text-sm text-[#667085] mt-1">{label}</p>
-      {subtitle && <p className="text-xs text-[#667085]/60 mt-0.5">{subtitle}</p>}
+      <p className="text-3xl font-bold text-[#F7F9F8] tracking-tight">{value}</p>
+      <p className="text-sm text-[#6B8A76] mt-1">{label}</p>
+      {subtitle && <p className="text-xs text-[#6B8A76]/60 mt-0.5">{subtitle}</p>}
     </div>
   )
 }
@@ -105,12 +105,12 @@ function StatCard({
 // --- Skeleton ---
 function SkeletonCard() {
   return (
-    <div className="rounded-2xl border border-[#21262d] bg-[#161b22] p-5">
+    <div className="rounded-2xl border border-[#1E3829] bg-[#122018] p-5">
       <div className="flex items-start justify-between mb-3">
-        <div className="h-9 w-9 rounded-xl bg-[#21262d] animate-pulse" />
+        <div className="h-9 w-9 rounded-xl bg-[#1E3829] animate-pulse" />
       </div>
-      <div className="h-8 w-24 rounded bg-[#21262d] animate-pulse mb-2" />
-      <div className="h-4 w-20 rounded bg-[#21262d] animate-pulse" />
+      <div className="h-8 w-24 rounded bg-[#1E3829] animate-pulse mb-2" />
+      <div className="h-4 w-20 rounded bg-[#1E3829] animate-pulse" />
     </div>
   )
 }
@@ -170,8 +170,8 @@ export default function Costs() {
     return (
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('costs.title')}</h1>
-          <p className="text-[#667085] text-sm mt-1">AI usage cost analysis</p>
+          <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('costs.title')}</h1>
+          <p className="text-[#6B8A76] text-sm mt-1">AI usage cost analysis</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <SkeletonCard />
@@ -190,11 +190,11 @@ export default function Costs() {
   if (!data) {
     return (
       <div className="text-center py-16">
-        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#161b22] border border-[#21262d]">
-          <DollarSign size={32} className="text-[#3F3F46]" />
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#122018] border border-[#1E3829]">
+          <DollarSign size={32} className="text-[#3D5445]" />
         </div>
-        <p className="text-[#667085] text-lg">No cost data available</p>
-        <p className="text-[#3F3F46] text-sm mt-1">Cost data will appear after routines run</p>
+        <p className="text-[#6B8A76] text-lg">No cost data available</p>
+        <p className="text-[#3D5445] text-sm mt-1">Cost data will appear after routines run</p>
       </div>
     )
   }
@@ -208,8 +208,8 @@ export default function Costs() {
     <div className="max-w-[1400px] mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('costs.title')}</h1>
-        <p className="text-[#667085] text-sm mt-1">AI usage cost analysis</p>
+        <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('costs.title')}</h1>
+        <p className="text-[#6B8A76] text-sm mt-1">AI usage cost analysis</p>
       </div>
 
       {/* KPI Cards */}
@@ -243,8 +243,8 @@ export default function Costs() {
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Line Chart: Cost per day */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
-          <h2 className="text-base font-semibold text-[#e6edf3] mb-4 flex items-center gap-2.5">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
+          <h2 className="text-base font-semibold text-[#F7F9F8] mb-4 flex items-center gap-2.5">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
               <Activity size={14} className="text-[#85F2A0]" />
             </div>
@@ -252,11 +252,11 @@ export default function Costs() {
           </h2>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={data.daily}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-              <XAxis dataKey="date" tick={{ fill: '#667085', fontSize: 11 }} />
-              <YAxis tick={{ fill: '#667085', fontSize: 11 }} tickFormatter={(v) => `$${v.toFixed(2)}`} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#1E3829" />
+              <XAxis dataKey="date" tick={{ fill: '#6B8A76', fontSize: 11 }} />
+              <YAxis tick={{ fill: '#6B8A76', fontSize: 11 }} tickFormatter={(v) => `$${v.toFixed(2)}`} />
               <Tooltip
-                contentStyle={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '12px', color: '#e6edf3' }}
+                contentStyle={{ background: '#122018', border: '1px solid #1E3829', borderRadius: '12px', color: '#F7F9F8' }}
                 formatter={(value: unknown) => [`$${Number(value).toFixed(4)}`, 'Cost']}
               />
               <Line type="monotone" dataKey="cost" stroke="#85F2A0" strokeWidth={2} dot={{ fill: '#85F2A0', r: 3 }} />
@@ -265,8 +265,8 @@ export default function Costs() {
         </div>
 
         {/* Pie Chart: Cost per agent */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
-          <h2 className="text-base font-semibold text-[#e6edf3] mb-4 flex items-center gap-2.5">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl p-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
+          <h2 className="text-base font-semibold text-[#F7F9F8] mb-4 flex items-center gap-2.5">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
               <DollarSign size={14} className="text-[#85F2A0]" />
             </div>
@@ -289,19 +289,19 @@ export default function Costs() {
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '12px', color: '#e6edf3' }}
+                contentStyle={{ background: '#122018', border: '1px solid #1E3829', borderRadius: '12px', color: '#F7F9F8' }}
                 formatter={(value: unknown) => [`$${Number(value).toFixed(4)}`, 'Cost']}
               />
-              <Legend wrapperStyle={{ color: '#8b949e', fontSize: '12px' }} />
+              <Legend wrapperStyle={{ color: '#C8D5CE', fontSize: '12px' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Per Routine Table */}
-      <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
-        <div className="p-5 border-b border-[#21262d]">
-          <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
+        <div className="p-5 border-b border-[#1E3829]">
+          <h2 className="text-base font-semibold text-[#F7F9F8] flex items-center gap-2.5">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
               <Calculator size={14} className="text-[#85F2A0]" />
             </div>
@@ -311,7 +311,7 @@ export default function Costs() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium">
+              <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium">
                 <th className="text-left p-4 pb-3">Routine</th>
                 <th className="text-right p-4 pb-3">Runs</th>
                 <th className="text-right p-4 pb-3">Total Cost</th>
@@ -322,14 +322,14 @@ export default function Costs() {
               {(data.by_routine || []).map((r, i) => (
                 <tr
                   key={i}
-                  className="border-t border-[#21262d]/60 hover:bg-white/[0.02] transition-colors group"
+                  className="border-t border-[#1E3829]/60 hover:bg-white/[0.02] transition-colors group"
                 >
-                  <td className="p-4 text-[#e6edf3] text-[13px] font-medium group-hover:text-white transition-colors">{r.name}</td>
-                  <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">{Number(r.runs || 0)}</td>
-                  <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">
-                    <span className="text-[#e6edf3]">${Number(r.total_cost || 0).toFixed(4)}</span>
+                  <td className="p-4 text-[#F7F9F8] text-[13px] font-medium group-hover:text-white transition-colors">{r.name}</td>
+                  <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{Number(r.runs || 0)}</td>
+                  <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">
+                    <span className="text-[#F7F9F8]">${Number(r.total_cost || 0).toFixed(4)}</span>
                   </td>
-                  <td className="p-4 text-right text-[#667085] tabular-nums text-[13px]">${Number(r.avg_cost || 0).toFixed(4)}</td>
+                  <td className="p-4 text-right text-[#6B8A76] tabular-nums text-[13px]">${Number(r.avg_cost || 0).toFixed(4)}</td>
                 </tr>
               ))}
             </tbody>
@@ -338,9 +338,9 @@ export default function Costs() {
       </div>
 
       {/* Per Heartbeat Table */}
-      <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden mt-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
-        <div className="p-5 border-b border-[#21262d]">
-          <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden mt-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
+        <div className="p-5 border-b border-[#1E3829]">
+          <h2 className="text-base font-semibold text-[#F7F9F8] flex items-center gap-2.5">
             <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
               <Activity size={14} className="text-[#85F2A0]" />
             </div>
@@ -348,12 +348,12 @@ export default function Costs() {
           </h2>
         </div>
         {(data.by_heartbeat || []).length === 0 ? (
-          <div className="p-8 text-center text-[#667085] text-sm">No heartbeat runs yet</div>
+          <div className="p-8 text-center text-[#6B8A76] text-sm">No heartbeat runs yet</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium">
+                <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium">
                   <th className="text-left p-4 pb-3">Heartbeat</th>
                   <th className="text-left p-4 pb-3">Agent</th>
                   <th className="text-right p-4 pb-3">Runs</th>
@@ -365,15 +365,15 @@ export default function Costs() {
                 {(data.by_heartbeat || []).map((h, i) => (
                   <tr
                     key={i}
-                    className="border-t border-[#21262d]/60 hover:bg-white/[0.02] transition-colors group"
+                    className="border-t border-[#1E3829]/60 hover:bg-white/[0.02] transition-colors group"
                   >
-                    <td className="p-4 text-[#e6edf3] text-[13px] font-medium group-hover:text-white transition-colors">{h.name}</td>
-                    <td className="p-4 text-[#8b949e] text-[13px]">{h.agent}</td>
-                    <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">{Number(h.runs || 0)}</td>
-                    <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">
-                      <span className="text-[#e6edf3]">${Number(h.total_cost || 0).toFixed(4)}</span>
+                    <td className="p-4 text-[#F7F9F8] text-[13px] font-medium group-hover:text-white transition-colors">{h.name}</td>
+                    <td className="p-4 text-[#C8D5CE] text-[13px]">{h.agent}</td>
+                    <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{Number(h.runs || 0)}</td>
+                    <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">
+                      <span className="text-[#F7F9F8]">${Number(h.total_cost || 0).toFixed(4)}</span>
                     </td>
-                    <td className="p-4 text-right text-[#667085] tabular-nums text-[13px]">${Number(h.avg_cost || 0).toFixed(4)}</td>
+                    <td className="p-4 text-right text-[#6B8A76] tabular-nums text-[13px]">${Number(h.avg_cost || 0).toFixed(4)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -384,15 +384,15 @@ export default function Costs() {
 
       {/* Image Generation Costs */}
       {imageCosts && imageCosts.entries.length > 0 && (
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden mt-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
-          <div className="p-5 border-b border-[#21262d] flex items-center justify-between">
-            <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden mt-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
+          <div className="p-5 border-b border-[#1E3829] flex items-center justify-between">
+            <h2 className="text-base font-semibold text-[#F7F9F8] flex items-center gap-2.5">
               <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#F472B6]/10 border border-[#F472B6]/20">
                 <Image size={14} className="text-[#F472B6]" />
               </div>
               Image Generation
             </h2>
-            <div className="flex items-center gap-4 text-[11px] text-[#667085]">
+            <div className="flex items-center gap-4 text-[11px] text-[#6B8A76]">
               <span>{imageCosts.totals.count} images</span>
               <span>{imageCosts.totals.total_tokens.toLocaleString()} tokens</span>
               <span>{formatBytes(imageCosts.totals.total_bytes)}</span>
@@ -405,7 +405,7 @@ export default function Costs() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium">
+                <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium">
                   <th className="text-left p-4 pb-3">Model</th>
                   <th className="text-left p-4 pb-3">Provider</th>
                   <th className="text-left p-4 pb-3">Output</th>
@@ -418,23 +418,23 @@ export default function Costs() {
               </thead>
               <tbody>
                 {[...imageCosts.entries].reverse().map((e, i) => (
-                  <tr key={i} className="border-t border-[#21262d]/60 hover:bg-white/[0.02] transition-colors group">
+                  <tr key={i} className="border-t border-[#1E3829]/60 hover:bg-white/[0.02] transition-colors group">
                     <td className="p-4">
                       <code className="text-[11px] text-[#F472B6] font-mono bg-[#F472B6]/8 px-2 py-0.5 rounded border border-[#F472B6]/15">
                         {e.model.split('/').pop()}
                       </code>
                     </td>
-                    <td className="p-4 text-[#8b949e] text-[13px]">{e.provider} <span className="text-[#667085]">({e.mode})</span></td>
-                    <td className="p-4 text-[#e6edf3] text-[13px] font-medium group-hover:text-white truncate max-w-[200px]" title={e.output_file}>
+                    <td className="p-4 text-[#C8D5CE] text-[13px]">{e.provider} <span className="text-[#6B8A76]">({e.mode})</span></td>
+                    <td className="p-4 text-[#F7F9F8] text-[13px] font-medium group-hover:text-white truncate max-w-[200px]" title={e.output_file}>
                       {e.output_file.split('/').pop()}
                     </td>
-                    <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">{e.token_usage.total_tokens.toLocaleString()}</td>
-                    <td className="p-4 text-right text-[#8b949e] tabular-nums text-[13px]">{formatBytes(e.size_bytes)}</td>
-                    <td className="p-4 text-right text-[#667085] tabular-nums text-[13px]">{e.elapsed_seconds.toFixed(1)}s</td>
+                    <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{e.token_usage.total_tokens.toLocaleString()}</td>
+                    <td className="p-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{formatBytes(e.size_bytes)}</td>
+                    <td className="p-4 text-right text-[#6B8A76] tabular-nums text-[13px]">{e.elapsed_seconds.toFixed(1)}s</td>
                     <td className="p-4 text-right tabular-nums text-[13px] text-[#85F2A0]">
                       {e.estimated_cost_usd !== undefined ? `$${e.estimated_cost_usd.toFixed(4)}` : '—'}
                     </td>
-                    <td className="p-4 text-right text-[#667085] text-[13px] whitespace-nowrap">{relativeTime(e.timestamp)}</td>
+                    <td className="p-4 text-right text-[#6B8A76] text-[13px] whitespace-nowrap">{relativeTime(e.timestamp)}</td>
                   </tr>
                 ))}
               </tbody>

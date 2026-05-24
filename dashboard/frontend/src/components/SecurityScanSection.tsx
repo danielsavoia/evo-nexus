@@ -1,11 +1,11 @@
-/**
+﻿/**
  * Wave 2.5 — SecurityScanSection
  *
  * Renders the security scan gate inside UpdatePreviewModal (and any future
  * install modal). Runs POST /api/plugins/scan on mount and propagates the
  * verdict upward via onVerdict / onOverride callbacks.
  *
- * Dark theme: bg-[#161b22], border-[#344054], accent #41A650
+ * Dark theme: bg-[#122018], border-[#1E3829], accent #41A650
  */
 
 import { useEffect, useRef, useState } from 'react'
@@ -98,7 +98,7 @@ function severityColor(sev: string): string {
     case 'HIGH':     return 'text-orange-400'
     case 'MEDIUM':   return 'text-yellow-400'
     case 'LOW':      return 'text-blue-400'
-    default:         return 'text-[#667085]'
+    default:         return 'text-[#6B8A76]'
   }
 }
 
@@ -218,18 +218,18 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
   }
 
   return (
-    <div className="border border-[#344054] rounded-xl overflow-hidden">
+    <div className="border border-[#1E3829] rounded-xl overflow-hidden">
       {/* Section header */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-white/3 border-b border-[#21262d]">
+      <div className="flex items-center gap-2 px-4 py-3 bg-white/3 border-b border-[#1E3829]">
         <Shield size={14} className="text-[#85F2A0] shrink-0" />
-        <span className="text-xs font-semibold text-[#D0D5DD]">Security Scan</span>
+        <span className="text-xs font-semibold text-[#C8D5CE]">Security Scan</span>
         {result?.cache_hit && (
-          <span className="ml-auto text-[10px] text-[#667085] bg-white/5 rounded px-1.5 py-0.5">
+          <span className="ml-auto text-[10px] text-[#6B8A76] bg-white/5 rounded px-1.5 py-0.5">
             cached
           </span>
         )}
         {result && (
-          <span className="text-[10px] text-[#667085] ml-auto">
+          <span className="text-[10px] text-[#6B8A76] ml-auto">
             {result.scan_duration_ms}ms · {result.scanners_used.join('+')}
           </span>
         )}
@@ -238,7 +238,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
       <div className="px-4 py-3 space-y-3">
         {/* Scanning spinner */}
         {scanning && (
-          <div className="flex items-center gap-2 text-xs text-[#667085]">
+          <div className="flex items-center gap-2 text-xs text-[#6B8A76]">
             <Loader2 size={13} className="animate-spin shrink-0" />
             <span>Scanning for security issues…</span>
           </div>
@@ -264,58 +264,58 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                 {verdictLabel(result.verdict)}
               </span>
               {result.findings.length > 0 && (
-                <span className="text-[10px] text-[#667085]">
+                <span className="text-[10px] text-[#6B8A76]">
                   {result.findings.length}{result.findings_truncated ? '+' : ''} finding
                   {result.findings.length !== 1 ? 's' : ''}
                 </span>
               )}
               {result.verdict === 'APPROVE' && result.findings.length === 0 && (
-                <span className="text-[10px] text-[#667085]">No issues found</span>
+                <span className="text-[10px] text-[#6B8A76]">No issues found</span>
               )}
             </div>
 
             {/* LLM reasoning (if any) */}
             {result.llm_used && result.llm_reasoning && (
-              <p className="text-[10px] text-[#667085] italic leading-relaxed">
+              <p className="text-[10px] text-[#6B8A76] italic leading-relaxed">
                 {result.llm_reasoning}
               </p>
             )}
 
             {/* Findings collapsible */}
             {result.findings.length > 0 && (
-              <div className="border border-[#21262d] rounded-lg overflow-hidden">
+              <div className="border border-[#1E3829] rounded-lg overflow-hidden">
                 <button
                   onClick={() => setFindingsOpen((o) => !o)}
-                  className="w-full flex items-center justify-between px-3 py-2 text-[10px] font-medium text-[#667085] hover:text-[#D0D5DD] hover:bg-white/3 transition-colors"
+                  className="w-full flex items-center justify-between px-3 py-2 text-[10px] font-medium text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/3 transition-colors"
                 >
                   <span>Findings</span>
                   {findingsOpen ? <ChevronUp size={11} /> : <ChevronDown size={11} />}
                 </button>
                 {findingsOpen && (
-                  <div className="divide-y divide-[#21262d]">
+                  <div className="divide-y divide-[#1E3829]">
                     {sortedFindings(result.findings).map((f, i) => (
                       <div key={i} className="px-3 py-2 space-y-0.5">
                         <div className="flex items-center gap-1.5">
                           <span className={`text-[10px] font-semibold uppercase ${severityColor(f.severity)}`}>
                             {f.severity}
                           </span>
-                          <span className="text-[10px] text-[#667085] font-mono">{f.category}</span>
+                          <span className="text-[10px] text-[#6B8A76] font-mono">{f.category}</span>
                         </div>
-                        <p className="text-xs text-[#D0D5DD] leading-relaxed">{f.description}</p>
+                        <p className="text-xs text-[#C8D5CE] leading-relaxed">{f.description}</p>
                         {f.file && (
-                          <p className="text-[10px] text-[#667085] font-mono truncate">
+                          <p className="text-[10px] text-[#6B8A76] font-mono truncate">
                             {f.file}{f.line > 0 ? `:${f.line}` : ''}
                           </p>
                         )}
                         {f.snippet && (
-                          <p className="text-[10px] text-[#667085] font-mono bg-black/20 rounded px-2 py-1 truncate">
+                          <p className="text-[10px] text-[#6B8A76] font-mono bg-black/20 rounded px-2 py-1 truncate">
                             {f.snippet}
                           </p>
                         )}
                       </div>
                     ))}
                     {result.findings_truncated && (
-                      <p className="px-3 py-2 text-[10px] text-[#667085] text-center">
+                      <p className="px-3 py-2 text-[10px] text-[#6B8A76] text-center">
                         More findings not shown. Review the full scan report.
                       </p>
                     )}
@@ -336,7 +336,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                   </button>
                 ) : (
                   <div className="space-y-1.5">
-                    <label className="text-[10px] text-[#667085]">
+                    <label className="text-[10px] text-[#6B8A76]">
                       Override reason (min 20 chars, required)
                     </label>
                     <textarea
@@ -344,7 +344,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                       onChange={(e) => setOverrideReason(e.target.value)}
                       rows={2}
                       placeholder="Explain why this BLOCK is being overridden…"
-                      className="w-full bg-black/20 border border-[#344054] rounded-lg px-3 py-2 text-xs text-[#D0D5DD] placeholder-[#667085] resize-none focus:outline-none focus:border-red-500/50"
+                      className="w-full bg-black/20 border border-[#1E3829] rounded-lg px-3 py-2 text-xs text-[#C8D5CE] placeholder-[#6B8A76] resize-none focus:outline-none focus:border-red-500/50"
                     />
                     <div className="flex gap-2">
                       <button
@@ -356,7 +356,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                       </button>
                       <button
                         onClick={() => { setShowOverrideInput(false); setOverrideReason('') }}
-                        className="px-3 py-1.5 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+                        className="px-3 py-1.5 text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
                       >
                         Cancel
                       </button>
@@ -370,7 +370,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
 
         {/* Skip scan checkbox — admin only */}
         {isAdmin && !scanning && (
-          <div className="pt-1 border-t border-[#21262d]">
+          <div className="pt-1 border-t border-[#1E3829]">
             <label className="flex items-start gap-2 cursor-pointer group">
               <div className="relative mt-0.5">
                 <input
@@ -383,7 +383,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                   className={`w-3.5 h-3.5 rounded border transition-colors ${
                     skipScan
                       ? 'bg-yellow-500 border-yellow-500'
-                      : 'border-[#344054] group-hover:border-[#667085]'
+                      : 'border-[#1E3829] group-hover:border-[#6B8A76]'
                   }`}
                 >
                   {skipScan && (
@@ -392,7 +392,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                 </div>
               </div>
               <div className="space-y-0.5">
-                <span className="text-[10px] text-[#667085]">
+                <span className="text-[10px] text-[#6B8A76]">
                   Skip scan — will be logged to audit
                 </span>
                 {skipScan && (
@@ -405,7 +405,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, on
                       }}
                       rows={1}
                       placeholder="Motivo (opcional, será registrado no audit log)"
-                      className="w-full bg-black/20 border border-[#344054] rounded px-2 py-1 text-[10px] text-[#D0D5DD] placeholder-[#667085] resize-none focus:outline-none focus:border-yellow-500/50"
+                      className="w-full bg-black/20 border border-[#1E3829] rounded px-2 py-1 text-[10px] text-[#C8D5CE] placeholder-[#6B8A76] resize-none focus:outline-none focus:border-yellow-500/50"
                       onClick={(e) => e.stopPropagation()}
                     />
                   </div>

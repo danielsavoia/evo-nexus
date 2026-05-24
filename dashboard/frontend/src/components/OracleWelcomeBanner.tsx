@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { X, BookOpen, Terminal } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { api } from '../lib/api'
@@ -48,7 +48,7 @@ export default function OracleWelcomeBanner() {
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <p className="text-[13px] font-semibold text-[#e6edf3]">
+        <p className="text-[13px] font-semibold text-[#F7F9F8]">
           {t('agents.welcomeBanner.title')}
         </p>
         <p className="text-[11px] text-[#5a7a5a] mt-0.5 leading-snug">
@@ -64,7 +64,7 @@ export default function OracleWelcomeBanner() {
       {/* Dismiss */}
       <button
         onClick={handleDismiss}
-        className="flex-shrink-0 p-1.5 rounded-lg text-[#5a6b7f] hover:text-[#e2e8f0] hover:bg-[#152030] transition-colors"
+        className="flex-shrink-0 p-1.5 rounded-lg text-[#6B8A76] hover:text-[#e2e8f0] hover:bg-[#152030] transition-colors"
         aria-label={t('common.close')}
       >
         <X size={14} />

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react'
+﻿import { useEffect, useState, useRef, useCallback } from 'react'
 import { Clock, Activity, Zap, Loader2, X, ExternalLink, ChevronRight, CheckCircle, XCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { api } from '../lib/api'
@@ -146,8 +146,8 @@ function RowIcon({ type }: { type: ItemType }) {
     </div>
   )
   return (
-    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#21262d] border border-[#21262d] shrink-0">
-      <Clock size={16} className="text-[#667085]" />
+    <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#1E3829] border border-[#1E3829] shrink-0">
+      <Clock size={16} className="text-[#6B8A76]" />
     </div>
   )
 }
@@ -156,14 +156,14 @@ function RowIcon({ type }: { type: ItemType }) {
 
 function SkeletonRow() {
   return (
-    <div className="flex items-center gap-4 px-4 py-3 border-b border-[#21262d]/60 animate-pulse">
-      <div className="w-9 h-9 rounded-xl bg-[#21262d] shrink-0" />
+    <div className="flex items-center gap-4 px-4 py-3 border-b border-[#1E3829]/60 animate-pulse">
+      <div className="w-9 h-9 rounded-xl bg-[#1E3829] shrink-0" />
       <div className="flex-1 min-w-0 space-y-2">
-        <div className="h-3.5 bg-[#21262d] rounded w-48" />
-        <div className="h-3 bg-[#21262d]/60 rounded w-32" />
+        <div className="h-3.5 bg-[#1E3829] rounded w-48" />
+        <div className="h-3 bg-[#1E3829]/60 rounded w-32" />
       </div>
-      <div className="h-5 bg-[#21262d] rounded-full w-16" />
-      <div className="h-3 bg-[#21262d]/60 rounded w-14" />
+      <div className="h-5 bg-[#1E3829] rounded-full w-16" />
+      <div className="h-3 bg-[#1E3829]/60 rounded w-14" />
     </div>
   )
 }
@@ -216,14 +216,14 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
         role="dialog"
         aria-modal="true"
         aria-label="Execution details"
-        className="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-[#0d1117] border-l border-[#21262d] flex flex-col z-50 shadow-2xl"
+        className="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-[#07130D] border-l border-[#1E3829] flex flex-col z-50 shadow-2xl"
         style={{ animation: 'slideInRight 180ms ease-out' }}
       >
         {/* Header */}
-        <div className="flex items-start gap-3 px-5 py-4 border-b border-[#21262d]">
+        <div className="flex items-start gap-3 px-5 py-4 border-b border-[#1E3829]">
           <RowIcon type={item.type} />
           <div className="flex-1 min-w-0">
-            <h2 className="text-sm font-semibold text-[#e6edf3] truncate">{item.name}</h2>
+            <h2 className="text-sm font-semibold text-[#F7F9F8] truncate">{item.name}</h2>
             <div className="flex items-center gap-2 mt-1">
               <TypeBadge type={item.type} />
               <StatusPill status={item.status} />
@@ -231,7 +231,7 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#667085] hover:text-[#e6edf3] hover:bg-white/5 transition-colors shrink-0"
+            className="p-1.5 rounded-lg text-[#6B8A76] hover:text-[#F7F9F8] hover:bg-white/5 transition-colors shrink-0"
             aria-label="Close"
           >
             <X size={16} />
@@ -248,9 +248,9 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
               { label: 'Duration', value: formatDuration(item.duration_ms, item.duration_seconds) },
               { label: 'Triggered by', value: item.triggered_by ?? 'schedule' },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-[#161b22] border border-[#21262d] rounded-xl p-3">
-                <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-1">{label}</p>
-                <p className="text-sm text-[#e6edf3] font-medium">{value}</p>
+              <div key={label} className="bg-[#122018] border border-[#1E3829] rounded-xl p-3">
+                <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-1">{label}</p>
+                <p className="text-sm text-[#F7F9F8] font-medium">{value}</p>
               </div>
             ))}
           </div>
@@ -258,19 +258,19 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
           {/* Cost section — heartbeats only */}
           {item.type === 'heartbeat' && (hasCost || tokensTotal > 0) && (
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-2">Cost</p>
-              <div className="bg-[#161b22] border border-[#21262d] rounded-xl p-3 flex items-center gap-6">
+              <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-2">Cost</p>
+              <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-3 flex items-center gap-6">
                 <div>
-                  <p className="text-[10px] text-[#667085] mb-0.5">Tokens in</p>
-                  <p className="text-sm text-[#e6edf3] font-mono">{(item.tokens_in ?? 0).toLocaleString()}</p>
+                  <p className="text-[10px] text-[#6B8A76] mb-0.5">Tokens in</p>
+                  <p className="text-sm text-[#F7F9F8] font-mono">{(item.tokens_in ?? 0).toLocaleString()}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] text-[#667085] mb-0.5">Tokens out</p>
-                  <p className="text-sm text-[#e6edf3] font-mono">{(item.tokens_out ?? 0).toLocaleString()}</p>
+                  <p className="text-[10px] text-[#6B8A76] mb-0.5">Tokens out</p>
+                  <p className="text-sm text-[#F7F9F8] font-mono">{(item.tokens_out ?? 0).toLocaleString()}</p>
                 </div>
                 {hasCost && (
                   <div>
-                    <p className="text-[10px] text-[#667085] mb-0.5">Cost</p>
+                    <p className="text-[10px] text-[#6B8A76] mb-0.5">Cost</p>
                     <p className="text-sm text-[#85F2A0] font-mono">${item.cost_usd!.toFixed(4)}</p>
                   </div>
                 )}
@@ -280,8 +280,8 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
 
           {/* Output / log */}
           <div>
-            <p className="text-[10px] uppercase tracking-wider text-[#667085] mb-2">Output</p>
-            <pre className="bg-[#0a0e14] border border-[#21262d] rounded-xl p-3 text-xs text-[#8b949e] font-mono overflow-auto max-h-64 whitespace-pre-wrap break-words">
+            <p className="text-[10px] uppercase tracking-wider text-[#6B8A76] mb-2">Output</p>
+            <pre className="bg-[#0a0e14] border border-[#1E3829] rounded-xl p-3 text-xs text-[#C8D5CE] font-mono overflow-auto max-h-64 whitespace-pre-wrap break-words">
               {logContent}
             </pre>
           </div>
@@ -298,11 +298,11 @@ function ActivityDrawer({ item, onClose }: DrawerProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-[#21262d]">
+        <div className="px-5 py-4 border-t border-[#1E3829]">
           <Link
             to={dedicatedHref}
             onClick={onClose}
-            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-[#161b22] border border-[#21262d] text-sm text-[#667085] hover:text-[#e6edf3] hover:border-[#41A650]/30 transition-all"
+            className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-[#122018] border border-[#1E3829] text-sm text-[#6B8A76] hover:text-[#F7F9F8] hover:border-[#41A650]/30 transition-all"
           >
             <ExternalLink size={14} />
             Open in dedicated page
@@ -537,16 +537,16 @@ export default function ActivityPage() {
       <div className="max-w-[1200px] mx-auto">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">
+          <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">
             {t('nav.activity')}
           </h1>
-          <p className="text-[#667085] text-sm mt-1">
+          <p className="text-[#6B8A76] text-sm mt-1">
             Execution log across routines, heartbeats and triggers
           </p>
         </div>
 
         {/* Filters — sticky after header */}
-        <div className="sticky top-0 z-20 bg-[#0C111D] pb-4 pt-1">
+        <div className="sticky top-0 z-20 bg-[#091410] pb-4 pt-1">
           <div className="flex flex-wrap items-center gap-3">
             {/* Type chips */}
             <div className="flex items-center gap-1.5">
@@ -559,7 +559,7 @@ export default function ActivityPage() {
                     className={`flex items-center gap-1.5 text-[12px] font-medium px-3 py-1.5 rounded-full border transition-all ${
                       active
                         ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/30'
-                        : 'bg-transparent text-[#667085] border-[#344054] hover:border-[#667085] hover:text-[#D0D5DD]'
+                        : 'bg-transparent text-[#6B8A76] border-[#1E3829] hover:border-[#6B8A76] hover:text-[#C8D5CE]'
                     }`}
                   >
                     {type === 'routines' && <Clock size={12} />}
@@ -572,13 +572,13 @@ export default function ActivityPage() {
             </div>
 
             {/* Divider */}
-            <span className="text-[#344054] hidden sm:block">|</span>
+            <span className="text-[#1E3829] hidden sm:block">|</span>
 
             {/* Status select */}
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as StatusFilter)}
-              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#41A650]/40 cursor-pointer"
+              className="bg-[#122018] border border-[#1E3829] text-[#C8D5CE] text-[12px] rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#41A650]/40 cursor-pointer"
             >
               <option value="all">All statuses</option>
               <option value="success">Success</option>
@@ -587,7 +587,7 @@ export default function ActivityPage() {
             </select>
 
             {/* Period tabs */}
-            <div className="flex items-center bg-[#161b22] border border-[#21262d] rounded-lg overflow-hidden">
+            <div className="flex items-center bg-[#122018] border border-[#1E3829] rounded-lg overflow-hidden">
               {PERIOD_TABS.map((p) => (
                 <button
                   key={p.key}
@@ -595,7 +595,7 @@ export default function ActivityPage() {
                   className={`text-[12px] px-3 py-1.5 transition-colors ${
                     period === p.key
                       ? 'bg-[#41A650]/10 text-[#85F2A0]'
-                      : 'text-[#667085] hover:text-[#D0D5DD]'
+                      : 'text-[#6B8A76] hover:text-[#C8D5CE]'
                   }`}
                 >
                   {p.label}
@@ -609,7 +609,7 @@ export default function ActivityPage() {
               value={displaySearch}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="Search by name..."
-              className="bg-[#161b22] border border-[#21262d] text-[#D0D5DD] text-[12px] rounded-lg px-3 py-1.5 w-48 focus:outline-none focus:border-[#41A650]/40 placeholder-[#667085]"
+              className="bg-[#122018] border border-[#1E3829] text-[#C8D5CE] text-[12px] rounded-lg px-3 py-1.5 w-48 focus:outline-none focus:border-[#41A650]/40 placeholder-[#6B8A76]"
             />
 
             {/* Pause */}
@@ -618,7 +618,7 @@ export default function ActivityPage() {
               className={`ml-auto text-[12px] px-3 py-1.5 rounded-lg border transition-all ${
                 paused
                   ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                  : 'bg-transparent text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
+                  : 'bg-transparent text-[#6B8A76] border-[#1E3829] hover:text-[#C8D5CE]'
               }`}
             >
               {paused ? 'Paused' : 'Auto-refresh on'}
@@ -627,18 +627,18 @@ export default function ActivityPage() {
         </div>
 
         {/* List */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden">
           {loading ? (
             <div>
               {[...Array(6)].map((_, i) => <SkeletonRow key={i} />)}
             </div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20">
-              <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#21262d] border border-[#344054] mb-4">
-                <Activity size={24} className="text-[#3F3F46]" />
+              <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#1E3829] border border-[#1E3829] mb-4">
+                <Activity size={24} className="text-[#3D5445]" />
               </div>
-              <p className="text-[#667085] text-sm">No activity in this period.</p>
-              <p className="text-[#3F3F46] text-xs mt-1">Try expanding the range.</p>
+              <p className="text-[#6B8A76] text-sm">No activity in this period.</p>
+              <p className="text-[#3D5445] text-xs mt-1">Try expanding the range.</p>
             </div>
           ) : (
             <>
@@ -649,25 +649,25 @@ export default function ActivityPage() {
                     key={item.id}
                     onClick={() => setSelectedItem(item)}
                     className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/[0.03] cursor-pointer transition-colors ${
-                      !isLast ? 'border-b border-[#21262d]/60' : ''
+                      !isLast ? 'border-b border-[#1E3829]/60' : ''
                     } ${selectedItem?.id === item.id ? 'bg-white/[0.02]' : ''}`}
                   >
                     <RowIcon type={item.type} />
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-sm font-medium text-[#e6edf3] truncate">{item.name}</span>
+                        <span className="text-sm font-medium text-[#F7F9F8] truncate">{item.name}</span>
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <TypeBadge type={item.type} />
-                        <span className="text-[#667085] text-[11px]">·</span>
-                        <span className="text-[#667085] text-[11px]">
+                        <span className="text-[#6B8A76] text-[11px]">·</span>
+                        <span className="text-[#6B8A76] text-[11px]">
                           {formatDuration(item.duration_ms, item.duration_seconds)}
                         </span>
                         {item.triggered_by && (
                           <>
-                            <span className="text-[#667085] text-[11px]">·</span>
-                            <span className="text-[#667085] text-[11px]">{item.triggered_by}</span>
+                            <span className="text-[#6B8A76] text-[11px]">·</span>
+                            <span className="text-[#6B8A76] text-[11px]">{item.triggered_by}</span>
                           </>
                         )}
                       </div>
@@ -676,20 +676,20 @@ export default function ActivityPage() {
                     <div className="flex items-center gap-3 shrink-0">
                       <StatusPill status={item.status} />
                       <div className="text-right hidden sm:block">
-                        <p className="text-[#667085] text-[11px]">{relativeTime(item.started_at)}</p>
-                        <p className="text-[#3F3F46] text-[10px]">{formatTime(item.started_at)}</p>
+                        <p className="text-[#6B8A76] text-[11px]">{relativeTime(item.started_at)}</p>
+                        <p className="text-[#3D5445] text-[10px]">{formatTime(item.started_at)}</p>
                       </div>
-                      <ChevronRight size={14} className="text-[#3F3F46]" />
+                      <ChevronRight size={14} className="text-[#3D5445]" />
                     </div>
                   </button>
                 )
               })}
 
               {hasMore && (
-                <div className="px-4 py-3 border-t border-[#21262d]/60">
+                <div className="px-4 py-3 border-t border-[#1E3829]/60">
                   <button
                     onClick={() => setPage((p) => p + 1)}
-                    className="text-[12px] text-[#667085] hover:text-[#85F2A0] transition-colors"
+                    className="text-[12px] text-[#6B8A76] hover:text-[#85F2A0] transition-colors"
                   >
                     Load more ({filtered.length - paginated.length} remaining)
                   </button>
@@ -701,7 +701,7 @@ export default function ActivityPage() {
 
         {/* Summary line */}
         {!loading && filtered.length > 0 && (
-          <p className="text-[#667085] text-xs mt-3 px-1">
+          <p className="text-[#6B8A76] text-xs mt-3 px-1">
             {filtered.length} execution{filtered.length !== 1 ? 's' : ''} · refreshes every 30s
             {paused ? ' (paused)' : ''}
           </p>

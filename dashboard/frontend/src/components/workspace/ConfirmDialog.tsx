@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+﻿import { useEffect, useRef } from 'react'
 import { AlertTriangle, Trash2, X } from 'lucide-react'
 
 export type ConfirmVariant = 'delete' | 'overwrite' | 'discard'
@@ -150,7 +150,7 @@ export default function ConfirmDialog({ variant, filename, currentPath, onConfir
               className="px-4 py-2 text-sm font-medium rounded-lg transition-colors flex items-center gap-1.5"
               style={{
                 background: content.destructive ? 'var(--danger)' : 'var(--evo-green)',
-                color: content.destructive ? '#fff' : '#0C111D',
+                color: content.destructive ? '#fff' : '#091410',
                 border: 'none',
               }}
               onMouseEnter={e => {

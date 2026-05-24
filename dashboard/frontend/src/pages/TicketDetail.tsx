@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { useToast } from '../components/Toast'
 import { useConfirm } from '../components/ConfirmDialog'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -71,7 +71,7 @@ const STATUS_STYLES: Record<TicketStatus, string> = {
   blocked: 'bg-red-500/10 text-red-400 border-red-500/20',
   review: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
   resolved: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-  closed: 'bg-[#21262d] text-[#667085] border-[#21262d]',
+  closed: 'bg-[#1E3829] text-[#6B8A76] border-[#1E3829]',
   archived: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
 }
 
@@ -369,7 +369,7 @@ export default function TicketDetail() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-24 text-[#667085]">
+      <div className="flex items-center justify-center py-24 text-[#6B8A76]">
         <RefreshCw size={18} className="animate-spin mr-2" /> Loading...
       </div>
     )
@@ -377,7 +377,7 @@ export default function TicketDetail() {
 
   if (error || !ticket) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-[#667085]">
+      <div className="flex flex-col items-center justify-center py-24 text-[#6B8A76]">
         <p className="text-sm text-red-400">{error || 'Ticket not found'}</p>
         <button onClick={() => navigate('/topics')} className="mt-3 text-xs text-[#85F2A0] hover:underline">
           Back to Topics
@@ -417,7 +417,7 @@ export default function TicketDetail() {
               className="
                 relative flex flex-col
                 w-[85vw] max-w-[320px] h-full
-                bg-[#0d1117] border-r border-white/5
+                bg-[#07130D] border-r border-white/5
                 animate-slide-in-left
               "
             >
@@ -445,7 +445,7 @@ export default function TicketDetail() {
         {/* Main area: header + chat */}
         <div className="flex flex-col flex-1 min-w-0">
           {/* Thread header bar */}
-          <div className="flex items-center gap-3 px-4 py-2 border-b border-[#21262d] bg-[#0C111D] shrink-0">
+          <div className="flex items-center gap-3 px-4 py-2 border-b border-[#1E3829] bg-[#091410] shrink-0">
             {/* Mobile thread list trigger — only visible on mobile */}
             <button
               type="button"
@@ -458,12 +458,12 @@ export default function TicketDetail() {
 
             <button
               onClick={() => navigate('/topics')}
-              className="flex items-center gap-1.5 text-xs text-[#667085] hover:text-white transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#6B8A76] hover:text-white transition-colors"
             >
               <ArrowLeft size={13} /> Topics
             </button>
-            <span className="text-[#667085]">/</span>
-            <span className="text-xs font-medium text-[#e6edf3] truncate max-w-xs">{ticket.title}</span>
+            <span className="text-[#6B8A76]">/</span>
+            <span className="text-xs font-medium text-[#F7F9F8] truncate max-w-xs">{ticket.title}</span>
             <span className="ml-auto flex items-center gap-2">
               {ticket.status === 'archived' && (
                 <span className="text-[10px] text-orange-400 border border-orange-400/30 bg-orange-400/10 px-2 py-0.5 rounded-full">archived</span>
@@ -471,7 +471,7 @@ export default function TicketDetail() {
               {ticket.status !== 'archived' && (
                 <button
                   onClick={handleArchiveThread}
-                  className="flex items-center gap-1 px-2 py-1 text-[11px] text-[#667085] hover:text-orange-400 border border-[#21262d] hover:border-orange-400/30 rounded-lg transition-colors"
+                  className="flex items-center gap-1 px-2 py-1 text-[11px] text-[#6B8A76] hover:text-orange-400 border border-[#1E3829] hover:border-orange-400/30 rounded-lg transition-colors"
                   title="Archive thread"
                 >
                   <Archive size={11} /> Archive
@@ -482,15 +482,15 @@ export default function TicketDetail() {
 
           {/* AgentChat fills remaining space */}
           {sessionLoading ? (
-            <div className="flex items-center justify-center flex-1 text-[#667085]">
+            <div className="flex items-center justify-center flex-1 text-[#6B8A76]">
               <RefreshCw size={16} className="animate-spin mr-2" /> Initialising session...
             </div>
           ) : threadSessionId ? (
             <div className="flex-1 overflow-hidden flex flex-col">
               {ticket.status === 'archived' && (
-                <div className="flex items-center gap-2 px-4 py-2 bg-[#161b22] border-b border-[#21262d] shrink-0">
+                <div className="flex items-center gap-2 px-4 py-2 bg-[#122018] border-b border-[#1E3829] shrink-0">
                   <span className="text-sm">📦</span>
-                  <span className="text-xs text-[#667085] flex-1">Thread arquivada — read-only.</span>
+                  <span className="text-xs text-[#6B8A76] flex-1">Thread arquivada — read-only.</span>
                   <button
                     onClick={async () => {
                       try {
@@ -519,7 +519,7 @@ export default function TicketDetail() {
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-center flex-1 text-[#667085] flex-col gap-2">
+            <div className="flex items-center justify-center flex-1 text-[#6B8A76] flex-col gap-2">
               <p className="text-sm">Session could not be initialised.</p>
               <button onClick={() => ticket && initThreadSession(ticket)} className="text-xs text-[#85F2A0] hover:underline">
                 Retry
@@ -538,27 +538,27 @@ export default function TicketDetail() {
       {/* Back */}
       <button
         onClick={() => navigate('/topics')}
-        className="flex items-center gap-1.5 text-xs text-[#667085] hover:text-white mb-6 transition-colors"
+        className="flex items-center gap-1.5 text-xs text-[#6B8A76] hover:text-white mb-6 transition-colors"
       >
         <ArrowLeft size={13} /> Back to Topics
       </button>
 
       {/* Ticket header */}
-      <div className="bg-[#161b22] border border-[#21262d] rounded-xl p-5 mb-4">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5 mb-4">
         <div className="flex items-start gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center shrink-0 mt-0.5">
+          <div className="w-10 h-10 rounded-xl bg-[#122018] border border-[#1E3829] flex items-center justify-center shrink-0 mt-0.5">
             <Ticket size={18} className="text-[#85F2A0]" />
           </div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl font-bold text-[#e6edf3] mb-1">{ticket.title}</h1>
+            <h1 className="text-xl font-bold text-[#F7F9F8] mb-1">{ticket.title}</h1>
             {ticket.description && (
-              <p className="text-sm text-[#667085]">{ticket.description}</p>
+              <p className="text-sm text-[#6B8A76]">{ticket.description}</p>
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={handleEditTitle}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#667085] hover:text-[#e6edf3] bg-[#161b22] border border-[#21262d] hover:border-[#344054] rounded-lg transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#6B8A76] hover:text-[#F7F9F8] bg-[#122018] border border-[#1E3829] hover:border-[#1E3829] rounded-lg transition-colors"
               title="Edit title"
             >
               <Pencil size={12} /> Edit
@@ -592,13 +592,13 @@ export default function TicketDetail() {
         </div>
 
         {/* Metadata grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs border-t border-[#21262d] pt-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs border-t border-[#1E3829] pt-4">
           <div>
-            <p className="text-[#667085] mb-1.5">Status</p>
+            <p className="text-[#6B8A76] mb-1.5">Status</p>
             {editStatus ? (
               <select
                 autoFocus
-                className="bg-[#0C111D] border border-[#21262d] rounded px-2 py-1 text-[#e6edf3] text-xs focus:outline-none focus:border-[#41A650]/50 transition-colors"
+                className="bg-[#091410] border border-[#1E3829] rounded px-2 py-1 text-[#F7F9F8] text-xs focus:outline-none focus:border-[#41A650]/50 transition-colors"
                 value={ticket.status}
                 onChange={e => handleStatusChange(e.target.value as TicketStatus)}
                 onBlur={() => setEditStatus(false)}
@@ -616,11 +616,11 @@ export default function TicketDetail() {
           </div>
 
           <div>
-            <p className="text-[#667085] mb-1.5">Priority</p>
+            <p className="text-[#6B8A76] mb-1.5">Priority</p>
             {editPriority ? (
               <select
                 autoFocus
-                className="bg-[#0C111D] border border-[#21262d] rounded px-2 py-1 text-[#e6edf3] text-xs focus:outline-none focus:border-[#41A650]/50 transition-colors"
+                className="bg-[#091410] border border-[#1E3829] rounded px-2 py-1 text-[#F7F9F8] text-xs focus:outline-none focus:border-[#41A650]/50 transition-colors"
                 value={ticket.priority}
                 onChange={e => handlePriorityChange(e.target.value as TicketPriority)}
                 onBlur={() => setEditPriority(false)}
@@ -630,7 +630,7 @@ export default function TicketDetail() {
             ) : (
               <button
                 onClick={() => setEditPriority(true)}
-                className="text-[#e6edf3] hover:text-[#85F2A0] transition-colors capitalize text-xs"
+                className="text-[#F7F9F8] hover:text-[#85F2A0] transition-colors capitalize text-xs"
               >
                 {ticket.priority}
               </button>
@@ -638,18 +638,18 @@ export default function TicketDetail() {
           </div>
 
           <div>
-            <p className="text-[#667085] mb-1.5">Assignee</p>
-            <span className="text-[#e6edf3] font-mono">{ticket.assignee_agent ? `@${ticket.assignee_agent}` : '—'}</span>
+            <p className="text-[#6B8A76] mb-1.5">Assignee</p>
+            <span className="text-[#F7F9F8] font-mono">{ticket.assignee_agent ? `@${ticket.assignee_agent}` : '—'}</span>
           </div>
 
           <div>
-            <p className="text-[#667085] mb-1.5">Lock</p>
+            <p className="text-[#6B8A76] mb-1.5">Lock</p>
             {ticket.locked_at ? (
               <span className="flex items-center gap-1 text-orange-400">
                 <Lock size={11} /> {ticket.locked_by}
               </span>
             ) : (
-              <span className="flex items-center gap-1 text-[#667085]">
+              <span className="flex items-center gap-1 text-[#6B8A76]">
                 <Unlock size={11} /> unlocked
               </span>
             )}
@@ -657,8 +657,8 @@ export default function TicketDetail() {
 
           {(ticket.source_agent || ticket.source_session_id) && (
             <div>
-              <p className="text-[#667085] mb-1.5">Source</p>
-              <span className="text-[#8b949e] font-mono text-[11px]">
+              <p className="text-[#6B8A76] mb-1.5">Source</p>
+              <span className="text-[#C8D5CE] font-mono text-[11px]">
                 {ticket.source_agent ? `@${ticket.source_agent}` : ''}
                 {ticket.source_agent && ticket.source_session_id ? ' ' : ''}
                 {ticket.source_session_id ? `via session #${ticket.source_session_id.slice(0, 8)}` : ''}
@@ -667,18 +667,18 @@ export default function TicketDetail() {
           )}
 
           <div>
-            <p className="text-[#667085] mb-1.5">Created</p>
-            <span className="text-[#8b949e]">{formatDate(ticket.created_at)}</span>
+            <p className="text-[#6B8A76] mb-1.5">Created</p>
+            <span className="text-[#C8D5CE]">{formatDate(ticket.created_at)}</span>
           </div>
 
           <div>
-            <p className="text-[#667085] mb-1.5">Updated</p>
-            <span className="text-[#8b949e]">{formatDate(ticket.updated_at)}</span>
+            <p className="text-[#6B8A76] mb-1.5">Updated</p>
+            <span className="text-[#C8D5CE]">{formatDate(ticket.updated_at)}</span>
           </div>
 
           {ticket.resolved_at && (
             <div>
-              <p className="text-[#667085] mb-1.5">Resolved</p>
+              <p className="text-[#6B8A76] mb-1.5">Resolved</p>
               <span className="text-[#85F2A0]">{formatDate(ticket.resolved_at)}</span>
             </div>
           )}
@@ -686,14 +686,14 @@ export default function TicketDetail() {
       </div>
 
       {/* Timeline */}
-      <div className="bg-[#161b22] border border-[#21262d] rounded-xl p-5 mb-4">
-        <h2 className="text-sm font-semibold text-[#e6edf3] mb-4 flex items-center gap-2">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5 mb-4">
+        <h2 className="text-sm font-semibold text-[#F7F9F8] mb-4 flex items-center gap-2">
           <Activity size={14} className="text-[#85F2A0]" /> Timeline
-          <span className="text-[10px] text-[#667085] font-normal">{timeline.length} items</span>
+          <span className="text-[10px] text-[#6B8A76] font-normal">{timeline.length} items</span>
         </h2>
 
         {timeline.length === 0 ? (
-          <div className="flex flex-col items-center py-8 text-[#667085]">
+          <div className="flex flex-col items-center py-8 text-[#6B8A76]">
             <Activity size={24} className="opacity-30 mb-2" />
             <p className="text-xs">No activity yet</p>
           </div>
@@ -704,27 +704,27 @@ export default function TicketDetail() {
                 <div className="shrink-0 flex items-center justify-center mt-0.5">
                   {item._type === 'comment'
                     ? <div className="w-6 h-6 rounded-full bg-[#41A650]/20 flex items-center justify-center"><MessageSquare size={11} className="text-[#85F2A0]" /></div>
-                    : <div className="w-6 h-6 rounded-full bg-[#21262d] flex items-center justify-center"><Activity size={11} className="text-[#667085]" /></div>
+                    : <div className="w-6 h-6 rounded-full bg-[#1E3829] flex items-center justify-center"><Activity size={11} className="text-[#6B8A76]" /></div>
                   }
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-medium text-[#e6edf3]">{(item as ActivityItem).actor || (item as CommentItem).author}</span>
-                    <span className="text-[10px] text-[#667085]">{formatDate(item.created_at)}</span>
+                    <span className="text-xs font-medium text-[#F7F9F8]">{(item as ActivityItem).actor || (item as CommentItem).author}</span>
+                    <span className="text-[10px] text-[#6B8A76]">{formatDate(item.created_at)}</span>
                   </div>
 
                   {item._type === 'comment' ? (
-                    <div className="bg-[#0C111D] border border-[#21262d] rounded-lg px-3 py-2">
-                      <p className="text-sm text-[#e6edf3] whitespace-pre-wrap">{(item as CommentItem).body}</p>
+                    <div className="bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2">
+                      <p className="text-sm text-[#F7F9F8] whitespace-pre-wrap">{(item as CommentItem).body}</p>
                       {(item as CommentItem).mentions.length > 0 && (
-                        <p className="text-[10px] text-[#667085] mt-1.5 font-mono">
+                        <p className="text-[10px] text-[#6B8A76] mt-1.5 font-mono">
                           mentions: {(item as CommentItem).mentions.map(m => `@${m}`).join(', ')}
                         </p>
                       )}
                     </div>
                   ) : (
-                    <p className="text-xs text-[#8b949e] italic">
+                    <p className="text-xs text-[#C8D5CE] italic">
                       {actionLabel((item as ActivityItem).action, (item as ActivityItem).payload)}
                     </p>
                   )}
@@ -737,20 +737,20 @@ export default function TicketDetail() {
 
       {/* Add comment */}
       {ticket.status !== 'closed' && (
-        <div className="bg-[#161b22] border border-[#21262d] rounded-xl p-5">
-          <h2 className="text-sm font-semibold text-[#e6edf3] mb-3 flex items-center gap-2">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-5">
+          <h2 className="text-sm font-semibold text-[#F7F9F8] mb-3 flex items-center gap-2">
             <MessageSquare size={14} className="text-[#85F2A0]" /> Add Comment
           </h2>
           <form onSubmit={handleAddComment}>
             <textarea
-              className="w-full bg-[#0C111D] border border-[#21262d] rounded-lg px-3 py-2 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/50 resize-none mb-3 transition-colors"
+              className="w-full bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50 resize-none mb-3 transition-colors"
               placeholder="Add a comment... Use @agent-slug to mention an agent"
               rows={3}
               value={commentBody}
               onChange={e => setCommentBody(e.target.value)}
             />
             <div className="flex items-center justify-between">
-              <p className="text-[10px] text-[#667085]">Tip: @mention an agent to wake their heartbeat</p>
+              <p className="text-[10px] text-[#6B8A76]">Tip: @mention an agent to wake their heartbeat</p>
               <button
                 type="submit"
                 disabled={submitting || !commentBody.trim()}
@@ -848,26 +848,26 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-[#161b22] border border-[#21262d] rounded-xl w-full max-w-md p-5 shadow-2xl">
-        <h2 className="text-base font-semibold text-[#e6edf3] mb-1">Convert to Thread</h2>
-        <p className="text-xs text-[#667085] mb-4">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl w-full max-w-md p-5 shadow-2xl">
+        <h2 className="text-base font-semibold text-[#F7F9F8] mb-1">Convert to Thread</h2>
+        <p className="text-xs text-[#6B8A76] mb-4">
           "{ticketTitle}" will become a persistent chat thread with isolated memory.
         </p>
 
         {loading ? (
-          <div className="flex items-center gap-2 text-xs text-[#667085] py-4">
+          <div className="flex items-center gap-2 text-xs text-[#6B8A76] py-4">
             <RefreshCw size={14} className="animate-spin" /> Loading workspace folders...
           </div>
         ) : (
           <>
             {!useCustom && folders.length > 0 && (
               <div className="mb-3">
-                <label className="text-xs text-[#667085] mb-1.5 block">Working directory</label>
+                <label className="text-xs text-[#6B8A76] mb-1.5 block">Working directory</label>
                 {!showNewFolder && (
                   <select
                     value={selectedFolder}
                     onChange={e => setSelectedFolder(e.target.value)}
-                    className="w-full bg-[#0C111D] border border-[#21262d] rounded-lg px-3 py-2 text-sm text-[#e6edf3] focus:outline-none focus:border-[#41A650]/50"
+                    className="w-full bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#F7F9F8] focus:outline-none focus:border-[#41A650]/50"
                   >
                     <option value="">Select a folder...</option>
                     {folders.map(f => (
@@ -885,7 +885,7 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
                         onChange={e => { setNewFolderName(e.target.value); setNewFolderError(null) }}
                         onKeyDown={e => { if (e.key === 'Enter') handleCreateFolder(); if (e.key === 'Escape') { setShowNewFolder(false); setNewFolderName(''); setNewFolderError(null) } }}
                         placeholder="nome-da-pasta"
-                        className="flex-1 bg-[#0C111D] border border-[#21262d] rounded-lg px-3 py-2 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/50"
+                        className="flex-1 bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50"
                       />
                       <button
                         onClick={handleCreateFolder}
@@ -897,7 +897,7 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
                       </button>
                       <button
                         onClick={() => { setShowNewFolder(false); setNewFolderName(''); setNewFolderError(null) }}
-                        className="p-2 text-[#667085] hover:text-[#e6edf3] rounded-lg transition-colors"
+                        className="p-2 text-[#6B8A76] hover:text-[#F7F9F8] rounded-lg transition-colors"
                       >
                         <X size={12} />
                       </button>
@@ -908,14 +908,14 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
                   <div className="flex items-center gap-3 mt-1">
                     <button
                       onClick={() => { setShowNewFolder(true); setNewFolderError(null) }}
-                      className="flex items-center gap-1 text-[10px] text-[#667085] hover:text-[#85F2A0] transition-colors"
+                      className="flex items-center gap-1 text-[10px] text-[#6B8A76] hover:text-[#85F2A0] transition-colors"
                     >
                       <FolderPlus size={11} />
                       Nova pasta
                     </button>
                     <button
                       onClick={() => setUseCustom(true)}
-                      className="text-[10px] text-[#667085] hover:text-[#85F2A0] transition-colors"
+                      className="text-[10px] text-[#6B8A76] hover:text-[#85F2A0] transition-colors"
                     >
                       Enter custom path
                     </button>
@@ -926,18 +926,18 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
 
             {(useCustom || folders.length === 0) && (
               <div className="mb-3">
-                <label className="text-xs text-[#667085] mb-1.5 block">Working directory path</label>
+                <label className="text-xs text-[#6B8A76] mb-1.5 block">Working directory path</label>
                 <input
                   type="text"
                   value={customPath}
                   onChange={e => setCustomPath(e.target.value)}
                   placeholder="workspace/my-project"
-                  className="w-full bg-[#0C111D] border border-[#21262d] rounded-lg px-3 py-2 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#41A650]/50"
+                  className="w-full bg-[#091410] border border-[#1E3829] rounded-lg px-3 py-2 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50"
                 />
                 {folders.length > 0 && (
                   <button
                     onClick={() => setUseCustom(false)}
-                    className="text-[10px] text-[#667085] hover:text-[#85F2A0] mt-1 transition-colors"
+                    className="text-[10px] text-[#6B8A76] hover:text-[#85F2A0] mt-1 transition-colors"
                   >
                     Pick from list
                   </button>
@@ -959,7 +959,7 @@ function ConvertToThreadModal({ ticketId, ticketTitle, onClose, onConverted }: C
         <div className="flex items-center gap-2 justify-end">
           <button
             onClick={onClose}
-            className="px-3 py-1.5 text-xs text-[#667085] border border-[#21262d] rounded-lg hover:border-[#344054] transition-colors"
+            className="px-3 py-1.5 text-xs text-[#6B8A76] border border-[#1E3829] rounded-lg hover:border-[#1E3829] transition-colors"
           >
             Cancel
           </button>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * UI Playground — development-only page at /dev/ui-playground
  *
  * Demonstrates all @evonexus/ui primitives and schema-driven components.
@@ -264,7 +264,7 @@ export default function UIPlayground() {
             style={{
               marginTop: 16,
               padding: 12,
-              background: '#161b22',
+              background: '#122018',
               borderRadius: 6,
               fontSize: 12,
               color: '#85F2A0',

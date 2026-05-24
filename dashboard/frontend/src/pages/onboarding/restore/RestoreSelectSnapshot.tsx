@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Clock, Tag, GitCommit, AlertTriangle, Loader2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { api } from '../../../lib/api'
@@ -47,11 +47,11 @@ function SnapshotItem({
           : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
       }`}
     >
-      <GitCommit size={12} className={selected ? 'text-[#85F2A0]' : 'text-[#5a6b7f]'} />
+      <GitCommit size={12} className={selected ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
       <div className="flex-1 min-w-0">
         <p className="text-[12px] font-medium text-[#e2e8f0] truncate">{snapshot.label}</p>
         {snapshot.date && (
-          <p className="text-[10px] text-[#5a6b7f]">{snapshot.date}</p>
+          <p className="text-[10px] text-[#6B8A76]">{snapshot.date}</p>
         )}
         {snapshot.message && (
           <p className="text-[10px] text-[#4a5a6e] truncate">{snapshot.message}</p>
@@ -93,7 +93,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
   ]
 
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
         <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
           <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
@@ -110,7 +110,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
 
             {loading ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 size={24} className="text-[#5a6b7f] animate-spin" />
+                <Loader2 size={24} className="text-[#6B8A76] animate-spin" />
               </div>
             ) : data ? (
               <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-1">
@@ -121,8 +121,8 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
                   return (
                     <div key={key}>
                       <div className="flex items-center gap-2 mb-2">
-                        <Icon size={12} className="text-[#5a6b7f]" />
-                        <span className="text-[11px] font-semibold text-[#5a6b7f] uppercase tracking-[0.08em]">{label}</span>
+                        <Icon size={12} className="text-[#6B8A76]" />
+                        <span className="text-[11px] font-semibold text-[#6B8A76] uppercase tracking-[0.08em]">{label}</span>
                         <span className="text-[10px] text-[#2d3d4f]">{items.length}</span>
                       </div>
                       <div className="space-y-1">
@@ -153,7 +153,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
                   />
                   <div>
                     <p className="text-[12px] font-medium text-[#e2e8f0]">{t('restore.selectSnapshot.includeKb')}</p>
-                    <p className="text-[10px] text-[#5a6b7f] mt-0.5">{t('restore.selectSnapshot.includeKbDesc')}</p>
+                    <p className="text-[10px] text-[#6B8A76] mt-0.5">{t('restore.selectSnapshot.includeKbDesc')}</p>
                   </div>
                 </label>
 
@@ -171,14 +171,14 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('restore.back')}
               </button>
               <button
                 onClick={handleNext}
                 disabled={!selected}
-                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
               >
                 {t('restore.next')}
               </button>

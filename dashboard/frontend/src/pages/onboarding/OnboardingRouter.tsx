@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { api } from '../../lib/api'
@@ -103,8 +103,8 @@ export default function OnboardingRouter() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#080c14] flex items-center justify-center">
-        <div className="text-[#5a6b7f] text-sm">{t('onboarding.loading')}</div>
+      <div className="min-h-screen bg-[#07130D] flex items-center justify-center">
+        <div className="text-[#6B8A76] text-sm">{t('onboarding.loading')}</div>
       </div>
     )
   }

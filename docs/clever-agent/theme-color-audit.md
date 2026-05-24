@@ -190,7 +190,52 @@ Escopo previsto:
   - `#F7F9F8` sobre `#41A650` → contraste adequado para texto em botoes
   - Fundos de cards `#122018` mais quentes que upstream — preserva dark mode premium
   - Status semânticos (erro/warning/info) preservados com cores originais
-- **Pendencias:**
-  - Validacao visual completa no browser (Etapa 6.5)
-  - Ajustes finos de contraste se detectados visualmente
-  - `--evo-green` e `--evo-accent` podem ser removidos em etapa futura apos validacao
+- **Pendencias pos-6.4:**
+  - Validacao visual confirmou que apenas a sidebar refletia a paleta Clever — area principal permanecia com fundos upstream navy (#0C111D, #161b22, etc)
+  - Corrigido em Etapa 6.5 — ver secao abaixo
+
+---
+
+## Visual correction patch (Etapa 6.5)
+
+- **Commit:** (ver git log)
+- **Diagnostico:** Etapa 6.4 substituiu corretamente o neon (#00FFA7) mas deixou intacta a paleta de fundos upstream GitHub Dark (#0C111D, #0d1117, #161b22, #21262d, #344054, #182230, #e6edf3, #667085, #8b949e). O resultado visual foi parcial — sidebar Clever, area principal upstream.
+- **Causa raiz:** App.tsx linha 220 usava `bg-[#0C111D]` como container raiz do dashboard. AgentDetail.tsx, Overview.tsx e demais paginas usavam as mesmas cores legacy de fundo e texto.
+- **Arquivos alterados:** 119+ (batch replacement + arquivos especificos)
+- **Substituicoes aplicadas:**
+
+| Cor antiga (GitHub Dark) | Cor nova (Clever Agent) | Papel |
+|---|---|---|
+| `#0C111D` | `#091410` | Fundo app raiz |
+| `#0d1117` | `#07130D` | Fundo profundo (header, rail) |
+| `#080c14` | `#07130D` | Loading onboarding |
+| `#161b22` | `#122018` | Cards / paineis |
+| `#182230` | `#122018` | Cards variante |
+| `#11110c` | `#0D1B12` | Bg variante (agents) |
+| `#21262d` | `#1E3829` | Bordas |
+| `#344054` | `#1E3829` | Bordas variante |
+| `#30363d` | `#2E5040` | Bordas hover |
+| `#1c2333` | `#162B1E` | Hover surfaces |
+| `#e6edf3` | `#F7F9F8` | Texto primario |
+| `#8b949e` | `#C8D5CE` | Texto secundario |
+| `#667085` | `#6B8A76` | Texto muted |
+| `#5a6b7f` | `#6B8A76` | Texto muted variante |
+| `#D0D5DD` | `#C8D5CE` | Texto medio |
+| `#3F3F46` | `#3D5445` | Texto very muted / disabled |
+| `#0a0f1a` | `#07130D` | CodeMirror/Docs bg |
+
+- **Novos tokens adicionados em index.css:**
+  - `--clever-agent-bg-app: #091410`
+  - `--clever-agent-bg-elevated: #122018`
+  - `--clever-agent-bg-card: #101E16`
+  - `--clever-agent-accent: #85F2A0` (alias semantico)
+  - `--clever-agent-action: #41A650` (alias semantico)
+  - `--clever-agent-warning: #F2CB05` (alias semantico)
+  - Ajuste: `--clever-agent-bg-panel: #0D1B12` (era `#0B1711`)
+  - Ajuste: `--clever-agent-border-soft: rgba(133, 242, 160, 0.14)` (era 0.16)
+  - Ajuste: `--clever-agent-border-medium: rgba(133, 242, 160, 0.24)` (era 0.28)
+- **Gradiente de fundo aplicado:** `body` e `.clever-app-shell` usam radial + linear gradient verde-profundo sutil
+- **App.tsx:** container raiz migrado para `.clever-app-shell` (gradient)
+- **AgentDetail.tsx:** container raiz e secao terminal migrados para gradient + backdrop-blur no header
+- **Resultado:** dashboard inteiro visualmente Clever Agent — fundos, paineis, cards, texto, bordas, terminal, rail de sessoes
+- **Auditoria final:** todos os 9 padroes de cor legacy = 0 ocorrencias

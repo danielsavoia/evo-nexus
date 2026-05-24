@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { useConfirm } from './ConfirmDialog'
 import {
   MessageSquare,
@@ -169,7 +169,7 @@ export default function ChatSessionList({
           }}
           onMouseEnter={(e) => {
             if (!isActive) {
-              e.currentTarget.style.background = '#161b22'
+              e.currentTarget.style.background = '#122018'
             }
           }}
           onMouseLeave={(e) => {
@@ -187,7 +187,7 @@ export default function ChatSessionList({
                   ? accentColor
                   : isActive
                   ? `${accentColor}60`
-                  : '#344054',
+                  : '#1E3829',
                 boxShadow: session.active
                   ? `0 0 6px ${accentColor}80`
                   : 'none',
@@ -206,12 +206,12 @@ export default function ChatSessionList({
                   onKeyDown={handleRenameKey}
                   onBlur={commitRename}
                   onClick={(e) => e.stopPropagation()}
-                  className="flex-1 min-w-0 bg-[#0d1117] border border-[#30363d] rounded px-1.5 py-0.5 text-[12px] font-medium text-[#e6edf3] outline-none focus:border-[#58a6ff]"
+                  className="flex-1 min-w-0 bg-[#07130D] border border-[#2E5040] rounded px-1.5 py-0.5 text-[12px] font-medium text-[#F7F9F8] outline-none focus:border-[#58a6ff]"
                 />
               ) : (
                 <p
                   className="text-[12px] font-medium truncate leading-tight"
-                  style={{ color: isActive ? '#e6edf3' : '#c9d1d9' }}
+                  style={{ color: isActive ? '#F7F9F8' : '#c9d1d9' }}
                 >
                   {session.name}
                 </p>
@@ -238,14 +238,14 @@ export default function ChatSessionList({
               )}
             </div>
             {!isEditing && session.preview && (
-              <p className="text-[11px] text-[#667085] truncate leading-tight">
+              <p className="text-[11px] text-[#6B8A76] truncate leading-tight">
                 {session.preview}
               </p>
             )}
             {!isEditing && session.ts && (
               <div className="flex items-center gap-1 mt-1">
-                <Clock size={9} className="text-[#3F3F46]" />
-                <span className="text-[10px] text-[#3F3F46]">
+                <Clock size={9} className="text-[#3D5445]" />
+                <span className="text-[10px] text-[#3D5445]">
                   {formatRelativeTime(session.ts)}
                 </span>
               </div>
@@ -290,7 +290,7 @@ export default function ChatSessionList({
             >
               <MessageSquare size={16} style={{ color: accentColor }} />
             </div>
-            <p className="text-[11px] text-[#667085] text-center leading-relaxed">
+            <p className="text-[11px] text-[#6B8A76] text-center leading-relaxed">
               Nenhuma conversa ainda.<br />Inicie uma nova conversa abaixo.
             </p>
           </div>
@@ -308,7 +308,7 @@ export default function ChatSessionList({
               <div className={activeSessions.length > 0 ? 'mt-3' : ''}>
                 <button
                   onClick={() => setArchivedOpen(v => !v)}
-                  className="w-full flex items-center gap-1.5 px-1 py-1 text-[11px] text-[#667085] hover:text-[#c9d1d9] transition-colors"
+                  className="w-full flex items-center gap-1.5 px-1 py-1 text-[11px] text-[#6B8A76] hover:text-[#c9d1d9] transition-colors"
                 >
                   {archivedOpen
                     ? <ChevronDown size={12} />
@@ -331,14 +331,14 @@ export default function ChatSessionList({
       {contextMenu && contextSession && (
         <div
           ref={menuRef}
-          className="fixed z-[200] rounded-lg border border-[#21262d] bg-[#161b22] shadow-2xl py-1 min-w-[160px]"
+          className="fixed z-[200] rounded-lg border border-[#1E3829] bg-[#122018] shadow-2xl py-1 min-w-[160px]"
           style={{ top: contextMenu.y, left: contextMenu.x }}
         >
           <button
             className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-[#c9d1d9] hover:bg-white/5 transition-colors"
             onClick={() => startRename(contextSession)}
           >
-            <Edit2 size={13} className="text-[#667085]" />
+            <Edit2 size={13} className="text-[#6B8A76]" />
             Renomear
           </button>
           <button
@@ -346,11 +346,11 @@ export default function ChatSessionList({
             onClick={() => handleArchive(contextSession)}
           >
             {contextSession.archived
-              ? <ArchiveRestore size={13} className="text-[#667085]" />
-              : <Archive size={13} className="text-[#667085]" />}
+              ? <ArchiveRestore size={13} className="text-[#6B8A76]" />
+              : <Archive size={13} className="text-[#6B8A76]" />}
             {contextSession.archived ? 'Desarquivar' : 'Arquivar'}
           </button>
-          <div className="border-t border-[#21262d] my-1" />
+          <div className="border-t border-[#1E3829] my-1" />
           <button
             className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-400 hover:bg-white/5 transition-colors"
             onClick={() => handleDelete(contextSession)}

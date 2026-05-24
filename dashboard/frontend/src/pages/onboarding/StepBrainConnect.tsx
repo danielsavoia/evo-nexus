@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { Eye, EyeOff, ExternalLink } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { api } from '../../lib/api'
@@ -46,7 +46,7 @@ export default function StepBrainConnect({ onNext, onBack }: StepBrainConnectPro
   }
 
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
         <OnboardingHeader step="step2aOf3" filled={2} />
 
@@ -65,7 +65,7 @@ export default function StepBrainConnect({ onNext, onBack }: StepBrainConnectPro
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="block text-[11px] font-semibold text-[#5a6b7f] tracking-[0.08em] uppercase">
+                <label className="block text-[11px] font-semibold text-[#6B8A76] tracking-[0.08em] uppercase">
                   {t('onboarding.connect.pat')}
                 </label>
                 <a
@@ -91,7 +91,7 @@ export default function StepBrainConnect({ onNext, onBack }: StepBrainConnectPro
                 <button
                   type="button"
                   onClick={() => setShowToken(!showToken)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5a6b7f] hover:text-[#e2e8f0] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B8A76] hover:text-[#e2e8f0] transition-colors"
                 >
                   {showToken ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -99,7 +99,7 @@ export default function StepBrainConnect({ onNext, onBack }: StepBrainConnectPro
             </div>
 
             <div className="p-3 rounded-lg bg-[#0a1220] border border-[#1e2a3a]">
-              <p className="text-[11px] text-[#5a6b7f] leading-relaxed">
+              <p className="text-[11px] text-[#6B8A76] leading-relaxed">
                 {t('onboarding.connect.patHintPart1')}
                 <code className="text-[#85F2A0]/80 bg-[#0f1520] px-1 py-0.5 rounded text-[10px]">{t('onboarding.connect.patHintScope')}</code>
                 {t('onboarding.connect.patHintPart2')}
@@ -109,14 +109,14 @@ export default function StepBrainConnect({ onNext, onBack }: StepBrainConnectPro
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>
               <button
                 onClick={handleNext}
                 disabled={connecting || !token.trim()}
-                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
               >
                 {connecting ? t('onboarding.connect.connecting') : t('onboarding.connect.connect')}
               </button>
