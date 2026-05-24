@@ -34,7 +34,8 @@ Observacao: os componentes ja aceitam URL livre em `meta.avatar`, sem restricao 
 ## Estilo visual dos novos avatars
 
 - Formato: SVG vetorial
-- Estilo: geometrico, premium, tecnico, limpo e consistente
+- Estilo: busto/headshot de persona (rosto, cabeca e ombros), semi-flat premium, tecnico e consistente
+- Cada agente recebeu acessorio funcional proprio (ex.: headset, prancheta, balanca, grafico, roadmap, escudo)
 - Paleta base Clever Agent:
   - `#19402A`
   - `#255938`
@@ -52,4 +53,4 @@ Observacao: os componentes ja aceitam URL livre em `meta.avatar`, sem restricao 
 
 ## Regra de governanca visual
 
-Avatars devem permanecer no design system Clever Agent, sem marca EvoNexus/Evolution e sem uso de imagens realistas de pessoas reconheciveis.
+Avatars devem permanecer no design system Clever Agent, sem marca EvoNexus/Evolution, sem fotos realistas, e sempre com leitura clara em tamanho pequeno (32px/48px/64px/96px).
