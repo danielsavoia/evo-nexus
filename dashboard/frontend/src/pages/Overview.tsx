@@ -181,7 +181,7 @@ function ActiveAgentsBar({ agents, loading }: { agents: ActiveAgent[]; loading: 
 
   return (
     <div className="flex items-center gap-3 mb-8 flex-wrap">
-      <span className="text-xs font-medium text-[#6B8A76] uppercase tracking-wider mr-1">Active Agents</span>
+      <span className="text-xs font-medium uppercase tracking-wider mr-1" style={{ color: 'rgba(242,203,5,0.7)' }}>Active Agents</span>
       {agents.length === 0 ? (
         <span className="text-xs text-[#6B8A76]/60 italic">No agents running</span>
       ) : (
@@ -411,7 +411,7 @@ export default function Overview() {
 
       {/* Quick Actions */}
       <div className="mb-4">
-        <h3 className="text-xs font-medium text-[#6B8A76] uppercase tracking-wider mb-3">Quick Actions</h3>
+        <h3 className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'rgba(242,203,5,0.65)' }}>Quick Actions</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {QUICK_ACTIONS.map((action) => {
             const Icon = action.icon

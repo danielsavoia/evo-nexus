@@ -174,7 +174,7 @@ export default function Sidebar() {
           item.desktopOnly ? 'hidden lg:flex' : 'flex'
         } ${
           isActive
-            ? 'text-[#85F2A0] bg-[#85F2A0]/10 border-l-2 border-[#41A650]'
+            ? 'text-[#85F2A0] bg-[#85F2A0]/10 border-l-2 border-[#F2CB05]/70'
             : 'text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 border-l-2 border-transparent'
         }`
       }

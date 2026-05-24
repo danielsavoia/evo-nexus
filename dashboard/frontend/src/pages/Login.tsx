@@ -102,7 +102,7 @@ export default function Login() {
     }
   }
 
-  const inp = "w-full px-4 py-3 rounded-lg bg-[#091410] border border-[#1E3829] text-[#F7F9F8] placeholder-[#4a6a56] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/70 focus:ring-1 focus:ring-[#41A650]/20"
+  const inp = "w-full px-4 py-3 rounded-lg bg-[#091410] border border-[#1E3829] text-[#F7F9F8] placeholder-[#4a6a56] text-sm transition-colors duration-200 focus:outline-none focus:border-[#F2CB05]/50 focus:ring-1 focus:ring-[#F2CB05]/15"
   const lbl = "block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase"
 
   return (
@@ -110,7 +110,9 @@ export default function Login() {
       <NetworkCanvas />
 
       <div className="w-full max-w-[380px] relative z-10">
-        <div className="rounded-xl border border-[#1E3829] bg-[#0B1711] shadow-[0_4px_40px_rgba(0,0,0,0.5)]">
+        <div className="relative rounded-xl border border-[#1E3829] bg-[#0B1711] shadow-[0_4px_40px_rgba(0,0,0,0.5)] overflow-hidden">
+          {/* Yellow brand accent line */}
+          <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#F2CB05]/50 to-transparent rounded-t-xl" />
 
           {/* Header */}
           <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">

@@ -489,27 +489,27 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
   return (
     <Link
       to={`/agents/${agent.name}`}
-      className="group relative block overflow-hidden rounded-2xl border border-[#F59E0B]/25 bg-[#0D1B12] transition-all duration-300 hover:border-[#F59E0B]/50"
+      className="group relative block overflow-hidden rounded-2xl border border-[#F2CB05]/22 bg-[#0D1B12] transition-all duration-300 hover:border-[#F2CB05]/45"
       style={{
-        boxShadow: '0 0 32px rgba(245,158,11,0.06), inset 0 1px 0 rgba(245,158,11,0.08)',
+        boxShadow: '0 0 28px rgba(242,203,5,0.05), inset 0 1px 0 rgba(242,203,5,0.07)',
       }}
     >
       {/* Ambient glow */}
       <div
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl opacity-30 transition-opacity duration-500 group-hover:opacity-50"
-        style={{ background: 'radial-gradient(circle, rgba(245,158,11,0.35), transparent 65%)' }}
+        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl opacity-20 transition-opacity duration-500 group-hover:opacity-35"
+        style={{ background: 'radial-gradient(circle, rgba(242,203,5,0.28), transparent 65%)' }}
       />
 
       <div className="relative flex items-center gap-5 px-6 py-5">
         {/* Avatar */}
-        <div className="transition-transform duration-300 group-hover:scale-105" style={{ filter: 'drop-shadow(0 0 12px rgba(245,158,11,0.3))' }}>
+        <div className="transition-transform duration-300 group-hover:scale-105" style={{ filter: 'drop-shadow(0 0 10px rgba(242,203,5,0.22))' }}>
           <AgentAvatar name={agent.name} size={56} />
         </div>
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="rounded-full bg-[#F59E0B]/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#F59E0B] border border-[#F59E0B]/30">
+            <span className="rounded-full bg-[#F2CB05]/12 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#F2CB05] border border-[#F2CB05]/28">
               Start Here
             </span>
             {isRunning && (
@@ -521,9 +521,9 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
                 Running
               </span>
             )}
-            <code className="ml-auto sm:ml-0 font-mono text-[11px] text-[#F59E0B]/80">/oracle</code>
+            <code className="ml-auto sm:ml-0 font-mono text-[11px] text-[#F2CB05]/75">/oracle</code>
           </div>
-          <h2 className="text-[22px] font-bold text-[#F9FAFB] leading-tight mb-0.5 group-hover:text-white transition-colors">
+          <h2 className="text-[22px] font-bold text-[#F7F9F8] leading-tight mb-0.5 group-hover:text-white transition-colors">
             Oracle
           </h2>
           <p className="text-[12.5px] text-[#C8D5CE] leading-snug">
@@ -532,7 +532,7 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
         </div>
 
         {/* CTA arrow */}
-        <div className="hidden sm:flex flex-shrink-0 items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-[#F59E0B]/70 group-hover:text-[#F59E0B] transition-colors">
+        <div className="hidden sm:flex flex-shrink-0 items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-[#F2CB05]/65 group-hover:text-[#F2CB05] transition-colors">
           Open
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
         </div>

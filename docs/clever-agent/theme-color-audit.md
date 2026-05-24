@@ -239,3 +239,43 @@ Escopo previsto:
 - **AgentDetail.tsx:** container raiz e secao terminal migrados para gradient + backdrop-blur no header
 - **Resultado:** dashboard inteiro visualmente Clever Agent — fundos, paineis, cards, texto, bordas, terminal, rail de sessoes
 - **Auditoria final:** todos os 9 padroes de cor legacy = 0 ocorrencias
+
+---
+
+## Yellow accent refinement (Etapa 6.5.1)
+
+- **Commit:** (ver git log)
+- **Filosofia:** `#F2CB05` como assinatura premium — maximo 5% da interface. Amarelo e detalhe, nao tema dominante.
+- **Onde foi aplicado:**
+
+| Local | Elemento | Descricao |
+|---|---|---|
+| `agent-meta.ts` | Oracle color | Oracle passa a usar `#F2CB05` como sua cor de agente |
+| `Agents.tsx` | OracleHeroCard | Border, glow, badge START HERE, /oracle code, Open arrow |
+| `AgentDetail.tsx` | Chat/Terminal tab bar | Icone e underline da tab ativa (Chat ou Terminal) |
+| `AgentDetail.tsx` | InfoRail tab bar | Underline e texto da tab ativa (Sessions/Profile/Memory) |
+| `Sidebar.tsx` | Nav item ativo | `border-l-2 border-[#F2CB05]/70` (era verde) |
+| `Overview.tsx` | Label "Active Agents" | Cor amarelo suave: `rgba(242,203,5,0.7)` |
+| `Overview.tsx` | Label "Quick Actions" | Cor amarelo suave: `rgba(242,203,5,0.65)` |
+| `Login.tsx` | Focus ring de inputs | `focus:border-[#F2CB05]/50 focus:ring-[#F2CB05]/15` |
+| `Login.tsx` | Linha topo do card | Gradiente `rgba(242,203,5,0.5)` sutil |
+| `site/Home.tsx` | Hero badge | Badge principal do hero em amarelo |
+| `site/Home.tsx` | Terminal demo dot | Ponto amarelo no terminal mockup |
+
+- **Onde NAO foi aplicado (intencional):**
+  - Fundo geral: nao
+  - Cards comuns: nao
+  - Botoes primarios (CTA verde): nao
+  - Texto de corpo: nao
+  - Mensagens de erro/warning semantico: preservados com cores proprias
+  - Sidebar toda: apenas o traço esquerdo do item ativo
+
+- **Tokens adicionados em index.css:**
+  - `--clever-agent-yellow-soft: rgba(242, 203, 5, 0.14)`
+  - `--clever-agent-yellow-medium: rgba(242, 203, 5, 0.32)`
+  - `--clever-agent-yellow-strong: rgba(242, 203, 5, 0.72)`
+  - Classes: `.clever-accent-yellow`, `.clever-border-yellow-soft`, `.clever-ring-yellow-soft`, `.clever-tab-underline-yellow`
+
+- **Regra de governanca:** amarelo Clever Agent e reservado para indicadores de foco, destaques pontuais, elemento de identidade de marca. Toda nova aplicacao deve ser avaliada contra este criterio.
+- **Dashboard build:** OK 2.21s
+- **Site build:** OK 6.48s

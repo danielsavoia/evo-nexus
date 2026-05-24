@@ -528,25 +528,31 @@ export default function AgentDetail() {
             <div className="flex items-center border-r border-[#1E3829] h-full">
               <button
                 onClick={() => { setViewMode('chat'); localStorage.setItem('evo:agent-view-mode', 'chat') }}
-                className={`flex items-center gap-1.5 px-3 h-full text-[11px] transition-colors ${
+                className={`relative flex items-center gap-1.5 px-3 h-full text-[11px] transition-colors ${
                   viewMode === 'chat'
                     ? 'text-[#F7F9F8] bg-[#091410]'
                     : 'text-[#6B8A76] hover:text-[#F7F9F8] hover:bg-[#122018]'
                 }`}
               >
-                <MessageSquare size={12} style={{ color: viewMode === 'chat' ? agentColor : undefined }} />
+                <MessageSquare size={12} style={{ color: viewMode === 'chat' ? '#F2CB05' : undefined }} />
                 Chat
+                {viewMode === 'chat' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full" style={{ background: '#F2CB05' }} />
+                )}
               </button>
               <button
                 onClick={() => { setViewMode('terminal'); localStorage.setItem('evo:agent-view-mode', 'terminal') }}
-                className={`flex items-center gap-1.5 px-3 h-full text-[11px] transition-colors ${
+                className={`relative flex items-center gap-1.5 px-3 h-full text-[11px] transition-colors ${
                   viewMode === 'terminal'
                     ? 'text-[#F7F9F8] bg-[#091410]'
                     : 'text-[#6B8A76] hover:text-[#F7F9F8] hover:bg-[#122018]'
                 }`}
               >
-                <TerminalIcon size={12} style={{ color: viewMode === 'terminal' ? agentColor : undefined }} />
+                <TerminalIcon size={12} style={{ color: viewMode === 'terminal' ? '#F2CB05' : undefined }} />
                 Terminal
+                {viewMode === 'terminal' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full" style={{ background: '#F2CB05' }} />
+                )}
               </button>
             </div>
 
@@ -773,7 +779,7 @@ function TabButton({
   label,
   active,
   onClick,
-  color,
+  color: _color,
   count,
 }: {
   label: string
@@ -786,7 +792,7 @@ function TabButton({
     <button
       onClick={onClick}
       className="relative h-10 flex items-center gap-2 text-[10.5px] uppercase tracking-[0.14em] font-medium transition-colors"
-      style={{ color: active ? '#F7F9F8' : '#6B8A76' }}
+      style={{ color: active ? '#F2CB05' : '#6B8A76' }}
     >
       {label}
       {count !== undefined && (
@@ -794,8 +800,8 @@ function TabButton({
       )}
       {active && (
         <span
-          className="absolute bottom-0 left-0 right-0 h-[2px]"
-          style={{ backgroundColor: color }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full"
+          style={{ backgroundColor: '#F2CB05' }}
         />
       )}
     </button>

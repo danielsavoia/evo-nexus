@@ -48,7 +48,7 @@ const AGENT_META_SEED: Record<string, AgentMeta> = {
   'pixel-social-media': { icon: Camera, color: '#A78BFA', command: '/pixel', label: 'Social Media', avatar: '/clever-agent/avatars/avatar_pixel.png' },
   'pulse-community': { icon: Users, color: '#2DD4BF', command: '/pulse', label: 'Community', avatar: '/clever-agent/avatars/avatar_pulse.png' },
   'sage-strategy': { icon: Compass, color: '#818CF8', command: '/sage', label: 'Strategy', avatar: '/clever-agent/avatars/avatar_sage.png' },
-  oracle: { icon: BookOpen, color: '#F59E0B', command: '/oracle', label: 'Knowledge', avatar: '/clever-agent/avatars/avatar_oracle.png' },
+  oracle: { icon: BookOpen, color: '#F2CB05', command: '/oracle', label: 'Knowledge', avatar: '/clever-agent/avatars/avatar_oracle.png' },
   'mako-marketing': { icon: Megaphone, color: '#FB923C', command: '/mako', label: 'Marketing', avatar: '/clever-agent/avatars/avatar_mako.png' },
   'aria-hr': { icon: UserCheck, color: '#F472B6', command: '/aria', label: 'HR / People', avatar: '/clever-agent/avatars/avatar_aria.png' },
   'zara-cs': { icon: Headphones, color: '#22D3EE', command: '/zara', label: 'Customer Success', avatar: '/clever-agent/avatars/avatar_zara.png' },

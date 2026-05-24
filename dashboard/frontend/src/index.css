@@ -23,6 +23,11 @@
   --clever-agent-action:        #41A650;
   --clever-agent-warning:       #F2CB05;
 
+  /* ── Yellow accent tokens (brand mark — use sparingly) ────────── */
+  --clever-agent-yellow-soft:   rgba(242, 203, 5, 0.14);
+  --clever-agent-yellow-medium: rgba(242, 203, 5, 0.32);
+  --clever-agent-yellow-strong: rgba(242, 203, 5, 0.72);
+
   /* ── Evo aliases → Clever Agent (backward-compat) ───────────────── */
   --evo-green: var(--clever-agent-green-300);
   --evo-accent: var(--clever-agent-green-600);
@@ -232,3 +237,30 @@ body {
 .prose-agent strong { color: var(--clever-agent-green-300); }
 .prose-agent code { color: var(--clever-agent-text-muted); background: rgba(13, 27, 18, 0.8); padding: 0.1em 0.3em; border-radius: 3px; }
 .prose-agent a { color: var(--clever-agent-green-300); }
+
+/* ── Yellow accent utilities (brand micro-detail — use sparingly) ─ */
+/* e.g. active indicator, featured badge, Oracle card detail */
+
+.clever-accent-yellow {
+  color: var(--clever-agent-warning);
+}
+
+.clever-border-yellow-soft {
+  border-color: var(--clever-agent-yellow-medium);
+}
+
+.clever-ring-yellow-soft {
+  box-shadow: 0 0 0 1px var(--clever-agent-yellow-soft);
+}
+
+/* Active tab underline helper */
+.clever-tab-underline-yellow::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--clever-agent-warning);
+  border-radius: 2px 2px 0 0;
+}

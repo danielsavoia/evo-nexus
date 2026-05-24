@@ -200,7 +200,7 @@ export default function Home() {
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
           <FadeIn>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2CB05]/10 border border-[#F2CB05]/25 text-[#F2CB05] text-sm font-medium mb-8">
               <Zap className="w-4 h-4" />
               <span>{t("hero.badge", { version: __APP_VERSION__ })}</span>
             </div>
@@ -256,7 +256,7 @@ export default function Home() {
             <div className="rounded-xl overflow-hidden bg-[#0a0f18] border border-border shadow-2xl relative">
               <div className="absolute top-0 inset-x-0 h-8 bg-muted flex items-center px-4 gap-2 border-b border-border">
                 <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                <div className="w-3 h-3 rounded-full" style={{ background: 'rgba(242,203,5,0.75)' }}></div>
                 <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 <div className="mx-auto text-xs text-muted-foreground font-mono">bash</div>
               </div>
@@ -531,7 +531,7 @@ export default function Home() {
               <div className="flex items-center justify-between px-4 h-10 bg-muted border-b border-border">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-3 h-3 rounded-full" style={{ background: 'rgba(242,203,5,0.75)' }}></div>
                   <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 </div>
                 <span className="text-xs text-muted-foreground font-mono">terminal</span>
