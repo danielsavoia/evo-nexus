@@ -17,12 +17,21 @@ _running_jobs = {}
 
 
 def _post_restore_migrate():
-    """Run schema fixes after restoring a backup (old DBs may have missing columns/bad data)."""
-    import sqlite3
+    """Run schema fixes after restoring a backup (old DBs may have missing columns/bad data).
+
+    SQLite-only — uses PRAGMA table_info(). In Postgres mode, restore is handled
+    by pg_restore + Alembic upgrade head; this function returns immediately.
+    """
+    import sqlite3  # noqa: F401 — allowlisted: SQLite-only post-restore schema repair
     from flask import current_app
 
-    db_path = current_app.config["SQLALCHEMY_DATABASE_URI"].replace("sqlite:///", "")
-    conn = sqlite3.connect(db_path)
+    db_uri = current_app.config["SQLALCHEMY_DATABASE_URI"]
+    if not db_uri.startswith("sqlite"):
+        # Postgres: nothing to do here. pg_restore + alembic upgrade handle it.
+        return
+
+    db_path = db_uri.replace("sqlite:///", "")
+    conn = sqlite3.connect(db_path)  # noqa — allowlisted: _post_restore_migrate() is SQLite-only (PRAGMA table_info; called only after SQLite backup restore)
     cur = conn.cursor()
 
     # Ensure all tables exist (db.create_all equivalent for new models)
@@ -97,7 +106,7 @@ def create_backup():
     if denied:
         return denied
 
-    if _running_jobs.get("backup"):
+    if _running_jobs.get("backup", {}).get("status") == "running":
         return jsonify({"error": "A backup is already running"}), 409
 
     target = request.get_json(silent=True) or {}
@@ -149,6 +158,9 @@ def restore_backup(filename):
     mode = data.get("mode", "merge")
     if mode not in ("merge", "replace"):
         return jsonify({"error": "Invalid mode. Use 'merge' or 'replace'"}), 400
+
+    if _running_jobs.get("restore", {}).get("status") == "running":
+        return jsonify({"error": "A restore is already running"}), 409
 
     def _run():
         try:

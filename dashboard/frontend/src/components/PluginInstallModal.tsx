@@ -7,7 +7,10 @@ import SecurityScanSection, { type ScanVerdict, type ScanResult } from './Securi
 interface PreviewResult {
   manifest: Record<string, unknown>
   warnings: string[]
-  conflicts?: Record<string, unknown>
+  // Backend returns conflicts as a list of human-readable strings (not a dict).
+  // See plugin_loader.PluginInstaller.preview() — each blocker is a string
+  // appended to result["conflicts"].
+  conflicts?: string[]
 }
 
 interface Props {
@@ -41,6 +44,9 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
   const [, setScanResult] = useState<ScanResult | null>(null)
   const [overrideReason, setOverrideReason] = useState('')
   const [warnConfirmed, setWarnConfirmed] = useState(false)
+  // Optional reason captured when admin checks "Skip scan" — never required;
+  // backend audit logs the skip regardless.
+  const [skipReason, setSkipReason] = useState('')
 
   // Effective source: uploaded staged path wins over URL input
   const effectiveSource = () => (uploadedPath ?? sourceUrl.trim())
@@ -59,12 +65,15 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
   }, [])
 
   // Scan gate logic (mirrors UpdatePreviewModal):
-  // null = scan not yet completed (wait) | APPROVE = pass | WARN+confirmed = pass |
-  // BLOCK+overrideReason(≥20) = admin pass
+  //   null    = scan not yet completed (wait)
+  //   APPROVE = pass
+  //   WARN    = pass when checkbox confirmed
+  //   BLOCK   = pass when admin types a ≥20-char override reason
+  //   SKIPPED = pass immediately (admin chose to bypass; audit logs the action)
   const scanGatePassed =
     scanVerdict === null
       ? false // still scanning
-      : scanVerdict === 'APPROVE'
+      : scanVerdict === 'APPROVE' || scanVerdict === 'SKIPPED'
         ? true
         : scanVerdict === 'WARN'
           ? warnConfirmed
@@ -127,6 +136,12 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
       if (scanVerdict === 'BLOCK' && overrideReason.trim().length >= 20) {
         body.override_reason = overrideReason.trim()
       }
+      // SKIPPED — admin bypassed the scan; backend audit-logs both the skip
+      // and the optional reason.
+      if (scanVerdict === 'SKIPPED') {
+        body.skip_scan = true
+        if (skipReason.trim()) body.skip_reason = skipReason.trim()
+      }
       const result = await api.post('/plugins/install', body) as { slug: string; mcp_servers_installed?: Array<{ effective_name: string }> }
       setInstalledSlug(result.slug)
       setMcpServersInstalled(result.mcp_servers_installed ?? [])
@@ -140,7 +155,9 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
 
   const manifest = preview?.manifest ?? {}
   const warnings = preview?.warnings ?? []
-  const conflicts = preview?.conflicts ? Object.keys(preview.conflicts) : []
+  const conflicts: string[] = Array.isArray(preview?.conflicts)
+    ? (preview!.conflicts as string[]).filter((c): c is string => typeof c === 'string' && c.length > 0)
+    : []
 
   // Install button is amber for WARN, normal green otherwise
   const installBtnClass =
@@ -279,6 +296,7 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                 authToken={authToken.trim() || undefined}
                 onVerdict={handleScanVerdict}
                 onOverride={handleOverride}
+                onSkipReason={setSkipReason}
               />
 
               {/* WARN confirmation checkbox */}
@@ -338,7 +356,11 @@ export default function PluginInstallModal({ onClose, onInstalled }: Props) {
                   <p className="text-xs font-medium text-red-400 mb-1 flex items-center gap-1.5">
                     <AlertTriangle size={12} /> {t('plugins.conflicts')}
                   </p>
-                  <p className="text-xs text-red-300/80">{conflicts.join(', ')}</p>
+                  <ul className="space-y-0.5 list-disc list-inside">
+                    {conflicts.map((c, i) => (
+                      <li key={i} className="text-xs text-red-300/80">{c}</li>
+                    ))}
+                  </ul>
                 </div>
               )}
 

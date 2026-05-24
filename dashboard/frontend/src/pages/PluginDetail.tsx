@@ -7,8 +7,19 @@ import {
   ToggleRight, ToggleLeft, Terminal, X,
 } from 'lucide-react'
 import { api } from '../lib/api'
+import { hydratePluginUiRegistry } from '../lib/plugin-ui-registry'
 import type { Plugin } from '../components/PluginCard'
 import UpdatePreviewModal from '../components/UpdatePreviewModal'
+import PluginUninstall, { type SafeUninstallSpec } from '../components/PluginUninstall'
+
+// Re-fetch the UI registry after install / update / uninstall so the sidebar,
+// page bundles, and ?v=<version> cache-buster all match the freshly written
+// manifest_json in plugins_installed. Without this, the in-memory registry
+// keeps the stale manifest until full page reload — which is why a v0.1.2
+// install kept showing v0.1.2 sidebar entries after upgrading to v0.1.3.
+async function refreshPluginUiRegistry() {
+  await hydratePluginUiRegistry(true)
+}
 
 interface HealthResult {
   slug: string
@@ -147,6 +158,11 @@ export default function PluginDetail() {
   // Wave 2.0 — Icon fallback state
   const [iconError, setIconError] = useState(false)
 
+  // B3 — Safe uninstall wizard state
+  const [showUninstallWizard, setShowUninstallWizard] = useState(false)
+  // Simple confirm modal for plugins without safe_uninstall (replaces window.confirm).
+  const [showSimpleConfirm, setShowSimpleConfirm] = useState(false)
+
   // Wave 2.3 — MCP restart banner dismiss (persisted via localStorage)
   const mcpBannerKey = `mcp-restart-dismissed-${slug}`
   const [mcpBannerDismissed, setMcpBannerDismissed] = useState<boolean>(
@@ -191,11 +207,25 @@ export default function PluginDetail() {
     }
   }
 
-  async function handleUninstall() {
-    if (!slug || !window.confirm(t('plugins.confirmUninstall'))) return
+  function handleUninstall() {
+    if (!slug) return
+    // B3: If plugin declares safe_uninstall.enabled, open the wizard instead of window.confirm.
+    const manifest = (plugin as unknown as Record<string, unknown> | null)?.manifest_json as Record<string, unknown> | undefined
+    const safeUninstall = (manifest?.safe_uninstall ?? {}) as SafeUninstallSpec
+    if (safeUninstall?.enabled) {
+      setShowUninstallWizard(true)
+      return
+    }
+    // Plugin without safe_uninstall — show simple in-app confirm modal.
+    setShowSimpleConfirm(true)
+  }
+
+  async function performSimpleUninstall() {
+    setShowSimpleConfirm(false)
     setRemoving(true)
     try {
       await api.delete(`/plugins/${slug}`)
+      await refreshPluginUiRegistry()
       navigate('/plugins')
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : t('common.unexpectedError'))
@@ -205,10 +235,10 @@ export default function PluginDetail() {
 
   async function handleToggle() {
     if (!plugin) return
-    const next = plugin.enabled !== 1
+    const next = !plugin.enabled
     try {
       await api.patch(`/plugins/${plugin.slug}`, { enabled: next })
-      setPlugin({ ...plugin, enabled: next ? 1 : 0 })
+      setPlugin({ ...plugin, enabled: next })
     } catch {
       // silent — refetch if needed
     }
@@ -397,7 +427,7 @@ export default function PluginDetail() {
     id: `plugin-${slug}-${mcp.name}`,
     label: `${mcp.name} (${mcp.command ?? '—'})`,
     type: 'mcp_servers',
-    enabled: plugin.enabled === 1,
+    enabled: Boolean(plugin.enabled),
   }))
 
   // Wave 2.2r — Integrations declared in the manifest (display-only; the
@@ -409,7 +439,7 @@ export default function PluginDetail() {
     id: `${slug}-${it.slug}`,
     label: `${it.label}${it.category ? ` · ${it.category}` : ''}`,
     type: 'integrations',
-    enabled: plugin.enabled === 1,
+    enabled: Boolean(plugin.enabled),
   }))
 
   const hasAnyCapabilities =
@@ -425,7 +455,61 @@ export default function PluginDetail() {
     mcpItems.length > 0 ||
     integrationItems.length > 0
 
+  // B3: Extract safe_uninstall spec from manifest for the wizard
+  const _manifest = (plugin as unknown as Record<string, unknown> | null)?.manifest_json as Record<string, unknown> | undefined
+  const _safeUninstallSpec = (_manifest?.safe_uninstall ?? {}) as SafeUninstallSpec
+
   return (
+    <>
+    {/* B3: Safe uninstall wizard overlay */}
+    {showUninstallWizard && slug && (
+      <PluginUninstall
+        slug={slug}
+        safeUninstall={_safeUninstallSpec}
+        onClose={() => setShowUninstallWizard(false)}
+        onUninstalled={async () => {
+          await refreshPluginUiRegistry()
+          navigate('/plugins')
+        }}
+      />
+    )}
+
+    {/* Simple confirm modal — for plugins without safe_uninstall.
+        Replaces the prior window.confirm() popup so the UX matches the rest
+        of the app (dark theme, branded accents, in-page overlay). */}
+    {showSimpleConfirm && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+        <div className="w-full max-w-md rounded-xl border border-neutral-800 bg-neutral-900 shadow-2xl">
+          <div className="flex items-center gap-2 border-b border-neutral-800 px-6 py-4">
+            <Trash2 className="h-5 w-5 text-red-400" />
+            <span className="font-semibold text-white">Desinstalar plugin: {slug}</span>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div className="flex items-start gap-3 rounded border border-red-800 bg-red-950/40 p-4">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+              <p className="text-sm text-red-200">
+                Esta ação não pode ser desfeita. O plugin será removido completamente,
+                incluindo seus dados (a menos que ele declare preservação explícita).
+              </p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowSimpleConfirm(false)}
+                className="rounded-lg border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => { void performSimpleUninstall() }}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+              >
+                Desinstalar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
     <div className="max-w-3xl mx-auto">
       {/* Back */}
       <button
@@ -463,12 +547,12 @@ export default function PluginDetail() {
           <button
             onClick={handleToggle}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border ${
-              plugin.enabled === 1
+              Boolean(plugin.enabled)
                 ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
                 : 'bg-[#21262d] text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
             }`}
           >
-            {plugin.enabled === 1 ? t('common.enabled') : t('common.disabled')}
+            {Boolean(plugin.enabled) ? t('common.enabled') : t('common.disabled')}
           </button>
           <button
             onClick={() => setPreviewOpen(true)}
@@ -666,6 +750,10 @@ export default function PluginDetail() {
               from: plugin.version,
               to: '…',
             }))
+            // Re-fetch plugin list AND the UI registry — without the registry
+            // refresh, the sidebar + page bundles keep pointing at the
+            // pre-update manifest until full reload.
+            await refreshPluginUiRegistry()
             const plugins = await api.get('/plugins') as Plugin[]
             const found = plugins.find((p) => p.slug === slug)
             if (found) {
@@ -679,5 +767,6 @@ export default function PluginDetail() {
         />
       )}
     </div>
+    </>
   )
 }

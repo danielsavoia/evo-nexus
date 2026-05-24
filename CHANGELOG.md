@@ -5,6 +5,133 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+PostgreSQL is now a first-class storage option alongside SQLite. Two
+features land together: **postgres-compat** (dual-backend schema, data
+migration tool) and **pg-native-configs** (configs live in DB when on PG,
+not in YAML/JSON).
+
+### Added — postgres-compat
+
+- **Dual-backend support**: set `DATABASE_URL=postgresql://...` to use PG;
+  unset to keep SQLite default. SQLite mode is byte-compatible with prior
+  releases.
+- **Alembic migrations** replace runtime `executescript()` + `PRAGMA
+  table_info` introspection. 30+ tables managed by versioned migrations
+  (0001-0010). New `make db-upgrade` / `db-current` / `db-history` /
+  `db-downgrade` targets.
+- **`evonexus-migrate` CLI** — copies SQLite data to a fresh PG with
+  trigger DISABLE/ENABLE around bulk inserts (preserves goal counters),
+  optimistic resume, row-count + checksum verification. Flags:
+  `--dry-run`, `--resume`, `--verify`/`--skip-verify`, `--allow-non-empty`,
+  `--batch-size`. New flag `--skip-incompatible-plugins` for partial
+  migration when a plugin still ships only `install.sqlite.sql`.
+- **Plugin contract v2** — plugins must provide both `install.sqlite.sql`
+  and `install.postgres.sql`. Plugins missing PG support fail-fast in PG
+  mode with a link to `docs/plugin-migration-v1.md`.
+- **CI grep guards** — pre-commit and CI block raw `sqlite3.connect` and
+  `UPDATE goal_tasks` outside an explicit allowlist (`db/ALLOWLIST.md`).
+
+### Added — pg-native-configs
+
+- **Configs live in PG when in PG mode** (workspace, providers, heartbeats,
+  routines, plugin-defined heartbeats/routines). SQLite mode is unchanged.
+- **`config_store` / `provider_store` / `routine_store`** — the only seams
+  authorized to read/write configs. Both seams bifurcate by dialect.
+- **LISTEN/NOTIFY hot reload** — heartbeat dispatcher and routine scheduler
+  open a dedicated PG connection on `LISTEN config_changed`. Triggers on
+  `heartbeats` and `routine_definitions` notify on every change. Reload
+  latency < 1s without SIGHUP / process restart.
+- **Plugin auto-import on install (PG mode)** — plugin's `heartbeats.yaml`
+  and `routines.yaml` populate the corresponding tables tagged
+  `source_plugin=<slug>`. Uninstall deletes by `source_plugin`. Update is
+  DELETE+INSERT in a single transaction; user-toggled `enabled` state is
+  preserved.
+- **`evonexus-import-configs` CLI** — one-shot migration of file-based
+  configs to PG for users who already moved their data with `db-migrate`
+  but not their YAMLs. Idempotent; `--dry-run`, `--force`, `--verbose`.
+- **Setup wizard PG-native** — `make setup` writes directly to DB when
+  `DATABASE_URL` is set; no YAML files are created in PG mode.
+- **`greplint pg-native-configs` CI job** — blocks new `yaml.safe_load`
+  calls outside the explicit allowlist of legitimate config seams,
+  preventing regression.
+- **`docs/postgres-mode.md`** — operator guide covering install, migration,
+  pooling, hot reload, plugin contract, and known limitations.
+
+### Changed
+
+- `dashboard.port` reads from `EVONEXUS_PORT` env var only (was YAML
+  fallback). Default 8080.
+- Goal-progress trigger ported from SQLite-only inline trigger to a
+  defense-in-depth pair (SQLite `CREATE TRIGGER` + PG `CREATE FUNCTION ...
+  LANGUAGE plpgsql`) so bulk updates and raw-SQL paths both increment
+  `goals.current_value` correctly.
+
+### Added — PG backup/restore
+
+- **`backup.py` integrates `pg_dump`** — when `DATABASE_URL` is set to a
+  Postgres URL, `make backup` dumps the database via `pg_dump --format=custom`
+  (no-owner, no-acl) and embeds it in the ZIP as `database.dump`. Manifest
+  records `db_backend: postgres` and dump metadata.
+- **`backup.py restore` calls `pg_restore`** — when the ZIP contains
+  `database.dump` and the current host is PG, restore runs `pg_restore`
+  against `DATABASE_URL`. `--mode replace` adds `--clean --if-exists` to
+  drop existing schema first; `--mode merge` (default) appends.
+- Backend-mismatch detection: restoring a Postgres ZIP onto a SQLite host
+  (or vice versa) aborts with a clear error pointing to `evonexus-migrate`.
+
+### Added — pg-native-logs
+
+- **Conversations, daily outputs, meetings, plugin hooks, audit and routines
+  now persist in PG**. 9 new tables (migration 0011) capture what previously
+  lived in `workspace/ADWs/logs/`, `workspace/daily-logs/`, `workspace/meetings/`,
+  and `memory/raw-transcripts/`.
+- **Chat hybrid write path**: `chat-logger.js` (Node) appends to JSONL first
+  (durable WAL), then async-POSTs to Flask `POST /api/chat-messages`. Idempotent
+  via UUID PK. `.synced` and `.pending` sidecars provide replay on Flask outage.
+- **`heartbeat_run_prompts` table** stores full prompts (no longer truncated to
+  1000 chars). 1:1 lazy join with `heartbeat_runs` keeps listing queries fast.
+- **TTL job** `make logs-cleanup` applies retention defaults (chat 90d, daily 180d,
+  plugin hooks 14d, etc.) — env-overridable per category. Meetings, audit,
+  brain repo transcripts retained forever.
+- **`evonexus-import-logs` CLI** backfills file-based logs into PG. Idempotent;
+  `--dry-run` and `--force` flags.
+- **Greplint Guard 4** (CI + pre-commit) blocks new file-log writers outside
+  the allowlist.
+- **`docs/postgres-mode.md`** — new "Logs and history in PG mode" section.
+
+### Deferred (PG-NC follow-ups, not blocking)
+
+- **Frontend cache invalidation** via SSE/WebSocket — backend caches
+  invalidate via NOTIFY but React state holds stale values until refresh
+  in unrelated browser tabs.
+- **LISTEN multiplexer** — currently each long-running process opens its
+  own connection. A single multiplexer would consolidate down to 1 conn.
+- **Smart-router config in DB** — out of scope; remains file-based for
+  the JS proxy process.
+
+## [0.33.0] - 2026-04-25
+
+Plugin contract release. Five PRs merged in one day to unblock the EvoNexus Plugin Nutri (and any future plugin needing per-endpoint role enforcement, public token-bound portals, or safe uninstall). Plus a UX fix so `409 CONFLICT` from plugin install actually says *why* it conflicted.
+
+### Added
+
+- **`requires_role` on `PluginWritableResource`** (PR #55) — plugins can declare a list of roles allowed on each writable endpoint. The host returns `403` when `current_user.role` is not in the list. `'admin'` always passes (super-user override). Backwards compatible: resources without the field accept any authenticated user.
+- **Auto-injected readonly bind params** (PR #55) — every `readonly_data` query receives `:current_user_id` and `:current_user_role` server-side. Plugins reference them directly in SQL for scoping (`WHERE primary_nutritionist_id = :current_user_id`). Both names are reserved — clients that try to spoof them via `?current_user_id=...` get `400`.
+- **`public_pages` capability** (PR #53) — token-bound public portals at `/p/{slug}/{route_prefix}/{token}`. Token validated against a plugin-declared `token_source.column`. CSP, rate limit, and security headers applied. Read-only `readonly_data` queries can be exposed to the portal via `public_via` + `bind_token_param`.
+- **HTML shell content negotiation** (PR #56) — when a request includes `text/html` in `Accept`, the host renders a minimal HTML shell that loads the plugin bundle as a module and instantiates the declared custom element with `data-token`. Programmatic clients (`Accept: application/javascript`, default `*/*`) keep getting the raw bundle. Plugins ship a single JS bundle and get a working browser experience for free.
+- **`safe_uninstall` capability** (PR #54) — three-step uninstall wizard with `preserved_tables` (renamed to `_orphan_{slug}_*` instead of dropped), pre-uninstall hook (sandboxed: read-only DB, no `BRAIN_REPO_MASTER_KEY`), and required user confirmation (checkbox + typed phrase + ZIP password). Reinstall verifies SHA256 and restores access to preserved data.
+- **Rate limit + security headers** (PR #52) — `flask-limiter` with in-memory storage on the public share endpoint and any future `/p/...` route. Five security headers applied to public responses (`Referrer-Policy`, `Cache-Control: no-store`, HSTS, `X-Content-Type-Options`, `Pragma`).
+
+### Fixed
+
+- **Plugin install wizard now shows the actual reason for `409 CONFLICT`.** The frontend was treating any 4xx as an opaque error string. Now `buildError` in `lib/api.ts` falls back to `data.conflicts[0]` when the standard `error`/`message` fields are absent (which is the case for the plugin preview endpoint), so a version mismatch shows up as `"409 CONFLICT: Plugin 'nutri' requires EvoNexus >= 0.33.0, but installed version is 0.32.3."` instead of just `"409 CONFLICT"`. `PluginInstallModal` also fixes the type of `conflicts` (was `Record<string, unknown>`, the backend always returned `string[]`) and renders each conflict as a list item.
+
+### Compat
+
+- All existing plugins (PM Essentials, etc.) work unchanged. New manifest fields default to absent / `None` and the auto-injected bind params are silently ignored if the SQL doesn't reference them. The `409` body shape for plugin install was already `{conflicts: [...], manifest, ...}` — only the frontend's interpretation changed.
+
 ## [0.32.3] - 2026-04-25
 
 Patch release fixing a long-standing Workspace UI bug where folders refused to open and the dev console flooded with `400 Path is a directory` requests, plus a small UX win on the file share dialog (reuse existing share links instead of generating a new token every time). Also includes the upstream PR #51 (private-repo plugin update flow + ClickUp webhook compat + DetachedInstanceError).

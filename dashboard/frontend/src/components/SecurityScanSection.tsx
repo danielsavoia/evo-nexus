@@ -27,7 +27,12 @@ import { useAuth } from '../context/AuthContext'
 // Types
 // ---------------------------------------------------------------------------
 
-export type ScanVerdict = 'APPROVE' | 'WARN' | 'BLOCK'
+// Verdicts:
+//   APPROVE — scan completed, no issues
+//   WARN    — scan completed, non-critical issues; needs explicit checkbox confirmation
+//   BLOCK   — scan completed, critical issues; needs admin override + reason ≥ 20 chars
+//   SKIPPED — admin chose to bypass the scan entirely; reason is optional. Audit logs the skip.
+export type ScanVerdict = 'APPROVE' | 'WARN' | 'BLOCK' | 'SKIPPED'
 
 interface ScanFinding {
   category: string
@@ -55,10 +60,18 @@ export interface ScanResult {
 interface Props {
   sourceUrl: string
   authToken?: string
+  /**
+   * True when this scan is part of an update flow (plugin already installed).
+   * Tells the backend to ignore "already installed" / "namespace collision"
+   * conflicts that would otherwise return 409 and break the update modal.
+   */
+  isUpdate?: boolean
   /** Called when a scan result is available (or when scan is skipped). */
   onVerdict: (verdict: ScanVerdict | null, result: ScanResult | null) => void
   /** Called when admin overrides a BLOCK. */
   onOverride: (reason: string) => void
+  /** Called when admin types/clears the optional skip reason. */
+  onSkipReason?: (reason: string) => void
 }
 
 // ---------------------------------------------------------------------------
@@ -121,7 +134,7 @@ function verdictColors(v: ScanVerdict) {
 // Main component
 // ---------------------------------------------------------------------------
 
-export default function SecurityScanSection({ sourceUrl, authToken, onVerdict, onOverride }: Props) {
+export default function SecurityScanSection({ sourceUrl, authToken, isUpdate, onVerdict, onOverride, onSkipReason }: Props) {
   const { user } = useAuth()
   const isAdmin = user?.role === 'admin'
 
@@ -144,7 +157,7 @@ export default function SecurityScanSection({ sourceUrl, authToken, onVerdict, o
     setError(null)
 
     api
-      .post('/plugins/scan', { source_url: sourceUrl, auth_token: authToken || undefined })
+      .post('/plugins/scan', { source_url: sourceUrl, auth_token: authToken || undefined, is_update: isUpdate || undefined })
       .then((res: unknown) => {
         const r = res as ScanResult
         setResult(r)
@@ -161,21 +174,28 @@ export default function SecurityScanSection({ sourceUrl, authToken, onVerdict, o
       .finally(() => {
         setScanning(false)
       })
-  }, [sourceUrl, authToken, onVerdict])
+  }, [sourceUrl, authToken, isUpdate, onVerdict])
 
-  // Handle skip checkbox
+  // Handle skip checkbox.
+  // Skipping the scan is an explicit admin decision — it passes the gate
+  // immediately. The audit log captures the skip (and optional reason)
+  // server-side, so we don't need a UI-side requirement to type something.
   function handleSkipToggle(checked: boolean) {
     setSkipScan(checked)
     if (checked) {
       setResult(null)
       setError(null)
-      onVerdict(null, null)
+      onVerdict('SKIPPED', null)
+      // Existing skipReason text (if any) flows up via the textarea onChange.
     } else {
+      // Clear any pending reason so the next install attempt doesn't carry stale text.
+      setSkipReason('')
+      onSkipReason?.('')
       // Re-run scan when unchecked
       hasRun.current = false
       setScanning(true)
       api
-        .post('/plugins/scan', { source_url: sourceUrl, auth_token: authToken || undefined })
+        .post('/plugins/scan', { source_url: sourceUrl, auth_token: authToken || undefined, is_update: isUpdate || undefined })
         .then((res: unknown) => {
           const r = res as ScanResult
           setResult(r)
@@ -379,9 +399,12 @@ export default function SecurityScanSection({ sourceUrl, authToken, onVerdict, o
                   <div className="space-y-1">
                     <textarea
                       value={skipReason}
-                      onChange={(e) => setSkipReason(e.target.value)}
+                      onChange={(e) => {
+                        setSkipReason(e.target.value)
+                        onSkipReason?.(e.target.value)
+                      }}
                       rows={1}
-                      placeholder="Reason for skipping (required)"
+                      placeholder="Motivo (opcional, será registrado no audit log)"
                       className="w-full bg-black/20 border border-[#344054] rounded px-2 py-1 text-[10px] text-[#D0D5DD] placeholder-[#667085] resize-none focus:outline-none focus:border-yellow-500/50"
                       onClick={(e) => e.stopPropagation()}
                     />

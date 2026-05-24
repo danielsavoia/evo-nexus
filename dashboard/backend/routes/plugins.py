@@ -12,15 +12,20 @@ import json
 import logging
 import os
 import shutil
-import sqlite3
+import sqlite3  # noqa: F401 — allowlisted: install/uninstall pass conn to plugin_migrator.run_sql_transactional (SQLite DDL engine) + Connection.backup() for DB snapshots (no PG analog)
+import subprocess
+import tempfile
 import threading
 import time
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from flask import Blueprint, abort, jsonify, request, send_file
 from flask_login import current_user, login_required
+from sqlalchemy import text
+from sqlalchemy.exc import OperationalError as _SAOperationalError
 
 logger = logging.getLogger(__name__)
 
@@ -39,35 +44,46 @@ class _WidgetLimitError(Exception):
     """Raised when a plugin would exceed the per-mount_point widget limit (AC27)."""
 
 
-def _get_db() -> sqlite3.Connection:
-    conn = sqlite3.connect(str(DB_PATH), timeout=10)
-    conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL")
-    conn.execute("PRAGMA foreign_keys=ON")
-    return conn
+def _get_db():
+    """Return a SQLAlchemy Connection (replaces raw sqlite3.connect)."""
+    from db.engine import get_engine
+    return get_engine().connect()
 
 
-def _audit(conn: sqlite3.Connection, plugin_id: str, action: str, payload: Any = None, success: bool = True) -> None:
-    """Write a row to plugin_audit_log."""
+def _audit(conn, plugin_id: str, action: str, payload: Any = None, success: bool = True) -> None:
+    """Write a row to plugin_audit_log.
+
+    Rollback on failure so a constraint violation doesn't leave the caller's
+    connection in a 'pending transaction' state that would block subsequent
+    writes with SQLITE_BUSY.
+    """
     try:
+        # Schema: slug, event, verdict, actor_user_id, actor_username, detail_json, created_at
+        # The legacy column names (plugin_id/action/payload/success) never matched the table.
         conn.execute(
-            "INSERT INTO plugin_audit_log (plugin_id, action, payload, success, created_at) "
-            "VALUES (?, ?, ?, ?, ?)",
-            (plugin_id, action, json.dumps(payload) if payload is not None else None,
-             1 if success else 0, _now_iso()),
+            text("INSERT INTO plugin_audit_log (slug, event, verdict, detail_json, created_at) "
+                 "VALUES (:slug, :event, :verdict, :detail_json, :created_at)"),
+            {"slug": plugin_id, "event": action,
+             "verdict": "PASS" if success else "FAIL",
+             "detail_json": json.dumps(payload) if payload is not None else "{}",
+             "created_at": _now_iso()},
         )
         conn.commit()
     except Exception as exc:
         logger.warning("audit log write failed: %s", exc)
+        try:
+            conn.rollback()
+        except Exception:
+            pass
 
 
-def _plugin_to_dict(row: sqlite3.Row) -> dict:
+def _plugin_to_dict(row) -> dict:
     """Serialize a plugins_installed row to a dict.
 
     Wave 2.0: adds ``icon_url`` derived from ``manifest.metadata.icon`` when
     present.  URL follows the existing /plugins/<slug>/ui/<path> pattern.
     """
-    d = dict(row)
+    d = dict(row._mapping)
     # Derive icon_url from manifest metadata (Wave 2.0, additive)
     try:
         manifest = json.loads(d.get("manifest_json") or "{}")
@@ -91,7 +107,7 @@ def _plugin_to_dict(row: sqlite3.Row) -> dict:
 # uninstall can delete them with a single DELETE WHERE source_plugin = ?.
 # ---------------------------------------------------------------------------
 
-def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path) -> None:
+def _seed_plugin_host_rows(conn, slug: str, plugin_dir: Path) -> None:
     import yaml
 
     def _load_yaml(name: str) -> dict:
@@ -121,45 +137,47 @@ def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path
             mslug = m.get("slug") or f"{slug}-root"
             namespaced_m = f"plugin-{slug}-{mslug}" if not mslug.startswith(f"plugin-{slug}-") else mslug
             conn.execute(
-                "INSERT OR IGNORE INTO missions "
-                "(slug, title, description, target_metric, target_value, current_value, "
-                " due_date, status, created_at, updated_at, source_plugin) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    namespaced_m,
-                    m.get("title") or m.get("name"),
-                    m.get("description"),
-                    m.get("target_metric"),
-                    float(m.get("target_value") or 0),
-                    float(m.get("current_value") or 0),
-                    m.get("due_date"),
-                    m.get("status") or "active",
-                    now, now, slug,
-                ),
+                text("INSERT INTO missions "
+                     "(slug, title, description, target_metric, target_value, current_value, "
+                     " due_date, status, created_at, updated_at, source_plugin) "
+                     "VALUES (:slug, :title, :desc, :metric, :tv, :cv, :due, :status, :cat, :uat, :sp) "
+                     "ON CONFLICT(slug) DO NOTHING"),
+                {
+                    "slug": namespaced_m,
+                    "title": m.get("title") or m.get("name"),
+                    "desc": m.get("description"),
+                    "metric": m.get("target_metric"),
+                    "tv": float(m.get("target_value") or 0),
+                    "cv": float(m.get("current_value") or 0),
+                    "due": m.get("due_date"),
+                    "status": m.get("status") or "active",
+                    "cat": now, "uat": now, "sp": slug,
+                },
             )
-            row = conn.execute("SELECT id FROM missions WHERE slug = ?", (namespaced_m,)).fetchone()
+            row = conn.execute(text("SELECT id FROM missions WHERE slug = :slug"), {"slug": namespaced_m}).fetchone()
             if row:
-                mission_id = row["id"]
+                mission_id = row.id
         else:
             # No mission declared — synthesize one so goals render in the UI
             anchor_slug = f"plugin-{slug}-root"
             conn.execute(
-                "INSERT OR IGNORE INTO missions "
-                "(slug, title, description, target_metric, target_value, current_value, "
-                " status, created_at, updated_at, source_plugin) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    anchor_slug,
-                    f"{slug} — plugin goals",
-                    f"Auto-created by the {slug} plugin to group its seed projects. "
-                    f"Deletes on uninstall.",
-                    None, 0, 0, "active",
-                    now, now, slug,
-                ),
+                text("INSERT INTO missions "
+                     "(slug, title, description, target_metric, target_value, current_value, "
+                     " status, created_at, updated_at, source_plugin) "
+                     "VALUES (:slug, :title, :desc, :metric, :tv, :cv, :status, :cat, :uat, :sp) "
+                     "ON CONFLICT(slug) DO NOTHING"),
+                {
+                    "slug": anchor_slug,
+                    "title": f"{slug} — plugin goals",
+                    "desc": (f"Auto-created by the {slug} plugin to group its seed projects. "
+                             f"Deletes on uninstall."),
+                    "metric": None, "tv": 0, "cv": 0, "status": "active",
+                    "cat": now, "uat": now, "sp": slug,
+                },
             )
-            row = conn.execute("SELECT id FROM missions WHERE slug = ?", (anchor_slug,)).fetchone()
+            row = conn.execute(text("SELECT id FROM missions WHERE slug = :slug"), {"slug": anchor_slug}).fetchone()
             if row:
-                mission_id = row["id"]
+                mission_id = row.id
         conn.commit()
 
     project_slug_to_id: dict[str, int] = {}
@@ -172,21 +190,19 @@ def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path
         # Prefer YAML-declared mission_id; fall back to the auto mission anchor
         proj_mission_id = proj.get("mission_id") if proj.get("mission_id") is not None else mission_id
         conn.execute(
-            "INSERT OR IGNORE INTO projects "
-            "(slug, mission_id, title, description, status, created_at, updated_at, source_plugin) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                namespaced,
-                proj_mission_id,
-                title,
-                proj.get("description"),
-                proj.get("status") or "active",
-                now, now, slug,
-            ),
+            text("INSERT INTO projects "
+                 "(slug, mission_id, title, description, status, created_at, updated_at, source_plugin) "
+                 "VALUES (:slug, :mid, :title, :desc, :status, :cat, :uat, :sp) "
+                 "ON CONFLICT(slug) DO NOTHING"),
+            {
+                "slug": namespaced, "mid": proj_mission_id, "title": title,
+                "desc": proj.get("description"), "status": proj.get("status") or "active",
+                "cat": now, "uat": now, "sp": slug,
+            },
         )
-        row = conn.execute("SELECT id FROM projects WHERE slug = ?", (namespaced,)).fetchone()
+        row = conn.execute(text("SELECT id FROM projects WHERE slug = :slug"), {"slug": namespaced}).fetchone()
         if row:
-            project_slug_to_id[pslug] = row["id"]
+            project_slug_to_id[pslug] = row.id
     conn.commit()
 
     goal_slug_to_id: dict[str, int] = {}
@@ -199,27 +215,24 @@ def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path
             continue
         namespaced = f"plugin-{slug}-{gslug}" if not gslug.startswith(f"plugin-{slug}-") else gslug
         conn.execute(
-            "INSERT OR IGNORE INTO goals "
-            "(slug, project_id, title, description, target_metric, metric_type, "
-            " target_value, current_value, due_date, status, created_at, updated_at, source_plugin) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                namespaced,
-                project_id,
-                title,
-                g.get("description"),
-                g.get("target_metric"),
-                g.get("metric_type") or "count",
-                float(g.get("target_value") or 0),
-                float(g.get("current_value") or 0),
-                g.get("due_date"),
-                g.get("status") or "active",
-                now, now, slug,
-            ),
+            text("INSERT INTO goals "
+                 "(slug, project_id, title, description, target_metric, metric_type, "
+                 " target_value, current_value, due_date, status, created_at, updated_at, source_plugin) "
+                 "VALUES (:slug, :pid, :title, :desc, :metric, :mtype, :tv, :cv, :due, :status, :cat, :uat, :sp) "
+                 "ON CONFLICT(slug) DO NOTHING"),
+            {
+                "slug": namespaced, "pid": project_id, "title": title,
+                "desc": g.get("description"), "metric": g.get("target_metric"),
+                "mtype": g.get("metric_type") or "count",
+                "tv": float(g.get("target_value") or 0),
+                "cv": float(g.get("current_value") or 0),
+                "due": g.get("due_date"), "status": g.get("status") or "active",
+                "cat": now, "uat": now, "sp": slug,
+            },
         )
-        row = conn.execute("SELECT id FROM goals WHERE slug = ?", (namespaced,)).fetchone()
+        row = conn.execute(text("SELECT id FROM goals WHERE slug = :slug"), {"slug": namespaced}).fetchone()
         if row:
-            goal_slug_to_id[gslug] = row["id"]
+            goal_slug_to_id[gslug] = row.id
     conn.commit()
 
     # ---- tasks/tasks.yaml: tickets ----
@@ -245,22 +258,18 @@ def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path
         import uuid as _uuid
         ticket_id = str(_uuid.uuid4())
         conn.execute(
-            "INSERT OR IGNORE INTO tickets "
-            "(id, title, description, status, priority, priority_rank, "
-            " goal_id, assignee_agent, created_by, created_at, updated_at, source_plugin) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                ticket_id,
-                title,
-                t.get("description"),
-                t.get("status") or "open",
-                priority,
-                priority_rank,
-                goal_id,
-                assignee,
-                f"plugin:{slug}",
-                now, now, slug,
-            ),
+            text("INSERT INTO tickets "
+                 "(id, title, description, status, priority, priority_rank, "
+                 " goal_id, assignee_agent, created_by, created_at, updated_at, source_plugin) "
+                 "VALUES (:id, :title, :desc, :status, :priority, :prank, "
+                 " :goal_id, :assignee, :created_by, :cat, :uat, :sp) "
+                 "ON CONFLICT(id) DO NOTHING"),
+            {
+                "id": ticket_id, "title": title, "desc": t.get("description"),
+                "status": t.get("status") or "open", "priority": priority,
+                "prank": priority_rank, "goal_id": goal_id, "assignee": assignee,
+                "created_by": f"plugin:{slug}", "cat": now, "uat": now, "sp": slug,
+            },
         )
     conn.commit()
 
@@ -274,26 +283,26 @@ def _seed_plugin_host_rows(conn: sqlite3.Connection, slug: str, plugin_dir: Path
         namespaced = f"plugin-{slug}-{tr_slug}" if not tr_slug.startswith(f"plugin-{slug}-") else tr_slug
         import secrets as _secrets
         conn.execute(
-            "INSERT OR IGNORE INTO triggers "
-            "(name, slug, type, source, event_filter, action_type, action_payload, "
-            " agent, secret, enabled, from_yaml, source_plugin, created_at, updated_at) "
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                name,
-                namespaced,
-                tr.get("type") or "webhook",
-                tr.get("source") or "webhook",
-                json.dumps(tr.get("event_filter")) if tr.get("event_filter") is not None else None,
-                tr.get("action_type") or "skill",
-                json.dumps(tr.get("action_payload") or {}),
-                tr.get("agent"),
-                tr.get("secret") or _secrets.token_urlsafe(32),
+            text("INSERT INTO triggers "
+                 "(name, slug, type, source, event_filter, action_type, action_payload, "
+                 " agent, secret, enabled, from_yaml, source_plugin, created_at, updated_at) "
+                 "VALUES (:name, :slug, :type, :source, :event_filter, :action_type, :action_payload, "
+                 " :agent, :secret, :enabled, :from_yaml, :sp, :cat, :uat) "
+                 "ON CONFLICT(slug) DO NOTHING"),
+            {
+                "name": name, "slug": namespaced,
+                "type": tr.get("type") or "webhook",
+                "source": tr.get("source") or "webhook",
+                "event_filter": json.dumps(tr.get("event_filter")) if tr.get("event_filter") is not None else None,
+                "action_type": tr.get("action_type") or "skill",
+                "action_payload": json.dumps(tr.get("action_payload") or {}),
+                "agent": tr.get("agent"),
+                "secret": tr.get("secret") or _secrets.token_urlsafe(32),
                 # Safety default: disabled so the user has to review and enable explicitly.
-                1 if tr.get("enabled") is True else 0,
-                1,  # from_yaml
-                slug,
-                now, now,
-            ),
+                "enabled": 1 if tr.get("enabled") is True else 0,
+                "from_yaml": 1,
+                "sp": slug, "cat": now, "uat": now,
+            },
         )
     conn.commit()
 
@@ -308,10 +317,10 @@ def list_plugins():
     conn = _get_db()
     try:
         rows = conn.execute(
-            "SELECT * FROM plugins_installed ORDER BY installed_at DESC"
+            text("SELECT * FROM plugins_installed ORDER BY installed_at DESC")
         ).fetchall()
         return jsonify([_plugin_to_dict(r) for r in rows])
-    except sqlite3.OperationalError as exc:
+    except _SAOperationalError as exc:
         return jsonify({"error": str(exc)}), 500
     finally:
         conn.close()
@@ -327,7 +336,7 @@ def get_plugin(slug: str):
     conn = _get_db()
     try:
         row = conn.execute(
-            "SELECT * FROM plugins_installed WHERE slug = ?", (slug,)
+            text("SELECT * FROM plugins_installed WHERE slug = :slug"), {"slug": slug}
         ).fetchone()
         if not row:
             return jsonify({"error": "Plugin not found"}), 404
@@ -345,17 +354,24 @@ def get_plugin(slug: str):
 def get_plugin_audit(slug: str):
     conn = _get_db()
     try:
-        # Table may not exist on fresh install; treat absence as empty list.
+        # Table is plugin_audit_log (not plugins_audit). Schema:
+        # id, slug, event, verdict, actor_user_id, actor_username, detail_json, created_at
         try:
             rows = conn.execute(
-                "SELECT id, action, success, created_at, payload "
-                "FROM plugins_audit WHERE plugin_id = ? "
-                "ORDER BY created_at DESC LIMIT 100",
-                (slug,),
+                text("SELECT id, event AS action, verdict, created_at, detail_json AS payload "
+                     "FROM plugin_audit_log WHERE slug = :slug "
+                     "ORDER BY created_at DESC LIMIT 100"),
+                {"slug": slug},
             ).fetchall()
-        except sqlite3.OperationalError:
+        except _SAOperationalError:
             return jsonify([])
-        return jsonify([dict(r) for r in rows])
+        # Map verdict ('PASS'/'FAIL') to success bool for the frontend's existing shape.
+        out = []
+        for r in rows:
+            d = dict(r._mapping)
+            d["success"] = (d.get("verdict") == "PASS")
+            out.append(d)
+        return jsonify(out)
     finally:
         conn.close()
 
@@ -447,7 +463,13 @@ def upload_plugin_archive():
 def scan_plugin():
     """Run a hybrid regex+LLM security scan on a plugin source URL.
 
-    Request body: {source_url: str, auth_token?: str}
+    Request body:
+      {source_url: str, auth_token?: str, is_update?: bool}
+
+    ``is_update``: when true, "plugin already installed" / "namespace collision"
+    / "already registered in DB" conflicts for the same slug are tolerated —
+    those are expected when scanning an update candidate. Other conflicts
+    (e.g. version_incompatible) still return 409.
 
     Returns ADR §5 verdict envelope:
     {verdict, severity, scan_duration_ms, scanners_used, cache_hit,
@@ -459,6 +481,7 @@ def scan_plugin():
     data = request.get_json(force=True, silent=True) or {}
     source_url = data.get("source_url", "")
     auth_token = data.get("auth_token") or None
+    is_update = bool(data.get("is_update", False))
     if not source_url:
         return jsonify({"error": "source_url required"}), 400
 
@@ -471,8 +494,27 @@ def scan_plugin():
     except Exception as exc:
         return jsonify({"error": f"preview failed: {exc}"}), 400
 
-    if preview.get("conflicts"):
-        return jsonify({"error": "conflict", "details": preview["conflicts"]}), 409
+    raw_conflicts = preview.get("conflicts") or []
+    if raw_conflicts:
+        if is_update:
+            # Strip benign "already exists" conflicts that update flow expects.
+            # Keep anything else (e.g. version_incompatible) so the user is
+            # warned about real problems.
+            _BENIGN_TOKENS = (
+                "Plugin directory already exists",
+                "Plugin namespace collision",
+                "is already registered in the database",
+            )
+            real_conflicts = [
+                c for c in raw_conflicts
+                if not any(token in str(c) for token in _BENIGN_TOKENS)
+            ]
+            if real_conflicts:
+                return jsonify({"error": "conflict", "details": real_conflicts}), 409
+            # All conflicts were benign — proceed with the scan against the
+            # staged copy. Fall through to the scan logic below.
+        else:
+            return jsonify({"error": "conflict", "details": raw_conflicts}), 409
 
     staged_path = preview.get("staged_path")
     if staged_path is None:
@@ -545,41 +587,40 @@ def get_plugin_audit_log():
     conn = _get_db()
     try:
         is_admin = getattr(current_user, "role", "viewer") == "admin"
-        params: list = []
+        named_params: dict = {"limit": limit}
         where_clauses: list[str] = []
 
         if slug:
-            where_clauses.append("slug = ?")
-            params.append(slug)
+            where_clauses.append("slug = :slug")
+            named_params["slug"] = slug
 
         if not is_admin:
-            where_clauses.append("actor_username = ?")
-            params.append(getattr(current_user, "username", ""))
+            where_clauses.append("actor_username = :uname")
+            named_params["uname"] = getattr(current_user, "username", "")
 
         where_sql = ("WHERE " + " AND ".join(where_clauses)) if where_clauses else ""
-        params.append(limit)
 
         rows = conn.execute(
-            f"""SELECT id, slug, event, verdict, actor_user_id, actor_username,
+            text(f"""SELECT id, slug, event, verdict, actor_user_id, actor_username,
                        detail_json, created_at
                 FROM plugin_audit_log
                 {where_sql}
                 ORDER BY created_at DESC
-                LIMIT ?""",
-            params,
+                LIMIT :limit"""),
+            named_params,
         ).fetchall()
 
         return jsonify({
             "entries": [
                 {
-                    "id": r["id"],
-                    "slug": r["slug"],
-                    "event": r["event"],
-                    "verdict": r["verdict"],
-                    "actor_user_id": r["actor_user_id"],
-                    "actor_username": r["actor_username"],
-                    "detail": json.loads(r["detail_json"] or "{}"),
-                    "created_at": r["created_at"],
+                    "id": r.id,
+                    "slug": r.slug,
+                    "event": r.event,
+                    "verdict": r.verdict,
+                    "actor_user_id": r.actor_user_id,
+                    "actor_username": r.actor_username,
+                    "detail": json.loads(r.detail_json or "{}"),
+                    "created_at": r.created_at,
                 }
                 for r in rows
             ],
@@ -597,26 +638,55 @@ def _audit_scan_event(
     actor_username: str | None,
     detail: dict | None = None,
 ) -> None:
-    """Insert a row into plugin_audit_log. Silently swallows errors."""
+    """Insert a row into plugin_audit_log. Silently swallows errors.
+
+    plugin_audit_log carries a legacy `plugin_id TEXT NOT NULL` column from the
+    original schema (used by `_audit()` above). The newer scan-event row shape
+    only knows the slug at install time (the plugin row hasn't been INSERTed
+    yet), so we duplicate the slug into both `plugin_id` and `slug` to satisfy
+    the legacy NOT NULL constraint without altering the table.
+
+    Connection lifecycle uses try/finally so a failed INSERT (e.g. constraint
+    violation) does not leak an open connection holding a write lock — that
+    leak is what produced the cascading 'database is locked' errors during
+    the v0.1.4 install attempt.
+    """
+    conn = None
     try:
         conn = _get_db()
+        # Schema (current): id, slug, event, verdict, actor_user_id,
+        # actor_username, detail_json, created_at. Older deployments may still
+        # have plugin_id/action columns — they are ignored here.
         conn.execute(
-            """INSERT INTO plugin_audit_log
-               (slug, event, verdict, actor_user_id, actor_username, detail_json)
-               VALUES (?, ?, ?, ?, ?, ?)""",
-            (
-                slug,
-                event,
-                verdict,
-                actor_user_id,
-                actor_username,
-                json.dumps(detail or {}),
-            ),
+            text("""INSERT INTO plugin_audit_log
+               (slug, event, verdict, actor_user_id, actor_username,
+                detail_json, created_at)
+               VALUES (:slug, :event, :verdict, :auid, :auname,
+                       :detail_json, :created_at)"""),
+            {
+                "slug": slug,
+                "event": event,
+                "verdict": verdict,
+                "auid": actor_user_id,
+                "auname": actor_username,
+                "detail_json": json.dumps(detail or {}),
+                "created_at": _now_iso(),
+            },
         )
         conn.commit()
-        conn.close()
     except Exception as exc:
         logger.warning("Audit log insert failed: %s", exc)
+        if conn is not None:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
+    finally:
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 
 # ---------------------------------------------------------------------------
@@ -778,6 +848,40 @@ def install_plugin():
     except RuntimeError as exc:
         return jsonify({"error": str(exc)}), 409
 
+    # B3: Check for orphaned tables from a previous uninstall (safe_uninstall).
+    # If orphans exist, verify SHA256 to prevent hostile reinstall (Vault B3.S3).
+    _orphan_check_conn = _get_db()
+    try:
+        _orphan_rows = _orphan_check_conn.execute(
+            text("SELECT tablename, original_sha256, original_plugin_version FROM plugin_orphans "
+                 "WHERE slug = :slug AND recovered_at IS NULL"),
+            {"slug": slug},
+        ).fetchall()
+    except Exception:
+        _orphan_rows = []
+    finally:
+        _orphan_check_conn.close()
+
+    if _orphan_rows:
+        # Verify SHA256: the plugin being installed must match what was originally installed.
+        _install_sha256 = tarball_sha256 or ""
+        _original_sha256s = {row.original_sha256 for row in _orphan_rows if row.original_sha256}
+        if _original_sha256s and _install_sha256:
+            if _install_sha256 not in _original_sha256s:
+                _admin_confirm = data.get("confirmed_sha256_change", False)
+                if not _admin_confirm:
+                    return jsonify({
+                        "error": "sha256_mismatch",
+                        "detail": (
+                            "Source changed since last install — possible hostile reinstall. "
+                            "This plugin has orphaned tables from a previous install. "
+                            "Pass confirmed_sha256_change=true to override (will be audited)."
+                        ),
+                        "orphaned_tables": [row.tablename for row in _orphan_rows],
+                        "expected_sha256": list(_original_sha256s),
+                        "provided_sha256": _install_sha256,
+                    }), 409
+
     plugin_dir = PLUGINS_DIR / slug
     state: dict[str, Any] = {
         "slug": slug,
@@ -788,6 +892,42 @@ def install_plugin():
     conn = _get_db()
 
     try:
+        # B3: Recover orphaned tables BEFORE copying/migrating (Vault B3.S3).
+        # Rename _orphan_{slug}_{table} back to {table} so install.sql can use them.
+        _recovered_tables: list[str] = []
+        if _orphan_rows:
+            _recovery_conn = _get_db()
+            try:
+                from sqlalchemy import inspect as _sa_inspect2
+                _r_engine = _recovery_conn.engine if hasattr(_recovery_conn, "engine") else None
+                _r_existing: set[str] = set()
+                if _r_engine is not None:
+                    _r_existing = set(_sa_inspect2(_r_engine).get_table_names())
+
+                for _orphan_row in _orphan_rows:
+                    _orig_table = _orphan_row.tablename
+                    _orphan_table_name = f"_orphan_{slug}_{_orig_table}"
+                    if _orphan_table_name in _r_existing:
+                        _recovery_conn.execute(
+                            text(f"ALTER TABLE {_orphan_table_name} RENAME TO {_orig_table}")  # noqa: S608 — identifiers validated at install
+                        )
+                        _recovery_conn.commit()
+                        _recovered_tables.append(_orig_table)
+                        logger.info("B3 reinstall: recovered orphaned table '%s'", _orig_table)
+
+                # Mark orphans as recovered in plugin_orphans
+                if _recovered_tables:
+                    _now = _now_iso()
+                    for _t in _recovered_tables:
+                        _recovery_conn.execute(
+                            text("UPDATE plugin_orphans SET recovered_at = :now "
+                                 "WHERE slug = :slug AND tablename = :tbl"),
+                            {"now": _now, "slug": slug, "tbl": _t},
+                        )
+                    _recovery_conn.commit()
+            finally:
+                _recovery_conn.close()
+
         # --- Step: copy plugin source to plugins/{slug}/ ---
         plugin_dir.mkdir(parents=True, exist_ok=True)
 
@@ -834,16 +974,22 @@ def install_plugin():
         # common `NNN_description.sql` convention (e.g. `001_create_tables.sql`)
         # don't have to rename — keeps friction low for community plugins.
         migrations_dir = plugin_dir / "migrations"
-        install_sql_path = migrations_dir / "install.sql"
-        if not install_sql_path.exists() and migrations_dir.is_dir():
-            candidates = sorted(migrations_dir.glob("*.sql"))
-            if candidates:
-                install_sql_path = candidates[0]
-        if install_sql_path.exists():
+        # Dialect-aware install SQL (plugin contract v1.0.0):
+        # install.{sqlite,postgres}.sql is preferred; legacy install.sql is
+        # accepted on SQLite under DeprecationWarning and rejected on Postgres.
+        from plugin_loader import resolve_plugin_sql, PluginCompatError
+        try:
+            install_sql_path = resolve_plugin_sql(migrations_dir, "install")
+        except FileNotFoundError:
+            install_sql_path = None
+        except PluginCompatError as exc:
+            raise RuntimeError(f"SQL migration failed: {exc}") from exc
+        if install_sql_path is not None:
             try:
-                conn2 = sqlite3.connect(str(DB_PATH))
-                install_plugin_sql(slug, install_sql_path, conn=conn2)
-                conn2.close()
+                # plugin_migrator dispatches by db.engine.dialect:
+                #   SQLite → opens its own sqlite3.Connection
+                #   Postgres → uses run_sql_transactional_pg via SQLAlchemy
+                install_plugin_sql(slug, install_sql_path)
             except MigrationError as exc:
                 raise RuntimeError(f"SQL migration failed: {exc}") from exc
         state["completed_steps"].append({"step": "sql_migrations"})
@@ -903,8 +1049,9 @@ def install_plugin():
         save_state(slug, state)
 
         # --- Step: heartbeats union ---
-        # Heartbeat YAML stays in plugins/{slug}/heartbeats.yaml — union happens at load time
-        # Sync to DB if heartbeat dispatcher is running
+        # SQLite mode: sync YAML → DB via dispatcher (union at load time).
+        # PG mode: import plugin heartbeats/routines directly into DB tables
+        #   (source_plugin=slug, enabled=False by default — ADR pg-native-configs Fase 5).
         try:
             import sys
             backend_dir = Path(__file__).resolve().parent.parent
@@ -914,6 +1061,16 @@ def install_plugin():
             _sync_heartbeats_to_db()
         except Exception as exc:
             logger.info("Heartbeat sync skipped (dispatcher not running): %s", exc)
+        # PG mode: populate heartbeats + routine_definitions with source_plugin tag
+        try:
+            from plugin_loader import (
+                _import_plugin_heartbeats_to_db,
+                _import_plugin_routines_to_db,
+            )
+            _import_plugin_heartbeats_to_db(slug)
+            _import_plugin_routines_to_db(slug)
+        except Exception as exc:
+            logger.warning("PG plugin configs import failed for %s: %s", slug, exc)
         state["completed_steps"].append({"step": "heartbeats_union"})
         save_state(slug, state)
 
@@ -944,19 +1101,19 @@ def install_plugin():
             mount_counts: dict[str, int] = {}
             try:
                 rows_mp = conn.execute(
-                    "SELECT manifest_json FROM plugins_installed WHERE enabled = 1 AND status = 'active' AND slug != ?",
-                    (slug,),
+                    text("SELECT manifest_json FROM plugins_installed WHERE enabled = TRUE AND status = 'active' AND slug != :slug"),
+                    {"slug": slug},
                 ).fetchall()
                 for row_mp in rows_mp:
                     try:
-                        existing_manifest = json.loads(row_mp["manifest_json"] or "{}")
+                        existing_manifest = json.loads(row_mp.manifest_json or "{}")
                         for wspec in (existing_manifest.get("ui_entry_points") or {}).get("widgets") or []:
                             mp = wspec.get("mount_point")
                             if mp:
                                 mount_counts[mp] = mount_counts.get(mp, 0) + 1
                     except Exception:
                         pass
-            except sqlite3.OperationalError:
+            except _SAOperationalError:
                 pass  # Table may not exist in early bootstrap
 
             for wspec in incoming_widgets:
@@ -1064,17 +1221,19 @@ def install_plugin():
 
         try:
             conn.execute(
-                """INSERT INTO plugins_installed
+                text("""INSERT INTO plugins_installed
                    (id, slug, name, version, tier, source_type, source_url,
                     installed_at, enabled, manifest_json, install_sha256, status)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, 'active')
-                   ON CONFLICT(slug) DO NOTHING""",
-                (slug, slug, manifest["name"], manifest["version"],
-                 manifest.get("tier", "essential"), "local", source_url,
-                 _now_iso(), json.dumps(manifest_for_db), manifest_sha),
+                   VALUES (:id, :slug, :name, :ver, :tier, 'local', :src_url,
+                           :installed_at, TRUE, :manifest_json, :sha, 'active')
+                   ON CONFLICT(slug) DO NOTHING"""),
+                {"id": slug, "slug": slug, "name": manifest["name"], "ver": manifest["version"],
+                 "tier": manifest.get("tier", "essential"), "src_url": source_url,
+                 "installed_at": _now_iso(), "manifest_json": json.dumps(manifest_for_db),
+                 "sha": manifest_sha},
             )
             conn.commit()
-        except sqlite3.OperationalError as exc:
+        except _SAOperationalError as exc:
             raise RuntimeError(f"DB register failed: {exc}") from exc
 
         state["completed_steps"].append({"step": "db_register"})
@@ -1164,9 +1323,189 @@ def uninstall_plugin(slug: str):
     if not plugin_dir.exists():
         return jsonify({"error": f"Plugin '{slug}' not found"}), 404
 
-    conn = _get_db()
+    # --- B3: safe_uninstall enforcement ---
+    # Load the installed manifest to check if safe_uninstall capability is declared.
+    _force_uninstall = os.environ.get("EVONEXUS_ALLOW_FORCE_UNINSTALL", "").strip() == "1"
+    _manifest_for_b3: dict = {}
+    _safe_uninstall_spec: dict = {}
     try:
-        # Pre-uninstall hook
+        _manifest_conn = _get_db()
+        _manifest_row = _manifest_conn.execute(
+            text("SELECT manifest_json FROM plugins_installed WHERE slug = :slug"), {"slug": slug}
+        ).fetchone()
+        _manifest_conn.close()
+        if _manifest_row:
+            _manifest_for_b3 = json.loads(_manifest_row.manifest_json or "{}")
+            _safe_uninstall_spec = _manifest_for_b3.get("safe_uninstall") or {}
+    except Exception as _exc:
+        logger.warning("B3: could not load manifest for safe_uninstall check: %s", _exc)
+
+    _su_enabled = _safe_uninstall_spec.get("enabled", False)
+    _block_uninstall = _safe_uninstall_spec.get("block_uninstall", False)
+
+    if _block_uninstall and not _force_uninstall:
+        return jsonify({
+            "error": "uninstall_blocked",
+            "detail": _safe_uninstall_spec.get("reason", "Plugin has declared block_uninstall: true."),
+            "code": "blocked",
+        }), 409
+
+    if _su_enabled and not _force_uninstall:
+        # Vault B3.S1: backend enforcement — require admin + confirmation_phrase + exported_at
+        if not hasattr(current_user, "role") or getattr(current_user, "role", None) != "admin":
+            return jsonify({
+                "error": "admin_required",
+                "detail": "Only admin users may uninstall plugins with safe_uninstall enabled.",
+                "code": "forbidden",
+            }), 403
+
+        _body = request.get_json(force=True, silent=True) or {}
+        _phrase_required = (_safe_uninstall_spec.get("user_confirmation") or {}).get("typed_phrase", "")
+        _phrase_given = _body.get("confirmation_phrase", "")
+        # Normalize both sides before comparing so the user is not punished for
+        # invisible characters that the browser silently inserts (NBSP from
+        # copy-paste, trailing whitespace from autofill, NFD vs NFC composition).
+        # The phrase is a human-typed confirmation token, not a cryptographic key —
+        # tolerance is appropriate. The raw values are still preserved for the
+        # error response so the operator can see the actual diff if needed.
+        import unicodedata
+        def _normalize_phrase(s: str) -> str:
+            return unicodedata.normalize("NFC", str(s or "")).strip().replace(" ", " ")
+        _required_norm = _normalize_phrase(_phrase_required)
+        _given_norm = _normalize_phrase(_phrase_given)
+        if _required_norm and _given_norm != _required_norm:
+            # Surface the actual diff so the UI can highlight the mismatch
+            # without the operator having to guess what went wrong.
+            return jsonify({
+                "error": "confirmation_phrase_mismatch",
+                "detail": f"Typed phrase must be exactly: {_phrase_required}",
+                "code": "bad_request",
+                "expected": _phrase_required,
+                "received": _phrase_given,
+                "expected_length": len(_required_norm),
+                "received_length": len(_given_norm),
+            }), 400
+
+        _exported_at = _body.get("exported_at", "")
+        if _exported_at:
+            if not os.path.exists(_exported_at):
+                return jsonify({
+                    "error": "export_file_not_found",
+                    "detail": f"Export file not found at path: {_exported_at}",
+                    "code": "bad_request",
+                }), 400
+
+        # Vault B3.S1: zip_password must be present (the actual encryption happens in the pre-hook)
+        _zip_password = _body.get("zip_password", "")
+        if not _zip_password:
+            return jsonify({
+                "error": "zip_password_required",
+                "detail": "A ZIP password is required to encrypt the export archive.",
+                "code": "bad_request",
+            }), 400
+
+    if _force_uninstall:
+        # Vault B3.S6: force-uninstall MUST produce an audit row with reason
+        _force_reason = (request.get_json(force=True, silent=True) or {}).get("force_reason", "")
+        logger.warning(
+            "FORCE UNINSTALL activated for '%s' (EVONEXUS_ALLOW_FORCE_UNINSTALL=1). reason=%r user=%s",
+            slug, _force_reason, getattr(current_user, "username", "unknown"),
+        )
+    # --- End B3 enforcement gate ---
+
+    conn = _get_db()
+    _orphan_records: list[str] = []  # B3: populated during orphan table rename phase
+    try:
+        # B3: Sandboxed pre-uninstall hook (Vault B3.S2)
+        # Run BEFORE the legacy hook so it has access to DB state.
+        _su_hook_spec = _safe_uninstall_spec.get("pre_uninstall_hook") or {}
+        if _su_enabled and not _force_uninstall and _su_hook_spec:
+            _hook_script = _su_hook_spec.get("script", "")
+            _hook_output_dir_template = _su_hook_spec.get("output_dir", "")
+            _hook_timeout = _su_hook_spec.get("timeout_seconds", 600)
+            _must_produce = _su_hook_spec.get("must_produce_file", True)
+            _hook_script_path = plugin_dir / _hook_script
+
+            if _hook_script_path.exists():
+                _ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+                _output_dir_str = _hook_output_dir_template.format(slug=slug, timestamp=_ts)
+                _output_dir_path = (WORKSPACE / _output_dir_str).resolve()
+                _output_dir_path.mkdir(parents=True, exist_ok=True)
+
+                # Create a read-only copy of the DB for the hook (Vault B3.S2)
+                _db_readonly_path = ""
+                try:
+                    _tmp_db = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
+                    _tmp_db.close()
+                    _tmp_db_path = _tmp_db.name
+                    _src_conn = sqlite3.connect(str(DB_PATH))  # noqa — allowlisted: Connection.backup() is SQLite-only API for DB snapshot (Vault B3); no PG analog
+                    _bk_conn = sqlite3.connect(_tmp_db_path)   # noqa — allowlisted: Connection.backup() target; no PG analog
+                    _src_conn.backup(_bk_conn)
+                    _src_conn.close()
+                    _bk_conn.close()
+                    _db_readonly_path = _tmp_db_path
+                except Exception as _dbe:
+                    logger.warning("B3: could not create DB snapshot for hook: %s", _dbe)
+
+                # Vault B3.S2: locked-down env — NO BRAIN_REPO_MASTER_KEY
+                _hook_env = {
+                    "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+                    "PLUGIN_SLUG": slug,
+                    "PLUGIN_VERSION": _manifest_for_b3.get("version", ""),
+                    "OUTPUT_DIR": str(_output_dir_path),
+                    "DB_READONLY_PATH": _db_readonly_path,
+                }
+
+                try:
+                    _proc = subprocess.run(
+                        ["python3", str(_hook_script_path)],
+                        cwd=str(plugin_dir),
+                        env=_hook_env,
+                        capture_output=True,
+                        text=True,
+                        timeout=_hook_timeout,
+                    )
+                    _hook_stdout = _proc.stdout[:5000]
+                    _hook_stderr = _proc.stderr[:5000]
+                    _hook_exit = _proc.returncode
+
+                    _audit(conn, slug, "safe_uninstall_hook", {
+                        "exit_code": _hook_exit,
+                        "stdout": _hook_stdout,
+                        "stderr": _hook_stderr,
+                        "output_dir": str(_output_dir_path),
+                    })
+
+                    if _hook_exit != 0:
+                        return jsonify({
+                            "error": "pre_hook_failed",
+                            "detail": "Pre-uninstall hook failed — uninstall aborted to prevent data loss.",
+                            "exit_code": _hook_exit,
+                            "stderr": _hook_stderr,
+                        }), 400
+
+                    if _must_produce:
+                        _produced = any(_output_dir_path.iterdir()) if _output_dir_path.exists() else False
+                        if not _produced:
+                            return jsonify({
+                                "error": "pre_hook_no_output",
+                                "detail": "Pre-uninstall hook produced no files — uninstall aborted to prevent data loss.",
+                            }), 400
+
+                except subprocess.TimeoutExpired:
+                    return jsonify({
+                        "error": "pre_hook_timeout",
+                        "detail": f"Pre-uninstall hook exceeded timeout of {_hook_timeout}s.",
+                    }), 400
+                finally:
+                    # Clean up DB snapshot
+                    if _db_readonly_path:
+                        try:
+                            os.unlink(_db_readonly_path)
+                        except Exception:
+                            pass
+
+        # Legacy pre-uninstall hook (non-B3 path)
         pre_hook = plugin_dir / "hooks" / "pre-uninstall.sh"
         if pre_hook.exists():
             try:
@@ -1216,23 +1555,114 @@ def uninstall_plugin(slug: str):
         except Exception as exc:
             logger.warning("rules index removal failed: %s", exc)
 
+        # PG mode: delete plugin-owned heartbeats and routine_definitions rows.
+        # Captured before deletion so IDs appear in the audit payload (AC5).
+        _deleted_heartbeat_ids: list = []
+        _deleted_routine_slugs: list = []
+        try:
+            from plugin_loader import (
+                _delete_plugin_heartbeats_from_db,
+                _delete_plugin_routines_from_db,
+            )
+            _deleted_heartbeat_ids = _delete_plugin_heartbeats_from_db(slug)
+            _deleted_routine_slugs = _delete_plugin_routines_from_db(slug)
+        except Exception as exc:
+            logger.warning("PG plugin configs delete failed for %s: %s", slug, exc)
+
         # Delete host rows this plugin seeded (goals/tasks/triggers capabilities).
         # DELETE WHERE source_plugin = ? leaves user-created rows untouched.
         # Order matters because of FKs: children → parents.
+        # B3: respect preserved_host_entities filters from safe_uninstall spec.
+        _preserved_host_entities = _safe_uninstall_spec.get("preserved_host_entities") or {}
         for _tbl in ("triggers", "tickets", "goal_tasks", "goals", "projects", "missions"):
             try:
-                conn.execute(f"DELETE FROM {_tbl} WHERE source_plugin = ?", (slug,))
+                # SQLAlchemy named-parameter style works on both SQLite and Postgres.
+                _where = "source_plugin = :slug"
+                if _tbl in _preserved_host_entities and not _force_uninstall:
+                    # Preserve rows matching the declared WHERE clause.
+                    # Only the base condition (source_plugin = :slug) is parameterized;
+                    # the preservation clause comes from the manifest (validated at install).
+                    _preserve_clause = _preserved_host_entities[_tbl]
+                    _where = f"(source_plugin = :slug) AND NOT ({_preserve_clause})"
+                conn.execute(text(f"DELETE FROM {_tbl} WHERE {_where}"), {"slug": slug})
                 conn.commit()
             except Exception as exc:
                 logger.warning("Uninstall: failed to clean %s: %s", _tbl, exc)
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
 
-        # SQL uninstall
-        uninstall_sql = plugin_dir / "migrations" / "uninstall.sql"
-        if uninstall_sql.exists():
+        # B3: Rename preserved tables to _orphan_{slug}_{tablename} BEFORE SQL uninstall.
+        # This removes them from the plugin namespace (Vault B3.S4) and records them
+        # in plugin_orphans so reinstall can detect and recover them.
+        _preserved_tables = _safe_uninstall_spec.get("preserved_tables") or []
+        if _preserved_tables and _su_enabled and not _force_uninstall:
+            _orphan_conn = _get_db()
             try:
-                conn2 = sqlite3.connect(str(DB_PATH))
-                uninstall_plugin_sql(slug, uninstall_sql, conn=conn2)
-                conn2.close()
+                from sqlalchemy import inspect as _sa_inspect
+                _engine = _orphan_conn.engine if hasattr(_orphan_conn, "engine") else None
+                if _engine is not None:
+                    _insp = _sa_inspect(_engine)
+                    _existing_tables_set = set(_insp.get_table_names())
+                else:
+                    # Fallback: dialect-agnostic query via information_schema
+                    _existing_tables_set = {
+                        row[0] for row in _orphan_conn.execute(
+                            text("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")
+                        ).fetchall()
+                    }
+                _user_id = getattr(current_user, "id", None)
+                _plugin_version = _manifest_for_b3.get("version", "")
+                _plugin_sha256 = _manifest_for_b3.get("source_sha256", "")
+                _plugin_publisher_url = _manifest_for_b3.get("source_url", "")
+
+                for _orig_table in _preserved_tables:
+                    if _orig_table not in _existing_tables_set:
+                        logger.info("B3: preserved table '%s' does not exist, skipping", _orig_table)
+                        continue
+                    _orphan_name = f"_orphan_{slug}_{_orig_table}"
+                    try:
+                        # Rename to orphan name (ALTER TABLE ... RENAME TO is portable)
+                        _orphan_conn.execute(text(f"ALTER TABLE {_orig_table} RENAME TO {_orphan_name}"))  # noqa: S608 — identifiers validated at install
+                        _orphan_conn.commit()
+                        logger.info("B3: renamed '%s' to '%s'", _orig_table, _orphan_name)
+
+                        # Record in plugin_orphans
+                        _orphan_conn.execute(
+                            text("INSERT INTO plugin_orphans "
+                                 "(id, slug, tablename, orphaned_at, orphaned_by_user_id, "
+                                 " original_plugin_version, original_sha256, original_publisher_url) "
+                                 "VALUES (:id, :slug, :tbl, :at, :uid, :ver, :sha, :pub) "
+                                 "ON CONFLICT(id) DO UPDATE SET "
+                                 " slug=excluded.slug, tablename=excluded.tablename, orphaned_at=excluded.orphaned_at"),
+                            {
+                                "id": str(uuid.uuid4()), "slug": slug, "tbl": _orig_table,
+                                "at": _now_iso(), "uid": _user_id,
+                                "ver": _plugin_version, "sha": _plugin_sha256,
+                                "pub": _plugin_publisher_url,
+                            },
+                        )
+                        _orphan_conn.commit()
+                        _orphan_records.append(_orig_table)
+                    except Exception as _te:
+                        logger.warning("B3: failed to rename table '%s': %s", _orig_table, _te)
+            finally:
+                _orphan_conn.close()
+
+        # SQL uninstall (runs after preserved tables are renamed — DROP won't touch them)
+        # Dialect-aware: uninstall.{sqlite,postgres}.sql per plugin contract v1.0.0
+        from plugin_loader import resolve_plugin_sql as _resolve_uninstall
+        try:
+            uninstall_sql = _resolve_uninstall(plugin_dir / "migrations", "uninstall")
+        except FileNotFoundError:
+            uninstall_sql = None
+        except Exception as exc:
+            logger.warning("uninstall SQL resolve failed: %s", exc)
+            uninstall_sql = None
+        if uninstall_sql is not None:
+            try:
+                uninstall_plugin_sql(slug, uninstall_sql)
             except Exception as exc:
                 logger.warning("SQL uninstall failed: %s", exc)
 
@@ -1251,12 +1681,16 @@ def uninstall_plugin(slug: str):
         _health_cache_removed = 0
         try:
             _health_rows = conn.execute(
-                "DELETE FROM integration_health_cache WHERE plugin_slug = ?", (slug,)
+                text("DELETE FROM integration_health_cache WHERE plugin_slug = :slug"), {"slug": slug}
             ).rowcount
             conn.commit()
             _health_cache_removed = _health_rows
         except Exception as exc:
             logger.warning("Uninstall: health cache cleanup failed for '%s': %s", slug, exc)
+            try:
+                conn.rollback()
+            except Exception:
+                pass
 
         # Post-uninstall hook
         post_hook = plugin_dir / "hooks" / "post-uninstall.sh"
@@ -1282,22 +1716,29 @@ def uninstall_plugin(slug: str):
         shutil.rmtree(plugin_dir, ignore_errors=True)
 
         # DB remove
-        conn.execute("DELETE FROM plugins_installed WHERE slug = ?", (slug,))
+        conn.execute(text("DELETE FROM plugins_installed WHERE slug = :slug"), {"slug": slug})
         conn.commit()
 
         # Reset circuit breaker state
         conn.execute(
-            "DELETE FROM plugin_hook_circuit_state WHERE plugin_slug = ?", (slug,)
+            text("DELETE FROM plugin_hook_circuit_state WHERE plugin_slug = :slug"), {"slug": slug}
         )
         conn.commit()
 
         # Reload scheduler
         _reload_scheduler()
 
-        _audit(conn, slug, "uninstall", {
+        _audit_action = "plugin_uninstall_safe" if (_su_enabled and not _force_uninstall) else "uninstall"
+        if _force_uninstall:
+            _audit_action = "plugin_uninstall_force"
+        _audit(conn, slug, _audit_action, {
             "removed_env_keys": _removed_env_keys,
             "removed_health_cache_count": _health_cache_removed,
             "mcp_audit": _mcp_audit,
+            "preserved_tables": _orphan_records,
+            "force_uninstall": _force_uninstall,
+            "deleted_heartbeat_ids": _deleted_heartbeat_ids,
+            "deleted_routine_slugs": _deleted_routine_slugs,
         }, success=True)
         invalidate_agent_meta_cache()
         return jsonify({
@@ -1305,6 +1746,7 @@ def uninstall_plugin(slug: str):
             "status": "uninstalled",
             "mcp_audit": _mcp_audit,
             "removed_env_keys": _removed_env_keys,
+            "preserved_tables": _orphan_records,
         })
 
     except Exception as exc:
@@ -1329,7 +1771,7 @@ def update_plugin_status(slug: str):
     conn = _get_db()
     try:
         row = conn.execute(
-            "SELECT id, capabilities_disabled FROM plugins_installed WHERE slug = ?", (slug,)
+            text("SELECT id, capabilities_disabled FROM plugins_installed WHERE slug = :slug"), {"slug": slug}
         ).fetchone()
         if not row:
             return jsonify({"error": "Plugin not found"}), 404
@@ -1338,7 +1780,7 @@ def update_plugin_status(slug: str):
         # and rules-index rebuild when plugin is enabled/disabled at the plugin level.
         # capabilities_disabled is NOT mutated — per-capability state is preserved.
         try:
-            caps_disabled: dict = json.loads(row["capabilities_disabled"] or "{}")
+            caps_disabled: dict = json.loads(row.capabilities_disabled or "{}")
         except (json.JSONDecodeError, TypeError):
             caps_disabled = {}
 
@@ -1396,8 +1838,8 @@ def update_plugin_status(slug: str):
         # We do this after the DB write below so the new status is visible.
         status = "active" if enabled else "disabled"
         conn.execute(
-            "UPDATE plugins_installed SET enabled = ?, status = ? WHERE slug = ?",
-            (1 if enabled else 0, status, slug),
+            text("UPDATE plugins_installed SET enabled = :en, status = :status WHERE slug = :slug"),
+            {"en": bool(enabled), "status": status, "slug": slug},
         )
         conn.commit()
         _audit(conn, slug, "enable" if enabled else "disable")
@@ -1457,50 +1899,47 @@ def update_plugin_capability(slug: str):
         return jsonify({"error": "invalid capability id"}), 400
 
     conn = _get_db()
-    # Use isolation_level=None (autocommit mode) so we can issue an explicit
-    # BEGIN IMMEDIATE, preventing lost-update races when concurrent requests
-    # read the same capabilities_disabled JSON and each write back their own
-    # version (Flask threaded=True is the live scenario).
-    conn.isolation_level = None
+    # Use an explicit transaction to prevent lost-update races when concurrent
+    # requests read the same capabilities_disabled JSON and each write back
+    # their own version (Flask threaded=True is the live scenario).
     try:
-        conn.execute("BEGIN IMMEDIATE")
-        row = conn.execute(
-            "SELECT id, enabled AS plugin_enabled, status, capabilities_disabled "
-            "FROM plugins_installed WHERE slug = ?",
-            (slug,),
-        ).fetchone()
-        if not row:
-            conn.execute("ROLLBACK")
-            return jsonify({"error": "Plugin not found"}), 404
+        with conn.begin():
+            row = conn.execute(
+                text("SELECT id, enabled AS plugin_enabled, status, capabilities_disabled "
+                     "FROM plugins_installed WHERE slug = :slug"),
+                {"slug": slug},
+            ).fetchone()
+            if not row:
+                return jsonify({"error": "Plugin not found"}), 404
 
-        # Parse existing capabilities_disabled JSON
-        try:
-            caps_disabled: dict = json.loads(row["capabilities_disabled"] or "{}")
-        except (json.JSONDecodeError, TypeError):
-            caps_disabled = {}
+            # Parse existing capabilities_disabled JSON
+            try:
+                caps_disabled: dict = json.loads(row.capabilities_disabled or "{}")
+            except (json.JSONDecodeError, TypeError):
+                caps_disabled = {}
 
-        # Update the set for this capability type
-        disabled_set: list = caps_disabled.get(cap_type, [])
-        if enabled:
-            # Remove from disabled set
-            disabled_set = [x for x in disabled_set if x != cap_id]
-        else:
-            # Add to disabled set (deduplicate)
-            if cap_id not in disabled_set:
-                disabled_set.append(cap_id)
+            # Update the set for this capability type
+            disabled_set: list = caps_disabled.get(cap_type, [])
+            if enabled:
+                # Remove from disabled set
+                disabled_set = [x for x in disabled_set if x != cap_id]
+            else:
+                # Add to disabled set (deduplicate)
+                if cap_id not in disabled_set:
+                    disabled_set.append(cap_id)
 
-        if disabled_set:
-            caps_disabled[cap_type] = disabled_set
-        else:
-            caps_disabled.pop(cap_type, None)
+            if disabled_set:
+                caps_disabled[cap_type] = disabled_set
+            else:
+                caps_disabled.pop(cap_type, None)
 
-        new_caps_json = json.dumps(caps_disabled)
+            new_caps_json = json.dumps(caps_disabled)
 
-        conn.execute(
-            "UPDATE plugins_installed SET capabilities_disabled = ? WHERE slug = ?",
-            (new_caps_json, slug),
-        )
-        conn.execute("COMMIT")
+            conn.execute(
+                text("UPDATE plugins_installed SET capabilities_disabled = :caps WHERE slug = :slug"),
+                {"caps": new_caps_json, "slug": slug},
+            )
+            # transaction commits on context exit
 
         # --- Side effects per capability type ---
         if cap_type in ("skills", "agents", "commands"):
@@ -1657,17 +2096,17 @@ def list_widgets():
     conn = _get_db()
     try:
         rows = conn.execute(
-            "SELECT slug, capabilities_disabled FROM plugins_installed WHERE enabled = 1 AND status = 'active'"
+            text("SELECT slug, capabilities_disabled FROM plugins_installed WHERE enabled = TRUE AND status = 'active'")
         ).fetchall()
         # Map slug -> set of disabled widget ids (Wave 1.1 per-capability filter)
-        active_slugs = {r["slug"] for r in rows}
+        active_slugs = {r.slug for r in rows}
         disabled_widgets_by_slug: dict[str, set] = {}
         for r in rows:
             try:
-                caps = json.loads(r["capabilities_disabled"] or "{}")
-                disabled_widgets_by_slug[r["slug"]] = set(caps.get("widgets", []))
+                caps = json.loads(r.capabilities_disabled or "{}")
+                disabled_widgets_by_slug[r.slug] = set(caps.get("widgets", []))
             except (json.JSONDecodeError, TypeError):
-                disabled_widgets_by_slug[r["slug"]] = set()
+                disabled_widgets_by_slug[r.slug] = set()
     finally:
         conn.close()
 
@@ -1703,11 +2142,17 @@ def list_widgets():
                 filename = installed_files[0].get("name") if isinstance(installed_files[0], dict) else None
             if not filename:
                 continue
+            # Cache-buster: mirrors what /api/plugin-ui-registry does for
+            # pages. Without ?v=, the browser keeps the old widget bundle
+            # for an hour due to the immutable Cache-Control header on
+            # /plugins/<slug>/ui/<path>, so a plugin update silently keeps
+            # serving the previous JS until the cache expires.
+            _widget_version = plugin_manifest.get("version", "0")
             widgets.append({
                 "slug": slug,
                 "widget_id": widget_id,
                 "custom_element_name": wspec.get("custom_element_name") or widget_id,
-                "bundle_url": f"/plugins/{slug}/ui/widgets/{filename}",
+                "bundle_url": f"/plugins/{slug}/ui/widgets/{filename}?v={_widget_version}",
                 "mount_point": wspec.get("mount_point"),
                 "label": wspec.get("label"),
             })
@@ -1733,9 +2178,9 @@ def regenerate_markers():
     rebuilt: list[str] = []
     try:
         rows = conn.execute(
-            "SELECT slug FROM plugins_installed WHERE enabled = 1 AND status = 'active'"
+            text("SELECT slug FROM plugins_installed WHERE enabled = TRUE AND status = 'active'")
         ).fetchall()
-        active_slugs = [r["slug"] for r in rows]
+        active_slugs = [r.slug for r in rows]
     finally:
         conn.close()
 
@@ -1794,12 +2239,12 @@ def readonly_data(slug: str, query_name: str):
     _rd_conn = _get_db()
     try:
         _pi_row = _rd_conn.execute(
-            "SELECT capabilities_disabled FROM plugins_installed WHERE slug = ? AND enabled = 1 AND status = 'active'",
-            (slug,),
+            text("SELECT capabilities_disabled FROM plugins_installed WHERE slug = :slug AND enabled = TRUE AND status = 'active'"),
+            {"slug": slug},
         ).fetchone()
         if _pi_row:
             try:
-                _caps = json.loads(_pi_row["capabilities_disabled"] or "{}")
+                _caps = json.loads(_pi_row.capabilities_disabled or "{}")
                 if query_name in _caps.get("readonly_data", []):
                     return jsonify({"error": "Query disabled"}), 404
             except (json.JSONDecodeError, TypeError):
@@ -1820,10 +2265,17 @@ def readonly_data(slug: str, query_name: str):
     if not sql:
         return jsonify({"error": "Invalid query declaration"}), 500
 
-    # Build query params from request.args — only declared params allowed
+    # Build query params from request.args — only declared params allowed.
+    # Wave 2.1.x reserved params (current_user_id, current_user_role) are
+    # injected server-side below and MUST NOT come from the client.
+    _RESERVED_PARAMS = {"current_user_id", "current_user_role"}
     declared_params = query_decl.get("params", {})
     params: dict = {}
     for key, value in request.args.items():
+        if key in _RESERVED_PARAMS:
+            return jsonify({
+                "error": f"Parameter '{key}' is reserved and cannot be supplied by the client"
+            }), 400
         if key not in declared_params:
             return jsonify({"error": f"Parameter '{key}' not declared in manifest"}), 400
         params[key] = value
@@ -1845,14 +2297,22 @@ def readonly_data(slug: str, query_name: str):
     elif ":limit" in sql:
         params["limit"] = 1000
 
+    # Wave 2.1.x — auto-inject current_user identity bind params (Gap 5 fix
+    # from evonexus-plugin-nutri Step 3). Plugins reference these as
+    # :current_user_id and :current_user_role in their SQL to enforce
+    # server-side scoping (e.g. `WHERE primary_nutritionist_id = :current_user_id`).
+    # These keys are reserved — manifest params with the same name are
+    # silently overridden.  Always present, regardless of declaration.
+    params["current_user_id"] = getattr(current_user, "id", None)
+    params["current_user_role"] = getattr(current_user, "role", "viewer")
+
     try:
         conn = _get_db()
-        cur = conn.execute(sql, params)
-        cols = [d[0] for d in cur.description] if cur.description else []
-        rows = [dict(zip(cols, r)) for r in cur.fetchmany(1000)]
+        cur = conn.execute(text(sql), params)
+        rows = [dict(r._mapping) for r in cur.fetchmany(1000)]
         conn.close()
         return jsonify({"query": query_name, "count": len(rows), "rows": rows})
-    except sqlite3.Error as exc:
+    except Exception as exc:
         return jsonify({"error": str(exc)}), 500
 
 
@@ -1891,14 +2351,14 @@ def writable_data(slug: str, resource_id: str):
     conn = _get_db()
     try:
         pi_row = conn.execute(
-            "SELECT capabilities_disabled FROM plugins_installed "
-            "WHERE slug = ? AND enabled = 1 AND status = 'active'",
-            (slug,),
+            text("SELECT capabilities_disabled FROM plugins_installed "
+                 "WHERE slug = :slug AND enabled = TRUE AND status = 'active'"),
+            {"slug": slug},
         ).fetchone()
         if not pi_row:
             return jsonify({"error": "Plugin not found or not active"}), 404
         try:
-            caps_disabled = json.loads(pi_row["capabilities_disabled"] or "{}")
+            caps_disabled = json.loads(pi_row.capabilities_disabled or "{}")
             if resource_id in caps_disabled.get("writable_data", []):
                 return jsonify({"error": "Resource disabled"}), 404
         except (json.JSONDecodeError, TypeError):
@@ -1926,6 +2386,19 @@ def writable_data(slug: str, resource_id: str):
         )
         return jsonify({"error": "Internal manifest error"}), 500
 
+    # Wave 2.1.x — endpoint-level RBAC enforcement (Gap 1 fix from
+    # evonexus-plugin-nutri Step 3 RBAC decision). When requires_role is set
+    # in the manifest, only users whose role is in the list may mutate.
+    # 'admin' always passes (super-user override).
+    requires_role = resource_decl.get("requires_role")
+    if requires_role:
+        actor_role = getattr(current_user, "role", "viewer")
+        if actor_role != "admin" and actor_role not in requires_role:
+            return jsonify({
+                "error": f"Resource '{resource_id}' requires role in {requires_role}, "
+                         f"current role is '{actor_role}'"
+            }), 403
+
     allowed_columns: list[str] = resource_decl.get("allowed_columns") or []
     method = request.method
 
@@ -1938,11 +2411,11 @@ def writable_data(slug: str, resource_id: str):
         try:
             conn = _get_db()
             # Parameterised — table name from whitelist, id from bind
-            conn.execute(f"DELETE FROM {table} WHERE id = ?", (row_id,))  # noqa: S608
+            conn.execute(text(f"DELETE FROM {table} WHERE id = :row_id"), {"row_id": row_id})  # noqa: S608
             conn.commit()
             conn.close()
             return jsonify({"deleted": row_id})
-        except sqlite3.Error as exc:
+        except Exception as exc:
             return jsonify({"error": str(exc)}), 500
 
     # POST / PUT — parse body
@@ -1971,32 +2444,52 @@ def writable_data(slug: str, resource_id: str):
     if unknown:
         return jsonify({"error": f"Columns not allowed: {unknown}"}), 400
 
+    # Empty-string → NULL coercion (PG strict-typing fix). Postgres rejects
+    # '' as a value for DATE / INTEGER / NUMERIC / BOOLEAN columns with
+    # InvalidDatetimeFormat / InvalidTextRepresentation. SQLite is lenient
+    # and stores '' as-is, so plugins authored against SQLite ship forms
+    # that submit '' for unfilled optional fields. Coerce '' to None
+    # uniformly so plugin authors don't have to remember to strip.
+    for k in list(body.keys()):
+        if body[k] == "":
+            body[k] = None
+
     if method == "POST":
-        # INSERT
+        # INSERT — use named params to avoid positional ? (portable across dialects)
         cols = [c for c in body if c in allowed_columns]
         if not cols:
             return jsonify({"error": "No valid columns provided"}), 400
-        placeholders = ", ".join("?" for _ in cols)
         col_list = ", ".join(cols)
-        values = [body[c] for c in cols]
+        placeholders = ", ".join(f":col_{c}" for c in cols)
+        named_vals = {f"col_{c}": body[c] for c in cols}
+
+        # Returning the inserted id is dialect-specific:
+        # - SQLite exposes cursor.lastrowid for raw SQL
+        # - Postgres requires `RETURNING id` because there is no equivalent
+        #   property on the SQLAlchemy `text()` cursor (`inserted_primary_key`
+        #   only works on Insert() Core constructs and raises
+        #   "Statement is not an insert() expression construct.").
         try:
             conn = _get_db()
-            cur = conn.execute(
-                f"INSERT INTO {table} ({col_list}) VALUES ({placeholders})",  # noqa: S608
-                values,
-            )
+            dialect_name = conn.engine.dialect.name if hasattr(conn, "engine") else conn.dialect.name
+            is_postgres = dialect_name == "postgresql"
+            sql = f"INSERT INTO {table} ({col_list}) VALUES ({placeholders})"  # noqa: S608
+            if is_postgres:
+                sql += " RETURNING id"
+            cur = conn.execute(text(sql), named_vals)
+            if is_postgres:
+                row = cur.fetchone()
+                last_id = row[0] if row else None
+            else:
+                last_id = getattr(cur, "lastrowid", None)
             conn.commit()
-            # Tables may have INTEGER PK (where lastrowid IS the id) or TEXT PK
-            # with a DEFAULT expression (where id was generated server-side and
-            # lastrowid is just the rowid). Fetch the actual id from the row.
-            row = conn.execute(
-                f"SELECT id FROM {table} WHERE rowid = ?",  # noqa: S608
-                (cur.lastrowid,),
-            ).fetchone()
             conn.close()
-            new_id = row["id"] if row else cur.lastrowid
-            return jsonify({"id": new_id}), 201
-        except sqlite3.Error as exc:
+            return jsonify({"id": last_id}), 201
+        except Exception as exc:
+            try:
+                conn.rollback()
+            except Exception:
+                pass
             return jsonify({"error": str(exc)}), 500
 
     # PUT — UPDATE by id (accepts both integer and string primary keys)
@@ -2007,18 +2500,19 @@ def writable_data(slug: str, resource_id: str):
     cols = [c for c in body if c in allowed_columns]
     if not cols:
         return jsonify({"error": "No valid columns to update"}), 400
-    set_clause = ", ".join(f"{c} = ?" for c in cols)
-    values = [body[c] for c in cols] + [row_id]
+    set_clause = ", ".join(f"{c} = :col_{c}" for c in cols)
+    named_vals = {f"col_{c}": body[c] for c in cols}
+    named_vals["row_id"] = row_id
     try:
         conn = _get_db()
         conn.execute(
-            f"UPDATE {table} SET {set_clause} WHERE id = ?",  # noqa: S608
-            values,
+            text(f"UPDATE {table} SET {set_clause} WHERE id = :row_id"),  # noqa: S608
+            named_vals,
         )
         conn.commit()
         conn.close()
         return jsonify({"updated": row_id})
-    except sqlite3.Error as exc:
+    except Exception as exc:
         return jsonify({"error": str(exc)}), 500
 
 
@@ -2048,15 +2542,15 @@ def plugin_ui_registry():
     conn = _get_db()
     try:
         rows = conn.execute(
-            "SELECT slug, capabilities_disabled FROM plugins_installed "
-            "WHERE enabled = 1 AND status = 'active'",
+            text("SELECT slug, capabilities_disabled FROM plugins_installed "
+                 "WHERE enabled = TRUE AND status = 'active'"),
         ).fetchall()
     finally:
         conn.close()
 
     result = []
     for row in rows:
-        slug_val = row["slug"]
+        slug_val = row.slug
         plugin_dir = PLUGINS_DIR / slug_val
         manifest_path = plugin_dir / ".install-manifest.json"
         if not manifest_path.exists():
@@ -2068,6 +2562,11 @@ def plugin_ui_registry():
         except Exception:
             continue
 
+        # Gate: only v2 plugins (schema_version == "2.0") are surfaced in the UI registry.
+        # v0 plugins (missing or "1.0") continue to be installed but do not expose pages.
+        if plugin_manifest.get("schema_version") != "2.0":
+            continue
+
         ui_ep = plugin_manifest.get("ui_entry_points") or {}
         pages_raw: list[dict] = ui_ep.get("pages") or []
         sidebar_groups_raw: list[dict] = ui_ep.get("sidebar_groups") or []
@@ -2077,7 +2576,7 @@ def plugin_ui_registry():
 
         # Filter disabled pages
         try:
-            caps_disabled = json.loads(row["capabilities_disabled"] or "{}")
+            caps_disabled = json.loads(row.capabilities_disabled or "{}")
             disabled_pages: list[str] = caps_disabled.get("ui_pages", [])
         except (json.JSONDecodeError, TypeError):
             disabled_pages = []
@@ -2139,6 +2638,55 @@ def serve_widget(slug: str, subpath: str):
     resp.headers["X-Content-Type-Options"] = "nosniff"
     resp.headers["Cache-Control"] = "public, max-age=3600, immutable"
     # Strict CSP for widget files — widgets may only connect back to self
+    resp.headers["Content-Security-Policy"] = (
+        "default-src 'none'; "
+        "script-src 'self' 'unsafe-inline'; "
+        "connect-src 'self'; "
+        "style-src 'unsafe-inline' 'self'; "
+        "img-src 'self' data:"
+    )
+    return resp
+
+
+# ---------------------------------------------------------------------------
+# GET /plugins/<slug>/dist/<path:subpath> — v2 plugin bundle serving (Step 2)
+#
+# Mirrors the widget endpoint above but serves from plugins/{slug}/dist/ so
+# that v2 bundles built to dist/ by Vite are reachable via dynamic import().
+# Same security model: login required, realpath containment, MIME whitelist.
+# ---------------------------------------------------------------------------
+
+@bp.route("/plugins/<slug>/dist/<path:subpath>", methods=["GET"])
+@login_required
+def serve_plugin_bundle(slug: str, subpath: str):
+    """Serve v2 plugin page bundles from plugins/{slug}/dist/ (Step 2)."""
+    plugin_dir = PLUGINS_DIR / slug
+    dist_root = os.path.realpath(str(plugin_dir / "dist"))
+    requested = os.path.realpath(os.path.join(dist_root, subpath))
+
+    # Containment check — must stay inside plugins/{slug}/dist/
+    if not requested.startswith(dist_root + os.sep):
+        abort(404)
+
+    if not os.path.isfile(requested):
+        abort(404)
+
+    ext = os.path.splitext(requested)[1].lower()
+    mime_map = {
+        ".js": "application/javascript; charset=utf-8",
+        ".mjs": "application/javascript; charset=utf-8",
+        ".css": "text/css; charset=utf-8",
+        ".json": "application/json; charset=utf-8",
+    }
+    mime = mime_map.get(ext)
+    if not mime:
+        abort(404)
+
+    from flask import make_response
+    resp = make_response(open(requested, "rb").read())
+    resp.headers["Content-Type"] = mime
+    resp.headers["X-Content-Type-Options"] = "nosniff"
+    resp.headers["Cache-Control"] = "public, max-age=3600, immutable"
     resp.headers["Content-Security-Policy"] = (
         "default-src 'none'; "
         "script-src 'self' 'unsafe-inline'; "
@@ -2291,16 +2839,16 @@ def _compute_preview(
     conn = _get_db()
     try:
         row = conn.execute(
-            "SELECT slug, source_url, version, manifest_json, capabilities_disabled "
-            "FROM plugins_installed WHERE slug = ?",
-            (slug,)
+            text("SELECT slug, source_url, version, manifest_json, capabilities_disabled "
+                 "FROM plugins_installed WHERE slug = :slug"),
+            {"slug": slug}
         ).fetchone()
         if not row:
             raise ValueError(f"Plugin '{slug}' is not installed")
 
-        installed_version = row["version"]
+        installed_version = row.version
         try:
-            installed_manifest_dict = json.loads(row["manifest_json"] or "{}")
+            installed_manifest_dict = json.loads(row.manifest_json or "{}")
         except Exception:
             installed_manifest_dict = {}
 
@@ -2319,7 +2867,7 @@ def _compute_preview(
 
         # capabilities_disabled for breaking-change heuristic
         try:
-            caps_disabled: dict = json.loads(row["capabilities_disabled"] or "{}")
+            caps_disabled: dict = json.loads(row.capabilities_disabled or "{}")
         except Exception:
             caps_disabled = {}
     finally:
@@ -2444,11 +2992,11 @@ def preview_plugin_update(slug: str):
     conn = _get_db()
     try:
         row = conn.execute(
-            "SELECT source_url FROM plugins_installed WHERE slug = ?", (slug,)
+            text("SELECT source_url FROM plugins_installed WHERE slug = :slug"), {"slug": slug}
         ).fetchone()
         if not row:
             return jsonify({"error": "not_found"}), 404
-        installed_source = row["source_url"] or ""
+        installed_source = row.source_url or ""
     finally:
         conn.close()
 
@@ -2535,16 +3083,16 @@ def update_plugin(slug: str):
     try:
         # 1. Validate plugin is installed
         row = conn.execute(
-            "SELECT slug, source_url, version, manifest_json FROM plugins_installed WHERE slug = ?",
-            (slug,)
+            text("SELECT slug, source_url, version, manifest_json FROM plugins_installed WHERE slug = :slug"),
+            {"slug": slug}
         ).fetchone()
         if not row:
             return jsonify({"error": "not_found"}), 404
 
-        installed_source = row["source_url"]
-        installed_version = row["version"]
+        installed_source = row.source_url
+        installed_version = row.version
         try:
-            installed_manifest_dict = json.loads(row["manifest_json"] or "{}")
+            installed_manifest_dict = json.loads(row.manifest_json or "{}")
         except Exception:
             installed_manifest_dict = {}
 
@@ -2661,6 +3209,23 @@ def update_plugin(slug: str):
                     "url": f"/plugins/{slug}/ui/widgets/{w.name}",
                 })
 
+        # React page bundles live inside plugins/{slug}/dist/. The previous
+        # implementation skipped this directory entirely, so a plugin update
+        # would bump the version in plugins_installed but keep serving the
+        # old dist/pages/*.js and dist/chunks/*.js — yielding a v1.1.5 tag
+        # over a v1.1.4 page bundle that still crashed in the browser.
+        # Vite library mode emits chunks with content-hashed names, so old
+        # chunks must be wiped before copy: otherwise dist/chunks/ accumulates
+        # both versions and the new manifest references the new hash while
+        # the old chunk's existence keeps it cached. shutil.rmtree + recopy
+        # gives a clean replacement.
+        dist_src = new_plugin_dir / "dist"
+        if dist_src.exists():
+            dist_dst = plugin_dir / "dist"
+            if dist_dst.exists():
+                shutil.rmtree(dist_dst)
+            shutil.copytree(dist_src, dist_dst)
+
         # Wave 2.3: apply MCP delta (tudo-ou-nada) for updated mcp_servers
         from plugin_install_state import get_plugin_mcp_servers as _get_plugin_mcp_servers
         mcp_delta_result: dict = {}
@@ -2681,8 +3246,16 @@ def update_plugin(slug: str):
             logger.warning("MCP delta failed during update of '%s': %s", slug, exc)
             # Non-fatal: log warning but allow update to proceed
 
-        # 9. Heartbeats/routines union — re-reads on next dispatch cycle; trigger reload
+        # 9. Heartbeats/routines union — trigger reload; PG mode: re-import with enabled preservation
         _reload_scheduler()
+        # PG mode: DELETE existing plugin rows, INSERT new ones from updated YAML,
+        # preserving user-modified enabled flags (ADR pg-native-configs Fase 5 — Q9).
+        _pg_reimport_result: dict = {}
+        try:
+            from plugin_loader import _reimport_plugin_configs_preserving_enabled
+            _pg_reimport_result = _reimport_plugin_configs_preserving_enabled(slug)
+        except Exception as exc:
+            logger.warning("PG plugin configs re-import failed for %s: %s", slug, exc)
 
         # 10. Build updated manifest dict
         new_manifest_dict = new_manifest.model_dump()
@@ -2691,11 +3264,11 @@ def update_plugin(slug: str):
         # IDs that persist keep their disabled state. IDs removed by the new version are pruned.
         # (ADR §7 — capability-id stability is author's contract; renames lose state by design)
         row_caps = conn.execute(
-            "SELECT capabilities_disabled FROM plugins_installed WHERE slug = ?", (slug,)
+            text("SELECT capabilities_disabled FROM plugins_installed WHERE slug = :slug"), {"slug": slug}
         ).fetchone()
         if row_caps:
             try:
-                existing_caps: dict = json.loads(row_caps["capabilities_disabled"] or "{}")
+                existing_caps: dict = json.loads(row_caps.capabilities_disabled or "{}")
             except (json.JSONDecodeError, TypeError):
                 existing_caps = {}
 
@@ -2732,8 +3305,8 @@ def update_plugin(slug: str):
                     if kept:
                         pruned[cap_type] = kept
                 conn.execute(
-                    "UPDATE plugins_installed SET capabilities_disabled = ? WHERE slug = ?",
-                    (json.dumps(pruned), slug),
+                    text("UPDATE plugins_installed SET capabilities_disabled = :caps WHERE slug = :slug"),
+                    {"caps": json.dumps(pruned), "slug": slug},
                 )
 
         # 12. Update DB — include new mcp_servers_installed if MCP delta produced records
@@ -2760,13 +3333,18 @@ def update_plugin(slug: str):
             new_manifest_dict["mcp_servers_installed"] = _new_installed_records
 
         conn.execute(
-            "UPDATE plugins_installed SET version = ?, manifest_json = ? WHERE slug = ?",
-            (new_version, json.dumps(new_manifest_dict), slug)
+            text("UPDATE plugins_installed SET version = :ver, manifest_json = :mj WHERE slug = :slug"),
+            {"ver": new_version, "mj": json.dumps(new_manifest_dict), "slug": slug},
         )
         conn.commit()
 
         # 13. Audit log
-        _audit(conn, slug, "update", {"from": installed_version, "to": new_version, "sql_sha_preserved": True})
+        _audit(conn, slug, "update", {
+            "from": installed_version,
+            "to": new_version,
+            "sql_sha_preserved": True,
+            "pg_reimport": _pg_reimport_result,
+        })
         invalidate_agent_meta_cache()
 
         return jsonify({
@@ -2838,20 +3416,19 @@ def _build_agent_meta_response() -> dict:
 
     # 2. Merge plugin agents
     try:
-        conn = sqlite3.connect(str(DB_PATH))
-        conn.row_factory = sqlite3.Row
-        rows = conn.execute(
-            "SELECT slug, manifest_json FROM plugins_installed WHERE enabled = 1 AND status = 'active'"
+        _am_conn = get_engine().connect()
+        rows = _am_conn.execute(
+            text("SELECT slug, manifest_json FROM plugins_installed WHERE enabled = TRUE AND status = 'active'")
         ).fetchall()
-        conn.close()
+        _am_conn.close()
     except Exception as exc:
         logger.warning("agent-meta: DB query failed, returning native-only seed: %s", exc)
         return result
 
     for row in rows:
-        plugin_slug = row["slug"]
+        plugin_slug = row.slug
         try:
-            manifest = json.loads(row["manifest_json"] or "{}")
+            manifest = json.loads(row.manifest_json or "{}")
         except Exception:
             continue
 
