@@ -384,7 +384,14 @@ export default function Sidebar() {
       {/* Credits */}
       <div className="px-4 py-3 border-t border-[#1E3829]/50">
         <p className="flex items-center justify-center gap-1.5 text-[10px] text-[#2d4a38]">
-          Built on EvoNexus
+          <a
+            href="https://cleverai.com.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#6B8A76] transition-colors"
+          >
+            acesse o Clever Ai
+          </a>
         </p>
       </div>
     </>
