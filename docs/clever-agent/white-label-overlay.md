@@ -187,60 +187,134 @@ Pendencias pos-aplicacao:
 
 ---
 
-## 13. Dashboard pages: Goals e Docs white-label
+## 13. Dashboard Docs white-label
 
-**STATUS: APLICADO — Etapa 6.6.1 concluida em 2026-05-24**
+**STATUS: APLICADO — Etapa 6.6.1 concluida em 2026-05-24 | Commit `7d556af`**
 
-### Goals (`/goals`) — `dashboard/frontend/src/pages/Goals.tsx`
+### Regra fundamental
 
-Causa do erro `Failed to fetch`: linha `const API = import.meta.env.DEV ? 'http://localhost:8080' : ''`
-apontava diretamente para a porta 8080 (incorreta), bypassando o proxy Vite que roteia `/api` → `localhost:8081`.
+The embedded dashboard docs route (`/docs`) is part of the Clever Agent white-label overlay.
+It must not expose EvoNexus as the primary product name, upstream installation commands,
+or upstream navigation links. `/docs` must render a non-empty Clever Agent documentation entry page.
 
-Correção: `const API = ''` — chamadas passam pelo proxy Vite normalmente.
+### Arquivo responsável
 
-Melhorias adicionais:
-- Error state substituído por mensagem amigável em português
-- Botão "Tentar novamente" com `import.meta.env.DEV` para debug técnico
-- Empty state mantido: "Nenhuma Mission criada ainda." com instrução `/create-goal`
+`dashboard/frontend/src/pages/Docs.tsx`
 
-### Docs (`/docs`) — `dashboard/frontend/src/pages/Docs.tsx`
+### O que foi alterado (Etapa 6.6.1)
 
-Mesmo erro de URL: `const API = import.meta.env.DEV ? 'http://localhost:8080' : ''` → corrigido para `const API = ''`.
-
-White-label aplicado:
-- Sidebar header: `EvoNexus Docs` → **`Clever Agent Docs`** (inline JSX)
-- `whiteLabel()` function adicionada — aplica substituições em render-time sem alterar o backend
-- Aplicada ao: conteúdo markdown após fetch (`setContent(whiteLabel(md))`), títulos de docs na nav
-- Loading state corrigido: `loading && sections.length > 0` → `loading` (mostra "Loading..." desde o início)
-- sections fetch: `catch` agora faz `setLoading(false)` (evita spinner infinito em falha)
-- `!docPath` early return agora faz `setLoading(false)` quando sections tem dados
-
-Tabela de substituições da `whiteLabel()` (em ordem de aplicação):
-
-| Padrão original | Substituto |
+| Alteração | Detalhe |
 |---|---|
-| `npx @evoapi/evo-nexus*` | `clever-agent setup` |
-| `raw.githubusercontent.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs/install` |
-| `github.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs` |
-| `github.com/evolution-foundation/evo-nexus*` | `https://clever.app/docs` |
-| `@evoapi/evo-nexus` | `clever-agent` |
+| API URL | `const API = import.meta.env.DEV ? 'http://localhost:8080' : ''` → `const API = ''` |
+| Sidebar header | `EvoNexus Docs` → **`Clever Agent Docs`** (inline JSX, linhas 122–126) |
+| `whiteLabel()` function | Adicionada — aplica substituições em render-time sem alterar o backend |
+| Aplicação do whiteLabel | `setContent(whiteLabel(md))` + `{whiteLabel(child.title)}` na nav |
+| Loading state | `loading && sections.length > 0` → `loading` (não fica em branco no carregamento inicial) |
+| sections fetch catch | Agora faz `setLoading(false)` em falha (sem spinner infinito) |
+| `!docPath` early return | Agora faz `setLoading(false)` quando sections já carregou |
+
+### Substituições obrigatórias de marca (reapply após upstream)
+
+Ao reaplicar o white-label, garantir que os seguintes textos sejam substituídos na UI e docs:
+
+| Texto original | Substituto |
+|---|---|
 | `EvoNexus` | `Clever Agent` |
 | `Evo Nexus` | `Clever Agent` |
-| `evo-nexus` | `clever-agent` |
-| `github.com/EvolutionAPI/clever-agent` | `clever.app/docs` |
-| `EvolutionAPI/clever-agent` | `clever-agent` |
+| `Getting Started with EvoNexus` | `Getting Started with Clever Agent` |
+| `What is EvoNexus` | `What is Clever Agent` |
+| `Installing EvoNexus with Docker` | `Installing Clever Agent with Docker` |
+| `Updating EvoNexus` | `Updating Clever Agent` |
+| `EvoNexus Plugin Contract` | `Clever Agent Plugin Contract` |
 
-> **Regra de reapply:** Se upstream atualizar `Goals.tsx` ou `Docs.tsx` e restaurar `http://localhost:8080`,
-> replicar a correção `const API = ''` e a função `whiteLabel()`.
+### Tabela de substituições da `whiteLabel()` (em ordem de aplicação)
 
-### The embedded dashboard docs route (`/docs`) must be treated as part of the Clever Agent white-label overlay.
+> Ordem importa: padrões específicos multi-segmento ANTES do genérico `evo-nexus`.
 
-It must not expose EvoNexus as the primary product name, upstream install commands, or upstream navigation links.
-`/docs` must render a non-empty Clever Agent documentation entry page.
+| Padrão original | Substituto | Motivo da ordem |
+|---|---|---|
+| `npx @evoapi/evo-nexus*` | `clever-agent setup` | específico antes do genérico |
+| `raw.githubusercontent.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs/install` | URL full antes do partial |
+| `github.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs` | URL full antes do partial |
+| `github.com/evolution-foundation/evo-nexus*` | `https://clever.app/docs` | URL full antes do partial |
+| `@evoapi/evo-nexus` | `clever-agent` | package específico |
+| `EvoNexus` | `Clever Agent` | genérico |
+| `Evo Nexus` | `Clever Agent` | genérico |
+| `evo-nexus` | `clever-agent` | genérico (último, pois altera URLs já processadas) |
+| `github.com/EvolutionAPI/clever-agent` | `clever.app/docs` | limpeza pós-substituição genérica |
+| `EvolutionAPI/clever-agent` | `clever-agent` | limpeza pós-substituição genérica |
+
+### Comandos e links upstream neutralizados
+
+Os seguintes itens **não devem aparecer como instrução principal** na UI Clever Agent:
+
+| Item | Substituto white-label |
+|---|---|
+| `npx @evoapi/evo-nexus` | `clever-agent setup` |
+| `github.com/EvolutionAPI/evo-nexus` | `clever.app/docs` |
+| `github.com/evolution-foundation/evo-nexus` | `clever.app/docs` |
+| `raw.githubusercontent.com/EvolutionAPI/evo-nexus` | `https://clever.app/docs/install` |
+| `localhost:8080` (como referência de instalação upstream) | mantido apenas em contexto técnico de backend |
+
+> **Nota:** These placeholders are white-label documentation placeholders and must be replaced
+> by the official Clever Agent installation flow when the deployment architecture is finalized.
+
+### Regra de reapply
+
+Se upstream atualizar `Docs.tsx` e restaurar `http://localhost:8080` ou `EvoNexus Docs`,
+reaplicar: `const API = ''`, sidebar header JSX, e a função `whiteLabel()` completa.
 
 ---
 
-## 14. Reapply checklist after upstream update
+## 14. Dashboard Goals route
+
+**STATUS: APLICADO — Etapa 6.6.1 concluida em 2026-05-24 | Commit `7d556af`**
+
+### Rota e arquivo
+
+- Rota: `/goals`
+- Arquivo: `dashboard/frontend/src/pages/Goals.tsx`
+
+### Problema anterior
+
+`Failed to fetch` ao carregar `/goals`. O componente chamava `http://localhost:8080/api/missions`
+diretamente, bypassando o proxy Vite. O backend do dashboard fica em `localhost:8081`; a porta
+`8080` era de outro serviço (CRM). O endpoint `/api/missions` existe e requer autenticação — confirmado
+com `curl -w "%{http_code}" http://localhost:8081/api/missions` → `401`.
+
+### Causa raiz
+
+```diff
+// ANTES — hardcoded, bypassa proxy, porta errada
+- const API = import.meta.env.DEV ? 'http://localhost:8080' : ''
+
+// DEPOIS — relativo, roteado pelo proxy Vite para :8081
++ const API = ''
+```
+
+### Regra de governança
+
+The Goals route must not call `http://localhost:8080` directly in the frontend.
+It must use relative API paths so Vite (local dev) and future deployment proxies
+can route requests correctly.
+
+### Error/empty states obrigatórios
+
+Se a API/backend não estiver disponível, a tela **não deve exibir** apenas `Error: Failed to fetch`.
+Deve exibir:
+- Mensagem amigável em português explicando o problema
+- Instrução para verificar o backend
+- Botão de retry
+- Detalhe técnico do erro apenas em modo DEV (`import.meta.env.DEV`)
+
+### Regra de reapply
+
+Se upstream atualizar `Goals.tsx` e restaurar `http://localhost:8080` como URL de API,
+reaplicar `const API = ''` e o error state amigável.
+
+---
+
+## 15. Reapply checklist after upstream update
 
 Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
@@ -250,8 +324,13 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 - [ ] `Agents.tsx` — confirmar key i18n `agents.subtitle`
 - [ ] `api.ts` — confirmar `const API = ''`
 - [ ] `Goals.tsx` — confirmar `const API = ''` (linha 71)
+- [ ] `Goals.tsx` — confirmar friendly loading, empty, and error states (não apenas `Failed to fetch`)
 - [ ] `Docs.tsx` — confirmar `const API = ''` (linha 7) e `whiteLabel()` function presente
 - [ ] `Docs.tsx` sidebar header — confirmar `Clever Agent Docs` (não `EvoNexus Docs`)
+- [ ] `/docs` renders a non-empty Clever Agent docs entry page (não fica em branco)
+- [ ] Docs markdown is passed through the `whiteLabel()` transformation layer
+- [ ] Upstream install commands not exposed as primary Clever Agent instructions (`npx @evoapi/evo-nexus` ausente)
+- [ ] Docs links do not point to upstream GitHub/EvolutionAPI as primary navigation
 - [ ] `vite.config.ts` — confirmar porta 8081 e proxy `/ws`
 - [ ] `index.css` — confirmar `@import "@evoapi/evonexus-ui/tokens.css"`
 - [ ] `agent-meta.ts` — confirmar 38 paths `.png`
@@ -269,7 +348,7 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
 ---
 
-## 15. Known pending work
+## 16. Known pending work
 
 | Item | Etapa | Status |
 |---|---|---|

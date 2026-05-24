@@ -217,7 +217,12 @@ Aplicada a: `setContent(whiteLabel(md))` + `{whiteLabel(child.title)}` na nav.
 
 ## 9. Commit e push
 
-Ver commit seguinte neste branch.
+| Campo | Valor |
+|---|---|
+| Commit | `7d556af` |
+| Mensagem | `fix: repair goals and docs white-label before beta (Etapa 6.6.1)` |
+| Branch | `clever-dev` |
+| Push | `origin/clever-dev` ✅ |
 
 ---
 
@@ -236,7 +241,29 @@ Ver commit seguinte neste branch.
 
 ---
 
-## 11. Decisão
+## 11. White-label reapply notes
+
+This patch is part of the Clever Agent white-label overlay and must be checked after every
+upstream/AppSpring/Evo Nexus merge into `clever-dev`.
+
+**Checklist pós-merge para esta área:**
+
+- [ ] `Goals.tsx` — `const API = ''` (não `http://localhost:8080`)
+- [ ] `Goals.tsx` — error state amigável presente (não apenas `Error: Failed to fetch`)
+- [ ] `Docs.tsx` — `const API = ''`
+- [ ] `Docs.tsx` — `whiteLabel()` function presente e aplicada ao conteúdo e títulos da nav
+- [ ] `Docs.tsx` sidebar header — `Clever Agent Docs` (não `EvoNexus Docs`)
+- [ ] `/docs` — carrega conteúdo por padrão (não fica em branco)
+- [ ] `/docs/getting-started` — `clever-agent setup` (não `npx @evoapi/evo-nexus`)
+- [ ] `/docs/getting-started` — sem URLs `github.com/EvolutionAPI/evo-nexus`
+
+**Referência de documentação:**
+- `docs/clever-agent/white-label-overlay.md` — seções 13 (Dashboard Docs) e 14 (Dashboard Goals)
+- `docs/clever-agent/white-label-patch-ledger.md` — linha `Docs/Goals routes`
+
+---
+
+## 12. Decisão
 
 **Pendente aprovação do usuário para promoção a `clever-beta`.**
 
