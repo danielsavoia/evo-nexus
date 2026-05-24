@@ -4,7 +4,32 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { ChevronDown, ChevronRight, Search, Menu, X, BookOpen, Rocket, LayoutDashboard, Bot, Zap, Clock, Plug, Globe, FileText } from 'lucide-react'
 
-const API = import.meta.env.DEV ? 'http://localhost:8080' : ''
+const API = ''
+
+// White-label overlay: replace upstream product branding at render time.
+// The backend serves markdown content referencing EvoNexus; this function
+// rewrites those references before they reach the DOM, keeping the backend
+// data source intact while displaying Clever Agent branding.
+// NOTE: order matters — specific multi-segment patterns run BEFORE the generic
+// `evo-nexus` → `clever-agent` replacement so they match original text.
+function whiteLabel(text: string): string {
+  return text
+    // Specific install commands (replace entire command, not just name)
+    .replace(/npx @evoapi\/evo-nexus\S*/g, 'clever-agent setup')
+    // Full GitHub URLs before the generic evo-nexus swap scrambles them
+    .replace(/https:\/\/raw\.githubusercontent\.com\/EvolutionAPI\/evo-nexus[^\s)"'\]]+/g, 'https://clever.app/docs/install')
+    .replace(/https:\/\/github\.com\/EvolutionAPI\/evo-nexus[^\s)"'\]]+/g, 'https://clever.app/docs')
+    .replace(/https:\/\/github\.com\/evolution-foundation\/evo-nexus[^\s)"'\]]+/g, 'https://clever.app/docs')
+    // Package reference
+    .replace(/@evoapi\/evo-nexus/g, 'clever-agent')
+    // Generic name replacements
+    .replace(/EvoNexus/g, 'Clever Agent')
+    .replace(/Evo Nexus/g, 'Clever Agent')
+    .replace(/evo-nexus/g, 'clever-agent')
+    // Clean up any remaining EvolutionAPI/ GitHub org prefix in paths
+    .replace(/github\.com\/EvolutionAPI\/clever-agent/g, 'clever.app/docs')
+    .replace(/EvolutionAPI\/clever-agent/g, 'clever-agent')
+}
 
 interface DocEntry {
   title: string
@@ -44,7 +69,10 @@ export default function Docs() {
     fetch(`${API}/api/docs`)
       .then((r) => r.json())
       .then((data) => setSections(data.sections || []))
-      .catch(() => setSections([]))
+      .catch(() => {
+        setSections([])
+        setLoading(false)
+      })
   }, [])
 
   // Load content when slug changes
@@ -72,7 +100,10 @@ export default function Docs() {
     }
 
     if (!docPath) {
-      if (sections.length > 0) setContent('# Page not found\n\nThe requested documentation page was not found.')
+      if (sections.length > 0) {
+        setContent('# Page not found\n\nThe requested documentation page was not found.')
+        setLoading(false)
+      }
       return
     }
 
@@ -83,7 +114,7 @@ export default function Docs() {
         return r.text()
       })
       .then((md) => {
-        setContent(md)
+        setContent(whiteLabel(md))
         setLoading(false)
       })
       .catch(() => {
@@ -120,8 +151,8 @@ export default function Docs() {
         <div className="flex items-center gap-2">
           <BookOpen size={20} className="text-[#85F2A0]" />
           <span className="text-lg font-bold">
-            <span className="text-[#85F2A0]">Evo</span>
-            <span className="text-white">Nexus</span>
+            <span className="text-[#85F2A0]">Clever</span>
+            <span className="text-white"> Agent</span>
             <span className="text-[#6B8A76] ml-1.5 text-sm font-normal">Docs</span>
           </span>
         </div>
@@ -195,7 +226,7 @@ export default function Docs() {
                           : 'text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 border-l-2 border-transparent'
                       }`}
                     >
-                      {child.title}
+                      {whiteLabel(child.title)}
                       {snippet && (
                         <span className="block text-xs text-[#475467] mt-0.5 truncate">
                           {snippet}
@@ -256,7 +287,7 @@ export default function Docs() {
       {/* Main content */}
       <main className="flex-1 ml-0 lg:ml-64 p-4 lg:p-12 pt-16 lg:pt-12 overflow-auto">
         <div className="max-w-4xl mx-auto">
-          {loading && sections.length > 0 ? (
+          {loading ? (
             <div className="text-[#6B8A76] text-sm">Loading...</div>
           ) : (
             <article className="docs-content">

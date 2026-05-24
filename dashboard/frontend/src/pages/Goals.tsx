@@ -68,7 +68,7 @@ interface Mission {
 
 // ---- Helpers ----
 
-const API = import.meta.env.DEV ? 'http://localhost:8080' : ''
+const API = ''
 
 async function apiFetch(path: string, opts?: RequestInit) {
   const res = await fetch(API + path, { credentials: 'include', ...opts })
@@ -612,8 +612,25 @@ export default function Goals() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-red-400 text-sm">Error: {error}</div>
+      <div className="flex flex-col items-center justify-center h-64 gap-4 px-6 text-center">
+        <Target size={32} className="text-[#1E3829]" />
+        <div>
+          <p className="text-[#C8D5CE] text-sm font-medium mb-1">
+            Não foi possível carregar as metas
+          </p>
+          <p className="text-[#6B8A76] text-xs max-w-sm">
+            Verifique se o backend do Clever Agent está em execução e tente novamente.
+          </p>
+          {import.meta.env.DEV && (
+            <p className="text-red-400/60 text-[10px] mt-2 font-mono">{error}</p>
+          )}
+        </div>
+        <button
+          onClick={() => { setError(''); setLoading(true); load() }}
+          className="flex items-center gap-2 px-4 py-2 text-xs text-[#6B8A76] hover:text-white border border-[#1E3829] rounded-lg hover:border-[#41A650]/40 transition-colors"
+        >
+          <RefreshCw size={12} /> Tentar novamente
+        </button>
       </div>
     )
   }

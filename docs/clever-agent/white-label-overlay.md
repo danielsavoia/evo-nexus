@@ -187,7 +187,60 @@ Pendencias pos-aplicacao:
 
 ---
 
-## 13. Reapply checklist after upstream update
+## 13. Dashboard pages: Goals e Docs white-label
+
+**STATUS: APLICADO — Etapa 6.6.1 concluida em 2026-05-24**
+
+### Goals (`/goals`) — `dashboard/frontend/src/pages/Goals.tsx`
+
+Causa do erro `Failed to fetch`: linha `const API = import.meta.env.DEV ? 'http://localhost:8080' : ''`
+apontava diretamente para a porta 8080 (incorreta), bypassando o proxy Vite que roteia `/api` → `localhost:8081`.
+
+Correção: `const API = ''` — chamadas passam pelo proxy Vite normalmente.
+
+Melhorias adicionais:
+- Error state substituído por mensagem amigável em português
+- Botão "Tentar novamente" com `import.meta.env.DEV` para debug técnico
+- Empty state mantido: "Nenhuma Mission criada ainda." com instrução `/create-goal`
+
+### Docs (`/docs`) — `dashboard/frontend/src/pages/Docs.tsx`
+
+Mesmo erro de URL: `const API = import.meta.env.DEV ? 'http://localhost:8080' : ''` → corrigido para `const API = ''`.
+
+White-label aplicado:
+- Sidebar header: `EvoNexus Docs` → **`Clever Agent Docs`** (inline JSX)
+- `whiteLabel()` function adicionada — aplica substituições em render-time sem alterar o backend
+- Aplicada ao: conteúdo markdown após fetch (`setContent(whiteLabel(md))`), títulos de docs na nav
+- Loading state corrigido: `loading && sections.length > 0` → `loading` (mostra "Loading..." desde o início)
+- sections fetch: `catch` agora faz `setLoading(false)` (evita spinner infinito em falha)
+- `!docPath` early return agora faz `setLoading(false)` quando sections tem dados
+
+Tabela de substituições da `whiteLabel()` (em ordem de aplicação):
+
+| Padrão original | Substituto |
+|---|---|
+| `npx @evoapi/evo-nexus*` | `clever-agent setup` |
+| `raw.githubusercontent.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs/install` |
+| `github.com/EvolutionAPI/evo-nexus*` | `https://clever.app/docs` |
+| `github.com/evolution-foundation/evo-nexus*` | `https://clever.app/docs` |
+| `@evoapi/evo-nexus` | `clever-agent` |
+| `EvoNexus` | `Clever Agent` |
+| `Evo Nexus` | `Clever Agent` |
+| `evo-nexus` | `clever-agent` |
+| `github.com/EvolutionAPI/clever-agent` | `clever.app/docs` |
+| `EvolutionAPI/clever-agent` | `clever-agent` |
+
+> **Regra de reapply:** Se upstream atualizar `Goals.tsx` ou `Docs.tsx` e restaurar `http://localhost:8080`,
+> replicar a correção `const API = ''` e a função `whiteLabel()`.
+
+### The embedded dashboard docs route (`/docs`) must be treated as part of the Clever Agent white-label overlay.
+
+It must not expose EvoNexus as the primary product name, upstream install commands, or upstream navigation links.
+`/docs` must render a non-empty Clever Agent documentation entry page.
+
+---
+
+## 14. Reapply checklist after upstream update
 
 Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
@@ -196,6 +249,9 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 - [ ] `Sidebar.tsx` — confirmar credits sem link EvoNexus
 - [ ] `Agents.tsx` — confirmar key i18n `agents.subtitle`
 - [ ] `api.ts` — confirmar `const API = ''`
+- [ ] `Goals.tsx` — confirmar `const API = ''` (linha 71)
+- [ ] `Docs.tsx` — confirmar `const API = ''` (linha 7) e `whiteLabel()` function presente
+- [ ] `Docs.tsx` sidebar header — confirmar `Clever Agent Docs` (não `EvoNexus Docs`)
 - [ ] `vite.config.ts` — confirmar porta 8081 e proxy `/ws`
 - [ ] `index.css` — confirmar `@import "@evoapi/evonexus-ui/tokens.css"`
 - [ ] `agent-meta.ts` — confirmar 38 paths `.png`
@@ -213,12 +269,16 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
 ---
 
-## 14. Known pending work
+## 15. Known pending work
 
-| Item | Etapa |
-|---|---|
-| ~~Aplicar paleta Clever Agent no dashboard e site~~ | ~~Etapa 6.4~~ — CONCLUIDO |
-| `Home.tsx`: `npx @evoapi/evo-nexus` -> comando Clever | Etapa 6.1 |
-| `site/` auditoria completa de textos | Etapa 6.1 |
-| Validacao visual completa com login | Pendente |
-| Promocao para `clever-beta` | Apos validacao visual aprovada |
+| Item | Etapa | Status |
+|---|---|---|
+| Aplicar paleta Clever Agent no dashboard e site | Etapa 6.4 | ✅ CONCLUIDO |
+| Aplicar paleta no App.tsx e superficies GitHub Dark | Etapa 6.5 | ✅ CONCLUIDO |
+| Amarelo `#F2CB05` em detalhes de design | Etapa 6.5.1 | ✅ CONCLUIDO |
+| Validacao visual completa (Overview, Agents, AgentDetail, Sidebar, Site) | Etapa 6.6 | ✅ CONCLUIDO |
+| Goals `Failed to fetch` corrigido | Etapa 6.6.1 | ✅ CONCLUIDO |
+| Docs white-label (`EvoNexus Docs` → `Clever Agent Docs`) | Etapa 6.6.1 | ✅ CONCLUIDO |
+| `site/` auditoria completa de textos | Etapa 6.1 | Pendente |
+| Login page validacao visual (requer logout) | Etapa 6.6 | Pendente |
+| Promocao para `clever-beta` | Apos validacao visual aprovada pelo usuario | Pendente |
