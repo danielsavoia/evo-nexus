@@ -1,56 +1,103 @@
-# Clever Agent Avatar White-label (Etapa 6.2)
+# Clever Agent Avatar White-label
 
-## Objetivo
+**Date:** 2026-05-24
+**Branch:** `clever-dev`
 
-Trocar os avatars visuais dos 38 agentes nativos para assets da marca Clever Agent, mantendo 100% da logica funcional (IDs, slugs, nomes, comandos e papeis).
+---
 
-## Paths usados
+## Decisão
 
-- Originais preservados (nao sobrescritos): `dashboard/frontend/public/avatar/`
-- Fonte da marca: `brand/clever-agent/avatars/`
-- Publico no frontend: `dashboard/frontend/public/clever-agent/avatars/`
+Os avatars oficiais do Clever Agent são PNGs aprovados manualmente, localizados nos paths white-label do projeto. Eles substituem os avatars originais do upstream (WEBPs em `dashboard/frontend/public/avatar/`) na camada visual do Clever Agent.
 
-## Decisao tecnica
+---
 
-- Nao sobrescrever arquivos upstream em `/avatar/` para reduzir conflitos em futuros upstream sync.
-- Fazer remapeamento 1:1 para `/clever-agent/avatars/` em:
-  - `dashboard/frontend/src/lib/agent-meta.ts`
-  - `dashboard/backend/agent_meta_seed.py`
+## Paths
 
-## Mapeamento 1:1
+| Finalidade | Path |
+|---|---|
+| Source de verdade (brand) | `brand/clever-agent/avatars/` |
+| Servido pelo frontend | `dashboard/frontend/public/clever-agent/avatars/` |
 
-Padrao aplicado para todos os 38 agentes:
+---
 
-- `avatar_<slug>.webp` (antigo) -> `avatar_<slug>.svg` (novo)
-- Exemplo: `/avatar/avatar_atlas.webp` -> `/clever-agent/avatars/avatar_atlas.svg`
+## Origem local dos assets aprovados
 
-## Componentes afetados
+Os assets foram aprovados manualmente e originados de:
 
-- `dashboard/frontend/src/components/AgentAvatar.tsx`
-- `dashboard/frontend/src/components/AgentIcon.tsx`
+```
+C:\Users\agenc\Downloads\Avatares
+```
 
-Observacao: os componentes ja aceitam URL livre em `meta.avatar`, sem restricao hardcoded para `/avatar/`.
+---
 
-## Estilo visual dos novos avatars
+## Regra de governança
 
-- Formato: SVG vetorial
-- Estilo: busto/headshot de persona (rosto, cabeca e ombros), semi-flat premium, tecnico e consistente
-- Cada agente recebeu acessorio funcional proprio (ex.: headset, prancheta, balanca, grafico, roadmap, escudo)
-- Paleta base Clever Agent:
-  - `#19402A`
-  - `#255938`
-  - `#41A650`
-  - `#85F2A0`
-  - `#F2CB05`
-  - `#F7F9F8`
+**Não sobrescrever** `dashboard/frontend/public/avatar/` — essa pasta pertence ao upstream (EvoNexus) e contém os WEBPs originais. Toda customização Clever Agent usa exclusivamente os paths `/clever-agent/avatars/`.
 
-## Como adicionar novos agentes no futuro
+---
 
-1. Criar novo SVG em `brand/clever-agent/avatars/avatar_<slug>.svg`.
-2. Copiar para `dashboard/frontend/public/clever-agent/avatars/avatar_<slug>.svg`.
-3. Atualizar `agent-meta.ts` e `agent_meta_seed.py` para usar `/clever-agent/avatars/avatar_<slug>.svg`.
-4. Validar com `npm run build` no `dashboard/frontend`.
+## Formato
 
-## Regra de governanca visual
+- **Formato:** PNG
+- **Quantidade:** 38 arquivos
+- **Padrão de nome:** `avatar_{slug}.png`
 
-Avatars devem permanecer no design system Clever Agent, sem marca EvoNexus/Evolution, sem fotos realistas, e sempre com leitura clara em tamanho pequeno (32px/48px/64px/96px).
+---
+
+## Mapeamento dos 38 avatars
+
+| Arquivo | Agente |
+|---|---|
+| avatar_apex.png | apex-architect |
+| avatar_aria.png | aria-hr |
+| avatar_atlas.png | atlas-project |
+| avatar_bolt.png | bolt-executor |
+| avatar_canvas.png | canvas-designer |
+| avatar_clawdia.png | clawdia-assistant |
+| avatar_compass.png | compass-planner |
+| avatar_dex.png | dex-data |
+| avatar_echo.png | echo-analyst |
+| avatar_flow.png | flow-git |
+| avatar_flux.png | flux-finance |
+| avatar_grid.png | grid-tester |
+| avatar_hawk.png | hawk-debugger |
+| avatar_helm.png | helm-conductor |
+| avatar_kai.png | kai-personal-assistant |
+| avatar_lens.png | lens-reviewer |
+| avatar_lex.png | lex-legal |
+| avatar_lumen.png | lumen-learning |
+| avatar_mako.png | mako-marketing |
+| avatar_mentor.png | mentor-courses |
+| avatar_mirror.png | mirror-retro |
+| avatar_nex.png | nex-sales |
+| avatar_nova.png | nova-product |
+| avatar_oath.png | oath-verifier |
+| avatar_oracle.png | oracle |
+| avatar_pixel.png | pixel-social-media |
+| avatar_prism.png | prism-scientist |
+| avatar_probe.png | probe-qa |
+| avatar_pulse.png | pulse-community |
+| avatar_quill.png | quill-writer |
+| avatar_raven.png | raven-critic |
+| avatar_sage.png | sage-strategy |
+| avatar_scout.png | scout-explorer |
+| avatar_scroll.png | scroll-docs |
+| avatar_trail.png | trail-tracer |
+| avatar_vault.png | vault-security |
+| avatar_zara.png | zara-cs |
+| avatar_zen.png | zen-simplifier |
+
+---
+
+## Arquivos de mapeamento atualizados
+
+| Arquivo | Status |
+|---|---|
+| `dashboard/frontend/src/lib/agent-meta.ts` | Atualizado para `.png` |
+| `dashboard/backend/agent_meta_seed.py` | Atualizado para `.png` |
+
+---
+
+## Observacao para novos agentes
+
+Novos agentes devem receber avatars no mesmo padrao visual Clever Agent (PNG, estilo consistente com os 38 existentes). O asset deve ser adicionado primeiro em `brand/clever-agent/avatars/` e depois em `dashboard/frontend/public/clever-agent/avatars/`. O mapeamento deve ser atualizado em `agent-meta.ts` e `agent_meta_seed.py`.
