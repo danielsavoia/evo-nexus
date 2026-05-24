@@ -24,7 +24,7 @@ export default function OnboardingHeader({ step, filled }: OnboardingHeaderProps
   )
   return (
     <div className="flex flex-col items-center gap-4 mb-6">
-      <img src="/clever-agent-dark.svg" alt="Clever Agent" className="h-7 w-auto opacity-90" />
+      <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[150px] h-auto opacity-90" />
       <div className="flex items-center gap-2">
         <span className="text-[11px] text-[#5a6b7f] uppercase tracking-[0.08em]">
           {t(`onboarding.stepIndicator.${step}`)}

@@ -259,10 +259,7 @@ export default function ShareView() {
 
 function PoweredByFooter() {
   return (
-    <a
-      href="https://evonexus.evolutionfoundation.com.br/"
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       style={{
         position: 'fixed',
         bottom: 0,
@@ -277,14 +274,12 @@ function PoweredByFooter() {
         backdropFilter: 'blur(8px)',
         borderTop: '1px solid rgba(52,64,84,0.5)',
         zIndex: 100,
-        textDecoration: 'none',
-        cursor: 'pointer',
       }}
     >
       <img src="/clever-agent-icon.svg" alt="Clever Agent" style={{ height: '16px', width: 'auto', opacity: 0.7 }} />
       <span style={{ fontSize: '11px', color: 'var(--text-muted, #667085)' }}>
         Powered by Clever Agent
       </span>
-    </a>
+    </div>
   )
 }

@@ -72,10 +72,9 @@ export default function Home() {
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const GITHUB_URL = "https://github.com/EvolutionAPI/evo-nexus";
+  const GITHUB_URL = "https://github.com/danielsavoia/evo-nexus";
   const DOCS_URL = "/docs";
   const DISCORD_URL = "https://discord.gg/evolution-api";
-  const EVOLUTION_URL = "https://evolutionfoundation.com.br";
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -122,17 +121,9 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Top Banner */}
-      <div className="fixed top-0 w-full z-[60] bg-primary text-primary-foreground">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-3 text-sm font-medium">
-          <span>{t("banner.text")}</span>
-          <a
-            href={EVOLUTION_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2 font-bold hover:opacity-80 transition-opacity"
-          >
-            {t("banner.cta")}
-          </a>
+      <div className="fixed top-0 w-full z-[60] bg-[#0F2318] border-b border-[#255938]/60">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-2 text-sm">
+          <span className="text-[#85F2A0]/80 font-medium">{t("banner.text")}</span>
         </div>
       </div>
 
@@ -140,7 +131,7 @@ export default function Home() {
       <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-background/80 backdrop-blur-md border-border' : 'bg-transparent border-transparent'}`} style={{ top: '36px' }}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={CleverAgentLogo} alt="Clever Agent" className="h-8" />
+            <img src={CleverAgentLogo} alt="Clever Agent" className="h-9" />
           </div>
 
           <div className="hidden md:flex items-center gap-4">
@@ -583,7 +574,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <img src={CleverAgentLogo} alt="Clever Agent" className="h-8" />
+                <img src={CleverAgentLogo} alt="Clever Agent" className="h-9" />
               </div>
               <p className="text-muted-foreground text-sm">{t("footer.tagline")}</p>
             </div>
