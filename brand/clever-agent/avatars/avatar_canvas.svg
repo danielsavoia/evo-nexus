@@ -1,0 +1,12 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' role='img' aria-label='avatar_canvas'>
+  <defs>
+    <linearGradient id='g4' x1='0' y1='0' x2='1' y2='1'>
+      <stop offset='0%' stop-color='#F2CB05'/>
+      <stop offset='100%' stop-color='#19402A'/>
+    </linearGradient>
+  </defs>
+  <rect x='2' y='2' width='92' height='92' rx='24' fill='url(#g4)'/>
+  <circle cx='48' cy='48' r='30' fill='none' stroke='#41A650' stroke-width='4' opacity='0.9'/>  <path d='M28 56 L48 28 L68 56' fill='none' stroke='#41A650' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/>
+  <circle cx='76' cy='20' r='6' fill='#F7F9F8' opacity='0.9'/>
+</svg>
+
