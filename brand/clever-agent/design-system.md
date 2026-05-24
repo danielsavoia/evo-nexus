@@ -252,8 +252,28 @@ Posicionamento sugerido: rodapé do dashboard, página About, ou tooltip no logo
 
 ---
 
-## 18. Changelog
+## 18. Theme application status
 
-| Data       | Versão | Descrição                                      |
-|------------|--------|------------------------------------------------|
-| 2026-05-24 | 1.0.0  | Criação inicial — 8 assets SVG + design system |
+The Clever Agent brand assets and avatars are already applied:
+- Logos, favicon, icon — applied in `dashboard/frontend/public/` and `site/public/`
+- 38 persona avatars (PNG) — applied in `dashboard/frontend/public/clever-agent/avatars/`
+- `agent-meta.ts` and `agent_meta_seed.py` — paths updated to `.png`
+
+The full UI color/theme overlay is **pending** and must be applied in a separate controlled phase (Etapa 6.4).
+
+Current upstream color tokens to replace:
+- `#00FFA7` (--evo-green, 597 occurrences) → `--clever-agent-green-300: #85F2A0` or accent
+- `--evo-green` CSS variable (10 occurrences) → `--clever-agent-green-300`
+- Background `#0C111D` (65 occurrences) → evaluate against Clever dark palette
+- Border `#344054` (80 occurrences) → evaluate compatibility
+
+See `docs/clever-agent/theme-color-audit.md` for full audit.
+
+---
+
+## 19. Changelog
+
+| Data       | Versao | Descricao                                                       |
+|------------|--------|-----------------------------------------------------------------|
+| 2026-05-24 | 1.0.0  | Criacao inicial — 8 assets SVG + design system                  |
+| 2026-05-24 | 1.1.0  | Add theme application status + pending color overlay reference  |
