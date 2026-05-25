@@ -1,7 +1,7 @@
 # Clever Agent White-label Patch Ledger
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-25 (setup password validation fix)
+**Last updated:** 2026-05-25 (brain repo restore snapshots fix)
 
 This file tracks every Clever Agent white-label patch applied on top of the upstream Evo Nexus codebase.
 **After every upstream/AppSpring/Evo Nexus merge into `clever-dev`, review each row and reapply as needed.**
@@ -21,6 +21,7 @@ This file tracks every Clever Agent white-label patch applied on top of the upst
 | Dockerfile.dashboard config seed | `Dockerfile.dashboard` | `2f72871` | Add `init-config.sh` entrypoint that seeds `/workspace/config/` from `_config_defaults/` on first boot; includes `providers.example.json` so onboarding works without manual `docker exec` | Medium — Dockerfile changes may conflict on upstream bumps | Fresh container: onboarding Anthropic provider selectable without error |
 | Onboarding restore flow + header palette | `OnboardingHeader.tsx`, `StepProvider.tsx`, `StepBrainRepo.tsx`, `Setup.tsx`, `restore/RestoreSelectRepo.tsx`, `restore/RestoreSelectSnapshot.tsx`, `restore/RestoreExecute.tsx`, `restore/RestoreConfirm.tsx` | *(esta auditoria)* | Apply Clever Agent palette to restore/ sub-flow (never patched before) and fix residual navy tokens in OnboardingHeader, StepProvider, StepBrainRepo, Setup back-button | High — restore/ sub-flow created upstream after initial palette patch; may be rewritten on upstream updates | Restore flow visible: no navy cards; OnboardingHeader inactive dots `#1E3829`; zero grep matches for upstream colors |
 | Setup password validation | `dashboard/backend/app.py`, `dashboard/frontend/src/pages/Setup.tsx`, `dashboard/frontend/src/i18n/locales/pt-BR/index.ts` | *(beta.3)* | Flask `abort(400)` returned HTML; frontend showed raw HTML error. Fix: `@app.errorhandler(HTTPException)` returns JSON for `/api/` routes; `pwViolations()` mirrors backend rules; `parseApiError()` maps errors to pt-BR; real-time password checklist in UI; min chars 6→8 in i18n | High — `app.py` and `Setup.tsx` touched on most upstream releases | Setup account step: typing password shows checklist; submitting weak password shows pt-BR message; no HTML in error display |
+| Brain repo restore snapshots | `dashboard/backend/routes/brain_repo.py`, `restore/RestoreSelectRepo.tsx`, `restore/RestoreFlow.tsx`, `restore/RestoreSelectSnapshot.tsx`, i18n (3 locales) | *(beta.4)* | `/api/brain-repo/snapshots` required DB config; during onboarding restore flow config not yet persisted → 400. Fix: snapshots() now accepts `?token&owner&repo` query params for temporary mode; frontend propagates token/owner/repoName from SelectRepo through Flow to SelectSnapshot; URLSearchParams used to build correct URL | High — restore/ sub-flow may be touched upstream; brain_repo.py updated frequently | Restore flow: selecting repo → selecting snapshot works without "Brain repo not connected" error |
 
 ---
 
