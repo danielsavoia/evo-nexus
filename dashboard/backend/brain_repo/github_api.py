@@ -219,11 +219,17 @@ def list_snapshots(token: str, owner: str, repo: str) -> dict:
         # refs/tags/milestone/teste → milestone/teste
         return ref[len("refs/tags/"):] if ref.startswith("refs/tags/") else ref
 
-    if status != 200 or not isinstance(body, list):
-        log.warning("list_snapshots: status %d", status)
-        return result
+    # 404 is expected for repos that have no tags yet (new brain repos).
+    # Do NOT return early — fall through to fetch HEAD so the user can still
+    # see and restore from the latest commit.
+    # Any other non-200 status is unexpected (5xx, 403 rate-limit, etc.);
+    # log a warning but still attempt the HEAD fetch rather than bailing out.
+    if status not in (200, 404):
+        log.warning("list_snapshots: tags status %d for %s/%s", status, owner, repo)
 
-    for ref_obj in body:
+    tags = body if (status == 200 and isinstance(body, list)) else []
+
+    for ref_obj in tags:
         ref = ref_obj.get("ref", "")
         sha = ref_obj.get("object", {}).get("sha", "")
         item = {"ref": ref, "sha": sha, "label": _label(ref)}
@@ -257,7 +263,14 @@ def validate_pat_scopes(token: str) -> tuple[bool, list[str]]:
     if status != 200:
         return False, []
 
-    scopes_header = resp_headers.get("X-OAuth-Scopes", "")
+    # dict(resp.headers) from Python's http.client normalises header names to
+    # Title-Case on some builds and lower-case on others depending on the HTTP
+    # library version. Use a case-insensitive lookup so we never miss the
+    # header regardless of casing (e.g. "x-oauth-scopes" vs "X-OAuth-Scopes").
+    scopes_header = next(
+        (v for k, v in resp_headers.items() if k.lower() == "x-oauth-scopes"),
+        "",
+    )
     scopes = [s.strip() for s in scopes_header.split(",") if s.strip()]
     has_repo = "repo" in scopes
     return has_repo, scopes

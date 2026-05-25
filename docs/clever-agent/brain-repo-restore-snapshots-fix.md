@@ -2,7 +2,7 @@
 
 **Data:** 2026-05-25
 **Branch:** `clever-dev` → `clever-beta`
-**Release planejada:** `0.33.0-clever-beta.4`
+**Release planejada:** `0.33.0-clever-beta.4` (flow frontend) / `0.33.0-clever-beta.5` (github_api fix + brain manifest)
 **Executado por:** Claude (automatizado via Claude Code)
 
 ---
@@ -107,7 +107,27 @@ Nova chave `restore.selectSnapshot.notConnected` adicionada:
 
 ---
 
-## 6. Pendências (fora do escopo desta missão)
+## 6. Correções adicionais — beta.5 (github_api + brain manifest)
+
+### Bug — `validate_pat_scopes`: header X-OAuth-Scopes case-insensitive
+
+`dict(resp.headers)` do Python normaliza nomes de headers de forma inconsistente entre versões. A busca `resp_headers.get("X-OAuth-Scopes", "")` retornava string vazia quando o header era armazenado como `x-oauth-scopes` (lowercase). Corrigido para busca case-insensitive via generator expression.
+
+**Arquivo:** `dashboard/backend/brain_repo/github_api.py` — função `validate_pat_scopes`
+
+### Bug — `list_snapshots`: repo sem tags retornava lista vazia
+
+GitHub retorna 404 em `/git/refs/tags` quando o repo não possui tags. O retorno antecipado `if status != 200: return result` impedia a busca de HEAD. Corrigido: 404 é tratado como "lista de tags vazia" e o código continua para buscar HEAD.
+
+**Arquivo:** `dashboard/backend/brain_repo/github_api.py` — função `list_snapshots`
+
+### Brain manifest — `danielsavoia/evonexus-brain`
+
+O repo brain precisa conter `.evo-brain` (marker JSON) e `manifest.yaml` na raiz para ser detectado por `detect_brain_repos()` e restaurado. Arquivos criados e commitados diretamente no repo.
+
+---
+
+## 7. Pendências documentadas
 
 | Item | Descrição |
 |------|-----------|
@@ -116,7 +136,7 @@ Nova chave `restore.selectSnapshot.notConnected` adicionada:
 
 ---
 
-## 7. Escopo preservado
+## 8. Escopo preservado
 
 | Regra | Status |
 |-------|--------|
