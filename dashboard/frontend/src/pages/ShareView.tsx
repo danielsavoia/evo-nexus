@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Markdown from '../components/Markdown'
 import CodeView from '../components/workspace/CodeView'
@@ -105,7 +105,7 @@ export default function ShareView() {
             width: '100%',
             minHeight: 'calc(100vh - 40px)',
             border: 'none',
-            background: '#0C111D',
+            background: '#091410',
           }}
           title="Arquivo compartilhado"
           sandbox="allow-same-origin allow-scripts"
@@ -119,8 +119,8 @@ export default function ShareView() {
     <div
       style={{
         minHeight: '100vh',
-        background: 'var(--bg-primary, #0C111D)',
-        color: 'var(--text-primary, #D0D5DD)',
+        background: 'var(--bg-primary, #091410)',
+        color: 'var(--text-primary, #C8D5CE)',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -129,7 +129,7 @@ export default function ShareView() {
       <div style={{ flex: 1, overflow: 'auto' }}>
         {state.status === 'loading' && (
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
-            <span style={{ color: 'var(--text-muted, #667085)', fontSize: '14px' }}>Carregando...</span>
+            <span style={{ color: 'var(--text-muted, #6B8A76)', fontSize: '14px' }}>Carregando...</span>
           </div>
         )}
 
@@ -141,22 +141,22 @@ export default function ShareView() {
                   width: '56px',
                   height: '56px',
                   borderRadius: '16px',
-                  background: 'var(--bg-card, #182230)',
-                  border: '1px solid var(--border, #344054)',
+                  background: 'var(--bg-card, #122018)',
+                  border: '1px solid var(--border, #1E3829)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   margin: '0 auto 16px',
                 }}
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted, #667085)" strokeWidth="1.5">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted, #6B8A76)" strokeWidth="1.5">
                   <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary, #D0D5DD)', marginBottom: '8px' }}>
+              <p style={{ fontSize: '15px', fontWeight: 600, color: 'var(--text-primary, #C8D5CE)', marginBottom: '8px' }}>
                 Link indisponível
               </p>
-              <p style={{ fontSize: '13px', color: 'var(--text-muted, #667085)', lineHeight: 1.6 }}>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted, #6B8A76)', lineHeight: 1.6 }}>
                 {state.message}
               </p>
             </div>
@@ -222,14 +222,14 @@ export default function ShareView() {
                 width: '80px',
                 height: '80px',
                 borderRadius: '20px',
-                background: 'var(--bg-card, #182230)',
-                border: '1px solid var(--border, #344054)',
+                background: 'var(--bg-card, #122018)',
+                border: '1px solid var(--border, #1E3829)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--evo-green, #00FFA7)" strokeWidth="1.5">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--evo-green, #85F2A0)" strokeWidth="1.5">
                 <path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
               </svg>
             </div>
@@ -259,10 +259,7 @@ export default function ShareView() {
 
 function PoweredByFooter() {
   return (
-    <a
-      href="https://evonexus.evolutionfoundation.com.br/"
-      target="_blank"
-      rel="noopener noreferrer"
+    <div
       style={{
         position: 'fixed',
         bottom: 0,
@@ -277,14 +274,12 @@ function PoweredByFooter() {
         backdropFilter: 'blur(8px)',
         borderTop: '1px solid rgba(52,64,84,0.5)',
         zIndex: 100,
-        textDecoration: 'none',
-        cursor: 'pointer',
       }}
     >
-      <img src="/EVO_NEXUS.webp" alt="EvoNexus" style={{ height: '16px', width: 'auto', opacity: 0.7 }} />
-      <span style={{ fontSize: '11px', color: 'var(--text-muted, #667085)' }}>
-        Powered by EvoNexus
+      <img src="/clever-agent-icon.svg" alt="Clever Agent" style={{ height: '16px', width: 'auto', opacity: 0.7 }} />
+      <span style={{ fontSize: '11px', color: 'var(--text-muted, #6B8A76)' }}>
+        Powered by Clever Agent
       </span>
-    </a>
+    </div>
   )
 }

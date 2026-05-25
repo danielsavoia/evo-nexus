@@ -95,7 +95,8 @@ Create the directory `workspace/projects/linear-reviews/` if it does not exist.
 - **Be direct** — numbers, not narrative
 
 
-### Notification line
+### Notify via Telegram
 
-Write as the last line of your output:
-TELEGRAM_MSG: 📋 Linear Review [date] | [main result in 1 line]
+Upon completion, use the Telegram reply tool to send a short summary to the user.
+Format: emoji + routine name + main result (1-3 lines).
+If the routine had no updates, send anyway with "no updates".

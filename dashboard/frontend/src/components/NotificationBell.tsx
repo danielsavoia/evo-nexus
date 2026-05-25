@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Bell, BellRing, CheckCircle2, X } from 'lucide-react'
 import { useNotifications } from '../context/NotificationContext'
@@ -58,12 +58,12 @@ export default function NotificationBell() {
       <button
         ref={buttonRef}
         onClick={() => setOpen(v => !v)}
-        className="relative p-1.5 rounded-lg text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 transition-colors"
+        className="relative p-1.5 rounded-lg text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 transition-colors"
         title="Notifications"
       >
         <Bell size={16} />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-[#00FFA7] text-[#0C111D] text-[9px] font-bold flex items-center justify-center leading-none">
+          <span className="absolute -top-0.5 -right-0.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-[#41A650] text-[#091410] text-[9px] font-bold flex items-center justify-center leading-none">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
@@ -72,16 +72,16 @@ export default function NotificationBell() {
       {open && (
         <div
           ref={panelRef}
-          className="absolute left-full top-0 ml-2 w-[360px] max-h-[480px] flex flex-col rounded-xl border border-[#21262d] bg-[#161b22] shadow-2xl z-[100] overflow-hidden"
+          className="absolute left-full top-0 ml-2 w-[360px] max-h-[480px] flex flex-col rounded-xl border border-[#1E3829] bg-[#122018] shadow-2xl z-[100] overflow-hidden"
           style={{ minWidth: 280 }}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[#21262d]">
-            <span className="text-sm font-semibold text-[#D0D5DD]">Notifications</span>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1E3829]">
+            <span className="text-sm font-semibold text-[#C8D5CE]">Notifications</span>
             {notifications.length > 0 && (
               <button
                 onClick={dismissAll}
-                className="text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+                className="text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
               >
                 Clear all
               </button>
@@ -91,30 +91,30 @@ export default function NotificationBell() {
           {/* List */}
           <div className="flex-1 overflow-y-auto">
             {notifications.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-[#667085]">
+              <div className="px-4 py-8 text-center text-sm text-[#6B8A76]">
                 No notifications
               </div>
             ) : (
               [...notifications].reverse().map((n, idx) => (
                 <div key={n.id}>
-                  {idx > 0 && <div className="border-t border-[#21262d]/60" />}
+                  {idx > 0 && <div className="border-t border-[#1E3829]/60" />}
                   <button
                     className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors flex items-start gap-3 group"
                     onClick={() => handleEntryClick(n)}
                   >
                     {/* Unread dot */}
-                    <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${n.read ? 'bg-transparent' : 'bg-[#00FFA7]'}`} />
+                    <span className={`mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 ${n.read ? 'bg-transparent' : 'bg-[#41A650]'}`} />
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5">
                         {n.event === 'agent_awaiting'
-                          ? <BellRing size={12} className="text-[#00FFA7] shrink-0" />
-                          : <CheckCircle2 size={12} className="text-[#667085] shrink-0" />}
-                        <span className="text-sm font-semibold text-[#D0D5DD] truncate">
+                          ? <BellRing size={12} className="text-[#85F2A0] shrink-0" />
+                          : <CheckCircle2 size={12} className="text-[#6B8A76] shrink-0" />}
+                        <span className="text-sm font-semibold text-[#C8D5CE] truncate">
                           @{n.agentName}
                         </span>
                       </div>
-                      <p className="text-xs text-[#667085] mt-0.5 truncate">
+                      <p className="text-xs text-[#6B8A76] mt-0.5 truncate">
                         {n.event === 'agent_awaiting'
                           ? `${toolLabel(n)} — needs approval${inputPreview(n) ? `: ${inputPreview(n)}` : ''}`
                           : 'finished turn'}
@@ -122,9 +122,9 @@ export default function NotificationBell() {
                     </div>
 
                     <div className="flex flex-col items-end gap-1 shrink-0">
-                      <span className="text-[10px] text-[#667085]">{relativeTime(n.createdAt)}</span>
+                      <span className="text-[10px] text-[#6B8A76]">{relativeTime(n.createdAt)}</span>
                       <button
-                        className="text-[#667085] opacity-0 group-hover:opacity-100 transition-opacity hover:text-[#D0D5DD]"
+                        className="text-[#6B8A76] opacity-0 group-hover:opacity-100 transition-opacity hover:text-[#C8D5CE]"
                         onClick={(e) => { e.stopPropagation(); dismiss(n.id) }}
                         aria-label="Dismiss"
                       >

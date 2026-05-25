@@ -84,7 +84,7 @@
 
   --border: 217 24% 27%;
   --input: 217 24% 27%;
-  --ring: 159 100% 50%;
+  --ring: 135 65% 62%; /* #85F2A0 → Clever Agent mint accent */
 
   --card: 220 43% 11%;
   --card-foreground: 210 20% 98%;
@@ -93,18 +93,18 @@
   --sidebar: 220 43% 11%;
   --sidebar-foreground: 210 20% 98%;
   --sidebar-border: 217 24% 27%;
-  --sidebar-primary: 159 100% 50%;
-  --sidebar-primary-foreground: 222 42% 8%;
+  --sidebar-primary: 129 44% 45%; /* #41A650 → Clever Agent green-600 */
+  --sidebar-primary-foreground: 0 0% 97%; /* white text on green button */
   --sidebar-accent: 215 33% 14%;
   --sidebar-accent-foreground: 210 20% 98%;
-  --sidebar-ring: 159 100% 50%;
+  --sidebar-ring: 135 65% 62%; /* Clever Agent mint */
 
   --popover: 220 43% 11%;
   --popover-foreground: 210 20% 98%;
   --popover-border: 217 24% 27%;
 
-  --primary: 159 100% 50%;
-  --primary-foreground: 222 42% 8%;
+  --primary: 129 44% 45%; /* #41A650 → Clever Agent green-600 */
+  --primary-foreground: 0 0% 97%; /* white text on green button */
 
   --secondary: 279 54% 43%;
   --secondary-foreground: 210 20% 98%;
@@ -118,7 +118,7 @@
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 20% 98%;
 
-  --chart-1: 159 100% 50%;
+  --chart-1: 129 44% 45%; /* #41A650 */
   --chart-2: 279 54% 43%;
   --chart-3: 173 58% 39%;
   --chart-4: 43 74% 66%;
@@ -186,7 +186,7 @@
 
   --border: 217 24% 27%;
   --input: 217 24% 27%;
-  --ring: 159 100% 50%;
+  --ring: 135 65% 62%; /* #85F2A0 → Clever Agent mint accent */
 
   --card: 220 43% 11%;
   --card-foreground: 210 20% 98%;
@@ -195,18 +195,18 @@
   --sidebar: 220 43% 11%;
   --sidebar-foreground: 210 20% 98%;
   --sidebar-border: 217 24% 27%;
-  --sidebar-primary: 159 100% 50%;
-  --sidebar-primary-foreground: 222 42% 8%;
+  --sidebar-primary: 129 44% 45%; /* #41A650 → Clever Agent green-600 */
+  --sidebar-primary-foreground: 0 0% 97%; /* white text on green button */
   --sidebar-accent: 215 33% 14%;
   --sidebar-accent-foreground: 210 20% 98%;
-  --sidebar-ring: 159 100% 50%;
+  --sidebar-ring: 135 65% 62%; /* Clever Agent mint */
 
   --popover: 220 43% 11%;
   --popover-foreground: 210 20% 98%;
   --popover-border: 217 24% 27%;
 
-  --primary: 159 100% 50%;
-  --primary-foreground: 222 42% 8%;
+  --primary: 129 44% 45%; /* #41A650 → Clever Agent green-600 */
+  --primary-foreground: 0 0% 97%; /* white text on green button */
 
   --secondary: 279 54% 43%;
   --secondary-foreground: 210 20% 98%;
@@ -220,7 +220,7 @@
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 20% 98%;
 
-  --chart-1: 159 100% 50%;
+  --chart-1: 129 44% 45%; /* #41A650 */
   --chart-2: 279 54% 43%;
   --chart-3: 173 58% 39%;
   --chart-4: 43 74% 66%;
@@ -409,7 +409,7 @@
 }
 
 .docs-content a {
-  color: #00FFA7;
+  color: #85F2A0;
 }
 
 .docs-content a:hover {
@@ -418,7 +418,7 @@
 
 .docs-content code {
   background: #161b22;
-  color: #00FFA7;
+  color: #85F2A0;
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
   font-size: 0.875rem;
@@ -441,7 +441,7 @@
 }
 
 .docs-content blockquote {
-  border-left: 4px solid #00FFA7;
+  border-left: 4px solid #85F2A0;
   padding: 0.5rem 1rem;
   margin: 1rem 0;
   color: #8b949e;

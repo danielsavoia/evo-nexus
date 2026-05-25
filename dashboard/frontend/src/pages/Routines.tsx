@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import {
   Clock,
   ArrowUpDown,
@@ -52,8 +52,8 @@ const AGENT_META: Record<string, { icon: LucideIcon; color: string; colorMuted: 
   'sage': { icon: Compass, color: '#818CF8', colorMuted: 'rgba(129,140,248,0.12)', label: 'Sage' },
 }
 
-const SYSTEM_META = { icon: Cog, color: '#8b949e', colorMuted: 'rgba(139,148,158,0.12)', label: 'systematic' }
-const DEFAULT_AGENT_META = { icon: Bot, color: '#8b949e', colorMuted: 'rgba(139,148,158,0.12)', label: '' }
+const SYSTEM_META = { icon: Cog, color: '#C8D5CE', colorMuted: 'rgba(139,148,158,0.12)', label: 'systematic' }
+const DEFAULT_AGENT_META = { icon: Bot, color: '#C8D5CE', colorMuted: 'rgba(139,148,158,0.12)', label: '' }
 
 function getAgentMeta(agentName: string) {
   if (!agentName) return DEFAULT_AGENT_META
@@ -117,15 +117,15 @@ type RunStatus = 'idle' | 'running' | 'success' | 'error'
 // Stat Card (matches Overview design)
 function StatCard({ label, value, icon: Icon }: { label: string; value: string | number; icon: LucideIcon }) {
   return (
-    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+    <div className="group relative bg-[#122018] border border-[#1E3829] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-          <Icon size={18} className="text-[#00FFA7]" />
+        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15">
+          <Icon size={18} className="text-[#85F2A0]" />
         </div>
       </div>
-      <p className="text-3xl font-bold text-[#e6edf3] tracking-tight">{value}</p>
-      <p className="text-sm text-[#667085] mt-1">{label}</p>
+      <p className="text-3xl font-bold text-[#F7F9F8] tracking-tight">{value}</p>
+      <p className="text-sm text-[#6B8A76] mt-1">{label}</p>
     </div>
   )
 }
@@ -190,12 +190,12 @@ export default function Routines() {
 
   const SortHeader = ({ label, field, align = 'left' }: { label: string; field: SortKey; align?: 'left' | 'right' }) => (
     <th
-      className={`pb-3 pr-4 cursor-pointer hover:text-[#e6edf3] transition-colors select-none ${align === 'right' ? 'text-right' : 'text-left'}`}
+      className={`pb-3 pr-4 cursor-pointer hover:text-[#F7F9F8] transition-colors select-none ${align === 'right' ? 'text-right' : 'text-left'}`}
       onClick={() => handleSort(field)}
     >
       <span className={`inline-flex items-center gap-1 ${align === 'right' ? 'justify-end' : ''}`}>
         {label}
-        <ArrowUpDown size={11} className={sortKey === field ? 'text-[#00FFA7]' : 'opacity-40'} />
+        <ArrowUpDown size={11} className={sortKey === field ? 'text-[#85F2A0]' : 'opacity-40'} />
       </span>
     </th>
   )
@@ -204,8 +204,8 @@ export default function Routines() {
     <div className="max-w-[1400px] mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('routines.title')}</h1>
-        <p className="text-[#667085] text-sm mt-1">Automated routine performance</p>
+        <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('routines.title')}</h1>
+        <p className="text-[#6B8A76] text-sm mt-1">Automated routine performance</p>
       </div>
 
       {/* Stats Bar */}
@@ -233,42 +233,42 @@ export default function Routines() {
         </div>
       ) : routines.length === 0 ? (
         <div className="text-center py-16">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#161b22] border border-[#21262d]">
-            <Clock size={32} className="text-[#3F3F46]" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#122018] border border-[#1E3829]">
+            <Clock size={32} className="text-[#3D5445]" />
           </div>
-          <p className="text-[#667085] text-lg">No routines data</p>
-          <p className="text-[#3F3F46] text-sm mt-1">Run some routines to see metrics here</p>
+          <p className="text-[#6B8A76] text-lg">No routines data</p>
+          <p className="text-[#3D5445] text-sm mt-1">Run some routines to see metrics here</p>
         </div>
       ) : (
         <>
           {/* Cost Chart */}
-          <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 mb-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+          <div className="bg-[#122018] border border-[#1E3829] rounded-2xl p-6 mb-6 transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <Zap size={14} className="text-[#00FFA7]" />
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <Zap size={14} className="text-[#85F2A0]" />
               </div>
-              <h2 className="text-base font-semibold text-[#e6edf3]">Cost per Routine</h2>
+              <h2 className="text-base font-semibold text-[#F7F9F8]">Cost per Routine</h2>
             </div>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#21262d" />
-                <XAxis dataKey="name" tick={{ fill: '#667085', fontSize: 11 }} angle={-30} textAnchor="end" height={60} />
-                <YAxis tick={{ fill: '#667085', fontSize: 11 }} tickFormatter={(v) => `$${v.toFixed(2)}`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#1E3829" />
+                <XAxis dataKey="name" tick={{ fill: '#6B8A76', fontSize: 11 }} angle={-30} textAnchor="end" height={60} />
+                <YAxis tick={{ fill: '#6B8A76', fontSize: 11 }} tickFormatter={(v) => `$${v.toFixed(2)}`} />
                 <Tooltip
-                  contentStyle={{ background: '#161b22', border: '1px solid #21262d', borderRadius: '12px', color: '#e6edf3' }}
+                  contentStyle={{ background: '#122018', border: '1px solid #1E3829', borderRadius: '12px', color: '#F7F9F8' }}
                   formatter={(value: unknown) => [`$${Number(value).toFixed(4)}`, 'Cost']}
                 />
-                <Bar dataKey="cost" fill="#00FFA7" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="cost" fill="#85F2A0" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
           {/* Table */}
-          <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+          <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium">
+                  <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium">
                     <th className="p-4 w-8"><span className="sr-only">Status</span></th>
                     <SortHeader label="Name" field="name" />
                     <SortHeader label="Agent" field="agent" />
@@ -286,22 +286,22 @@ export default function Routines() {
                   {sorted.map((r, i) => {
                     const agentMeta = getAgentMeta(r.agent)
                     return (
-                      <tr key={i} className="border-t border-[#21262d]/60 hover:bg-[#161b22] transition-colors">
+                      <tr key={i} className="border-t border-[#1E3829]/60 hover:bg-[#122018] transition-colors">
                         {/* Status dot */}
                         <td className="p-4">
                           <span
                             className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border"
                             style={{
                               backgroundColor:
-                                r.status === 'healthy' ? 'rgba(0,255,167,0.10)' :
+                                r.status === 'healthy' ? 'rgba(133, 242, 160,0.10)' :
                                 r.status === 'warning' ? 'rgba(251,191,36,0.10)' :
                                 'rgba(239,68,68,0.10)',
                               color:
-                                r.status === 'healthy' ? '#00FFA7' :
+                                r.status === 'healthy' ? '#85F2A0' :
                                 r.status === 'warning' ? '#FBBF24' :
                                 '#EF4444',
                               borderColor:
-                                r.status === 'healthy' ? 'rgba(0,255,167,0.25)' :
+                                r.status === 'healthy' ? 'rgba(133, 242, 160,0.25)' :
                                 r.status === 'warning' ? 'rgba(251,191,36,0.25)' :
                                 'rgba(239,68,68,0.25)',
                             }}
@@ -310,7 +310,7 @@ export default function Routines() {
                               className="w-1.5 h-1.5 rounded-full"
                               style={{
                                 backgroundColor:
-                                  r.status === 'healthy' ? '#00FFA7' :
+                                  r.status === 'healthy' ? '#85F2A0' :
                                   r.status === 'warning' ? '#FBBF24' :
                                   '#EF4444',
                               }}
@@ -318,7 +318,7 @@ export default function Routines() {
                             {r.status}
                           </span>
                         </td>
-                        <td className="py-3 pr-4 text-[#e6edf3] text-[13px] font-medium">{r.name}</td>
+                        <td className="py-3 pr-4 text-[#F7F9F8] text-[13px] font-medium">{r.name}</td>
                         {/* Agent badge with color */}
                         <td className="py-3 pr-4">
                           {r.agent ? (
@@ -334,22 +334,22 @@ export default function Routines() {
                               {r.agent}
                             </span>
                           ) : (
-                            <span className="text-[#667085] text-[13px]">-</span>
+                            <span className="text-[#6B8A76] text-[13px]">-</span>
                           )}
                         </td>
-                        <td className="py-3 pr-4 text-right text-[#D0D5DD] tabular-nums text-[13px]">{r.runs}</td>
+                        <td className="py-3 pr-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{r.runs}</td>
                         <td className="py-3 pr-4 text-right">
                           <span className={`text-[13px] font-medium ${
-                            r.success_pct >= 90 ? 'text-[#00FFA7]' : r.success_pct >= 70 ? 'text-[#FBBF24]' : 'text-red-400'
+                            r.success_pct >= 90 ? 'text-[#85F2A0]' : r.success_pct >= 70 ? 'text-[#FBBF24]' : 'text-red-400'
                           }`}>
                             {r.success_pct}%
                           </span>
                         </td>
-                        <td className="py-3 pr-4 text-[#667085] text-right text-[13px]">{r.avg_time}</td>
-                        <td className="py-3 pr-4 text-[#D0D5DD] text-right tabular-nums text-[13px]">{Number(r.total_tokens || 0).toLocaleString()}</td>
-                        <td className="py-3 pr-4 text-[#D0D5DD] text-right tabular-nums text-[13px]">${Number(r.total_cost || 0).toFixed(4)}</td>
-                        <td className="py-3 pr-4 text-[#667085] text-right tabular-nums text-[13px]">${Number(r.avg_cost || 0).toFixed(4)}</td>
-                        <td className="py-3 pr-4 text-right text-[#667085] text-[13px] whitespace-nowrap">{relativeTime(r.last_run)}</td>
+                        <td className="py-3 pr-4 text-[#6B8A76] text-right text-[13px]">{r.avg_time}</td>
+                        <td className="py-3 pr-4 text-[#C8D5CE] text-right tabular-nums text-[13px]">{Number(r.total_tokens || 0).toLocaleString()}</td>
+                        <td className="py-3 pr-4 text-[#C8D5CE] text-right tabular-nums text-[13px]">${Number(r.total_cost || 0).toFixed(4)}</td>
+                        <td className="py-3 pr-4 text-[#6B8A76] text-right tabular-nums text-[13px]">${Number(r.avg_cost || 0).toFixed(4)}</td>
+                        <td className="py-3 pr-4 text-right text-[#6B8A76] text-[13px] whitespace-nowrap">{relativeTime(r.last_run)}</td>
                         <td className="py-3 pr-4 text-right">
                           {(() => {
                             const status = runStatus[r.name] || 'idle'
@@ -359,7 +359,7 @@ export default function Routines() {
                               </span>
                             )
                             if (status === 'success') return (
-                              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20">
+                              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20">
                                 <CheckCircle2 size={10} /> Started
                               </span>
                             )
@@ -382,7 +382,7 @@ export default function Routines() {
                                     setTimeout(() => setRunStatus(prev => ({ ...prev, [r.name]: 'idle' })), 5000)
                                   }
                                 }}
-                                className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 hover:bg-[#00FFA7]/20 hover:shadow-[0_0_12px_rgba(0,255,167,0.10)] transition-all"
+                                className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 hover:bg-[#41A650]/20 hover:shadow-[0_0_12px_rgba(133, 242, 160,0.10)] transition-all"
                                 title={`Run ${r.name}`}
                               >
                                 <Play size={10} /> Run
@@ -394,15 +394,15 @@ export default function Routines() {
                     )
                   })}
                   {/* Totals row */}
-                  <tr className="border-t-2 border-[#00FFA7]/20 bg-[#00FFA7]/[0.03]">
+                  <tr className="border-t-2 border-[#41A650]/20 bg-[#41A650]/[0.03]">
                     <td className="p-4" />
-                    <td className="py-3 pr-4 text-[#00FFA7] text-[13px] font-semibold">TOTAL</td>
+                    <td className="py-3 pr-4 text-[#85F2A0] text-[13px] font-semibold">TOTAL</td>
                     <td className="py-3 pr-4" />
-                    <td className="py-3 pr-4 text-[#e6edf3] text-right text-[13px] font-semibold tabular-nums">{totals.runs}</td>
+                    <td className="py-3 pr-4 text-[#F7F9F8] text-right text-[13px] font-semibold tabular-nums">{totals.runs}</td>
                     <td className="py-3 pr-4" />
                     <td className="py-3 pr-4" />
-                    <td className="py-3 pr-4 text-[#e6edf3] text-right text-[13px] font-semibold tabular-nums">{Number(totals.total_tokens || 0).toLocaleString()}</td>
-                    <td className="py-3 pr-4 text-[#e6edf3] text-right text-[13px] font-semibold tabular-nums">${Number(totals.total_cost || 0).toFixed(4)}</td>
+                    <td className="py-3 pr-4 text-[#F7F9F8] text-right text-[13px] font-semibold tabular-nums">{Number(totals.total_tokens || 0).toLocaleString()}</td>
+                    <td className="py-3 pr-4 text-[#F7F9F8] text-right text-[13px] font-semibold tabular-nums">${Number(totals.total_cost || 0).toFixed(4)}</td>
                     <td className="py-3 pr-4" />
                     <td className="py-3 pr-4" />
                     <td className="py-3 pr-4" />

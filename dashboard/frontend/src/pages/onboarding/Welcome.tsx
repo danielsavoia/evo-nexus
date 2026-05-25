@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+﻿import { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 /* ── Animated mesh background (reused from Login.tsx) ── */
@@ -43,7 +43,7 @@ function NetworkCanvas() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(0, 255, 167, 0.25)'
+        ctx.fillStyle = 'rgba(133, 242, 160, 0.25)'
         ctx.fill()
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -55,7 +55,7 @@ function NetworkCanvas() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(q.x, q.y)
-            ctx.strokeStyle = `rgba(0, 255, 167, ${0.06 * (1 - dist / maxDist)})`
+            ctx.strokeStyle = `rgba(133, 242, 160, ${0.06 * (1 - dist / maxDist)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -84,7 +84,7 @@ interface WelcomeProps {
 export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
   const { t } = useTranslation()
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif] relative">
       <NetworkCanvas />
 
       <div className="w-full max-w-[480px] relative z-10">
@@ -93,7 +93,7 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
           {/* Header */}
           <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
             <div className="flex flex-col items-center gap-3">
-              <img src="/EVO_NEXUS.webp" alt="EvoNexus" className="h-8 w-auto" />
+              <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[180px] h-auto" />
               <div className="text-center">
                 <h1 className="text-[16px] font-semibold text-[#e2e8f0]">{t('onboarding.welcome.title')}</h1>
                 <p className="text-[11px] text-[#4a5a6e] mt-1">{t('onboarding.welcome.subtitle')}</p>
@@ -103,20 +103,20 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
 
           {/* Content */}
           <div className="px-7 py-6 space-y-3">
-            <p className="text-[12px] text-[#5a6b7f] text-center mb-5">
+            <p className="text-[12px] text-[#6B8A76] text-center mb-5">
               {t('onboarding.welcome.chooseHowToStart')}
             </p>
 
             <button
               onClick={onFirstTime}
-              className="w-full py-3 px-4 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
+              className="w-full py-3 px-4 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors"
             >
               {t('onboarding.welcome.configureFromScratch')}
             </button>
 
             <button
               onClick={onRestore}
-              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
             >
               {t('onboarding.welcome.restoreBrainRepo')}
             </button>
@@ -128,10 +128,7 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
         </div>
 
         <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
-          <a href="https://evolutionfoundation.com.br" target="_blank" rel="noopener noreferrer"
-            className="hover:text-[#4a5a6e] transition-colors">
-            Evolution Foundation
-          </a>
+          Built on EvoNexus
         </p>
       </div>
     </div>

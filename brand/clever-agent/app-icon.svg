@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Clever Agent app icon">
+  <title>Clever Agent</title>
+  <!--
+    App icon: 1:1 ratio, dark rounded-square background.
+    Exportar em 1024×1024 px para app stores (iOS/Android/PWA).
+    Raio de borda: ~22% do tamanho total (iOS guideline).
+  -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#255938"/>
+      <stop offset="100%" stop-color="#19402A"/>
+    </linearGradient>
+    <linearGradient id="hexGradApp" x1="50" y1="8" x2="50" y2="92" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="50%"  stop-color="#85F2A0"/>
+      <stop offset="100%" stop-color="#41A650"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="100" height="100" rx="22" fill="url(#bgGrad)"/>
+
+  <!-- Icon contents — same geometry as icon.svg, scaled 0.76 and centered -->
+  <g id="icon" transform="translate(12,12) scale(0.76)">
+    <!-- Hex lines -->
+    <g stroke="url(#hexGradApp)" stroke-width="3" stroke-linecap="round" fill="none">
+      <line x1="50" y1="12" x2="82" y2="31"/>
+      <line x1="82" y1="31" x2="82" y2="69"/>
+      <line x1="82" y1="69" x2="50" y2="88"/>
+      <line x1="50" y1="88" x2="18" y2="69"/>
+      <line x1="18" y1="69" x2="18" y2="31"/>
+      <line x1="18" y1="31" x2="50" y2="12"/>
+    </g>
+    <!-- Nodes: top white, lower-left mint, lower-right yellow -->
+    <circle cx="50" cy="12" r="5.5" fill="#FFFFFF"/>
+    <circle cx="18" cy="69" r="5.5" fill="#85F2A0"/>
+    <circle cx="82" cy="69" r="5.5" fill="#F2CB05"/>
+    <!-- Chat bubble — medium green for contrast on dark bg -->
+    <path d="M38,35 H62 Q68,35 68,41 V55 Q68,61 62,61 H52 L47,68 L44,61 H38 Q32,61 32,55 V41 Q32,35 38,35 Z"
+          fill="#41A650"/>
+    <!-- Eyes -->
+    <circle cx="43" cy="48" r="3.5" fill="#FFFFFF"/>
+    <circle cx="57" cy="48" r="3.5" fill="#FFFFFF"/>
+  </g>
+</svg>

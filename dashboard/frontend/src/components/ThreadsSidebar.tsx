@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+﻿import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, ChevronRight, ChevronDown, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { api } from '../lib/api'
@@ -57,12 +57,12 @@ function ThreadItem({
       className={`
         w-full text-left px-3 py-2 flex flex-col gap-0.5 transition-colors
         ${isActive
-          ? 'border-l-2 border-[#00FFA7] bg-[#00FFA7]/5'
+          ? 'border-l-2 border-[#41A650] bg-[#41A650]/5'
           : 'border-l-2 border-transparent hover:bg-white/[0.03]'}
       `}
     >
       <span
-        className="text-[12px] leading-[1.35] text-[#e6edf3] overflow-hidden whitespace-nowrap text-ellipsis w-full"
+        className="text-[12px] leading-[1.35] text-[#F7F9F8] overflow-hidden whitespace-nowrap text-ellipsis w-full"
         style={{ display: 'block' }}
         title={thread.title}
       >
@@ -100,7 +100,7 @@ function AgentGroup({
         className="w-full flex items-center gap-2 px-3 py-1.5 hover:bg-white/[0.03] transition-colors group"
       >
         <AgentIcon agent={group.agent} size={20} />
-        <span className="flex-1 text-left text-[11px] font-medium text-[#8b949e] group-hover:text-[#e6edf3] transition-colors truncate capitalize">
+        <span className="flex-1 text-left text-[11px] font-medium text-[#C8D5CE] group-hover:text-[#F7F9F8] transition-colors truncate capitalize">
           {label}
         </span>
         <span className="text-[10px] text-white/30 tabular-nums mr-1">
@@ -161,12 +161,12 @@ function CollapsedAgentList({
             title={getAgentMeta(group.agent).label}
             className={`
               relative rounded p-0.5
-              ${hasActive ? 'ring-1 ring-[#00FFA7]/50' : ''}
+              ${hasActive ? 'ring-1 ring-[#85F2A0]/50' : ''}
             `}
           >
             <AgentIcon agent={group.agent} size={28} />
             <span
-              className="absolute -top-1 -right-1 text-[9px] tabular-nums bg-[#161b22] border border-[#30363d] text-[#8b949e] rounded-full w-4 h-4 flex items-center justify-center"
+              className="absolute -top-1 -right-1 text-[9px] tabular-nums bg-[#122018] border border-[#2E5040] text-[#C8D5CE] rounded-full w-4 h-4 flex items-center justify-center"
             >
               {group.threads.length}
             </span>
@@ -252,15 +252,15 @@ export default function ThreadsSidebar({
   if (collapsed) {
     return (
       <div
-        className={`${asDrawer ? 'flex' : 'hidden md:flex'} flex-col shrink-0 border-r border-[#21262d] bg-[#0a0e14]`}
+        className={`${asDrawer ? 'flex' : 'hidden md:flex'} flex-col shrink-0 border-r border-[#1E3829] bg-[#0a0e14]`}
         style={asDrawer ? undefined : { width: 48, transition: 'width 200ms ease-out' }}
       >
         {/* Toggle */}
-        <div className="flex items-center justify-center h-10 border-b border-[#21262d]">
+        <div className="flex items-center justify-center h-10 border-b border-[#1E3829]">
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="p-1.5 text-[#667085] hover:text-[#e6edf3] transition-colors"
+            className="p-1.5 text-[#6B8A76] hover:text-[#F7F9F8] transition-colors"
             aria-label="Expand sidebar"
           >
             <PanelLeftOpen size={14} />
@@ -280,12 +280,12 @@ export default function ThreadsSidebar({
   // ── Expanded mode ──
   return (
     <div
-      className={`${asDrawer ? 'flex' : 'hidden md:flex'} flex-col shrink-0 border-r border-[#21262d] bg-[#0a0e14]`}
+      className={`${asDrawer ? 'flex' : 'hidden md:flex'} flex-col shrink-0 border-r border-[#1E3829] bg-[#0a0e14]`}
       style={asDrawer ? undefined : { width: 280, transition: 'width 200ms ease-out' }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-3 h-10 border-b border-[#21262d] shrink-0">
-        <span className="text-[11px] font-semibold text-[#8b949e] uppercase tracking-wider">
+      <div className="flex items-center justify-between px-3 h-10 border-b border-[#1E3829] shrink-0">
+        <span className="text-[11px] font-semibold text-[#C8D5CE] uppercase tracking-wider">
           Threads
         </span>
         <div className="flex items-center gap-1">
@@ -293,7 +293,7 @@ export default function ThreadsSidebar({
             type="button"
             disabled
             aria-label="New thread"
-            className="p-1 text-[#667085] opacity-40 cursor-not-allowed"
+            className="p-1 text-[#6B8A76] opacity-40 cursor-not-allowed"
             title="Nova thread (em breve)"
           >
             <Plus size={13} />
@@ -301,7 +301,7 @@ export default function ThreadsSidebar({
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="p-1 text-[#667085] hover:text-[#e6edf3] transition-colors"
+            className="p-1 text-[#6B8A76] hover:text-[#F7F9F8] transition-colors"
             aria-label="Collapse sidebar"
           >
             <PanelLeftClose size={13} />
@@ -362,7 +362,7 @@ function ArchivedSection({
   const total = groups.reduce((acc, g) => acc + g.threads.length, 0)
 
   return (
-    <div className="mt-2 border-t border-[#21262d]">
+    <div className="mt-2 border-t border-[#1E3829]">
       <button
         type="button"
         onClick={() => setExpanded(e => !e)}

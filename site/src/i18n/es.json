@@ -8,7 +8,7 @@
     "badge": "v{{version}} ya disponible",
     "title": "Tu equipo de IA,",
     "titleHighlight": "ya armado.",
-    "subtitle": "38 agentes que recuerdan, agendan y cumplen metas. De finanzas a ingeniería — todo conectado. Open source. Un comando.",
+    "subtitle": "38 agentes que recuerdan, agendan y cumplen metas. De finanzas a ingeniería — todo conectado.",
     "cta": "Comienza Ahora, es gratis",
     "viewGithub": "Ver en GitHub",
     "discord": "Únete a 17,000+ devs en Discord",
@@ -24,7 +24,7 @@
     "sectionSubtitle": "No es un menú de features. Es una estructura que sigue trabajando cuando cierras el laptop.",
     "beat1": {
       "title": "Define la meta una vez",
-      "body": "EvoNexus organiza el trabajo en cuatro niveles: Misión → Proyecto → Meta → Tarea. Defines qué es éxito — \"100 clientes pagantes para el Q4\" — y el sistema lo rastrea automáticamente. Las metas avanzan cuando las tareas se marcan como hechas. Los agentes reciben el contexto completo antes de actuar.",
+      "body": "Clever Agent organiza el trabajo en cuatro niveles: Misión → Proyecto → Meta → Tarea. Defines qué es éxito — \"100 clientes pagantes para el Q4\" — y el sistema lo rastrea automáticamente. Las metas avanzan cuando las tareas se marcan como hechas. Los agentes reciben el contexto completo antes de actuar.",
       "example": "Misión: MRR $1M Q4 2026 → Proyecto: Evo AI → Meta: 100 clientes pagantes para 30/jun (progreso: 23/100, 45 días restantes) → Tareas asignadas a los agentes."
     },
     "beat2": {
@@ -34,7 +34,7 @@
     },
     "beat3": {
       "title": "Documentos que los agentes realmente leen",
-      "body": "Sube PDFs, documentos internos, SOPs, transcripciones — los agentes los consultan verbatim. EvoNexus viene con un sistema RAG híbrido (búsqueda por palabra clave + semántica) en tu propio Postgres. Tú traes los datos, los agentes traen el contexto. Sin alucinaciones sobre lo que dicen tus políticas — citan la fuente.",
+      "body": "Sube PDFs, documentos internos, SOPs, transcripciones — los agentes los consultan verbatim. Clever Agent viene con un sistema RAG híbrido (búsqueda por palabra clave + semántica) en tu propio Postgres. Tú traes los datos, los agentes traen el contexto. Sin alucinaciones sobre lo que dicen tus políticas — citan la fuente.",
       "example": "Lex revisa un nuevo contrato de proveedor. Consulta tu base de conocimiento legal, encuentra la cláusula que contradice tu template estándar de NDA y la señala con el párrafo exacto de la fuente. Revisas el diff, no el documento entero."
     },
     "beat4": {
@@ -111,7 +111,7 @@
   "knowledge": {
     "sectionTitle": "Agentes que sí leen tus documentos",
     "sectionSubtitle": "Sube tus documentos una vez. Cada agente los consulta en contexto — verbatim, con citas.",
-    "body": "EvoNexus viene con un sistema RAG híbrido: búsqueda por palabra clave + embeddings semánticos (MPNet local, OpenAI o Gemini con MRL 768/1536/3072). Tu conocimiento vive en tu propio Postgres. Los agentes consultan en tiempo de ejecución — sin alucinaciones sobre lo que dicen tus SOPs, sin respuestas genéricas cuando existe una fuente. Citan el párrafo, no su mejor suposición.",
+    "body": "Clever Agent viene con un sistema RAG híbrido: búsqueda por palabra clave + embeddings semánticos (MPNet local, OpenAI o Gemini con MRL 768/1536/3072). Tu conocimiento vive en tu propio Postgres. Los agentes consultan en tiempo de ejecución — sin alucinaciones sobre lo que dicen tus SOPs, sin respuestas genéricas cuando existe una fuente. Citan el párrafo, no su mejor suposición.",
     "bullet1": "Soporta PDF, DOCX, PPTX, XLSX, HTML, EPUB y texto plano. Ingesta una vez por la UI de Knowledge o CLI.",
     "bullet2": "Recuperación híbrida: búsqueda por palabra clave para precisión, búsqueda semántica para cobertura. Los dos, no uno u otro.",
     "bullet3": "Trae tu propio Postgres — Supabase, Neon, RDS o on-prem. Tus datos se quedan en tu infraestructura."
@@ -143,11 +143,11 @@
     "label": "Conecta con todo lo que usas"
   },
   "banner": {
-    "text": "Un proyecto open source de Evolution Foundation.",
+    "text": "Clever Agent — IA orquestada para operaciones inteligentes.",
     "cta": "Saber más"
   },
   "footer": {
-    "tagline": "Un proyecto de Evolution Foundation.",
+    "tagline": "Construido sobre EvoNexus · Evolution Foundation",
     "links": "Links",
     "documentation": "Documentación",
     "contributing": "Contribuir",

@@ -1,11 +1,11 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react'
+﻿import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { AlertTriangle, RefreshCw } from 'lucide-react'
 
 export function FullPageLoader({ label = 'Loading...' }: { label?: string }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0C111D] px-6">
-      <div className="flex items-center gap-3 rounded-full border border-[#21262d] bg-[#0f1520] px-4 py-3 text-sm text-[#D0D5DD] shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#00FFA7]/25 border-t-[#00FFA7]" />
+    <div className="flex min-h-screen items-center justify-center bg-[#091410] px-6">
+      <div className="flex items-center gap-3 rounded-full border border-[#1E3829] bg-[#0f1520] px-4 py-3 text-sm text-[#C8D5CE] shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#41A650]/25 border-t-[#41A650]" />
         <span>{label}</span>
       </div>
     </div>
@@ -15,8 +15,8 @@ export function FullPageLoader({ label = 'Loading...' }: { label?: string }) {
 export function SectionLoader({ label = 'Loading section...' }: { label?: string }) {
   return (
     <div className="flex min-h-[40vh] items-center justify-center px-6 py-12">
-      <div className="flex items-center gap-3 rounded-2xl border border-[#21262d] bg-[#0f1520] px-4 py-3 text-sm text-[#D0D5DD] shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#00FFA7]/25 border-t-[#00FFA7]" />
+      <div className="flex items-center gap-3 rounded-2xl border border-[#1E3829] bg-[#0f1520] px-4 py-3 text-sm text-[#C8D5CE] shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
+        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#41A650]/25 border-t-[#41A650]" />
         <span>{label}</span>
       </div>
     </div>
@@ -62,14 +62,14 @@ export class SectionBoundary extends Component<SectionBoundaryProps, SectionBoun
                 <h2 className="text-base font-semibold text-[#F9FAFB]">
                   Unable to load {this.props.sectionName}
                 </h2>
-                <p className="text-sm text-[#D0D5DD]">
+                <p className="text-sm text-[#C8D5CE]">
                   An unexpected error interrupted this section.
                 </p>
               </div>
             </div>
 
-            <div className="mt-4 rounded-2xl border border-[#21262d] bg-[#0C111D] p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#667085]">
+            <div className="mt-4 rounded-2xl border border-[#1E3829] bg-[#091410] p-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6B8A76]">
                 Error details
               </p>
               <p className="mt-2 text-sm text-[#FCA5A5] break-words">
@@ -81,7 +81,7 @@ export class SectionBoundary extends Component<SectionBoundaryProps, SectionBoun
               <button
                 type="button"
                 onClick={this.handleRetry}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#344054] bg-[#161b22] px-4 py-2 text-sm font-medium text-[#e6edf3] transition-colors hover:border-[#00FFA7]/50 hover:text-white"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#1E3829] bg-[#122018] px-4 py-2 text-sm font-medium text-[#F7F9F8] transition-colors hover:border-[#41A650]/50 hover:text-white"
               >
                 <RefreshCw size={14} />
                 Try again
@@ -89,7 +89,7 @@ export class SectionBoundary extends Component<SectionBoundaryProps, SectionBoun
               <button
                 type="button"
                 onClick={() => window.location.reload()}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#00FFA7]/30 bg-[#00FFA7]/10 px-4 py-2 text-sm font-medium text-[#00FFA7] transition-colors hover:bg-[#00FFA7]/15"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#41A650]/30 bg-[#41A650]/10 px-4 py-2 text-sm font-medium text-[#85F2A0] transition-colors hover:bg-[#41A650]/15"
               >
                 Reload app
               </button>

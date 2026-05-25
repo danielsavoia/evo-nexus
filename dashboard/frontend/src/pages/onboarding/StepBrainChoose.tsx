@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Plus, GitBranch, Loader2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { api } from '../../lib/api'
 import { useAuth } from '../../context/AuthContext'
 import OnboardingHeader from './OnboardingHeader'
 
-const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20"
+const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
 
 interface Repo {
   name: string
@@ -68,7 +68,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
   }
 
   return (
-    <div className="min-h-screen bg-[#080c14] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
+    <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
         <OnboardingHeader step="step2bOf3" filled={2} />
 
@@ -91,28 +91,28 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                 onClick={() => setMode('create')}
                 className={`flex items-center gap-2 p-3 rounded-lg border text-left transition-all ${
                   mode === 'create'
-                    ? 'border-[#00FFA7]/60 bg-[#00FFA7]/8'
+                    ? 'border-[#41A650]/60 bg-[#41A650]/8'
                     : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
                 }`}
               >
-                <Plus size={14} className={mode === 'create' ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'} />
+                <Plus size={14} className={mode === 'create' ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
                 <div>
                   <p className="text-[12px] font-semibold text-[#e2e8f0]">{t('onboarding.choose.createNew')}</p>
-                  <p className="text-[10px] text-[#5a6b7f]">{t('onboarding.choose.createNewDesc')}</p>
+                  <p className="text-[10px] text-[#6B8A76]">{t('onboarding.choose.createNewDesc')}</p>
                 </div>
               </button>
               <button
                 onClick={() => setMode('existing')}
                 className={`flex items-center gap-2 p-3 rounded-lg border text-left transition-all ${
                   mode === 'existing'
-                    ? 'border-[#00FFA7]/60 bg-[#00FFA7]/8'
+                    ? 'border-[#41A650]/60 bg-[#41A650]/8'
                     : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
                 }`}
               >
-                <GitBranch size={14} className={mode === 'existing' ? 'text-[#00FFA7]' : 'text-[#5a6b7f]'} />
+                <GitBranch size={14} className={mode === 'existing' ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
                 <div>
                   <p className="text-[12px] font-semibold text-[#e2e8f0]">{t('onboarding.choose.useExisting')}</p>
-                  <p className="text-[10px] text-[#5a6b7f]">{t('onboarding.choose.useExistingDesc')}</p>
+                  <p className="text-[10px] text-[#6B8A76]">{t('onboarding.choose.useExistingDesc')}</p>
                 </div>
               </button>
             </div>
@@ -120,7 +120,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
             {/* Create mode */}
             {mode === 'create' && (
               <div>
-                <label className="block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase">
+                <label className="block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase">
                   {t('onboarding.choose.repoName')}
                 </label>
                 <input
@@ -131,7 +131,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                   placeholder="evo-brain-workspace"
                   autoFocus
                 />
-                <p className="text-[10px] text-[#5a6b7f] mt-1.5">
+                <p className="text-[10px] text-[#6B8A76] mt-1.5">
                   {t('onboarding.choose.repoNameHint')}
                 </p>
               </div>
@@ -140,16 +140,16 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
             {/* Existing mode */}
             {mode === 'existing' && (
               <div>
-                <label className="block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase">
+                <label className="block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase">
                   {t('onboarding.choose.detectedRepos')}
                 </label>
                 {loadingRepos ? (
                   <div className="flex items-center justify-center py-6">
-                    <Loader2 size={18} className="text-[#5a6b7f] animate-spin" />
+                    <Loader2 size={18} className="text-[#6B8A76] animate-spin" />
                   </div>
                 ) : repos.length === 0 ? (
                   <div className="py-4 text-center">
-                    <p className="text-[12px] text-[#5a6b7f]">{t('onboarding.choose.noReposFound')}</p>
+                    <p className="text-[12px] text-[#6B8A76]">{t('onboarding.choose.noReposFound')}</p>
                     <p className="text-[11px] text-[#2d3d4f] mt-1">{t('onboarding.choose.noReposHint')}</p>
                   </div>
                 ) : (
@@ -160,14 +160,14 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                         onClick={() => setSelectedRepo(repo)}
                         className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
                           selectedRepo?.full_name === repo.full_name
-                            ? 'border-[#00FFA7]/60 bg-[#00FFA7]/8'
+                            ? 'border-[#41A650]/60 bg-[#41A650]/8'
                             : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
                         }`}
                       >
-                        <GitBranch size={13} className="text-[#5a6b7f] flex-shrink-0" />
+                        <GitBranch size={13} className="text-[#6B8A76] flex-shrink-0" />
                         <div className="min-w-0">
                           <p className="text-[12px] font-medium text-[#e2e8f0] truncate">{repo.name}</p>
-                          <p className="text-[10px] text-[#5a6b7f] truncate">{repo.full_name}</p>
+                          <p className="text-[10px] text-[#6B8A76] truncate">{repo.full_name}</p>
                         </div>
                       </button>
                     ))}
@@ -179,14 +179,14 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#5a6b7f] hover:border-[#00FFA7]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving || (mode === 'existing' && !selectedRepo)}
-                className="flex-1 py-3 rounded-lg bg-[#00FFA7] text-[#080c14] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
+                className="flex-1 py-3 rounded-lg bg-[#41A650] text-[#07130D] hover:bg-[#00e69a] text-sm font-semibold transition-colors disabled:opacity-40"
               >
                 {saving ? t('onboarding.choose.connecting') : t('onboarding.next')}
               </button>

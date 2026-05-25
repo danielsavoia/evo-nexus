@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clever Agent — Brand Preview</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-900: #19402A;
+      --green-800: #255938;
+      --green-600: #41A650;
+      --green-300: #85F2A0;
+      --yellow-500: #F2CB05;
+      --bg-light: #F7F9F8;
+      --font: 'DM Sans', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: #EBEBEB;
+      color: #111;
+      padding: 40px 24px 80px;
+    }
+
+    h1 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 16px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    /* ---- Cards ---- */
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .card {
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px 20px;
+      gap: 14px;
+      min-width: 180px;
+    }
+
+    .card.light { background: #FFFFFF; border: 1px solid #E0E0E0; }
+    .card.neutral { background: var(--bg-light); border: 1px solid #D8DCD9; }
+    .card.dark  { background: var(--green-800); }
+    .card.darker { background: var(--green-900); }
+    .card.black { background: #111111; }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .card.light .card-label,
+    .card.neutral .card-label { color: #AAA; }
+    .card.dark .card-label,
+    .card.darker .card-label,
+    .card.black .card-label { color: rgba(255,255,255,.35); }
+
+    /* ---- Logo section ---- */
+    .logo-card {
+      border-radius: 12px;
+      padding: 40px 48px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      flex: 1 1 calc(50% - 8px);
+      min-width: 280px;
+    }
+    .logo-card.light  { background: #FFFFFF; border: 1px solid #E0E0E0; }
+    .logo-card.neutral{ background: var(--bg-light); border: 1px solid #D8DCD9; }
+    .logo-card.dark   { background: var(--green-800); }
+    .logo-card.darker { background: var(--green-900); }
+    .logo-card.black  { background: #111111; }
+    .logo-card .card-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .logo-card.light .card-label,
+    .logo-card.neutral .card-label { color: #AAA; }
+    .logo-card.dark .card-label,
+    .logo-card.darker .card-label,
+    .logo-card.black .card-label { color: rgba(255,255,255,.35); }
+
+    /* ---- Sizes section ---- */
+    .sizes-card {
+      background: #FFFFFF;
+      border: 1px solid #E0E0E0;
+      border-radius: 12px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: flex-end;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .size-item span {
+      font-size: 11px;
+      color: #AAA;
+      font-weight: 500;
+    }
+
+    /* ---- Color Palette ---- */
+    .palette {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .swatch-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,.08);
+    }
+    .swatch-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: #555;
+      letter-spacing: .04em;
+    }
+    .swatch-hex {
+      font-size: 10px;
+      color: #999;
+      font-family: monospace;
+    }
+
+    /* ---- Favicon row ---- */
+    .favicon-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .fav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .fav-item span { font-size: 11px; color: #AAA; font-weight: 500; }
+
+    img.svg-asset { display: block; }
+  </style>
+</head>
+<body>
+
+  <h1>Clever Agent — Brand Preview</h1>
+
+  <!-- LOGO HORIZONTAL -->
+  <div class="section">
+    <h2>Logo Horizontal</h2>
+    <div class="cards" style="flex-wrap:wrap;">
+      <div class="logo-card light">
+        <img src="logo-horizontal.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Padrão — fundo claro</span>
+      </div>
+      <div class="logo-card neutral">
+        <img src="logo-horizontal-light.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Light — fundo neutro #F7F9F8</span>
+      </div>
+      <div class="logo-card dark">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo #255938</span>
+      </div>
+      <div class="logo-card darker">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo #19402A</span>
+      </div>
+      <div class="logo-card black">
+        <img src="logo-horizontal-dark.svg" width="420" class="svg-asset"/>
+        <span class="card-label">Dark — fundo preto</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÍCONE ISOLADO -->
+  <div class="section">
+    <h2>Ícone Isolado</h2>
+    <div class="cards">
+      <div class="card light">
+        <img src="icon.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Padrão</span>
+      </div>
+      <div class="card neutral">
+        <img src="icon-light.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Light bg</span>
+      </div>
+      <div class="card dark">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Dark #255938</span>
+      </div>
+      <div class="card darker">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Dark #19402A</span>
+      </div>
+      <div class="card black">
+        <img src="icon-dark.svg" width="80" class="svg-asset"/>
+        <span class="card-label">Preto</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP ICON -->
+  <div class="section">
+    <h2>App Icon</h2>
+    <div class="cards">
+      <div class="card light">
+        <img src="app-icon.svg" width="80" class="svg-asset" style="border-radius:18px;"/>
+        <span class="card-label">80 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="60" class="svg-asset" style="border-radius:14px;"/>
+        <span class="card-label">60 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="48" class="svg-asset" style="border-radius:11px;"/>
+        <span class="card-label">48 px</span>
+      </div>
+      <div class="card light">
+        <img src="app-icon.svg" width="32" class="svg-asset" style="border-radius:7px;"/>
+        <span class="card-label">32 px</span>
+      </div>
+      <div class="card dark">
+        <img src="app-icon.svg" width="80" class="svg-asset" style="border-radius:18px;"/>
+        <span class="card-label">Sobre dark</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAVICON -->
+  <div class="section">
+    <h2>Favicon</h2>
+    <div class="cards">
+      <div class="card light">
+        <div class="favicon-row">
+          <div class="fav-item">
+            <img src="favicon.svg" width="32" class="svg-asset"/>
+            <span>32 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="24" class="svg-asset"/>
+            <span>24 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="16" class="svg-asset"/>
+            <span>16 px</span>
+          </div>
+        </div>
+        <span class="card-label">Fundo claro</span>
+      </div>
+      <div class="card dark">
+        <div class="favicon-row">
+          <div class="fav-item">
+            <img src="favicon.svg" width="32" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">32 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="24" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">24 px</span>
+          </div>
+          <div class="fav-item">
+            <img src="favicon.svg" width="16" class="svg-asset"/>
+            <span style="color:rgba(255,255,255,.4)">16 px</span>
+          </div>
+        </div>
+        <span class="card-label">Fundo dark</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESCALA DO ÍCONE -->
+  <div class="section">
+    <h2>Escala do Ícone</h2>
+    <div class="sizes-card">
+      <div class="size-item">
+        <img src="icon.svg" width="120" class="svg-asset"/>
+        <span>120 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="80" class="svg-asset"/>
+        <span>80 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="48" class="svg-asset"/>
+        <span>48 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="32" class="svg-asset"/>
+        <span>32 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="24" class="svg-asset"/>
+        <span>24 px</span>
+      </div>
+      <div class="size-item">
+        <img src="icon.svg" width="16" class="svg-asset"/>
+        <span>16 px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PALETA -->
+  <div class="section">
+    <h2>Paleta de Cores</h2>
+    <div class="card light" style="align-items:flex-start; padding:28px 32px;">
+      <div class="palette">
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#19402A;"></div>
+          <span class="swatch-name">Green 900</span>
+          <span class="swatch-hex">#19402A</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#255938;"></div>
+          <span class="swatch-name">Green 800</span>
+          <span class="swatch-hex">#255938</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#41A650;"></div>
+          <span class="swatch-name">Green 600</span>
+          <span class="swatch-hex">#41A650</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#85F2A0;"></div>
+          <span class="swatch-name">Green 300</span>
+          <span class="swatch-hex">#85F2A0</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#F2CB05;"></div>
+          <span class="swatch-name">Yellow 500</span>
+          <span class="swatch-hex">#F2CB05</span>
+        </div>
+        <div class="swatch">
+          <div class="swatch-circle" style="background:#F7F9F8; border:1px solid #D8DCD9;"></div>
+          <span class="swatch-name">BG Light</span>
+          <span class="swatch-hex">#F7F9F8</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -61,7 +61,7 @@ const AREA_COLORS: Record<string, { bg: string; text: string; border: string }> 
 
 function getAreaStyle(area: string) {
   const key = Object.keys(AREA_COLORS).find((k) => area.toLowerCase().includes(k.toLowerCase()))
-  return key ? AREA_COLORS[key] : { bg: 'rgba(0,255,167,0.08)', text: '#00FFA7', border: 'rgba(0,255,167,0.20)' }
+  return key ? AREA_COLORS[key] : { bg: 'rgba(133, 242, 160,0.08)', text: '#85F2A0', border: 'rgba(133, 242, 160,0.20)' }
 }
 
 // --- Metric card icon mapping ---
@@ -127,15 +127,15 @@ function StatCard({
   icon: LucideIcon
 }) {
   const deltaColor = {
-    up: 'text-[#00FFA7]',
+    up: 'text-[#85F2A0]',
     down: 'text-red-400',
-    neutral: 'text-[#667085]',
+    neutral: 'text-[#6B8A76]',
   }[deltaType]
 
   const deltaBg = {
-    up: 'bg-[#00FFA7]/10',
+    up: 'bg-[#41A650]/10',
     down: 'bg-red-400/10',
-    neutral: 'bg-[#667085]/10',
+    neutral: 'bg-[#6B8A76]/10',
   }[deltaType]
 
   const DeltaIcon = {
@@ -145,13 +145,13 @@ function StatCard({
   }[deltaType]
 
   return (
-    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]">
+    <div className="group relative bg-[#122018] border border-[#1E3829] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
       {/* Subtle top gradient accent */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
 
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-          <Icon size={18} className="text-[#00FFA7]" />
+        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15">
+          <Icon size={18} className="text-[#85F2A0]" />
         </div>
         {delta && (
           <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${deltaColor} ${deltaBg}`}>
@@ -161,8 +161,8 @@ function StatCard({
         )}
       </div>
 
-      <p className="text-3xl font-bold text-[#e6edf3] tracking-tight">{value}</p>
-      <p className="text-sm text-[#667085] mt-1">{label}</p>
+      <p className="text-3xl font-bold text-[#F7F9F8] tracking-tight">{value}</p>
+      <p className="text-sm text-[#6B8A76] mt-1">{label}</p>
     </div>
   )
 }
@@ -181,18 +181,18 @@ function ActiveAgentsBar({ agents, loading }: { agents: ActiveAgent[]; loading: 
 
   return (
     <div className="flex items-center gap-3 mb-8 flex-wrap">
-      <span className="text-xs font-medium text-[#667085] uppercase tracking-wider mr-1">Active Agents</span>
+      <span className="text-xs font-medium uppercase tracking-wider mr-1" style={{ color: 'rgba(242,203,5,0.7)' }}>Active Agents</span>
       {agents.length === 0 ? (
-        <span className="text-xs text-[#667085]/60 italic">No agents running</span>
+        <span className="text-xs text-[#6B8A76]/60 italic">No agents running</span>
       ) : (
         agents.map((agent, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-[#161b22] border border-[#21262d] text-[#e6edf3]"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-[#122018] border border-[#1E3829] text-[#F7F9F8]"
           >
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FFA7] opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FFA7]" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#41A650] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#41A650]" />
             </span>
             {agent.name}
           </span>
@@ -248,7 +248,7 @@ export default function Overview() {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <p className="text-red-400 text-lg mb-2">Failed to load overview</p>
-          <p className="text-[#667085] text-sm">{error}</p>
+          <p className="text-[#6B8A76] text-sm">{error}</p>
         </div>
       </div>
     )
@@ -261,8 +261,8 @@ export default function Overview() {
     <div className="max-w-[1400px] mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('overview.title')}</h1>
-        <p className="text-[#667085] text-sm mt-1">{t('overview.subtitle')}</p>
+        <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('overview.title')}</h1>
+        <p className="text-[#6B8A76] text-sm mt-1">{t('overview.subtitle')}</p>
       </div>
 
       {/* Stat Cards */}
@@ -294,15 +294,15 @@ export default function Overview() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Recent Reports */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl p-6 transition-all duration-300 hover:border-[#1E3829] hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <FileText size={14} className="text-[#00FFA7]" />
+            <h2 className="text-base font-semibold text-[#F7F9F8] flex items-center gap-2.5">
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <FileText size={14} className="text-[#85F2A0]" />
               </div>
               Recent Reports
             </h2>
-            <Link to="/workspace" className="text-xs font-medium text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1">
+            <Link to="/workspace" className="text-xs font-medium text-[#6B8A76] hover:text-[#85F2A0] transition-colors flex items-center gap-1">
               View all <ArrowRight size={12} />
             </Link>
           </div>
@@ -323,11 +323,11 @@ export default function Overview() {
                     className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.03] transition-all group"
                   >
                     <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04] shrink-0">
-                      <FileText size={14} className="text-[#667085] group-hover:text-[#e6edf3] transition-colors" />
+                      <FileText size={14} className="text-[#6B8A76] group-hover:text-[#F7F9F8] transition-colors" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-[#e6edf3] group-hover:text-white transition-colors truncate">{r.title}</p>
-                      <p className="text-xs text-[#667085] mt-0.5">{relativeTime(r.date)}</p>
+                      <p className="text-sm text-[#F7F9F8] group-hover:text-white transition-colors truncate">{r.title}</p>
+                      <p className="text-xs text-[#6B8A76] mt-0.5">{relativeTime(r.date)}</p>
                     </div>
                     <span
                       className="text-[10px] font-medium px-2 py-0.5 rounded-full border shrink-0"
@@ -345,21 +345,21 @@ export default function Overview() {
             </div>
           ) : (
             <div className="flex items-center justify-center h-32">
-              <p className="text-[#667085] text-sm">No recent reports</p>
+              <p className="text-[#6B8A76] text-sm">No recent reports</p>
             </div>
           )}
         </div>
 
         {/* Routines */}
-        <div className="bg-[#161b22] border border-[#21262d] rounded-2xl p-6 transition-all duration-300 hover:border-[#21262d] hover:shadow-[0_0_32px_rgba(0,255,167,0.04)]">
+        <div className="bg-[#122018] border border-[#1E3829] rounded-2xl p-6 transition-all duration-300 hover:border-[#1E3829] hover:shadow-[0_0_32px_rgba(133, 242, 160,0.04)]">
           <div className="flex items-center justify-between mb-5">
-            <h2 className="text-base font-semibold text-[#e6edf3] flex items-center gap-2.5">
-              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-                <Clock size={14} className="text-[#00FFA7]" />
+            <h2 className="text-base font-semibold text-[#F7F9F8] flex items-center gap-2.5">
+              <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/8 border border-[#41A650]/15">
+                <Clock size={14} className="text-[#85F2A0]" />
               </div>
               Routines
             </h2>
-            <Link to="/activity" className="text-xs font-medium text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1">
+            <Link to="/activity" className="text-xs font-medium text-[#6B8A76] hover:text-[#85F2A0] transition-colors flex items-center gap-1">
               View all <ArrowRight size={12} />
             </Link>
           </div>
@@ -374,7 +374,7 @@ export default function Overview() {
             <div className="overflow-x-auto -mx-6 px-6">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium">
+                  <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium">
                     <th className="text-left pb-3 pr-4">Routine</th>
                     <th className="text-left pb-3 pr-4">Status</th>
                     <th className="text-right pb-3 pr-4">Runs</th>
@@ -385,14 +385,14 @@ export default function Overview() {
                   {routines.map((r, i) => (
                     <tr
                       key={i}
-                      className="border-t border-[#21262d]/60 hover:bg-white/[0.02] transition-colors"
+                      className="border-t border-[#1E3829]/60 hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="py-2.5 pr-4 text-[#e6edf3] text-[13px] font-medium">{r.name}</td>
+                      <td className="py-2.5 pr-4 text-[#F7F9F8] text-[13px] font-medium">{r.name}</td>
                       <td className="py-2.5 pr-4">
                         <HealthBadge status={r.status} label={r.status} />
                       </td>
-                      <td className="py-2.5 pr-4 text-right text-[#D0D5DD] tabular-nums text-[13px]">{r.runs}</td>
-                      <td className="py-2.5 text-right text-[#667085] text-[13px]">{relativeTime(r.last_run)}</td>
+                      <td className="py-2.5 pr-4 text-right text-[#C8D5CE] tabular-nums text-[13px]">{r.runs}</td>
+                      <td className="py-2.5 text-right text-[#6B8A76] text-[13px]">{relativeTime(r.last_run)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -400,7 +400,7 @@ export default function Overview() {
             </div>
           ) : (
             <div className="flex items-center justify-center h-32">
-              <p className="text-[#667085] text-sm">No routines data</p>
+              <p className="text-[#6B8A76] text-sm">No routines data</p>
             </div>
           )}
         </div>
@@ -411,7 +411,7 @@ export default function Overview() {
 
       {/* Quick Actions */}
       <div className="mb-4">
-        <h3 className="text-xs font-medium text-[#667085] uppercase tracking-wider mb-3">Quick Actions</h3>
+        <h3 className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: 'rgba(242,203,5,0.65)' }}>Quick Actions</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {QUICK_ACTIONS.map((action) => {
             const Icon = action.icon
@@ -419,14 +419,14 @@ export default function Overview() {
               <Link
                 key={action.label}
                 to={action.to}
-                className="group flex items-center gap-3 bg-[#161b22] border border-[#21262d] rounded-xl px-4 py-3 transition-all duration-200 hover:border-[#00FFA7]/30 hover:bg-[#00FFA7]/[0.03]"
+                className="group flex items-center gap-3 bg-[#122018] border border-[#1E3829] rounded-xl px-4 py-3 transition-all duration-200 hover:border-[#41A650]/30 hover:bg-[#41A650]/[0.03]"
               >
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04] group-hover:bg-[#00FFA7]/10 transition-colors">
-                  <Icon size={15} className="text-[#667085] group-hover:text-[#00FFA7] transition-colors" />
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/[0.04] group-hover:bg-[#41A650]/10 transition-colors">
+                  <Icon size={15} className="text-[#6B8A76] group-hover:text-[#85F2A0] transition-colors" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-medium text-[#e6edf3] group-hover:text-white truncate">{action.label}</p>
-                  <p className="text-[11px] text-[#667085] truncate">{action.hint}</p>
+                  <p className="text-[13px] font-medium text-[#F7F9F8] group-hover:text-white truncate">{action.label}</p>
+                  <p className="text-[11px] text-[#6B8A76] truncate">{action.hint}</p>
                 </div>
               </Link>
             )

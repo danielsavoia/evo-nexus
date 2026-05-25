@@ -1,11 +1,13 @@
-import { lazy, Suspense, useEffect, type ReactNode } from 'react'
+﻿import { lazy, Suspense, useEffect, type ReactNode } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { hydrateAgentMeta } from './lib/agent-meta'
 import { hydratePluginUiRegistry } from './lib/plugin-ui-registry'
 import { initEvoNexusSdk } from './lib/evonexus-sdk'
+import { loadWorkspaceTimezone } from './lib/format'
 import PluginPageHost from './pages/PluginPageHost'
 import { NotificationProvider } from './context/NotificationContext'
+import { PluginNavigationProvider } from './context/PluginNavigationContext'
 import Sidebar from './components/Sidebar'
 import { FullPageLoader, SectionBoundary, SectionLoader } from './components/PageStates'
 import { lazyDefault, lazyNamed } from './lib/lazyImport'
@@ -57,6 +59,7 @@ const KnowledgeUpload = lazyDefault(() => import('./pages/Knowledge/Upload'))
 const KnowledgeBrowse = lazyDefault(() => import('./pages/Knowledge/Browse'))
 const KnowledgeSearch = lazyDefault(() => import('./pages/Knowledge/Search'))
 const KnowledgeApiKeys = lazyDefault(() => import('./pages/Knowledge/ApiKeys'))
+const UIPlayground = lazyDefault(() => import('./pages/UIPlayground'))
 
 function FullPageRoute({
   locationKey,
@@ -68,7 +71,7 @@ function FullPageRoute({
   children: ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-[#0C111D]">
+    <div className="clever-app-shell min-h-screen">
       <SectionBoundary key={locationKey} sectionName={sectionName}>
         <Suspense fallback={<FullPageLoader label={`Loading ${sectionName}...`} />}>
           {children}
@@ -135,6 +138,7 @@ function AppContent() {
       hydrateAgentMeta()
       hydratePluginUiRegistry()
       initEvoNexusSdk()
+      loadWorkspaceTimezone()
     }
   }, [user])
 
@@ -153,7 +157,7 @@ function AppContent() {
   if (isDocs) {
     // Redirect .txt files to API directly
     if (location.pathname.endsWith('.txt')) {
-      const apiBase = import.meta.env.DEV ? 'http://localhost:8080' : ''
+      const apiBase = ''
       window.location.replace(`${apiBase}/api/docs/llms-full.txt`)
       return null
     }
@@ -202,7 +206,7 @@ function AppContent() {
   // Allow direct access to /onboarding regardless
   if (isOnboarding) {
     return (
-      <Suspense fallback={<div className="min-h-screen bg-[#080c14] flex items-center justify-center"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+      <Suspense fallback={<div className="clever-app-shell min-h-screen flex items-center justify-center"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
         <Routes>
           <Route path="/onboarding/*" element={<OnboardingRouter />} />
         </Routes>
@@ -211,8 +215,9 @@ function AppContent() {
   }
 
   return (
+    <PluginNavigationProvider>
     <NotificationProvider>
-      <div className="flex min-h-screen bg-[#0C111D]">
+      <div className="clever-app-shell flex min-h-screen">
         <Sidebar />
 
         {/* Pages - responsive margin */}
@@ -228,12 +233,12 @@ function AppContent() {
               {/* Onboarding & Settings routes (lazy — keep their own suspense so they
                   can render even before Sidebar-scoped permissions load) */}
               <Route path="/onboarding/*" element={
-                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
                   <OnboardingRouter />
                 </Suspense>
               } />
               <Route path="/settings/brain-repo" element={
-                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#5a6b7f] text-sm">Loading...</div></div>}>
+                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="text-[#6B8A76] text-sm">Loading...</div></div>}>
                   <BrainRepo />
                 </Suspense>
               } />
@@ -274,6 +279,9 @@ function AppContent() {
               {hasPermission('tickets', 'view') && <Route path="/topics" element={<Topics />} />}
               {hasPermission('tickets', 'view') && <Route path="/issues" element={<Navigate to="/topics" replace />} />}
               {hasPermission('tickets', 'view') && <Route path="/tickets/:id" element={<TicketDetail />} />}
+              {/* Dev-only: @evonexus/ui component playground */}
+              <Route path="/dev/ui-playground" element={<UIPlayground />} />
+
               {hasPermission('knowledge', 'view') && (
                 <>
                   {/* Top-level Knowledge shell: only Connections + Settings */}
@@ -298,6 +306,7 @@ function AppContent() {
         </main>
       </div>
     </NotificationProvider>
+    </PluginNavigationProvider>
   )
 }
 

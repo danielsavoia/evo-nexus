@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Settings as SettingsIcon, Save, X, Pencil, Check,
@@ -7,6 +7,7 @@ import {
   Camera, Users, Compass, Cog, type LucideIcon,
 } from 'lucide-react'
 import { api } from '../lib/api'
+import { refreshWorkspaceTimezone } from '../lib/format'
 import Markdown from '../components/Markdown'
 
 // ── Toggle (copied from Providers.tsx) ─────────────────────────────────────
@@ -18,8 +19,8 @@ function Toggle({ on, onChange, disabled }: { on: boolean; onChange: (v: boolean
       aria-checked={on}
       disabled={disabled}
       onClick={() => onChange(!on)}
-      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00FFA7] disabled:opacity-40 disabled:cursor-not-allowed ${
-        on ? 'bg-[#00FFA7]' : 'bg-[#1e2a3a]'
+      className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#41A650] disabled:opacity-40 disabled:cursor-not-allowed ${
+        on ? 'bg-[#41A650]' : 'bg-[#1e2a3a]'
       }`}
     >
       <span className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 translate-y-0.5 ${
@@ -41,8 +42,8 @@ const AGENT_META: Record<string, { icon: LucideIcon; color: string; colorMuted: 
   pulse: { icon: Users, color: '#2DD4BF', colorMuted: 'rgba(45,212,191,0.12)', label: 'Pulse' },
   sage: { icon: Compass, color: '#818CF8', colorMuted: 'rgba(129,140,248,0.12)', label: 'Sage' },
 }
-const DEFAULT_AGENT_META = { icon: Bot, color: '#8b949e', colorMuted: 'rgba(139,148,158,0.12)', label: '' }
-const SYSTEM_META = { icon: Cog, color: '#8b949e', colorMuted: 'rgba(139,148,158,0.12)', label: 'system' }
+const DEFAULT_AGENT_META = { icon: Bot, color: '#C8D5CE', colorMuted: 'rgba(139,148,158,0.12)', label: '' }
+const SYSTEM_META = { icon: Cog, color: '#C8D5CE', colorMuted: 'rgba(139,148,158,0.12)', label: 'system' }
 
 function getAgentMeta(agentName: string) {
   if (!agentName) return DEFAULT_AGENT_META
@@ -52,8 +53,8 @@ function getAgentMeta(agentName: string) {
 }
 
 // ── Input / label class strings (same as Providers.tsx) ────────────────────
-const inp = 'w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#00FFA7]/60 focus:ring-1 focus:ring-[#00FFA7]/20'
-const lbl = 'block text-[11px] font-semibold text-[#5a6b7f] mb-1.5 tracking-[0.08em] uppercase'
+const inp = 'w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20'
+const lbl = 'block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase'
 
 // ── Toast notification ──────────────────────────────────────────────────────
 type ToastType = 'success' | 'error' | 'info'
@@ -81,10 +82,10 @@ function ToastStack({ toasts }: { toasts: Toast[] }) {
           key={t.id}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium shadow-lg border transition-all ${
             t.type === 'success'
-              ? 'bg-[#0b1018] border-[#00FFA7]/30 text-[#00FFA7]'
+              ? 'bg-[#0b1018] border-[#41A650]/30 text-[#85F2A0]'
               : t.type === 'error'
               ? 'bg-[#0b1018] border-red-500/30 text-red-400'
-              : 'bg-[#0b1018] border-[#21262d] text-[#667085]'
+              : 'bg-[#0b1018] border-[#1E3829] text-[#6B8A76]'
           }`}
         >
           <span>{t.message}</span>
@@ -97,14 +98,14 @@ function ToastStack({ toasts }: { toasts: Toast[] }) {
 // ── Frequency badge ─────────────────────────────────────────────────────────
 function FreqBadge({ freq }: { freq: string }) {
   const styles: Record<string, string> = {
-    daily: 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20',
+    daily: 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20',
     weekly: 'bg-[#818CF8]/10 text-[#818CF8] border-[#818CF8]/20',
     monthly: 'bg-[#FBBF24]/10 text-[#FBBF24] border-[#FBBF24]/20',
   }
   const icons: Record<string, LucideIcon> = { daily: Clock, weekly: Calendar, monthly: CalendarClock }
   const FreqIcon = icons[freq] || Clock
   return (
-    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${styles[freq] || 'bg-[#1e2a3a] text-[#667085] border-[#1e2a3a]'}`}>
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${styles[freq] || 'bg-[#1e2a3a] text-[#6B8A76] border-[#1e2a3a]'}`}>
       <FreqIcon size={9} />
       {freq}
     </span>
@@ -184,6 +185,9 @@ function WorkspaceTab({ showToast }: { showToast: (msg: string, type?: ToastType
         },
         dashboard: { port: config.port },
       })
+      // Refresh the cached timezone so date formatting on other pages
+      // picks up the change without a hard reload.
+      refreshWorkspaceTimezone(config.timezone)
       showToast('Workspace saved successfully')
     } catch {
       showToast('Failed to save workspace config', 'error')
@@ -289,7 +293,7 @@ function WorkspaceTab({ showToast }: { showToast: (msg: string, type?: ToastType
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#00FFA7] text-[#080c14] font-semibold text-sm hover:bg-[#00e69a] transition-colors disabled:opacity-40"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#41A650] text-[#07130D] font-semibold text-sm hover:bg-[#00e69a] transition-colors disabled:opacity-40"
         >
           <Save size={14} />
           {saving ? t('common.saving') : t('settings.saveWorkspace')}
@@ -387,12 +391,12 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
       {/* Top bar */}
       <div className="flex items-center justify-between mb-5">
         <div className="flex items-center gap-3">
-          <span className="text-[#667085] text-sm">{totalCount} routines configured</span>
+          <span className="text-[#6B8A76] text-sm">{totalCount} routines configured</span>
           <button
             onClick={reloadScheduler}
             disabled={reloading}
             title="Reload scheduler"
-            className="flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-md text-[#5a6b7f] border border-[#1e2a3a] hover:text-[#8a9aae] hover:border-[#2e3a4a] transition-colors disabled:opacity-40"
+            className="flex items-center gap-1.5 text-[11px] px-3 py-1.5 rounded-md text-[#6B8A76] border border-[#1e2a3a] hover:text-[#8a9aae] hover:border-[#2e3a4a] transition-colors disabled:opacity-40"
           >
             <RefreshCw size={11} className={reloading ? 'animate-spin' : ''} />
             Reload scheduler
@@ -409,13 +413,13 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
             <div key={key}>
               <div className="flex items-center gap-2 mb-3">
                 <FreqBadge freq={key} />
-                <span className="text-[#667085] text-[11px]">{list.length} routines</span>
+                <span className="text-[#6B8A76] text-[11px]">{list.length} routines</span>
               </div>
-              <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden">
+              <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="text-[#667085] text-[11px] uppercase tracking-wider font-medium border-b border-[#21262d]">
+                      <tr className="text-[#6B8A76] text-[11px] uppercase tracking-wider font-medium border-b border-[#1E3829]">
                         <th className="px-4 py-3 text-left w-12">Enabled</th>
                         <th className="px-4 py-3 text-left">Name</th>
                         <th className="px-4 py-3 text-left">Agent</th>
@@ -430,7 +434,7 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                         const rowKey = `${key}/${r.slug}`
                         const isEditing = editingSlug === r.slug
                         return (
-                          <tr key={r.slug} className="border-t border-[#21262d]/60 hover:bg-[#0d1117]/40 transition-colors">
+                          <tr key={r.slug} className="border-t border-[#1E3829]/60 hover:bg-[#07130D]/40 transition-colors">
                             <td className="px-4 py-3">
                               <Toggle
                                 on={r.enabled}
@@ -438,7 +442,7 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                                 onChange={() => handleToggle(key, r.slug, r.enabled)}
                               />
                             </td>
-                            <td className="px-4 py-3 text-[#e6edf3] text-[13px] font-medium whitespace-nowrap">{r.name}</td>
+                            <td className="px-4 py-3 text-[#F7F9F8] text-[13px] font-medium whitespace-nowrap">{r.name}</td>
                             <td className="px-4 py-3">
                               {r.agent ? (
                                 <span
@@ -456,7 +460,7 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                                 <span className="text-[#3d4f65] text-[12px]">—</span>
                               )}
                             </td>
-                            <td className="px-4 py-3 text-[#667085] text-[13px] whitespace-nowrap">
+                            <td className="px-4 py-3 text-[#6B8A76] text-[13px] whitespace-nowrap">
                               {isEditing ? (
                                 <span className="flex items-center gap-1">
                                   <input
@@ -468,19 +472,19 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                                       if (e.key === 'Enter') commitEdit(key, r.slug)
                                       if (e.key === 'Escape') setEditingSlug(null)
                                     }}
-                                    className="w-28 px-2 py-1 rounded bg-[#0f1520] border border-[#00FFA7]/40 text-[#e6edf3] text-[12px] focus:outline-none font-mono"
+                                    className="w-28 px-2 py-1 rounded bg-[#0f1520] border border-[#41A650]/40 text-[#F7F9F8] text-[12px] focus:outline-none font-mono"
                                   />
-                                  <button onClick={() => commitEdit(key, r.slug)} className="text-[#00FFA7] hover:text-[#00e69a] p-0.5 transition-colors">
+                                  <button onClick={() => commitEdit(key, r.slug)} className="text-[#85F2A0] hover:text-[#00e69a] p-0.5 transition-colors">
                                     <Check size={13} />
                                   </button>
-                                  <button onClick={() => setEditingSlug(null)} className="text-[#667085] hover:text-red-400 p-0.5 transition-colors">
+                                  <button onClick={() => setEditingSlug(null)} className="text-[#6B8A76] hover:text-red-400 p-0.5 transition-colors">
                                     <X size={13} />
                                   </button>
                                 </span>
                               ) : (
                                 <button
                                   onClick={() => startEdit(r.slug, r.schedule)}
-                                  className="flex items-center gap-1.5 group hover:text-[#e6edf3] transition-colors"
+                                  className="flex items-center gap-1.5 group hover:text-[#F7F9F8] transition-colors"
                                   title="Click to edit schedule"
                                 >
                                   <code className="font-mono text-[12px]">{r.schedule || '—'}</code>
@@ -489,13 +493,13 @@ function RoutinesTab({ showToast }: { showToast: (msg: string, type?: ToastType)
                               )}
                             </td>
                             <td className="px-4 py-3">
-                              <code className="text-[11px] text-[#5a6b7f] font-mono bg-[#0b1018] px-2 py-0.5 rounded border border-[#152030]">
+                              <code className="text-[11px] text-[#6B8A76] font-mono bg-[#0b1018] px-2 py-0.5 rounded border border-[#152030]">
                                 {r.script}
                               </code>
                             </td>
                             <td className="px-4 py-3 text-right">
                               {r.args ? (
-                                <code className="text-[10px] text-[#5a6b7f] font-mono bg-[#0b1018] px-1.5 py-0.5 rounded border border-[#152030]">{r.args}</code>
+                                <code className="text-[10px] text-[#6B8A76] font-mono bg-[#0b1018] px-1.5 py-0.5 rounded border border-[#152030]">{r.args}</code>
                               ) : (
                                 <span className="text-[#3d4f65] text-[12px]">—</span>
                               )}
@@ -558,15 +562,15 @@ function ReferenceTab() {
   return (
     <div>
       {/* Sub-tabs */}
-      <div className="flex gap-1 mb-5 border-b border-[#21262d]">
+      <div className="flex gap-1 mb-5 border-b border-[#1E3829]">
         {REF_TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveRef(tab.key)}
             className={`px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
               activeRef === tab.key
-                ? 'text-[#00FFA7] border-[#00FFA7]'
-                : 'text-[#667085] border-transparent hover:text-[#e6edf3] hover:border-[#21262d]'
+                ? 'text-[#85F2A0] border-[#41A650]'
+                : 'text-[#6B8A76] border-transparent hover:text-[#F7F9F8] hover:border-[#1E3829]'
             }`}
           >
             {tab.label}
@@ -574,7 +578,7 @@ function ReferenceTab() {
         ))}
       </div>
 
-      <div className="bg-[#161b22] border border-[#21262d] rounded-xl p-6">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-xl p-6">
         {loading ? (
           <div className="space-y-3">
             {[...Array(10)].map((_, i) => (
@@ -614,17 +618,17 @@ function NotificationsTab() {
 
   return (
     <div className="max-w-xl space-y-6">
-      <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#21262d]">
-          <h3 className="text-[13px] font-semibold text-[#e6edf3]">Browser Notifications</h3>
-          <p className="text-[11px] text-[#667085] mt-0.5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#1E3829]">
+          <h3 className="text-[13px] font-semibold text-[#F7F9F8]">Browser Notifications</h3>
+          <p className="text-[11px] text-[#6B8A76] mt-0.5">
             Show an OS notification when an agent is waiting for your approval while you're in another tab.
           </p>
         </div>
         <div className="px-5 py-4 flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] text-[#e6edf3] font-medium">Enable notifications</p>
-            <p className="text-[11px] text-[#667085] mt-0.5">
+            <p className="text-[13px] text-[#F7F9F8] font-medium">Enable notifications</p>
+            <p className="text-[11px] text-[#6B8A76] mt-0.5">
               {permission === 'unsupported'
                 ? 'Browser notifications are not supported in this environment.'
                 : permission === 'denied'
@@ -685,17 +689,17 @@ function TrustTab({ showToast }: { showToast: (msg: string, type?: ToastType) =>
 
   return (
     <div className="max-w-xl space-y-6">
-      <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#21262d]">
-          <h3 className="text-[13px] font-semibold text-[#e6edf3]">Trust mode</h3>
-          <p className="text-[11px] text-[#667085] mt-0.5">
+      <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#1E3829]">
+          <h3 className="text-[13px] font-semibold text-[#F7F9F8]">Trust mode</h3>
+          <p className="text-[11px] text-[#6B8A76] mt-0.5">
             When ON, agents run Write / Edit / Bash / NotebookEdit / Agent without asking for approval. OFF keeps the per-tool Allow/Deny prompt.
           </p>
         </div>
         <div className="px-5 py-4 flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <p className="text-[13px] text-[#e6edf3] font-medium">Auto-approve all tools in chat</p>
-            <p className="text-[11px] text-[#667085] mt-0.5">
+            <p className="text-[13px] text-[#F7F9F8] font-medium">Auto-approve all tools in chat</p>
+            <p className="text-[11px] text-[#6B8A76] mt-0.5">
               {isLoading
                 ? 'Loading…'
                 : enabled
@@ -735,25 +739,25 @@ export default function Settings() {
     <div className="max-w-[1200px] mx-auto font-[Inter,-apple-system,sans-serif]">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#161b22] border border-[#21262d]">
-          <SettingsIcon size={20} className="text-[#00FFA7]" />
+        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#122018] border border-[#1E3829]">
+          <SettingsIcon size={20} className="text-[#85F2A0]" />
         </div>
         <div>
           <h1 className="text-xl font-bold text-white tracking-tight">{t('settings.title')}</h1>
-          <p className="text-[#5a6b7f] text-sm mt-0.5">{t('settings.headerSubtitle')}</p>
+          <p className="text-[#6B8A76] text-sm mt-0.5">{t('settings.headerSubtitle')}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-7 border-b border-[#21262d]">
+      <div className="flex gap-1 mb-7 border-b border-[#1E3829]">
         {TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`px-5 py-2.5 text-sm font-medium whitespace-nowrap transition-colors border-b-2 -mb-px ${
               activeTab === tab.key
-                ? 'text-[#00FFA7] border-[#00FFA7]'
-                : 'text-[#667085] border-transparent hover:text-[#e6edf3] hover:border-[#21262d]'
+                ? 'text-[#85F2A0] border-[#41A650]'
+                : 'text-[#6B8A76] border-transparent hover:text-[#F7F9F8] hover:border-[#1E3829]'
             }`}
           >
             {t(tab.labelKey)}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+﻿import { useState, useEffect, useRef, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CheckCircle, Copy, Check, PanelLeftOpen } from 'lucide-react'
 import { api } from '../lib/api'
@@ -87,7 +87,7 @@ function NameDialog({ title, placeholder, defaultValue = '', onConfirm, onCancel
             className="px-3 py-1.5 text-sm font-medium rounded-lg transition-colors"
             style={{
               background: 'var(--evo-green)',
-              color: '#0C111D',
+              color: '#091410',
               opacity: value.trim() ? 1 : 0.5,
             }}
           >
@@ -862,7 +862,7 @@ export default function Workspace() {
             className="flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium"
             style={{
               background: 'var(--bg-card)',
-              border: `1px solid ${toast.type === 'success' ? 'rgba(0,255,167,0.3)' : 'rgba(239,68,68,0.3)'}`,
+              border: `1px solid ${toast.type === 'success' ? 'rgba(133, 242, 160,0.3)' : 'rgba(239,68,68,0.3)'}`,
               color: toast.type === 'success' ? 'var(--evo-green)' : 'var(--danger)',
               boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
               animation: 'slideInRight 200ms ease-out',

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+﻿import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -6,6 +6,7 @@ import {
   CheckCircle, Star,
 } from 'lucide-react'
 import { api } from '../lib/api'
+import { hydratePluginUiRegistry } from '../lib/plugin-ui-registry'
 import PluginCard, { type Plugin } from '../components/PluginCard'
 import PluginInstallModal from '../components/PluginInstallModal'
 
@@ -54,7 +55,7 @@ function MarketplaceTab() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48">
-        <Loader2 size={20} className="text-[#00FFA7] animate-spin" />
+        <Loader2 size={20} className="text-[#85F2A0] animate-spin" />
       </div>
     )
   }
@@ -74,58 +75,58 @@ function MarketplaceTab() {
     <div>
       {/* Search */}
       <div className="relative mb-6">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#667085]" />
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B8A76]" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder={t('plugins.searchMarketplace')}
-          className="w-full bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#00FFA7]/40 transition-colors"
+          className="w-full bg-[#122018] border border-[#1E3829] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/40 transition-colors"
         />
       </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-12">
-          <Package size={32} className="text-[#344054] mx-auto mb-3" />
-          <p className="text-[#667085] text-sm">{t('plugins.noMarketplaceResults')}</p>
+          <Package size={32} className="text-[#1E3829] mx-auto mb-3" />
+          <p className="text-[#6B8A76] text-sm">{t('plugins.noMarketplaceResults')}</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtered.map((item) => (
             <div
               key={item.id}
-              className="group bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/30 hover:shadow-[0_0_20px_rgba(0,255,167,0.04)]"
+              className="group bg-[#122018] border border-[#1E3829] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/30 hover:shadow-[0_0_20px_rgba(133, 242, 160,0.04)]"
             >
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/15 to-transparent rounded-t-2xl" />
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/12 to-transparent rounded-t-2xl" />
 
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15 shrink-0">
-                    <Package size={16} className="text-[#00FFA7]" />
+                  <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15 shrink-0">
+                    <Package size={16} className="text-[#85F2A0]" />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-[#e6edf3] truncate">{item.name}</p>
-                    <p className="text-xs text-[#667085]">v{item.version}</p>
+                    <p className="text-sm font-semibold text-[#F7F9F8] truncate">{item.name}</p>
+                    <p className="text-xs text-[#6B8A76]">v{item.version}</p>
                   </div>
                 </div>
                 {item.verified ? (
-                  <span className="flex items-center gap-1 text-[10px] font-medium text-[#00FFA7] bg-[#00FFA7]/10 px-2 py-0.5 rounded-full border border-[#00FFA7]/20 shrink-0">
+                  <span className="flex items-center gap-1 text-[10px] font-medium text-[#85F2A0] bg-[#41A650]/10 px-2 py-0.5 rounded-full border border-[#41A650]/20 shrink-0">
                     <CheckCircle size={10} />
                     {t('plugins.verified')}
                   </span>
                 ) : (
-                  <span className="text-[10px] font-medium text-[#667085] bg-[#21262d] px-2 py-0.5 rounded-full border border-[#344054] shrink-0">
+                  <span className="text-[10px] font-medium text-[#6B8A76] bg-[#1E3829] px-2 py-0.5 rounded-full border border-[#1E3829] shrink-0">
                     {t('plugins.community')}
                   </span>
                 )}
               </div>
 
-              <p className="text-xs text-[#667085] mb-3 line-clamp-2">{item.description}</p>
+              <p className="text-xs text-[#6B8A76] mb-3 line-clamp-2">{item.description}</p>
 
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap gap-1">
                   {item.tags.slice(0, 3).map((tag) => (
-                    <span key={tag} className="text-[10px] text-[#667085] bg-[#0C111D] px-1.5 py-0.5 rounded">
+                    <span key={tag} className="text-[10px] text-[#6B8A76] bg-[#091410] px-1.5 py-0.5 rounded">
                       {tag}
                     </span>
                   ))}
@@ -136,7 +137,7 @@ function MarketplaceTab() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="text-[10px] text-[#667085] hover:text-[#00FFA7] transition-colors flex items-center gap-1"
+                    className="text-[10px] text-[#6B8A76] hover:text-[#85F2A0] transition-colors flex items-center gap-1"
                   >
                     <Star size={10} />
                     {t('plugins.viewRepo')}
@@ -204,21 +205,21 @@ export default function Plugins() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('plugins.title')}</h1>
-          <p className="text-[#667085] text-sm mt-1">{t('plugins.subtitle')}</p>
+          <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('plugins.title')}</h1>
+          <p className="text-[#6B8A76] text-sm mt-1">{t('plugins.subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={fetchPlugins}
             disabled={loading}
-            className="p-2 rounded-lg text-[#667085] hover:text-[#D0D5DD] hover:bg-white/5 transition-colors"
+            className="p-2 rounded-lg text-[#6B8A76] hover:text-[#C8D5CE] hover:bg-white/5 transition-colors"
             title={t('common.refresh')}
           >
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
           </button>
           <button
             onClick={() => setShowInstall(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#00FFA7] text-black rounded-lg hover:bg-[#00FFA7]/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-[#41A650] text-black rounded-lg hover:bg-[#41A650]/90 transition-colors"
           >
             <Plus size={16} />
             {t('plugins.install')}
@@ -227,20 +228,20 @@ export default function Plugins() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-6 bg-[#161b22] border border-[#21262d] rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 bg-[#122018] border border-[#1E3829] rounded-xl p-1 w-fit">
         {tabs.map(({ key, label }) => (
           <button
             key={key}
             onClick={() => setTab(key)}
             className={`px-4 py-1.5 text-sm font-medium rounded-lg transition-colors ${
               tab === key
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20'
-                : 'text-[#667085] hover:text-[#D0D5DD]'
+                ? 'bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20'
+                : 'text-[#6B8A76] hover:text-[#C8D5CE]'
             }`}
           >
             {label}
             {key === 'installed' && plugins.length > 0 && (
-              <span className="ml-1.5 text-[10px] bg-[#21262d] text-[#667085] px-1.5 py-0.5 rounded-full">
+              <span className="ml-1.5 text-[10px] bg-[#1E3829] text-[#6B8A76] px-1.5 py-0.5 rounded-full">
                 {plugins.length}
               </span>
             )}
@@ -253,13 +254,13 @@ export default function Plugins() {
         <div>
           {/* Search */}
           <div className="relative mb-6">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#667085]" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B8A76]" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder={t('plugins.searchInstalled')}
-              className="w-full max-w-sm bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#00FFA7]/40 transition-colors"
+              className="w-full max-w-sm bg-[#122018] border border-[#1E3829] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/40 transition-colors"
             />
           </div>
 
@@ -272,20 +273,20 @@ export default function Plugins() {
 
           {loading ? (
             <div className="flex items-center justify-center h-48">
-              <Loader2 size={20} className="text-[#00FFA7] animate-spin" />
+              <Loader2 size={20} className="text-[#85F2A0] animate-spin" />
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-16">
-              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-[#161b22] border border-[#21262d] mx-auto mb-4">
-                <Package size={28} className="text-[#344054]" />
+              <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-[#122018] border border-[#1E3829] mx-auto mb-4">
+                <Package size={28} className="text-[#1E3829]" />
               </div>
-              <p className="text-[#667085] text-sm mb-4">
+              <p className="text-[#6B8A76] text-sm mb-4">
                 {plugins.length === 0 ? t('plugins.noPlugins') : t('common.noResults')}
               </p>
               {plugins.length === 0 && (
                 <button
                   onClick={() => setShowInstall(true)}
-                  className="text-sm text-[#00FFA7] hover:text-[#00FFA7]/80 transition-colors"
+                  className="text-sm text-[#85F2A0] hover:text-[#85F2A0]/80 transition-colors"
                 >
                   {t('plugins.installFirst')}
                 </button>
@@ -313,7 +314,15 @@ export default function Plugins() {
       {showInstall && (
         <PluginInstallModal
           onClose={() => setShowInstall(false)}
-          onInstalled={fetchPlugins}
+          onInstalled={async () => {
+            // Re-fetch plugin list AND the UI registry so the sidebar +
+            // bundle URLs reflect the manifest just installed (without this,
+            // the user has to hard-reload the browser to see the new pages).
+            await Promise.all([
+              hydratePluginUiRegistry(true),
+              Promise.resolve(fetchPlugins()),
+            ])
+          }}
         />
       )}
     </div>

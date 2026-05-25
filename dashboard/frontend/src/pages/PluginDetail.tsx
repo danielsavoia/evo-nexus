@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import {
@@ -7,8 +7,19 @@ import {
   ToggleRight, ToggleLeft, Terminal, X,
 } from 'lucide-react'
 import { api } from '../lib/api'
+import { hydratePluginUiRegistry } from '../lib/plugin-ui-registry'
 import type { Plugin } from '../components/PluginCard'
 import UpdatePreviewModal from '../components/UpdatePreviewModal'
+import PluginUninstall, { type SafeUninstallSpec } from '../components/PluginUninstall'
+
+// Re-fetch the UI registry after install / update / uninstall so the sidebar,
+// page bundles, and ?v=<version> cache-buster all match the freshly written
+// manifest_json in plugins_installed. Without this, the in-memory registry
+// keeps the stale manifest until full page reload — which is why a v0.1.2
+// install kept showing v0.1.2 sidebar entries after upgrading to v0.1.3.
+async function refreshPluginUiRegistry() {
+  await hydratePluginUiRegistry(true)
+}
 
 interface HealthResult {
   slug: string
@@ -61,18 +72,18 @@ function CapabilitySwitch({
   loading: boolean
 }) {
   return (
-    <div className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-[#21262d]/50 transition-colors">
+    <div className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-[#1E3829]/50 transition-colors">
       <div className="flex-1 min-w-0 mr-3">
-        <p className="text-sm text-[#D0D5DD] truncate">{item.label}</p>
-        <p className="text-xs text-[#667085]">{item.type}</p>
+        <p className="text-sm text-[#C8D5CE] truncate">{item.label}</p>
+        <p className="text-xs text-[#6B8A76]">{item.type}</p>
       </div>
       <button
         onClick={() => onToggle(item.type, item.id, !item.enabled)}
         disabled={loading}
         className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-colors border ${
           item.enabled
-            ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
-            : 'bg-[#21262d] text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
+            ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20 hover:bg-[#41A650]/20'
+            : 'bg-[#1E3829] text-[#6B8A76] border-[#1E3829] hover:text-[#C8D5CE]'
         } disabled:opacity-50`}
         title={item.enabled ? 'Disable' : 'Enable'}
       >
@@ -106,7 +117,7 @@ function CapabilityGroup({
   if (items.length === 0) return null
   return (
     <div className="mt-3 first:mt-0">
-      <p className="text-xs text-[#667085] font-medium uppercase tracking-wide mb-1 px-1">{title}</p>
+      <p className="text-xs text-[#6B8A76] font-medium uppercase tracking-wide mb-1 px-1">{title}</p>
       <div className="space-y-0.5">
         {items.map((item) => (
           <CapabilitySwitch
@@ -146,6 +157,11 @@ export default function PluginDetail() {
 
   // Wave 2.0 — Icon fallback state
   const [iconError, setIconError] = useState(false)
+
+  // B3 — Safe uninstall wizard state
+  const [showUninstallWizard, setShowUninstallWizard] = useState(false)
+  // Simple confirm modal for plugins without safe_uninstall (replaces window.confirm).
+  const [showSimpleConfirm, setShowSimpleConfirm] = useState(false)
 
   // Wave 2.3 — MCP restart banner dismiss (persisted via localStorage)
   const mcpBannerKey = `mcp-restart-dismissed-${slug}`
@@ -191,11 +207,25 @@ export default function PluginDetail() {
     }
   }
 
-  async function handleUninstall() {
-    if (!slug || !window.confirm(t('plugins.confirmUninstall'))) return
+  function handleUninstall() {
+    if (!slug) return
+    // B3: If plugin declares safe_uninstall.enabled, open the wizard instead of window.confirm.
+    const manifest = (plugin as unknown as Record<string, unknown> | null)?.manifest_json as Record<string, unknown> | undefined
+    const safeUninstall = (manifest?.safe_uninstall ?? {}) as SafeUninstallSpec
+    if (safeUninstall?.enabled) {
+      setShowUninstallWizard(true)
+      return
+    }
+    // Plugin without safe_uninstall — show simple in-app confirm modal.
+    setShowSimpleConfirm(true)
+  }
+
+  async function performSimpleUninstall() {
+    setShowSimpleConfirm(false)
     setRemoving(true)
     try {
       await api.delete(`/plugins/${slug}`)
+      await refreshPluginUiRegistry()
       navigate('/plugins')
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : t('common.unexpectedError'))
@@ -205,10 +235,10 @@ export default function PluginDetail() {
 
   async function handleToggle() {
     if (!plugin) return
-    const next = plugin.enabled !== 1
+    const next = !plugin.enabled
     try {
       await api.patch(`/plugins/${plugin.slug}`, { enabled: next })
-      setPlugin({ ...plugin, enabled: next ? 1 : 0 })
+      setPlugin({ ...plugin, enabled: next })
     } catch {
       // silent — refetch if needed
     }
@@ -250,7 +280,7 @@ export default function PluginDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 size={24} className="text-[#00FFA7] animate-spin" />
+        <Loader2 size={24} className="text-[#85F2A0] animate-spin" />
       </div>
     )
   }
@@ -260,7 +290,7 @@ export default function PluginDetail() {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <p className="text-red-400 mb-2">{error ?? 'Plugin not found'}</p>
-          <button onClick={() => navigate('/plugins')} className="text-sm text-[#667085] hover:text-[#D0D5DD]">
+          <button onClick={() => navigate('/plugins')} className="text-sm text-[#6B8A76] hover:text-[#C8D5CE]">
             {t('common.back')}
           </button>
         </div>
@@ -397,7 +427,7 @@ export default function PluginDetail() {
     id: `plugin-${slug}-${mcp.name}`,
     label: `${mcp.name} (${mcp.command ?? '—'})`,
     type: 'mcp_servers',
-    enabled: plugin.enabled === 1,
+    enabled: Boolean(plugin.enabled),
   }))
 
   // Wave 2.2r — Integrations declared in the manifest (display-only; the
@@ -409,7 +439,7 @@ export default function PluginDetail() {
     id: `${slug}-${it.slug}`,
     label: `${it.label}${it.category ? ` · ${it.category}` : ''}`,
     type: 'integrations',
-    enabled: plugin.enabled === 1,
+    enabled: Boolean(plugin.enabled),
   }))
 
   const hasAnyCapabilities =
@@ -425,12 +455,66 @@ export default function PluginDetail() {
     mcpItems.length > 0 ||
     integrationItems.length > 0
 
+  // B3: Extract safe_uninstall spec from manifest for the wizard
+  const _manifest = (plugin as unknown as Record<string, unknown> | null)?.manifest_json as Record<string, unknown> | undefined
+  const _safeUninstallSpec = (_manifest?.safe_uninstall ?? {}) as SafeUninstallSpec
+
   return (
+    <>
+    {/* B3: Safe uninstall wizard overlay */}
+    {showUninstallWizard && slug && (
+      <PluginUninstall
+        slug={slug}
+        safeUninstall={_safeUninstallSpec}
+        onClose={() => setShowUninstallWizard(false)}
+        onUninstalled={async () => {
+          await refreshPluginUiRegistry()
+          navigate('/plugins')
+        }}
+      />
+    )}
+
+    {/* Simple confirm modal — for plugins without safe_uninstall.
+        Replaces the prior window.confirm() popup so the UX matches the rest
+        of the app (dark theme, branded accents, in-page overlay). */}
+    {showSimpleConfirm && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+        <div className="w-full max-w-md rounded-xl border border-neutral-800 bg-neutral-900 shadow-2xl">
+          <div className="flex items-center gap-2 border-b border-neutral-800 px-6 py-4">
+            <Trash2 className="h-5 w-5 text-red-400" />
+            <span className="font-semibold text-white">Desinstalar plugin: {slug}</span>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <div className="flex items-start gap-3 rounded border border-red-800 bg-red-950/40 p-4">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-red-400" />
+              <p className="text-sm text-red-200">
+                Esta ação não pode ser desfeita. O plugin será removido completamente,
+                incluindo seus dados (a menos que ele declare preservação explícita).
+              </p>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowSimpleConfirm(false)}
+                className="rounded-lg border border-neutral-700 px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => { void performSimpleUninstall() }}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+              >
+                Desinstalar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
     <div className="max-w-3xl mx-auto">
       {/* Back */}
       <button
         onClick={() => navigate('/plugins')}
-        className="flex items-center gap-1.5 text-sm text-[#667085] hover:text-[#D0D5DD] mb-6 transition-colors"
+        className="flex items-center gap-1.5 text-sm text-[#6B8A76] hover:text-[#C8D5CE] mb-6 transition-colors"
       >
         <ArrowLeft size={14} />
         {t('plugins.title')}
@@ -439,7 +523,7 @@ export default function PluginDetail() {
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center gap-4">
-          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-[#41A650]/8 border border-[#41A650]/15">
             {!iconError && plugin.icon_url ? (
               <img
                 src={plugin.icon_url}
@@ -448,12 +532,12 @@ export default function PluginDetail() {
                 onError={() => setIconError(true)}
               />
             ) : (
-              <Package size={24} className="text-[#00FFA7]" />
+              <Package size={24} className="text-[#85F2A0]" />
             )}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-[#e6edf3]">{plugin.name}</h1>
-            <p className="text-sm text-[#667085]">
+            <h1 className="text-xl font-bold text-[#F7F9F8]">{plugin.name}</h1>
+            <p className="text-sm text-[#6B8A76]">
               {plugin.slug} &middot; v{plugin.version}
             </p>
           </div>
@@ -463,17 +547,17 @@ export default function PluginDetail() {
           <button
             onClick={handleToggle}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border ${
-              plugin.enabled === 1
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/20 hover:bg-[#00FFA7]/20'
-                : 'bg-[#21262d] text-[#667085] border-[#344054] hover:text-[#D0D5DD]'
+              Boolean(plugin.enabled)
+                ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/20 hover:bg-[#41A650]/20'
+                : 'bg-[#1E3829] text-[#6B8A76] border-[#1E3829] hover:text-[#C8D5CE]'
             }`}
           >
-            {plugin.enabled === 1 ? t('common.enabled') : t('common.disabled')}
+            {Boolean(plugin.enabled) ? t('common.enabled') : t('common.disabled')}
           </button>
           <button
             onClick={() => setPreviewOpen(true)}
             disabled={removing}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#00FFA7] border border-[#00FFA7]/20 rounded-lg hover:bg-[#00FFA7]/10 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#85F2A0] border border-[#41A650]/20 rounded-lg hover:bg-[#41A650]/10 disabled:opacity-50 transition-colors"
           >
             <Download size={12} />
             Atualizar
@@ -490,7 +574,7 @@ export default function PluginDetail() {
       </div>
 
       {updateMsg && (
-        <div className="mb-4 text-xs text-[#D0D5DD] bg-[#161b22] border border-[#21262d] rounded-lg px-3 py-2">
+        <div className="mb-4 text-xs text-[#C8D5CE] bg-[#122018] border border-[#1E3829] rounded-lg px-3 py-2">
           {updateMsg}
         </div>
       )}
@@ -520,8 +604,8 @@ export default function PluginDetail() {
 
       <div className="space-y-4">
         {/* Manifest details */}
-        <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
-          <h2 className="text-sm font-semibold text-[#e6edf3] mb-4">{t('plugins.manifestDetails')}</h2>
+        <section className="bg-[#122018] border border-[#1E3829] rounded-2xl p-5">
+          <h2 className="text-sm font-semibold text-[#F7F9F8] mb-4">{t('plugins.manifestDetails')}</h2>
           <dl className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
             {[
               { label: t('common.version'), value: plugin.version },
@@ -533,24 +617,24 @@ export default function PluginDetail() {
             ].map(({ label, value }) =>
               value ? (
                 <div key={label}>
-                  <dt className="text-xs text-[#667085] mb-0.5">{label}</dt>
-                  <dd className="text-[#e6edf3]">{value}</dd>
+                  <dt className="text-xs text-[#6B8A76] mb-0.5">{label}</dt>
+                  <dd className="text-[#F7F9F8]">{value}</dd>
                 </div>
               ) : null
             )}
           </dl>
           {typeof manifest['description'] === 'string' && manifest['description'] && (
-            <div className="mt-4 pt-4 border-t border-[#21262d]">
-              <dt className="text-xs text-[#667085] mb-1">{t('common.description')}</dt>
-              <dd className="text-sm text-[#D0D5DD]">{manifest['description']}</dd>
+            <div className="mt-4 pt-4 border-t border-[#1E3829]">
+              <dt className="text-xs text-[#6B8A76] mb-1">{t('common.description')}</dt>
+              <dd className="text-sm text-[#C8D5CE]">{manifest['description']}</dd>
             </div>
           )}
           {capabilities.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-[#21262d]">
-              <p className="text-xs text-[#667085] mb-2">{t('plugins.capabilities')}</p>
+            <div className="mt-4 pt-4 border-t border-[#1E3829]">
+              <p className="text-xs text-[#6B8A76] mb-2">{t('plugins.capabilities')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {capabilities.map((cap) => (
-                  <span key={cap} className="text-xs bg-[#00FFA7]/10 text-[#00FFA7] border border-[#00FFA7]/20 px-2 py-0.5 rounded-full">
+                  <span key={cap} className="text-xs bg-[#41A650]/10 text-[#85F2A0] border border-[#41A650]/20 px-2 py-0.5 rounded-full">
                     {cap}
                   </span>
                 ))}
@@ -561,12 +645,12 @@ export default function PluginDetail() {
 
         {/* Capabilities — Wave 1.1 */}
         {hasAnyCapabilities && (
-          <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
-            <h2 className="text-sm font-semibold text-[#e6edf3] mb-1 flex items-center gap-2">
-              <Layers size={14} className="text-[#00FFA7]" />
+          <section className="bg-[#122018] border border-[#1E3829] rounded-2xl p-5">
+            <h2 className="text-sm font-semibold text-[#F7F9F8] mb-1 flex items-center gap-2">
+              <Layers size={14} className="text-[#85F2A0]" />
               Capabilities
             </h2>
-            <p className="text-xs text-[#667085] mb-4">
+            <p className="text-xs text-[#6B8A76] mb-4">
               Toggle individual capabilities. Plugin-level on/off overrides all.
             </p>
             <CapabilityGroup title="Heartbeats" items={heartbeatItems} onToggle={handleCapabilityToggle} loadingId={capLoadingId} />
@@ -584,16 +668,16 @@ export default function PluginDetail() {
         )}
 
         {/* Health */}
-        <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
+        <section className="bg-[#122018] border border-[#1E3829] rounded-2xl p-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-sm font-semibold text-[#e6edf3] flex items-center gap-2">
-              <ShieldCheck size={14} className="text-[#00FFA7]" />
+            <h2 className="text-sm font-semibold text-[#F7F9F8] flex items-center gap-2">
+              <ShieldCheck size={14} className="text-[#85F2A0]" />
               {t('plugins.health')}
             </h2>
             <button
               onClick={checkHealth}
               disabled={healthLoading}
-              className="flex items-center gap-1.5 text-xs text-[#667085] hover:text-[#D0D5DD] transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[#6B8A76] hover:text-[#C8D5CE] transition-colors"
             >
               {healthLoading ? <Loader2 size={12} className="animate-spin" /> : <RefreshCw size={12} />}
               {t('common.refresh')}
@@ -603,16 +687,16 @@ export default function PluginDetail() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 {health.status === 'active' ? (
-                  <CheckCircle size={14} className="text-[#00FFA7]" />
+                  <CheckCircle size={14} className="text-[#85F2A0]" />
                 ) : (
                   <XCircle size={14} className="text-red-400" />
                 )}
-                <span className={`text-sm font-medium ${health.status === 'active' ? 'text-[#00FFA7]' : 'text-red-400'}`}>
+                <span className={`text-sm font-medium ${health.status === 'active' ? 'text-[#85F2A0]' : 'text-red-400'}`}>
                   {health.status}
                 </span>
               </div>
               {health.reason && (
-                <p className="text-xs text-[#667085]">{health.reason}</p>
+                <p className="text-xs text-[#6B8A76]">{health.reason}</p>
               )}
               {health.tampered_files && health.tampered_files.length > 0 && (
                 <div className="mt-2 bg-red-500/5 border border-red-500/20 rounded-lg p-3">
@@ -628,21 +712,21 @@ export default function PluginDetail() {
               )}
             </div>
           ) : (
-            <p className="text-sm text-[#667085]">{t('plugins.healthNotChecked')}</p>
+            <p className="text-sm text-[#6B8A76]">{t('plugins.healthNotChecked')}</p>
           )}
         </section>
 
         {/* Audit log */}
         {audit.length > 0 && (
-          <section className="bg-[#161b22] border border-[#21262d] rounded-2xl p-5">
-            <h2 className="text-sm font-semibold text-[#e6edf3] mb-4">{t('plugins.auditLog')}</h2>
+          <section className="bg-[#122018] border border-[#1E3829] rounded-2xl p-5">
+            <h2 className="text-sm font-semibold text-[#F7F9F8] mb-4">{t('plugins.auditLog')}</h2>
             <div className="space-y-1.5">
               {audit.slice(0, 20).map((entry) => (
                 <div key={entry.id} className="flex items-center gap-3 text-xs py-1">
-                  <span className="text-[#667085] w-32 shrink-0">
+                  <span className="text-[#6B8A76] w-32 shrink-0">
                     {new Date(entry.created_at).toLocaleString()}
                   </span>
-                  <span className={`font-medium ${entry.success ? 'text-[#00FFA7]' : 'text-red-400'}`}>
+                  <span className={`font-medium ${entry.success ? 'text-[#85F2A0]' : 'text-red-400'}`}>
                     {entry.action}
                   </span>
                   {!entry.success && (
@@ -666,6 +750,10 @@ export default function PluginDetail() {
               from: plugin.version,
               to: '…',
             }))
+            // Re-fetch plugin list AND the UI registry — without the registry
+            // refresh, the sidebar + page bundles keep pointing at the
+            // pre-update manifest until full reload.
+            await refreshPluginUiRegistry()
             const plugins = await api.get('/plugins') as Plugin[]
             const found = plugins.find((p) => p.slug === slug)
             if (found) {
@@ -679,5 +767,6 @@ export default function PluginDetail() {
         />
       )}
     </div>
+    </>
   )
 }

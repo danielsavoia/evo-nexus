@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Zap,
@@ -38,10 +38,10 @@ const CATEGORY_META: Record<string, { icon: LucideIcon; color: string; colorMute
   'discord': { icon: MessageSquare, color: '#7C8AFF', colorMuted: 'rgba(124,138,255,0.12)', glowColor: 'rgba(124,138,255,0.15)', label: 'Discord' },
   'pulse': { icon: Heart, color: '#2DD4BF', colorMuted: 'rgba(45,212,191,0.12)', glowColor: 'rgba(45,212,191,0.15)', label: 'Community' },
   'sage': { icon: Compass, color: '#FBBF24', colorMuted: 'rgba(251,191,36,0.12)', glowColor: 'rgba(251,191,36,0.15)', label: 'Strategy' },
-  'evo': { icon: BarChart3, color: '#00FFA7', colorMuted: 'rgba(0,255,167,0.12)', glowColor: 'rgba(0,255,167,0.15)', label: 'Evo Method' },
+  'evo': { icon: BarChart3, color: '#85F2A0', colorMuted: 'rgba(133, 242, 160,0.12)', glowColor: 'rgba(133, 242, 160,0.15)', label: 'Evo Method' },
 }
 
-const DEFAULT_CATEGORY = { icon: Zap, color: '#8b949e', colorMuted: 'rgba(139,148,158,0.12)', glowColor: 'rgba(139,148,158,0.15)', label: 'Other' }
+const DEFAULT_CATEGORY = { icon: Zap, color: '#C8D5CE', colorMuted: 'rgba(139,148,158,0.12)', glowColor: 'rgba(139,148,158,0.15)', label: 'Other' }
 
 function getCategoryMeta(prefix: string) {
   // Try exact match first, then prefix match
@@ -52,15 +52,15 @@ function getCategoryMeta(prefix: string) {
 
 function SkeletonCard() {
   return (
-    <div className="rounded-xl border border-[#21262d] bg-[#161b22] p-5">
+    <div className="rounded-xl border border-[#1E3829] bg-[#122018] p-5">
       <div className="flex items-start justify-between mb-3">
-        <div className="h-10 w-10 rounded-lg bg-[#21262d] animate-pulse" />
-        <div className="h-5 w-16 rounded-full bg-[#21262d] animate-pulse" />
+        <div className="h-10 w-10 rounded-lg bg-[#1E3829] animate-pulse" />
+        <div className="h-5 w-16 rounded-full bg-[#1E3829] animate-pulse" />
       </div>
-      <div className="h-4 w-32 rounded bg-[#21262d] animate-pulse mb-2" />
+      <div className="h-4 w-32 rounded bg-[#1E3829] animate-pulse mb-2" />
       <div className="space-y-1.5 mb-4">
-        <div className="h-3 w-full rounded bg-[#21262d] animate-pulse" />
-        <div className="h-3 w-2/3 rounded bg-[#21262d] animate-pulse" />
+        <div className="h-3 w-full rounded bg-[#1E3829] animate-pulse" />
+        <div className="h-3 w-2/3 rounded bg-[#1E3829] animate-pulse" />
       </div>
     </div>
   )
@@ -72,15 +72,15 @@ function SkeletonStat() {
 
 function StatCard({ label, value, icon: Icon }: { label: string; value: string | number; icon: LucideIcon }) {
   return (
-    <div className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]">
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+    <div className="group relative bg-[#122018] border border-[#1E3829] rounded-2xl p-5 transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
       <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15">
-          <Icon size={18} className="text-[#00FFA7]" />
+        <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15">
+          <Icon size={18} className="text-[#85F2A0]" />
         </div>
       </div>
-      <p className="text-3xl font-bold text-[#e6edf3] tracking-tight">{value}</p>
-      <p className="text-sm text-[#667085] mt-1">{label}</p>
+      <p className="text-3xl font-bold text-[#F7F9F8] tracking-tight">{value}</p>
+      <p className="text-sm text-[#6B8A76] mt-1">{label}</p>
     </div>
   )
 }
@@ -92,7 +92,7 @@ function SkillCard({ skill }: { skill: Skill }) {
   return (
     <Link
       to={`/skills/${skill.name}`}
-      className="group relative block rounded-xl border border-[#21262d] bg-[#161b22] p-5 transition-all duration-300 hover:border-transparent"
+      className="group relative block rounded-xl border border-[#1E3829] bg-[#122018] p-5 transition-all duration-300 hover:border-transparent"
     >
       {/* Hover glow effect */}
       <div
@@ -125,16 +125,16 @@ function SkillCard({ skill }: { skill: Skill }) {
 
       {/* Name */}
       <div className="relative mb-1.5">
-        <h3 className="text-[15px] font-semibold text-[#e6edf3] transition-colors duration-200 group-hover:text-white">
+        <h3 className="text-[15px] font-semibold text-[#F7F9F8] transition-colors duration-200 group-hover:text-white">
           {skill.name}
         </h3>
-        <code className="mt-1 inline-block text-[11px] font-mono text-[#667085]">
+        <code className="mt-1 inline-block text-[11px] font-mono text-[#6B8A76]">
           {skill.prefix}-*
         </code>
       </div>
 
       {/* Description */}
-      <p className="relative text-[13px] leading-relaxed text-[#667085] line-clamp-2">
+      <p className="relative text-[13px] leading-relaxed text-[#6B8A76] line-clamp-2">
         {skill.description || 'No description available.'}
       </p>
     </Link>
@@ -170,8 +170,8 @@ export default function Skills() {
     <div className="max-w-[1400px] mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#e6edf3] tracking-tight">{t('skills.title')}</h1>
-        <p className="text-[#667085] text-sm mt-1">Specialized capabilities and domain knowledge</p>
+        <h1 className="text-2xl font-bold text-[#F7F9F8] tracking-tight">{t('skills.title')}</h1>
+        <p className="text-[#6B8A76] text-sm mt-1">Specialized capabilities and domain knowledge</p>
       </div>
 
       {/* Stats Bar */}
@@ -192,13 +192,13 @@ export default function Skills() {
       {/* Search + Filter Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-6">
         <div className="relative flex-1 max-w-md">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#667085]" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B8A76]" />
           <input
             type="text"
             placeholder="Search skills..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-[#161b22] border border-[#21262d] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#e6edf3] placeholder-[#667085] focus:outline-none focus:border-[#00FFA7]/50 focus:shadow-[0_0_12px_rgba(0,255,167,0.08)] transition-all"
+            className="w-full bg-[#122018] border border-[#1E3829] rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#F7F9F8] placeholder-[#6B8A76] focus:outline-none focus:border-[#41A650]/50 focus:shadow-[0_0_12px_rgba(133, 242, 160,0.08)] transition-all"
           />
         </div>
         <div className="flex items-center gap-2 flex-wrap">
@@ -206,8 +206,8 @@ export default function Skills() {
             onClick={() => setSelectedCategory(null)}
             className={`text-xs px-3 py-1.5 rounded-full border transition-all duration-200 ${
               !selectedCategory
-                ? 'bg-[#00FFA7]/10 text-[#00FFA7] border-[#00FFA7]/30'
-                : 'bg-transparent text-[#667085] border-[#21262d] hover:border-[#667085]/50'
+                ? 'bg-[#41A650]/10 text-[#85F2A0] border-[#41A650]/30'
+                : 'bg-transparent text-[#6B8A76] border-[#1E3829] hover:border-[#6B8A76]/50'
             }`}
           >
             All
@@ -222,8 +222,8 @@ export default function Skills() {
                 className="text-xs px-3 py-1.5 rounded-full border transition-all duration-200"
                 style={{
                   backgroundColor: isActive ? meta.colorMuted : 'transparent',
-                  color: isActive ? meta.color : '#667085',
-                  borderColor: isActive ? `${meta.color}44` : '#21262d',
+                  color: isActive ? meta.color : '#6B8A76',
+                  borderColor: isActive ? `${meta.color}44` : '#1E3829',
                 }}
               >
                 {cat}
@@ -242,11 +242,11 @@ export default function Skills() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#161b22] border border-[#21262d]">
-            <Zap size={32} className="text-[#3F3F46]" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#122018] border border-[#1E3829]">
+            <Zap size={32} className="text-[#3D5445]" />
           </div>
-          <p className="text-[#667085] text-lg">No skills found</p>
-          <p className="text-[#3F3F46] text-sm mt-1">Try adjusting your search or filter</p>
+          <p className="text-[#6B8A76] text-lg">No skills found</p>
+          <p className="text-[#3D5445] text-sm mt-1">Try adjusting your search or filter</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

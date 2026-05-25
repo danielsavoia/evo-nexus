@@ -8,7 +8,7 @@
     "badge": "v{{version}} is now live",
     "title": "Your AI team,",
     "titleHighlight": "pre-assembled.",
-    "subtitle": "38 agents that remember, schedule, and hit targets. From finance to engineering — all wired up. Open source. One command.",
+    "subtitle": "38 agents that remember, schedule, and hit targets. From finance to engineering — all wired up.",
     "cta": "Get Started, it's free",
     "viewGithub": "View on GitHub",
     "discord": "Join 17,000+ developers on Discord",
@@ -24,7 +24,7 @@
     "sectionSubtitle": "Not a menu of features. A structure that keeps working when you close the laptop.",
     "beat1": {
       "title": "Set the goal once",
-      "body": "EvoNexus organizes work across four levels: Mission → Project → Goal → Task. You define what success looks like — \"100 paying customers by Q4\" — and the system tracks it automatically. Goals update when tasks are marked done. Agents receive the full cascade as context before they act.",
+      "body": "Clever Agent organizes work across four levels: Mission → Project → Goal → Task. You define what success looks like — \"100 paying customers by Q4\" — and the system tracks it automatically. Goals update when tasks are marked done. Agents receive the full cascade as context before they act.",
       "example": "Mission: MRR $1M Q4 2026 → Project: Evo AI → Goal: 100 paying customers by Jun 30 (progress: 23/100, 45 days left) → Tasks assigned to agents."
     },
     "beat2": {
@@ -34,7 +34,7 @@
     },
     "beat3": {
       "title": "Docs your agents actually read",
-      "body": "Upload PDFs, internal docs, SOPs, transcripts — agents query them verbatim. EvoNexus ships with a hybrid RAG system (keyword + semantic search) backed by your own Postgres. You bring the data, agents bring the context. No hallucinations about what your policies say — they cite the source.",
+      "body": "Upload PDFs, internal docs, SOPs, transcripts — agents query them verbatim. Clever Agent ships with a hybrid RAG system (keyword + semantic search) backed by your own Postgres. You bring the data, agents bring the context. No hallucinations about what your policies say — they cite the source.",
       "example": "Lex reviews a new vendor contract. It queries your legal knowledge base, finds the clause that contradicts your standard NDA template, and flags it with the exact source paragraph. You review the diff, not the whole document."
     },
     "beat4": {
@@ -111,7 +111,7 @@
   "knowledge": {
     "sectionTitle": "Agents that actually read your docs",
     "sectionSubtitle": "Upload your documents once. Every agent queries them in context — verbatim, with citations.",
-    "body": "EvoNexus ships with a hybrid RAG system: keyword search + semantic embeddings (local MPNet, OpenAI, or Gemini with MRL 768/1536/3072). Your knowledge lives in your own Postgres database. Agents query it at runtime — no hallucinations about what your SOPs say, no generic answers when a source exists. They cite the paragraph, not their best guess.",
+    "body": "Clever Agent ships with a hybrid RAG system: keyword search + semantic embeddings (local MPNet, OpenAI, or Gemini with MRL 768/1536/3072). Your knowledge lives in your own Postgres database. Agents query it at runtime — no hallucinations about what your SOPs say, no generic answers when a source exists. They cite the paragraph, not their best guess.",
     "bullet1": "Supports PDF, DOCX, PPTX, XLSX, HTML, EPUB, and plain text. Ingest once via the Knowledge UI or CLI.",
     "bullet2": "Hybrid retrieval: keyword match for precision, semantic search for coverage. Both, not either/or.",
     "bullet3": "Bring your own Postgres — Supabase, Neon, RDS, or on-prem. Your data stays in your infrastructure."
@@ -143,11 +143,11 @@
     "label": "Connects with everything you use"
   },
   "banner": {
-    "text": "An Evolution Foundation open source project.",
+    "text": "Clever Agent — orchestrated AI for intelligent operations.",
     "cta": "Learn more"
   },
   "footer": {
-    "tagline": "An Evolution Foundation project.",
+    "tagline": "Built on EvoNexus · Evolution Foundation",
     "links": "Links",
     "documentation": "Documentation",
     "contributing": "Contributing",

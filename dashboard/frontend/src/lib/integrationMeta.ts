@@ -76,7 +76,7 @@ const INTEGRATION_META: IntegrationMeta[] = [
   },
   {
     id: 'licensing',
-    description: 'Telemetria de instâncias open source',
+    description: 'Telemetria de instâncias',
     fields: [
       { envKey: 'LICENSING_ADMIN_TOKEN', label: 'Admin Token', hint: 'Token de administração do serviço de licenciamento', required: true },
       { envKey: 'LICENSING_API_URL', label: 'API URL', hint: 'URL da API de licenciamento', required: true },
@@ -84,7 +84,7 @@ const INTEGRATION_META: IntegrationMeta[] = [
   },
   {
     id: 'evolution api',
-    description: 'API principal Evolution (open source)',
+    description: 'API principal de integração',
     fields: [
       { envKey: 'EVOLUTION_API_KEY', label: 'API Key', hint: 'Chave de autenticação da Evolution API', required: true },
       { envKey: 'EVOLUTION_API_URL', label: 'API URL', hint: 'URL base da instância Evolution API', required: true },

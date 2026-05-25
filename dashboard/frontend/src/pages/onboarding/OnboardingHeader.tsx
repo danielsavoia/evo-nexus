@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+﻿import { useTranslation } from 'react-i18next'
 
 type StepKey = 'step1of3' | 'step2of3' | 'step2aOf3' | 'step2bOf3' | 'step3of3'
 
@@ -20,13 +20,13 @@ interface OnboardingHeaderProps {
 export default function OnboardingHeader({ step, filled }: OnboardingHeaderProps) {
   const { t } = useTranslation()
   const dot = (active: boolean) => (
-    <span className={`h-1.5 w-8 rounded-full ${active ? 'bg-[#00FFA7]' : 'bg-[#152030]'}`} />
+    <span className={`h-1.5 w-8 rounded-full ${active ? 'bg-[#41A650]' : 'bg-[#152030]'}`} />
   )
   return (
     <div className="flex flex-col items-center gap-4 mb-6">
-      <img src="/EVO_NEXUS.webp" alt="EvoNexus" className="h-7 w-auto opacity-90" />
+      <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[150px] h-auto opacity-90" />
       <div className="flex items-center gap-2">
-        <span className="text-[11px] text-[#5a6b7f] uppercase tracking-[0.08em]">
+        <span className="text-[11px] text-[#6B8A76] uppercase tracking-[0.08em]">
           {t(`onboarding.stepIndicator.${step}`)}
         </span>
         <div className="flex gap-1.5">

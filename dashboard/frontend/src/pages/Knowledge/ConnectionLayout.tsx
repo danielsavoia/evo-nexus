@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useParams, useNavigate, Link } from 'react-router-dom'
+﻿import { NavLink, Outlet, useParams, useNavigate, Link } from 'react-router-dom'
 import { ArrowLeft, Database } from 'lucide-react'
 import { useEffect } from 'react'
 import { KnowledgeProvider, useKnowledge } from '../../context/KnowledgeContext'
@@ -35,7 +35,7 @@ function ConnectionLayoutInner() {
   // page refresh that lands directly on /knowledge/connections/:id.
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-16 text-[#667085] text-sm">
+      <div className="flex items-center justify-center py-16 text-[#6B8A76] text-sm">
         Loading connection…
       </div>
     )
@@ -44,13 +44,13 @@ function ConnectionLayoutInner() {
   if (!connection) {
     return (
       <div className="text-center py-16">
-        <p className="text-[#D0D5DD] font-medium mb-2">Connection not found</p>
-        <p className="text-[#667085] text-sm mb-4">
+        <p className="text-[#C8D5CE] font-medium mb-2">Connection not found</p>
+        <p className="text-[#6B8A76] text-sm mb-4">
           The connection you&apos;re trying to open doesn&apos;t exist or was deleted.
         </p>
         <button
           onClick={() => navigate('/knowledge')}
-          className="text-sm text-[#00FFA7] hover:underline"
+          className="text-sm text-[#85F2A0] hover:underline"
         >
           ← Back to Connections
         </button>
@@ -60,7 +60,7 @@ function ConnectionLayoutInner() {
 
   const statusColor =
     connection.status === 'ready'
-      ? 'text-[#00FFA7] bg-[#00FFA7]/10'
+      ? 'text-[#85F2A0] bg-[#41A650]/10'
       : connection.status === 'error'
       ? 'text-red-400 bg-red-400/10'
       : 'text-yellow-400 bg-yellow-400/10'
@@ -71,25 +71,25 @@ function ConnectionLayoutInner() {
       <div className="mb-6">
         <Link
           to="/knowledge"
-          className="inline-flex items-center gap-1.5 text-xs text-[#667085] hover:text-[#D0D5DD] mb-3 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-[#6B8A76] hover:text-[#C8D5CE] mb-3 transition-colors"
         >
           <ArrowLeft size={14} />
           All connections
         </Link>
         <div className="flex items-center gap-3 flex-wrap">
-          <Database size={20} className="text-[#00FFA7]" />
+          <Database size={20} className="text-[#85F2A0]" />
           <h1 className="text-xl font-bold text-[#F9FAFB]">{connection.name}</h1>
           <span className={`text-[10px] px-2 py-0.5 rounded uppercase font-semibold ${statusColor}`}>
             {connection.status}
           </span>
-          <span className="text-xs text-[#667085] font-mono">
+          <span className="text-xs text-[#6B8A76] font-mono">
             {connection.host}:{connection.port ?? 5432} / {connection.database_name}
           </span>
         </div>
       </div>
 
       {/* Per-connection tabs */}
-      <div className="flex gap-1 mb-6 border-b border-[#344054] overflow-x-auto">
+      <div className="flex gap-1 mb-6 border-b border-[#1E3829] overflow-x-auto">
         {tabs.map((t) => (
           <NavLink
             key={t.label}
@@ -98,8 +98,8 @@ function ConnectionLayoutInner() {
             className={({ isActive }) =>
               `px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px whitespace-nowrap ${
                 isActive
-                  ? 'text-[#00FFA7] border-[#00FFA7]'
-                  : 'text-[#667085] border-transparent hover:text-[#D0D5DD]'
+                  ? 'text-[#85F2A0] border-[#41A650]'
+                  : 'text-[#6B8A76] border-transparent hover:text-[#C8D5CE]'
               }`
             }
           >
@@ -118,7 +118,7 @@ export default function ConnectionLayout() {
   const { hasPermission } = useAuth()
   if (!hasPermission('knowledge', 'view')) {
     return (
-      <div className="flex items-center justify-center h-64 text-[#667085] text-sm">
+      <div className="flex items-center justify-center h-64 text-[#6B8A76] text-sm">
         You don&apos;t have permission to view Knowledge.
       </div>
     )

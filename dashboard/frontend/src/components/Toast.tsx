@@ -1,4 +1,4 @@
-import {
+﻿import {
   createContext,
   useCallback,
   useContext,
@@ -50,8 +50,8 @@ const VARIANT_CONFIG: Record<
 > = {
   success: {
     icon: <CheckCircle2 size={16} />,
-    borderColor: '#00FFA7',
-    iconColor: '#00FFA7',
+    borderColor: '#85F2A0',
+    iconColor: '#85F2A0',
   },
   error: {
     icon: <AlertCircle size={16} />,
@@ -91,7 +91,7 @@ function ToastCard({
         width: 360,
         padding: '12px 14px',
         borderRadius: 8,
-        background: '#161b22',
+        background: '#122018',
         borderLeft: `3px solid ${cfg.borderColor}`,
         boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
         display: 'flex',
@@ -114,7 +114,7 @@ function ToastCard({
             margin: 0,
             fontSize: 13,
             fontWeight: 500,
-            color: '#e6edf3',
+            color: '#F7F9F8',
             lineHeight: 1.4,
           }}
         >

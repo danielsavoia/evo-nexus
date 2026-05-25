@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+﻿import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { Package, AlertTriangle, CheckCircle, Loader2, XCircle } from 'lucide-react'
 
@@ -8,7 +8,9 @@ export interface Plugin {
   version: string
   tier: string
   status: 'active' | 'disabled' | 'broken' | 'installing' | 'uninstalling'
-  enabled: number
+  // Backend returns boolean on Postgres, number (0/1) on legacy SQLite —
+  // accept both shapes; UI normalises with Boolean().
+  enabled: boolean | number
   source_url: string
   installed_at: string
   manifest_json: string
@@ -27,10 +29,10 @@ interface Props {
 }
 
 function StatusIcon({ status }: { status: Plugin['status'] }) {
-  if (status === 'active') return <CheckCircle size={14} className="text-[#00FFA7]" />
+  if (status === 'active') return <CheckCircle size={14} className="text-[#85F2A0]" />
   if (status === 'broken') return <XCircle size={14} className="text-red-400" />
   if (status === 'installing' || status === 'uninstalling') return <Loader2 size={14} className="text-yellow-400 animate-spin" />
-  return <AlertTriangle size={14} className="text-[#667085]" />
+  return <AlertTriangle size={14} className="text-[#6B8A76]" />
 }
 
 function statusLabel(status: Plugin['status']): string {
@@ -46,7 +48,8 @@ function statusLabel(status: Plugin['status']): string {
 
 export default function PluginCard({ plugin, onClick, onToggle }: Props) {
   const { t } = useTranslation()
-  const isEnabled = plugin.enabled === 1
+  // Tolerate boolean (Postgres) and integer (legacy SQLite) — both shapes can arrive.
+  const isEnabled = Boolean(plugin.enabled)
   const busy = plugin.status === 'installing' || plugin.status === 'uninstalling'
   // Wave 2.0: track icon load error per card (useState prevents reset on re-render)
   const [iconError, setIconError] = useState(false)
@@ -62,14 +65,14 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
 
   return (
     <div
-      className="group relative bg-[#161b22] border border-[#21262d] rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-[#00FFA7]/40 hover:shadow-[0_0_24px_rgba(0,255,167,0.06)]"
+      className="group relative bg-[#122018] border border-[#1E3829] rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:border-[#41A650]/40 hover:shadow-[0_0_24px_rgba(133, 242, 160,0.06)]"
       onClick={onClick}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#00FFA7]/20 to-transparent rounded-t-2xl" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#41A650]/15 to-transparent rounded-t-2xl" />
 
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#00FFA7]/8 border border-[#00FFA7]/15 shrink-0">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-[#41A650]/8 border border-[#41A650]/15 shrink-0">
             {showIcon ? (
               <img
                 src={plugin.icon_url!}
@@ -78,12 +81,12 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
                 onError={() => setIconError(true)}
               />
             ) : (
-              <Package size={18} className="text-[#00FFA7]" />
+              <Package size={18} className="text-[#85F2A0]" />
             )}
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-[#e6edf3] truncate">{plugin.name}</p>
-            <p className="text-xs text-[#667085]">v{plugin.version}</p>
+            <p className="text-sm font-semibold text-[#F7F9F8] truncate">{plugin.name}</p>
+            <p className="text-xs text-[#6B8A76]">v{plugin.version}</p>
           </div>
         </div>
 
@@ -96,7 +99,7 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
           disabled={busy}
           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors shrink-0 ${
             busy ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'
-          } ${isEnabled ? 'bg-[#00FFA7]' : 'bg-[#344054]'}`}
+          } ${isEnabled ? 'bg-[#41A650]' : 'bg-[#1E3829]'}`}
           title={isEnabled ? t('common.disable') : t('common.enable')}
         >
           <span
@@ -108,22 +111,22 @@ export default function PluginCard({ plugin, onClick, onToggle }: Props) {
       </div>
 
       {manifest.description && (
-        <p className="text-xs text-[#667085] mb-3 line-clamp-2">{manifest.description}</p>
+        <p className="text-xs text-[#6B8A76] mb-3 line-clamp-2">{manifest.description}</p>
       )}
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
           <StatusIcon status={plugin.status} />
           <span className={`text-xs font-medium ${
-            plugin.status === 'active' ? 'text-[#00FFA7]' :
+            plugin.status === 'active' ? 'text-[#85F2A0]' :
             plugin.status === 'broken' ? 'text-red-400' :
-            'text-[#667085]'
+            'text-[#6B8A76]'
           }`}>
             {statusLabel(plugin.status)}
           </span>
         </div>
         {manifest.capabilities && manifest.capabilities.length > 0 && (
-          <span className="text-[10px] text-[#667085] bg-[#21262d] px-2 py-0.5 rounded-full">
+          <span className="text-[10px] text-[#6B8A76] bg-[#1E3829] px-2 py-0.5 rounded-full">
             {manifest.capabilities.length} cap{manifest.capabilities.length !== 1 ? 's' : ''}
           </span>
         )}

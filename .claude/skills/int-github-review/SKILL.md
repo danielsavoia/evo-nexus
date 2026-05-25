@@ -116,7 +116,8 @@ Create directory if it does not exist.
 - **Focus on action** — what needs the responsible person's attention, not just numbers
 
 
-### Notification line
+### Notify via Telegram
 
-Write as the last line of your output:
-TELEGRAM_MSG: 🐙 GitHub Review [date] | [main result in 1 line]
+Upon completion, use the Telegram reply tool to send a short summary to the user.
+Format: emoji + routine name + main result (1-3 lines).
+If the routine had no updates, send anyway with "no updates".

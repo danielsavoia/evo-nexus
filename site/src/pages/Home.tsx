@@ -13,8 +13,7 @@ import {
   SiFigma, SiWhatsapp, SiIntercom, SiHubspot
 } from "react-icons/si";
 
-import MainLogo from "@assets/logo.webp";
-import EvoNexusLogo from "@assets/EVO_NEXUS.webp";
+import CleverAgentLogo from "@assets/clever-agent.svg";
 import printOverview from "@assets/print-overview.webp";
 import printAgents from "@assets/print-agents.webp";
 import printIntegrations from "@assets/print-integrations.webp";
@@ -67,15 +66,13 @@ export default function Home() {
   }, [lightboxImg]);
 
   const copyCode = useCallback(() => {
-    navigator.clipboard.writeText(`npx @evoapi/evo-nexus`);
+    navigator.clipboard.writeText(`Instalacao guiada disponivel na implantacao Clever Agent.`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, []);
 
-  const GITHUB_URL = "https://github.com/EvolutionAPI/evo-nexus";
   const DOCS_URL = "/docs";
   const DISCORD_URL = "https://discord.gg/evolution-api";
-  const EVOLUTION_URL = "https://evolutionfoundation.com.br";
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -122,17 +119,9 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Top Banner */}
-      <div className="fixed top-0 w-full z-[60] bg-primary text-primary-foreground">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-3 text-sm font-medium">
-          <span>{t("banner.text")}</span>
-          <a
-            href={EVOLUTION_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="underline underline-offset-2 font-bold hover:opacity-80 transition-opacity"
-          >
-            {t("banner.cta")}
-          </a>
+      <div className="fixed top-0 w-full z-[60] bg-[#0F2318] border-b border-[#255938]/60">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-2 text-sm">
+          <span className="text-[#85F2A0]/80 font-medium">{t("banner.text")}</span>
         </div>
       </div>
 
@@ -140,12 +129,12 @@ export default function Home() {
       <nav className={`fixed w-full z-50 transition-all duration-300 border-b ${isScrolled ? 'bg-background/80 backdrop-blur-md border-border' : 'bg-transparent border-transparent'}`} style={{ top: '36px' }}>
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={EvoNexusLogo} alt="EvoNexus" className="h-8" />
+            <img src={CleverAgentLogo} alt="Clever Agent" className="w-[150px] h-auto" />
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-github">{t("nav.github")}</a>
-            <a href={DOCS_URL} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-docs">{t("nav.docs")}</a>
+            <button onClick={() => scrollTo("quickstart")} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-quickstart">Quickstart</button>
+            <button onClick={() => scrollTo("screenshots")} className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium" data-testid="link-screenshots">Screenshots</button>
             <div className="flex items-center gap-1 border border-border rounded-lg px-1 py-0.5">
               {LANGUAGES.map((lang) => (
                 <button
@@ -159,7 +148,7 @@ export default function Home() {
               ))}
             </div>
             <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-[0_0_15px_rgba(0,255,167,0.3)]"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-[0_0_15px_rgba(65, 166, 80, 0.3)]"
               onClick={() => scrollTo("quickstart")}
               data-testid="button-get-started-nav"
             >
@@ -182,8 +171,8 @@ export default function Home() {
               className="md:hidden overflow-hidden bg-background/95 backdrop-blur-md border-b border-border"
             >
               <div className="flex flex-col gap-4 px-6 py-6">
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-foreground font-medium" onClick={() => setMobileMenuOpen(false)}>{t("nav.github")}</a>
-                <a href={DOCS_URL} className="text-foreground font-medium" onClick={() => setMobileMenuOpen(false)}>{t("nav.docs")}</a>
+                <button className="text-left text-foreground font-medium" onClick={() => scrollTo("quickstart")}>Quickstart</button>
+                <button className="text-left text-foreground font-medium" onClick={() => scrollTo("screenshots")}>Screenshots</button>
                 <div className="flex items-center gap-1 border border-border rounded-lg px-1 py-0.5 w-fit">
                   {LANGUAGES.map((lang) => (
                     <button
@@ -211,12 +200,12 @@ export default function Home() {
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-6 text-center flex flex-col items-center">
           <FadeIn>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F2CB05]/10 border border-[#F2CB05]/25 text-[#F2CB05] text-sm font-medium mb-8">
               <Zap className="w-4 h-4" />
               <span>{t("hero.badge", { version: __APP_VERSION__ })}</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tighter max-w-4xl mx-auto leading-tight mb-6 font-heading">
-              {t("hero.title")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-300">{t("hero.titleHighlight")}</span>
+              {t("hero.title")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-[#85F2A0]">{t("hero.titleHighlight")}</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               {t("hero.subtitle")}
@@ -240,17 +229,14 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-8 h-14 shadow-[0_0_20px_rgba(0,255,167,0.4)]"
+                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-8 h-14 shadow-[0_0_20px_rgba(65, 166, 80, 0.4)]"
                 onClick={() => scrollTo("quickstart")}
                 data-testid="button-get-started-hero"
               >
                 {t("hero.cta")}
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-muted text-foreground font-medium text-lg px-8 h-14" data-testid="button-github-hero" asChild>
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-                  <SiGithub className="w-5 h-5 mr-2" />
-                  {t("hero.viewGithub")}
-                </a>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto border-border hover:bg-muted text-foreground font-medium text-lg px-8 h-14" data-testid="button-learn-hero" onClick={() => scrollTo("screenshots")}>
+                {t("banner.cta")}
               </Button>
             </div>
 
@@ -270,15 +256,15 @@ export default function Home() {
             <div className="rounded-xl overflow-hidden bg-[#0a0f18] border border-border shadow-2xl relative">
               <div className="absolute top-0 inset-x-0 h-8 bg-muted flex items-center px-4 gap-2 border-b border-border">
                 <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                <div className="w-3 h-3 rounded-full" style={{ background: 'rgba(242,203,5,0.75)' }}></div>
+                <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 <div className="mx-auto text-xs text-muted-foreground font-mono">bash</div>
               </div>
               <div className="p-6 pt-12 font-mono text-sm leading-relaxed text-gray-300">
-                <div className="flex gap-2"><span className="text-primary">$</span> <span>npx @evoapi/evo-nexus</span></div>
-                <div className="text-emerald-400 mt-2">&#10003; Claude Code CLI detected</div>
-                <div className="text-emerald-400">&#10003; Dependencies installed</div>
-                <div className="text-emerald-400">&#10003; Dashboard built</div>
+                <div className="flex gap-2"><span className="text-primary">$</span> <span>Ambiente provisionado pela equipe Clever.</span></div>
+                <div className="text-[#85F2A0] mt-2">&#10003; Claude Code CLI detected</div>
+                <div className="text-[#85F2A0]">&#10003; Dependencies installed</div>
+                <div className="text-[#85F2A0]">&#10003; Dashboard built</div>
                 <div className="text-blue-400 mt-2 font-bold">&#8594; Open http://localhost:8080</div>
                 <div className="w-2 h-4 bg-primary animate-pulse mt-2"></div>
               </div>
@@ -287,7 +273,7 @@ export default function Home() {
         </section>
 
         {/* How Work Gets Done — 4-beat narrative */}
-        <section className="max-w-7xl mx-auto px-6">
+        <section id="screenshots" className="max-w-7xl mx-auto px-6">
           <FadeIn>
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 font-heading">{t("howWorkGetsDone.sectionTitle")}</h2>
@@ -468,7 +454,7 @@ export default function Home() {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`group relative rounded-xl border border-border bg-card overflow-hidden shadow-lg transition-all hover:border-primary/50 hover:shadow-[0_0_30px_rgba(0,255,167,0.1)] cursor-pointer${i === 0 ? ' md:col-span-2' : ''}`}
+                  className={`group relative rounded-xl border border-border bg-card overflow-hidden shadow-lg transition-all hover:border-primary/50 hover:shadow-[0_0_30px_rgba(65, 166, 80, 0.1)] cursor-pointer${i === 0 ? ' md:col-span-2' : ''}`}
                   onClick={() => setLightboxImg(item.img)}
                   data-testid={`screenshot-${i}`}
                 >
@@ -496,7 +482,7 @@ export default function Home() {
               <SiLinear className="w-7 h-7 hover:text-purple-500 transition-colors" title="Linear" />
               <SiDiscord className="w-7 h-7 hover:text-indigo-400 transition-colors" title="Discord" />
               <SiTelegram className="w-7 h-7 hover:text-blue-400 transition-colors" title="Telegram" />
-              <SiWhatsapp className="w-7 h-7 hover:text-green-500 transition-colors" title="WhatsApp" />
+              <SiWhatsapp className="w-7 h-7 hover:text-[#41A650] transition-colors" title="WhatsApp" />
               <SiStripe className="w-7 h-7 hover:text-indigo-500 transition-colors" title="Stripe" />
               <SiTodoist className="w-7 h-7 hover:text-red-500 transition-colors" title="Todoist" />
               <SiYoutube className="w-7 h-7 hover:text-red-600 transition-colors" title="YouTube" />
@@ -524,12 +510,12 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 mb-8 relative">
               <div className="hidden sm:block absolute top-6 left-[16%] right-[16%] h-[2px] bg-border z-0"></div>
               {[
-                { step: 1, title: t("howItWorks.step1.title"), code: "npx @evoapi/evo-nexus", desc: t("howItWorks.step1.desc") },
+                { step: 1, title: t("howItWorks.step1.title"), code: "Instalacao guiada", desc: t("howItWorks.step1.desc") },
                 { step: 2, title: t("howItWorks.step2.title"), code: "make dashboard-app", desc: t("howItWorks.step2.desc") },
                 { step: 3, title: t("howItWorks.step3.title"), code: t("howItWorks.step3.code"), desc: t("howItWorks.step3.desc") },
               ].map((item, i) => (
                 <div key={i} className="flex-1 flex flex-col items-center text-center relative z-10">
-                  <div className="w-12 h-12 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center text-lg font-bold text-primary mb-3 shadow-[0_0_12px_rgba(0,255,167,0.15)]">
+                  <div className="w-12 h-12 rounded-full bg-card border-2 border-primary/50 flex items-center justify-center text-lg font-bold text-primary mb-3 shadow-[0_0_12px_rgba(65, 166, 80, 0.15)]">
                     {item.step}
                   </div>
                   <h3 className="text-sm font-bold mb-1">{item.title}</h3>
@@ -545,8 +531,8 @@ export default function Home() {
               <div className="flex items-center justify-between px-4 h-10 bg-muted border-b border-border">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                  <div className="w-3 h-3 rounded-full" style={{ background: 'rgba(242,203,5,0.75)' }}></div>
+                  <div className="w-3 h-3 rounded-full bg-[#41A650]/90"></div>
                 </div>
                 <span className="text-xs text-muted-foreground font-mono">terminal</span>
                 <Button
@@ -560,13 +546,13 @@ export default function Home() {
                 </Button>
               </div>
               <div className="p-6 md:p-8 font-mono text-base md:text-lg leading-loose">
-                <div className="flex gap-3"><span className="text-primary select-none">$</span> <span className="text-gray-300"><span className="text-blue-400">npx</span> @evoapi/evo-nexus</span></div>
+                <div className="flex gap-3"><span className="text-primary select-none">$</span> <span className="text-gray-300">Instalacao guiada disponivel na implantacao Clever Agent.</span></div>
                 <div className="mt-4 text-muted-foreground text-sm">{t("quickstart.comment")}</div>
               </div>
             </div>
 
             <div className="text-center mt-8">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-10 h-14 shadow-[0_0_20px_rgba(0,255,167,0.4)]" data-testid="button-get-started-bottom" asChild>
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg px-10 h-14 shadow-[0_0_20px_rgba(65, 166, 80, 0.4)]" data-testid="button-get-started-bottom" asChild>
                 <a href={DOCS_URL}>
                   {t("quickstart.viewGuide")}
                 </a>
@@ -583,7 +569,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <img src={MainLogo} alt="Evolution Foundation" className="h-8" />
+                <img src={CleverAgentLogo} alt="Clever Agent" className="w-[150px] h-auto" />
               </div>
               <p className="text-muted-foreground text-sm">{t("footer.tagline")}</p>
             </div>
@@ -591,10 +577,7 @@ export default function Home() {
             <div className="flex flex-col md:items-center gap-4">
               <h4 className="font-bold mb-2">{t("footer.links")}</h4>
               <div className="flex flex-wrap gap-6">
-                <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-github">GitHub</a>
                 <a href={DOCS_URL} className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-docs">{t("footer.documentation")}</a>
-                <a href={`${GITHUB_URL}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-contributing">{t("footer.contributing")}</a>
-                <a href={`${GITHUB_URL}/blob/main/CHANGELOG.md`} target="_blank" rel="noreferrer" className="text-sm text-muted-foreground hover:text-primary transition-colors" data-testid="link-footer-changelog">{t("footer.changelog")}</a>
               </div>
             </div>
 

@@ -1,0 +1,13 @@
+﻿<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96' role='img' aria-label='Kai Personal'>
+  <rect x='2' y='2' width='92' height='92' rx='24' fill='#255938'/>
+  <circle cx='48' cy='48' r='44' fill='none' stroke='#85F2A0' stroke-opacity='0.35' stroke-width='2'/>
+  <ellipse cx='48' cy='84' rx='26' ry='16' fill='#85F2A0'/>
+  <rect x='38' y='58' width='20' height='12' rx='6' fill='#F2D3BF'/>
+  <circle cx='48' cy='46' r='18' fill='#F2D3BF'/>
+  <path d='M30 44c1-12 9-19 18-19c9 0 17 6 18 18c-4-5-10-7-18-7s-14 2-18 8z' fill='#255938'/><circle cx='34' cy='38' r='4' fill='#255938'/><circle cx='62' cy='37' r='4' fill='#255938'/>
+  <circle cx='42' cy='46' r='1.8' fill='#19402A'/>
+  <circle cx='54' cy='46' r='1.8' fill='#19402A'/>
+  <path d='M43 53q5 4 10 0' stroke='#19402A' stroke-width='1.8' fill='none' stroke-linecap='round'/>
+  <path d='M38 40q4-3 8 0M50 40q4-3 8 0' stroke='#255938' stroke-width='1.5' fill='none' stroke-linecap='round'/>
+  <path d='M66 58c0-3 4-4 5-1c1-3 5-2 5 1c0 3-5 6-5 6s-5-3-5-6z' fill='#F2CB05'/>
+</svg>

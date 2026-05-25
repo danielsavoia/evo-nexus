@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { X, BookOpen, Terminal } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { api } from '../lib/api'
@@ -38,7 +38,7 @@ export default function OracleWelcomeBanner() {
 
   return (
     <div
-      className="mb-5 flex items-center gap-4 px-4 py-3 rounded-xl border border-[#00FFA7]/20"
+      className="mb-5 flex items-center gap-4 px-4 py-3 rounded-xl border border-[#41A650]/20"
       style={{ backgroundColor: '#0b1a12' }}
     >
       {/* Icon */}
@@ -48,12 +48,12 @@ export default function OracleWelcomeBanner() {
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <p className="text-[13px] font-semibold text-[#e6edf3]">
+        <p className="text-[13px] font-semibold text-[#F7F9F8]">
           {t('agents.welcomeBanner.title')}
         </p>
         <p className="text-[11px] text-[#5a7a5a] mt-0.5 leading-snug">
           {t('agents.welcomeBanner.descriptionPart1')}
-          <span className="inline-flex items-center gap-1 font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0f2010] border border-[#00FFA7]/15 text-[#00FFA7]/80">
+          <span className="inline-flex items-center gap-1 font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#0f2010] border border-[#41A650]/15 text-[#85F2A0]/80">
             <Terminal size={9} />
             /oracle
           </span>
@@ -64,7 +64,7 @@ export default function OracleWelcomeBanner() {
       {/* Dismiss */}
       <button
         onClick={handleDismiss}
-        className="flex-shrink-0 p-1.5 rounded-lg text-[#5a6b7f] hover:text-[#e2e8f0] hover:bg-[#152030] transition-colors"
+        className="flex-shrink-0 p-1.5 rounded-lg text-[#6B8A76] hover:text-[#e2e8f0] hover:bg-[#152030] transition-colors"
         aria-label={t('common.close')}
       >
         <X size={14} />

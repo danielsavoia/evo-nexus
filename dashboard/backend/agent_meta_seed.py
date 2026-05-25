@@ -12,158 +12,159 @@ from __future__ import annotations
 from typing import Dict, Optional
 
 # Each entry: {label: str, avatar_url: str | None}
-# avatar_url follows the same pattern as /avatar/avatar_{slug}.webp on the frontend.
+# avatar_url follows /clever-agent/avatars/avatar_{slug}.png on the frontend.
 NATIVE_AGENT_SEED: Dict[str, Dict[str, Optional[str]]] = {
     "atlas-project": {
         "label": "Projects",
-        "avatar_url": "/avatar/avatar_atlas.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_atlas.png",
     },
     "clawdia-assistant": {
         "label": "Operations",
-        "avatar_url": "/avatar/avatar_clawdia.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_clawdia.png",
     },
     "flux-finance": {
         "label": "Finance",
-        "avatar_url": "/avatar/avatar_flux.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_flux.png",
     },
     "kai-personal-assistant": {
         "label": "Personal",
-        "avatar_url": "/avatar/avatar_kai.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_kai.png",
     },
     "mentor-courses": {
         "label": "Courses",
-        "avatar_url": "/avatar/avatar_mentor.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_mentor.png",
     },
     "lumen-learning": {
         "label": "Learning Retention",
-        "avatar_url": "/avatar/avatar_lumen.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_lumen.png",
     },
     "nex-sales": {
         "label": "Sales",
-        "avatar_url": "/avatar/avatar_nex.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_nex.png",
     },
     "pixel-social-media": {
         "label": "Social Media",
-        "avatar_url": "/avatar/avatar_pixel.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_pixel.png",
     },
     "pulse-community": {
         "label": "Community",
-        "avatar_url": "/avatar/avatar_pulse.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_pulse.png",
     },
     "sage-strategy": {
         "label": "Strategy",
-        "avatar_url": "/avatar/avatar_sage.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_sage.png",
     },
     "oracle": {
         "label": "Knowledge",
-        "avatar_url": "/avatar/avatar_oracle.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_oracle.png",
     },
     "mako-marketing": {
         "label": "Marketing",
-        "avatar_url": "/avatar/avatar_mako.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_mako.png",
     },
     "aria-hr": {
         "label": "HR / People",
-        "avatar_url": "/avatar/avatar_aria.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_aria.png",
     },
     "zara-cs": {
         "label": "Customer Success",
-        "avatar_url": "/avatar/avatar_zara.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_zara.png",
     },
     "lex-legal": {
         "label": "Legal",
-        "avatar_url": "/avatar/avatar_lex.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_lex.png",
     },
     "nova-product": {
         "label": "Product",
-        "avatar_url": "/avatar/avatar_nova.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_nova.png",
     },
     "dex-data": {
         "label": "Data / BI",
-        "avatar_url": "/avatar/avatar_dex.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_dex.png",
     },
     "helm-conductor": {
         "label": "Cycle Orchestration",
-        "avatar_url": "/avatar/avatar_helm.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_helm.png",
     },
     "mirror-retro": {
         "label": "Retrospective",
-        "avatar_url": "/avatar/avatar_mirror.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_mirror.png",
     },
     "apex-architect": {
         "label": "Architect",
-        "avatar_url": "/avatar/avatar_apex.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_apex.png",
     },
     "bolt-executor": {
         "label": "Executor",
-        "avatar_url": "/avatar/avatar_bolt.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_bolt.png",
     },
     "canvas-designer": {
         "label": "Designer",
-        "avatar_url": "/avatar/avatar_canvas.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_canvas.png",
     },
     "compass-planner": {
         "label": "Planner",
-        "avatar_url": "/avatar/avatar_compass.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_compass.png",
     },
     "echo-analyst": {
         "label": "Analyst",
-        "avatar_url": "/avatar/avatar_echo.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_echo.png",
     },
     "flow-git": {
         "label": "Git Master",
-        "avatar_url": "/avatar/avatar_flow.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_flow.png",
     },
     "grid-tester": {
         "label": "Test Engineer",
-        "avatar_url": "/avatar/avatar_grid.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_grid.png",
     },
     "hawk-debugger": {
         "label": "Debugger",
-        "avatar_url": "/avatar/avatar_hawk.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_hawk.png",
     },
     "lens-reviewer": {
         "label": "Code Reviewer",
-        "avatar_url": "/avatar/avatar_lens.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_lens.png",
     },
     "oath-verifier": {
         "label": "Verifier",
-        "avatar_url": "/avatar/avatar_oath.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_oath.png",
     },
     "prism-scientist": {
         "label": "Scientist",
-        "avatar_url": "/avatar/avatar_prism.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_prism.png",
     },
     "probe-qa": {
         "label": "QA Tester",
-        "avatar_url": "/avatar/avatar_probe.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_probe.png",
     },
     "quill-writer": {
         "label": "Writer",
-        "avatar_url": "/avatar/avatar_quill.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_quill.png",
     },
     "raven-critic": {
         "label": "Critic",
-        "avatar_url": "/avatar/avatar_raven.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_raven.png",
     },
     "scout-explorer": {
         "label": "Explorer",
-        "avatar_url": "/avatar/avatar_scout.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_scout.png",
     },
     "scroll-docs": {
         "label": "Document Specialist",
-        "avatar_url": "/avatar/avatar_scroll.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_scroll.png",
     },
     "trail-tracer": {
         "label": "Tracer",
-        "avatar_url": "/avatar/avatar_trail.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_trail.png",
     },
     "vault-security": {
         "label": "Security Reviewer",
-        "avatar_url": "/avatar/avatar_vault.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_vault.png",
     },
     "zen-simplifier": {
         "label": "Code Simplifier",
-        "avatar_url": "/avatar/avatar_zen.webp",
+        "avatar_url": "/clever-agent/avatars/avatar_zen.png",
     },
 }
+

@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+﻿import { NavLink, Outlet } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Database } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
@@ -17,7 +17,7 @@ export default function KnowledgeLayout() {
 
   if (!hasPermission('knowledge', 'view')) {
     return (
-      <div className="flex items-center justify-center h-64 text-[#667085] text-sm">
+      <div className="flex items-center justify-center h-64 text-[#6B8A76] text-sm">
         {t('knowledge.noPermission')}
       </div>
     )
@@ -29,16 +29,16 @@ export default function KnowledgeLayout() {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-[#F9FAFB] flex items-center gap-2">
-            <Database size={22} className="text-[#00FFA7]" />
+            <Database size={22} className="text-[#85F2A0]" />
             {t('knowledge.title')}
           </h1>
-          <p className="text-[#667085] mt-1 text-sm">
+          <p className="text-[#6B8A76] mt-1 text-sm">
             {t('knowledge.layoutSubtitle')}
           </p>
         </div>
 
         {/* Global tabs (connection-agnostic) */}
-        <div className="flex gap-1 mb-6 border-b border-[#344054] overflow-x-auto">
+        <div className="flex gap-1 mb-6 border-b border-[#1E3829] overflow-x-auto">
           {tabs.map((tab) => (
             <NavLink
               key={tab.to}
@@ -47,8 +47,8 @@ export default function KnowledgeLayout() {
               className={({ isActive }) =>
                 `px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px whitespace-nowrap ${
                   isActive
-                    ? 'text-[#00FFA7] border-[#00FFA7]'
-                    : 'text-[#667085] border-transparent hover:text-[#D0D5DD]'
+                    ? 'text-[#85F2A0] border-[#41A650]'
+                    : 'text-[#6B8A76] border-transparent hover:text-[#C8D5CE]'
                 }`
               }
             >

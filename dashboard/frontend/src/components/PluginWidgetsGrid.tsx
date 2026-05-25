@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+﻿import { useEffect, useState, useRef } from 'react'
 import { api } from '../lib/api'
 import { Puzzle } from 'lucide-react'
 
@@ -48,16 +48,16 @@ function WidgetSlot({ widget }: { widget: PluginWidget }) {
 
   if (error) {
     return (
-      <div className="bg-[#161b22] border border-red-500/20 rounded-2xl p-4 text-xs text-red-400">
+      <div className="bg-[#122018] border border-red-500/20 rounded-2xl p-4 text-xs text-red-400">
         Widget <code>{widget.widget_id}</code>: {error}
       </div>
     )
   }
 
   return (
-    <div className="bg-[#161b22] border border-[#21262d] rounded-2xl overflow-hidden">
+    <div className="bg-[#122018] border border-[#1E3829] rounded-2xl overflow-hidden">
       {!ready && (
-        <div className="flex items-center justify-center h-24 text-xs text-[#667085]">
+        <div className="flex items-center justify-center h-24 text-xs text-[#6B8A76]">
           Loading widget…
         </div>
       )}
@@ -86,8 +86,8 @@ export default function PluginWidgetsGrid({ mountPoint = 'overview' }: Props) {
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-3">
-        <Puzzle size={14} className="text-[#00FFA7]" />
-        <h3 className="text-xs font-medium text-[#667085] uppercase tracking-wider">Plugin Widgets</h3>
+        <Puzzle size={14} className="text-[#85F2A0]" />
+        <h3 className="text-xs font-medium text-[#6B8A76] uppercase tracking-wider">Plugin Widgets</h3>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {widgets.map((w) => (
