@@ -22,7 +22,7 @@ const PROVIDERS: Provider[] = [
 const OPENROUTER_BASE_URL = 'https://openrouter.ai/api/v1'
 const OPENROUTER_DEFAULT_MODEL = 'anthropic/claude-sonnet-4'
 
-const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
+const inp = "w-full px-4 py-3 rounded-lg bg-[#122018] border border-[#1E3829] text-[#e2e8f0] placeholder-[#2d4a38] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
 const lbl = "block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase"
 
 interface StepProviderProps {
@@ -35,7 +35,7 @@ type Phase = 'select' | ProviderId
 export default function StepProvider({ onNext, onBack }: StepProviderProps) {
   const [phase, setPhase] = useState<Phase>('select')
 
-  const cardShell = "rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]"
+  const cardShell = "rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]"
 
   return (
     <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
@@ -92,9 +92,9 @@ function ProviderSelect({ shell, onPick, onBack }: { shell: string; onPick: (id:
   const { t } = useTranslation()
   return (
     <div className={shell}>
-      <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+      <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
         <h2 className="text-[16px] font-semibold text-[#e2e8f0]">{t('onboarding.provider.title')}</h2>
-        <p className="text-[11px] text-[#4a5a6e] mt-1">{t('onboarding.provider.subtitle')}</p>
+        <p className="text-[11px] text-[#6B8A76] mt-1">{t('onboarding.provider.subtitle')}</p>
       </div>
 
       <div className="px-7 py-6 space-y-4">
@@ -103,7 +103,7 @@ function ProviderSelect({ shell, onPick, onBack }: { shell: string; onPick: (id:
             <button
               key={p.id}
               onClick={() => onPick(p.id)}
-              className="p-3 rounded-lg border text-left transition-all duration-200 border-[#1e2a3a] bg-[#0f1520] hover:border-[#41A650]/60 hover:bg-[#41A650]/5"
+              className="p-3 rounded-lg border text-left transition-all duration-200 border-[#1E3829] bg-[#122018] hover:border-[#85F2A0]/40 hover:bg-[#41A650]/8"
             >
               <div className="flex items-center gap-2 mb-1">
                 <span
@@ -120,7 +120,7 @@ function ProviderSelect({ shell, onPick, onBack }: { shell: string; onPick: (id:
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBack}
-            className="flex-1 py-3 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-1 py-3 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -166,7 +166,7 @@ function AnthropicSubStep({ shell, onBackToProviders, onDone }: { shell: string;
 
   return (
     <div className={shell}>
-      <div className="px-7 pt-5 pb-4 border-b border-[#152030]">
+      <div className="px-7 pt-5 pb-4 border-b border-[#1E3829]">
         <BackLink onClick={onBackToProviders} />
         <h2 className="text-[16px] font-semibold text-[#e2e8f0] mt-2">{t('onboarding.providerAnthropic.title')}</h2>
       </div>
@@ -178,16 +178,16 @@ function AnthropicSubStep({ shell, onBackToProviders, onDone }: { shell: string;
           </div>
         )}
 
-        <p className="text-[12px] text-[#8a9aae] leading-relaxed">
+        <p className="text-[12px] text-[#6B8A76] leading-relaxed">
           {t('onboarding.providerAnthropic.bodyPart1')}
-          <code className="inline-flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded bg-[#0f1520] border border-[#41A650]/20 text-[#85F2A0] mx-1">
+          <code className="inline-flex items-center gap-1 font-mono text-[11px] px-1.5 py-0.5 rounded bg-[#122018] border border-[#41A650]/20 text-[#85F2A0] mx-1">
             <Terminal size={10} />
             {t('onboarding.providerAnthropic.codeChip')}
           </code>
           {t('onboarding.providerAnthropic.bodyPart2')}
         </p>
 
-        <div className="p-3 rounded-lg bg-[#0a1220] border border-[#1e2a3a]">
+        <div className="p-3 rounded-lg bg-[#0D1B12] border border-[#1E3829]">
           <p className="text-[11px] text-[#6B8A76] leading-relaxed">
             {t('onboarding.providerAnthropic.noKeyNote')}
           </p>
@@ -196,7 +196,7 @@ function AnthropicSubStep({ shell, onBackToProviders, onDone }: { shell: string;
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -272,7 +272,7 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
 
   return (
     <div className={shell}>
-      <div className="px-7 pt-5 pb-4 border-b border-[#152030]">
+      <div className="px-7 pt-5 pb-4 border-b border-[#1E3829]">
         <BackLink onClick={onBackToProviders} />
         <h2 className="text-[16px] font-semibold text-[#e2e8f0] mt-2">{t('onboarding.providerOpenAI.title')}</h2>
       </div>
@@ -339,7 +339,7 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
           </div>
         )}
 
-        <div className="p-3 rounded-lg bg-[#0a1220] border border-[#1e2a3a]">
+        <div className="p-3 rounded-lg bg-[#0D1B12] border border-[#1E3829]">
           <p className="text-[11px] text-[#6B8A76] leading-relaxed">
             {t('onboarding.providerOpenAI.storageNote')}
           </p>
@@ -348,7 +348,7 @@ function OpenAISubStep({ shell, onBackToProviders, onDone }: { shell: string; on
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -398,7 +398,7 @@ function OpenRouterSubStep({ shell, onBackToProviders, onDone }: { shell: string
 
   return (
     <div className={shell}>
-      <div className="px-7 pt-5 pb-4 border-b border-[#152030]">
+      <div className="px-7 pt-5 pb-4 border-b border-[#1E3829]">
         <BackLink onClick={onBackToProviders} />
         <h2 className="text-[16px] font-semibold text-[#e2e8f0] mt-2">{t('onboarding.providerOpenRouter.title')}</h2>
       </div>
@@ -412,7 +412,7 @@ function OpenRouterSubStep({ shell, onBackToProviders, onDone }: { shell: string
 
         <div>
           <label className={lbl}>{t('onboarding.providerOpenRouter.baseUrlLabel')}</label>
-          <div className="px-3 py-2.5 rounded-lg bg-[#0f1520] border border-[#1e2a3a] font-mono text-[12px] text-[#6366F1] flex items-center gap-2">
+          <div className="px-3 py-2.5 rounded-lg bg-[#122018] border border-[#1E3829] font-mono text-[12px] text-[#85F2A0] flex items-center gap-2">
             <ExternalLink size={12} />
             {OPENROUTER_BASE_URL}
           </div>
@@ -452,7 +452,7 @@ function OpenRouterSubStep({ shell, onBackToProviders, onDone }: { shell: string
           />
         </div>
 
-        <div className="p-3 rounded-lg bg-[#0a1220] border border-[#1e2a3a]">
+        <div className="p-3 rounded-lg bg-[#0D1B12] border border-[#1E3829]">
           <p className="text-[11px] text-[#6B8A76] leading-relaxed">
             {t('onboarding.providerOpenAI.storageNote')}
           </p>
@@ -461,7 +461,7 @@ function OpenRouterSubStep({ shell, onBackToProviders, onDone }: { shell: string
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>
@@ -607,12 +607,12 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
 
   return (
     <div className={shell}>
-      <div className="px-7 pt-5 pb-4 border-b border-[#152030]">
+      <div className="px-7 pt-5 pb-4 border-b border-[#1E3829]">
         <BackLink onClick={onBackToProviders} />
         <h2 className="text-[16px] font-semibold text-[#e2e8f0] mt-2">{t('onboarding.providerCodex.title')}</h2>
       </div>
 
-      <div className="flex border-b border-[#152030]">
+      <div className="flex border-b border-[#1E3829]">
         <button
           onClick={() => setTab('browser')}
           className={`flex-1 py-2.5 text-[11px] font-medium tracking-wide uppercase transition-colors ${tab === 'browser' ? 'text-[#85F2A0] border-b-2 border-[#41A650]' : 'text-[#6B8A76]'}`}
@@ -675,7 +675,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
               </p>
               <p className="text-xs text-[#6B8A76]">{t('onboarding.providerCodex.device2')}:</p>
               <div className="flex items-center justify-center">
-                <code className="text-xl font-bold text-white tracking-[0.15em] bg-[#0f1520] px-5 py-2.5 rounded-lg border border-[#1e2a3a]">
+                <code className="text-xl font-bold text-[#85F2A0] tracking-[0.15em] bg-[#122018] px-5 py-2.5 rounded-lg border border-[#1E3829]">
                   {deviceCode.user_code}
                 </code>
               </div>
@@ -704,7 +704,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
         <div className="flex gap-3 pt-2">
           <button
             onClick={onBackToProviders}
-            className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+            className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
           >
             {t('onboarding.back')}
           </button>

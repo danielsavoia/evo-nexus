@@ -53,18 +53,37 @@ COPY scheduler.py ./
 COPY .claude/ .claude/
 COPY docs/ docs/
 
+# Copy config example files to a fixed location outside the config volume.
+# At runtime the config/ directory is a Docker volume (starts empty), so any
+# files written here would be shadowed. We copy them to _config_defaults/ so
+# the entrypoint can seed the volume on first boot without needing docker exec.
+COPY config/providers.example.json   _config_defaults/providers.example.json
+COPY config/workspace.example.yaml   _config_defaults/workspace.example.yaml
+COPY config/smart-router.example.json _config_defaults/smart-router.example.json
+COPY config/heartbeats.example.yaml  _config_defaults/heartbeats.example.yaml
+
 # Copy built frontend from stage 1
 COPY --from=frontend-build /workspace/frontend/dist dashboard/frontend/dist
 
-# Copy pyproject.toml again (needed by app.py for version reading)
-# Already copied above, but ensure it's at workspace root
-
 # Create data directory for SQLite
 RUN mkdir -p dashboard/data
+
+# Bootstrap entrypoint: seeds config volume from _config_defaults on first boot
+# then hands off to the original Flask CMD.
+RUN printf '#!/bin/sh\n\
+# Seed config volume with example files if not present\n\
+for src in /workspace/_config_defaults/*; do\n\
+  base=$(basename "$src")\n\
+  dest="/workspace/config/$base"\n\
+  if [ ! -f "$dest" ]; then\n\
+    cp "$src" "$dest"\n\
+  fi\n\
+done\n\
+exec "$@"\n' > /usr/local/bin/init-config.sh && chmod +x /usr/local/bin/init-config.sh
 
 # Default port
 ENV EVONEXUS_PORT=8080
 EXPOSE 8080
 
-# Run Flask app via uv
+ENTRYPOINT ["/usr/local/bin/init-config.sh"]
 CMD ["uv", "run", "python", "dashboard/backend/app.py"]

@@ -20,10 +20,10 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
       <div className="w-full max-w-[480px] relative z-10">
         <OnboardingHeader step="step3of3" filled={3} />
 
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <h2 className="text-[16px] font-semibold text-[#e2e8f0]">{t('onboarding.confirm.title')}</h2>
-            <p className="text-[11px] text-[#4a5a6e] mt-1">{t('onboarding.confirm.subtitle')}</p>
+            <p className="text-[11px] text-[#6B8A76] mt-1">{t('onboarding.confirm.subtitle')}</p>
           </div>
 
           <div className="px-7 py-6 space-y-4">
@@ -33,7 +33,7 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
                 {t('onboarding.confirm.summary')}
               </p>
 
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a]">
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-[#122018] border border-[#1E3829]">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/10">
                   <Cpu size={14} className="text-[#85F2A0]" />
                 </div>
@@ -44,7 +44,7 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
                 <Check size={14} className="text-[#85F2A0] flex-shrink-0" />
               </div>
 
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a]">
+              <div className="flex items-center gap-3 p-3 rounded-lg bg-[#122018] border border-[#1E3829]">
                 <div className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#41A650]/10">
                   <GitBranch size={14} className="text-[#85F2A0]" />
                 </div>
@@ -73,7 +73,7 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>
@@ -87,7 +87,7 @@ export default function StepConfirm({ provider, wantBrainRepo, onComplete, onSki
 
             <button
               onClick={onSkip}
-              className="w-full py-2 text-[11px] text-[#2d3d4f] hover:text-[#6B8A76] transition-colors"
+              className="w-full py-2 text-[11px] text-[#2d4a38] hover:text-[#6B8A76] transition-colors"
             >
               {t('onboarding.confirm.skipAll')}
             </button>

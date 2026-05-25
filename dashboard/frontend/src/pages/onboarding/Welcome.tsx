@@ -88,15 +88,15 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
       <NetworkCanvas />
 
       <div className="w-full max-w-[480px] relative z-10">
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
 
           {/* Header */}
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <div className="flex flex-col items-center gap-3">
               <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[180px] h-auto" />
               <div className="text-center">
                 <h1 className="text-[16px] font-semibold text-[#e2e8f0]">{t('onboarding.welcome.title')}</h1>
-                <p className="text-[11px] text-[#4a5a6e] mt-1">{t('onboarding.welcome.subtitle')}</p>
+                <p className="text-[11px] text-[#6B8A76] mt-1">{t('onboarding.welcome.subtitle')}</p>
               </div>
             </div>
           </div>
@@ -116,19 +116,21 @@ export default function Welcome({ onFirstTime, onRestore }: WelcomeProps) {
 
             <button
               onClick={onRestore}
-              className="w-full py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+              className="w-full py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
             >
               {t('onboarding.welcome.restoreBrainRepo')}
             </button>
 
-            <p className="text-[10px] text-[#2d3d4f] text-center pt-2">
+            <p className="text-[10px] text-[#2d4a38] text-center pt-2">
               {t('onboarding.welcome.restoreHint')}
             </p>
           </div>
         </div>
 
-        <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
-          Built on EvoNexus
+        <p className="text-center mt-4 text-[10px] text-[#2d4a38]">
+          <a href="https://cleverai.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-[#6B8A76] transition-colors">
+            Clever Agent
+          </a>
         </p>
       </div>
     </div>
