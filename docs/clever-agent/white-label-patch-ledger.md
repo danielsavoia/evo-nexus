@@ -1,7 +1,7 @@
 # Clever Agent White-label Patch Ledger
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-24
+**Last updated:** 2026-05-25
 
 This file tracks every Clever Agent white-label patch applied on top of the upstream Evo Nexus codebase.
 **After every upstream/AppSpring/Evo Nexus merge into `clever-dev`, review each row and reapply as needed.**
@@ -17,6 +17,8 @@ This file tracks every Clever Agent white-label patch applied on top of the upst
 | Avatars | `brand/clever-agent/avatars/avatar_{slug}.png` (38), `dashboard/frontend/public/clever-agent/avatars/` (38), `agent-meta.ts`, `agent_meta_seed.py` | `ba52926` | 38 Clever Agent persona PNG avatars replacing upstream WEBPs | Medium — agent list/slugs may change; avatar public path may reset | Agents grid: PNG avatars load; no broken images |
 | Theme palette | `dashboard/frontend/src/index.css`, `dashboard/frontend/src/App.tsx`, 90+ UI files, `site/src/index.css`, `site/src/**` | `964d903`, `8d430c0`, `41cc42a` | Full Clever Agent green/yellow palette; replace `#00FFA7`, GitHub Dark navy, and amber accent; yellow `#F2CB05` in 8 UI points | High — any upstream UI change may reintroduce old colors | Full visual validation: Overview, Agents, AgentDetail, Sidebar, Login, Site |
 | Docs/Goals routes | `dashboard/frontend/src/pages/Docs.tsx`, `dashboard/frontend/src/pages/Goals.tsx` | `7d556af` | Fix `localhost:8080` API bypass; docs white-label runtime overlay; `EvoNexus Docs` → `Clever Agent Docs`; neutralize upstream install commands | High — upstream frequently updates Docs.tsx and Goals.tsx | `/goals` loads without error; `/docs` shows "Clever Agent Docs"; `/docs/getting-started` shows `clever-agent setup` |
+| Onboarding wizard | `Setup.tsx`, `onboarding/Welcome.tsx`, `StepProvider.tsx`, `StepConfirm.tsx`, `StepBrainRepo.tsx`, `StepBrainChoose.tsx`, `StepBrainConnect.tsx` | `2f72871` | Remove "Built on EvoNexus" footer from all wizard screens; replace footer with "Clever Agent" link; apply Clever Agent palette to all wizard cards/inputs (remove navy `#0b1018`/`#0f1520`/`#152030`/`#1e2a3a`) | High — setup/onboarding rewritten on upstream updates | Setup/onboarding flow: no "EvoNexus" text visible; cards in green palette |
+| Dockerfile.dashboard config seed | `Dockerfile.dashboard` | `2f72871` | Add `init-config.sh` entrypoint that seeds `/workspace/config/` from `_config_defaults/` on first boot; includes `providers.example.json` so onboarding works without manual `docker exec` | Medium — Dockerfile changes may conflict on upstream bumps | Fresh container: onboarding Anthropic provider selectable without error |
 
 ---
 
