@@ -79,7 +79,7 @@ Arquivos corrigidos:
 
 | Componente | Dockerfile | Imagem | Tag | Digest |
 |------------|------------|--------|-----|--------|
-| Dashboard (Flask+React+ML) | `Dockerfile.dashboard` | `ghcr.io/danielsavoia/clever-agent-dashboard` | `0.33.0-clever-beta.2` | *(registrado após push)* |
+| Dashboard (Flask+React+ML) | `Dockerfile.dashboard` | `ghcr.io/danielsavoia/clever-agent-dashboard` | `0.33.0-clever-beta.2` | `sha256:e674fe189efb3cc865acb435afc264ca11dac8a126bd5242dbf41e6ec540800d` |
 | Site (nginx+React) | — | Não republicado (sem mudanças) | `0.33.0-clever-beta.1` (mantido) | — |
 | Runtime (Node+Python+CLI) | — | Não republicado (sem mudanças) | `0.33.0-clever-beta.1` (mantido) | — |
 
@@ -89,12 +89,12 @@ Arquivos corrigidos:
 
 | Branch | HEAD antes | HEAD após |
 |--------|-----------|-----------|
-| `clever-dev` | `5d9f2a8` | `2f72871` |
-| `clever-beta` | `a1273c9` | `7a56c3e` |
+| `clever-dev` | `5d9f2a8` | `6fe2a18` (inclui onboarding color audit) |
+| `clever-beta` | `a1273c9` | `ace7cc8` (inclui onboarding color audit) |
 | `clever-prod` | `7f5dd76` | `7f5dd76` (inalterado) |
 | `upstream-sync` | `fe15fd5` | `fe15fd5` (inalterado) |
 
-**Tag:** `clever-agent-v0.33.0-clever-beta.2` → HEAD `7a56c3e`
+**Tag:** `clever-agent-v0.33.0-clever-beta.2` → HEAD `ace7cc8` (F-01/F-03 + onboarding color audit)
 
 ---
 
@@ -112,6 +112,16 @@ Arquivos corrigidos:
 | /docs ok | ✅ |
 | /docs/getting-started ok | ✅ |
 | Build TypeScript sem erros | ✅ |
+| Imagem GHCR publicada (digest registrado) | ✅ `sha256:e674fe189efb3cc865acb435afc264ca11dac8a126bd5242dbf41e6ec540800d` |
+| Smoke GHCR — HTTP `/` 200 | ✅ |
+| Smoke GHCR — `/clever-agent.svg` 200 | ✅ |
+| Smoke GHCR — `/clever-agent/avatars/avatar_oracle.png` 200 | ✅ |
+| Smoke GHCR — title "Clever Agent" no HTML | ✅ |
+| Smoke GHCR — sem "EvoNexus" no HTML | ✅ |
+| Smoke GHCR — `providers.example.json` semeado com 8 providers | ✅ anthropic, openrouter, omnirouter, openai, codex_auth, gemini, bedrock, vertex |
+| Smoke GHCR — `init-config.sh` presente no container | ✅ |
+| Onboarding color audit aprovado (zero tokens upstream) | ✅ ver `onboarding-color-audit-0.33.0-clever-beta.2.md` |
+| GHCR latest publicado? | ❌ Não |
 
 ---
 
