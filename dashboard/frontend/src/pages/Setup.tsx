@@ -1,8 +1,71 @@
-﻿import { useState, useEffect, useRef, useCallback, type FormEvent } from 'react'
+﻿import { useState, useEffect, useRef, useCallback, useMemo, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { api } from '../lib/api'
 import { setWorkspaceLanguage } from '../i18n'
+
+/* ── Password policy (mirrors auth_security.py exactly) ── */
+const PW_RULES = [
+  { test: (p: string) => p.length >= 8,              label: '8+ caracteres' },
+  { test: (p: string) => /[a-z]/.test(p),            label: 'letra minúscula' },
+  { test: (p: string) => /[A-Z]/.test(p),            label: 'letra maiúscula' },
+  { test: (p: string) => /\d/.test(p),               label: 'um número' },
+  { test: (p: string) => /[^a-zA-Z0-9]/.test(p),    label: 'caractere especial' },
+]
+
+function pwViolations(pw: string, username = '', emailVal = ''): string[] {
+  const v: string[] = []
+  PW_RULES.forEach(r => { if (!r.test(pw)) v.push(r.label) })
+  const norm = pw.toLowerCase()
+  const tokens = [username.toLowerCase(), emailVal.toLowerCase().split('@')[0]]
+    .filter(t => t.length >= 3)
+  if (tokens.some(t => norm.includes(t))) v.push('não conter seu usuário ou e-mail')
+  return v
+}
+
+/* Password error-message map: backend English → UI pt-BR */
+const PW_ERROR_MAP: [string, string][] = [
+  ['Password must include a special character',              'A senha precisa incluir pelo menos um caractere especial.'],
+  ['Password must include an uppercase letter',             'A senha precisa incluir pelo menos uma letra maiúscula.'],
+  ['Password must include a lowercase letter',             'A senha precisa incluir pelo menos uma letra minúscula.'],
+  ['Password must include a digit',                        'A senha precisa incluir pelo menos um número.'],
+  ['Password must be at least 8 characters',               'A senha precisa ter pelo menos 8 caracteres.'],
+  ['Password must not contain your username or email',     'A senha não pode conter seu usuário ou e-mail.'],
+  ['Password is too common',                               'Essa senha é muito comum. Escolha uma senha mais segura.'],
+  ['Username and password are required',                   'Usuário e senha são obrigatórios.'],
+  ['Username already exists',                              'Esse nome de usuário já está em uso.'],
+  ['Email is required',                                    'E-mail é obrigatório.'],
+  ['Setup already completed',                              'Setup já realizado.'],
+]
+
+function parseApiError(ex: unknown): string {
+  const raw = ex instanceof Error ? ex.message : String(ex)
+  // Strip HTTP prefix like "400 Bad Request: " to get the description only
+  let text = raw.replace(/^\d{3}[^:]*:\s*/i, '').trim()
+
+  // If backend sent HTML (pre-fix or non-API route), extract <p>...</p>
+  if (/<html|<!doctype/i.test(text)) {
+    const m = text.match(/<p>([^<]+)<\/p>/i)
+    text = m ? m[1].trim() : ''
+  }
+
+  if (!text) return 'Não foi possível criar a conta. Verifique os dados e tente novamente.'
+
+  // Backend may join multiple violations with "; " — map each part
+  const parts = text.split(/;\s*/).filter(Boolean)
+  const mapped = parts.map(part => {
+    for (const [en, pt] of PW_ERROR_MAP) {
+      if (part.toLowerCase().includes(en.toLowerCase())) return pt
+    }
+    // If it still contains HTML tags, strip them as fallback
+    if (/<[a-z]/i.test(part)) return ''
+    return part
+  }).filter(Boolean)
+
+  return mapped.length
+    ? mapped.join(' ')
+    : 'Não foi possível criar a conta. Verifique os dados e tente novamente.'
+}
 
 /* ── Animated mesh background ── */
 function NetworkCanvas() {
@@ -107,6 +170,8 @@ export default function Setup() {
   const [displayName, setDisplayName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  // Real-time password strength checklist (mirrors backend rules)
+  const pwRuleStatus = useMemo(() => PW_RULES.map(r => ({ label: r.label, ok: r.test(password) })), [password])
 
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -134,7 +199,13 @@ export default function Setup() {
     e.preventDefault()
     setError('')
     if (!username.trim()) { setError(t('setup.usernameRequired')); return }
-    if (password.length < 6) { setError(t('setup.passwordMinChars', { count: 6 })); return }
+
+    // Frontend validation mirrors backend auth_security.py rules exactly
+    const violations = pwViolations(password, username.trim(), email.trim())
+    if (violations.length > 0) {
+      setError(`A senha precisa ter: ${violations.join(', ')}.`)
+      return
+    }
     if (password !== confirmPassword) { setError(t('setup.passwordsMismatch')); return }
 
     setSubmitting(true)
@@ -157,7 +228,7 @@ export default function Setup() {
       await refreshUser()
       window.location.href = '/providers'
     } catch (ex: unknown) {
-      setError(ex instanceof Error ? ex.message : t('setup.setupFailed'))
+      setError(parseApiError(ex))
     } finally {
       setSubmitting(false)
     }
@@ -294,6 +365,21 @@ export default function Setup() {
                       className={inp} placeholder={t('setup.repeatShort')} autoComplete="new-password" />
                   </div>
                 </div>
+
+                {/* Password strength checklist — shown once user starts typing */}
+                {password.length > 0 && (
+                  <div className="px-3 py-2.5 rounded-lg bg-[#0D1B12] border border-[#1E3829] space-y-1">
+                    <p className="text-[10px] font-semibold text-[#6B8A76] uppercase tracking-[0.06em] mb-1">
+                      A senha precisa ter:
+                    </p>
+                    {pwRuleStatus.map(({ label, ok }) => (
+                      <div key={label} className={`flex items-center gap-1.5 text-[10px] transition-colors ${ok ? 'text-[#85F2A0]' : 'text-[#6B8A76]'}`}>
+                        <span className="w-3 text-center font-bold">{ok ? '✓' : '○'}</span>
+                        <span>{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 <div className={`flex gap-2.5 mt-2 ${hasConfig ? '' : ''}`}>
                   {!hasConfig && (

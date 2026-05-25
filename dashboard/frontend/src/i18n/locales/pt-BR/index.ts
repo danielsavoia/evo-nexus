@@ -238,7 +238,7 @@ const translations = {
       createPassword: 'Criar senha',
       confirmPassword: 'Confirmar senha',
       confirmShort: 'Confirmar',
-      passwordMinCharsShort: 'Mín. 6 caracteres',
+      passwordMinCharsShort: 'Mín. 8 caracteres',
       repeatShort: 'Repita',
       passwordsMismatch: 'As senhas não coincidem',
       nameRequired: 'Nome é obrigatório',

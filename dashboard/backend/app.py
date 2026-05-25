@@ -590,6 +590,22 @@ def delete_social_account(platform, index):
     delete_account(platform, index)
     return {"ok": True, "platforms": all_platforms_with_accounts()}
 
+# --------------- JSON error responses for /api/ routes ---------------
+from werkzeug.exceptions import HTTPException
+
+@app.errorhandler(HTTPException)
+def api_http_error(e: HTTPException):
+    """Return JSON instead of Flask's default HTML error pages for /api/ routes.
+
+    Frontend callers use api.ts which already tries JSON-parsing first; this
+    ensures password-policy violations (abort 400) and other HTTP errors come
+    back as {"error": "..."} so the UI can display a clean, translatable message
+    rather than raw HTML like <!doctype html>...<p>Password must include...</p>.
+    """
+    if request.path.startswith('/api/'):
+        return jsonify({"error": e.description}), e.code
+    return e
+
 # --------------- Serve React build ---------------
 FRONTEND_DIST = Path(__file__).resolve().parent.parent / "frontend" / "dist"
 
