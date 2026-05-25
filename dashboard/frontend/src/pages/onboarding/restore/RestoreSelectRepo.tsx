@@ -11,8 +11,15 @@ interface Repo {
   html_url: string
 }
 
+interface RestoreInfo {
+  repoUrl: string
+  token: string
+  owner: string
+  repoName: string
+}
+
 interface RestoreSelectRepoProps {
-  onNext: (repoUrl: string) => void
+  onNext: (info: RestoreInfo) => void
   onBack: () => void
 }
 
@@ -65,7 +72,13 @@ export default function RestoreSelectRepo({ onNext, onBack }: RestoreSelectRepoP
       setError(t('restore.selectRepo.selectRepo'))
       return
     }
-    onNext(selectedRepo.html_url)
+    const [owner, repoName] = selectedRepo.full_name.split('/')
+    onNext({
+      repoUrl: selectedRepo.html_url,
+      token: token.trim(),
+      owner: owner ?? '',
+      repoName: repoName ?? selectedRepo.name,
+    })
   }
 
   return (

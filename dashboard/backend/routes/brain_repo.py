@@ -518,20 +518,51 @@ def detect():
 @bp.route("/api/brain-repo/snapshots")
 @login_required
 def snapshots():
-    """List available restore snapshots (daily / weekly / milestones / head)."""
-    config = _get_config()
-    if not config or not config.github_token_encrypted:
-        abort(400, description="Brain repo not connected")
+    """List available restore snapshots (daily / weekly / milestones / head).
 
-    token = _decrypt_token(config)
-    if not token:
-        abort(400, description="Could not decrypt stored token")
+    Supports two modes:
+
+    **Temporary / onboarding-restore mode** (all three query params present):
+        GET /api/brain-repo/snapshots?token=<PAT>&owner=<github_owner>&repo=<repo_name>
+
+        Used during the restore onboarding flow before the brain repo has been
+        persisted to DB (i.e. while the user is still in the wizard). The PAT is
+        used directly and is never stored.
+
+        SECURITY NOTE: passing the PAT in a query string exposes it in server
+        access logs and browser history. Future hardening: migrate to a POST
+        endpoint with token in the request body or an Authorization header.
+
+    **Connected mode** (no query params, or incomplete set):
+        Reads the stored BrainRepoConfig row, decrypts the token, and uses the
+        persisted owner/repo. Aborts 400 if no config is found.
+    """
+    token = request.args.get("token", "").strip()
+    owner = request.args.get("owner", "").strip()
+    repo_n = request.args.get("repo", "").strip()
+
+    if token and owner and repo_n:
+        # Temporary/onboarding mode — use query params directly, skip DB
+        pass
+    else:
+        # Connected mode — read from persisted config
+        config = _get_config()
+        if not config or not config.github_token_encrypted:
+            abort(400, description="Brain repo not connected")
+        token = _decrypt_token(config)
+        if not token:
+            abort(400, description="Could not decrypt stored token")
+        owner = config.repo_owner
+        repo_n = config.repo_name
 
     try:
         from brain_repo.github_api import list_snapshots
-        result = list_snapshots(token, config.repo_owner, config.repo_name)
+        result = list_snapshots(token, owner, repo_n)
     except ImportError:
         result = {"daily": [], "weekly": [], "milestones": [], "head": None}
+    except Exception:
+        log.exception("Failed to list brain repo snapshots for %s/%s", owner, repo_n)
+        return jsonify({"error": "Failed to load snapshots from GitHub"}), 502
 
     return jsonify(result)
 

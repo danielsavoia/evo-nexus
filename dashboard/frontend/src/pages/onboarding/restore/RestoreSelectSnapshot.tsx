@@ -25,6 +25,12 @@ interface SelectedSnapshot {
 
 interface RestoreSelectSnapshotProps {
   repoUrl: string
+  /** PAT forwarded from RestoreSelectRepo — used to call snapshots without a persisted DB config */
+  token?: string
+  /** GitHub repo owner (extracted from full_name) */
+  owner?: string
+  /** GitHub repo name (extracted from full_name) */
+  repoName?: string
   onNext: (snapshot: SelectedSnapshot) => void
   onBack: () => void
 }
@@ -62,7 +68,7 @@ function SnapshotItem({
   )
 }
 
-export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: RestoreSelectSnapshotProps) {
+export default function RestoreSelectSnapshot({ repoUrl, token, owner, repoName, onNext, onBack }: RestoreSelectSnapshotProps) {
   const { t } = useTranslation()
   const [data, setData] = useState<SnapshotData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -71,11 +77,31 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
   const [error, setError] = useState('')
 
   useEffect(() => {
-    api.get('/brain-repo/snapshots')
+    // Build the URL — if we have the temporary token/owner/repoName from the
+    // onboarding restore flow, pass them as query params so the backend can
+    // list snapshots without requiring a persisted DB config.
+    let url = '/brain-repo/snapshots'
+    if (token && owner && repoName) {
+      const params = new URLSearchParams({
+        token,
+        owner,
+        repo: repoName,
+      })
+      url += `?${params.toString()}`
+    }
+
+    api.get(url)
       .then((d: SnapshotData) => setData(d))
-      .catch(() => setError(t('restore.selectSnapshot.failed')))
+      .catch((ex: unknown) => {
+        const raw = ex instanceof Error ? ex.message : ''
+        if (/Brain repo not connected/i.test(raw)) {
+          setError(t('restore.selectSnapshot.notConnected'))
+        } else {
+          setError(t('restore.selectSnapshot.failed'))
+        }
+      })
       .finally(() => setLoading(false))
-  }, [repoUrl, t])
+  }, [repoUrl, token, owner, repoName, t])
 
   const handleNext = () => {
     if (!selected) {

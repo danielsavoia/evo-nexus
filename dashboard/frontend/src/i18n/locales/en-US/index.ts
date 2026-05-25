@@ -1089,6 +1089,7 @@ const translations = {
         kbWarning: 'Restoring kb-mirror requires the master key used when the snapshot was created. Without it, KB content cannot be decrypted.',
         selectSnapshot: 'Please select a snapshot',
         failed: 'Failed to load snapshots',
+        notConnected: 'Brain repo is not connected yet. Check that the repository has valid snapshots or try reconnecting.',
       },
       confirm: {
         title: 'Confirm restore',
