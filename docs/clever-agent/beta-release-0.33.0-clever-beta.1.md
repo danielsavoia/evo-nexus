@@ -87,8 +87,8 @@ Merge commit: `f4b9002` — `chore: promote clever-dev to clever-beta after visu
 | Componente | Dockerfile | Imagem | Tag | Status |
 |---|---|---|---|---|
 | Site (nginx+React) | `site/Dockerfile` | `ghcr.io/danielsavoia/clever-agent-site` | `0.33.0-clever-beta.1` | ✅ Publicada — digest: `sha256:e3c74abd70cb558981a18b5d1a0df2976f0bd1fc7229161f68c84f0118ba7caa` |
-| Dashboard (Flask+React+ML) | `Dockerfile.dashboard` | `ghcr.io/danielsavoia/clever-agent-dashboard` | `0.33.0-clever-beta.1` | ✅ Build OK (8.95 GB — inclui sentence-transformers/torch) — push em andamento |
-| Runtime (Node+Python+Claude CLI) | `Dockerfile` | `ghcr.io/danielsavoia/clever-agent-runtime` | `0.33.0-clever-beta.1` | ⏳ Build em andamento |
+| Dashboard (Flask+React+ML) | `Dockerfile.dashboard` | `ghcr.io/danielsavoia/clever-agent-dashboard` | `0.33.0-clever-beta.1` | ✅ Publicada (8.95 GB) — digest: `sha256:278f9fac7fa80fddcddcc7a881828318d3f17ba76501d2130f416159d6353fca` |
+| Runtime (Node+Python+Claude CLI) | `Dockerfile` | `ghcr.io/danielsavoia/clever-agent-runtime` | `0.33.0-clever-beta.1` | ✅ Build OK (3.8 GB) — push em andamento |
 
 ### Nota sobre tamanho das imagens
 
@@ -131,9 +131,9 @@ falha TypeScript no build. Corrigidos nesta etapa via commit `ae3b896`.
 
 | Item | Status |
 |---|---|
-| Push dashboard (8.95 GB) para GHCR | ⏳ Em andamento — pode demorar por tamanho |
-| Push runtime para GHCR | ⏳ Build em andamento |
-| Atualizar digests neste documento | ⏳ Após pushes completarem |
+| Push dashboard (8.95 GB) para GHCR | ✅ Concluído — digest registrado |
+| Push runtime (3.8 GB) para GHCR | ⏳ Em andamento |
+| Atualizar digest do runtime neste documento | ⏳ Após push completar |
 | Deploy VPS | ❌ Não nesta etapa — aguarda decisão do usuário |
 | Promoção para `clever-prod` | ❌ Não nesta etapa — aguarda decisão do usuário |
 | Redução do tamanho da imagem dashboard | ⚠️ Opcional — `sentence-transformers` é pesado; avaliar se pode ser opcional |
