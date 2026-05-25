@@ -44,7 +44,7 @@ function SnapshotItem({
       className={`w-full flex items-center gap-3 p-2.5 rounded-lg border text-left transition-all ${
         selected
           ? 'border-[#41A650]/60 bg-[#41A650]/8'
-          : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
+          : 'border-[#1E3829] bg-[#122018] hover:border-[#1E3829]/60'
       }`}
     >
       <GitCommit size={12} className={selected ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
@@ -54,10 +54,10 @@ function SnapshotItem({
           <p className="text-[10px] text-[#6B8A76]">{snapshot.date}</p>
         )}
         {snapshot.message && (
-          <p className="text-[10px] text-[#4a5a6e] truncate">{snapshot.message}</p>
+          <p className="text-[10px] text-[#6B8A76] truncate">{snapshot.message}</p>
         )}
       </div>
-      <code className="text-[9px] font-mono text-[#2d3d4f] flex-shrink-0">{snapshot.ref.slice(0, 8)}</code>
+      <code className="text-[9px] font-mono text-[#2d4a38] flex-shrink-0">{snapshot.ref.slice(0, 8)}</code>
     </button>
   )
 }
@@ -95,10 +95,10 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
   return (
     <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <h2 className="text-[16px] font-semibold text-[#e2e8f0]">{t('restore.selectSnapshot.title')}</h2>
-            <p className="text-[11px] text-[#4a5a6e] mt-1">{t('restore.selectSnapshot.subtitle')}</p>
+            <p className="text-[11px] text-[#6B8A76] mt-1">{t('restore.selectSnapshot.subtitle')}</p>
           </div>
 
           <div className="px-7 py-6 space-y-4">
@@ -123,7 +123,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
                       <div className="flex items-center gap-2 mb-2">
                         <Icon size={12} className="text-[#6B8A76]" />
                         <span className="text-[11px] font-semibold text-[#6B8A76] uppercase tracking-[0.08em]">{label}</span>
-                        <span className="text-[10px] text-[#2d3d4f]">{items.length}</span>
+                        <span className="text-[10px] text-[#2d4a38]">{items.length}</span>
                       </div>
                       <div className="space-y-1">
                         {items.map((s) => (
@@ -159,7 +159,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
 
                 {includeKb && (
                   <div className="mt-2 flex items-start gap-2 p-3 rounded-lg bg-[#1a1400] border border-[#3a3015]">
-                    <AlertTriangle size={13} className="text-[#F59E0B] flex-shrink-0 mt-0.5" />
+                    <AlertTriangle size={13} className="text-[#F2CB05] flex-shrink-0 mt-0.5" />
                     <p className="text-[11px] text-[#b89070]">
                       {t('restore.selectSnapshot.kbWarning')}
                     </p>
@@ -171,7 +171,7 @@ export default function RestoreSelectSnapshot({ repoUrl, onNext, onBack }: Resto
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('restore.back')}
               </button>

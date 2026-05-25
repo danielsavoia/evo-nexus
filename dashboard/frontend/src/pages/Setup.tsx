@@ -298,7 +298,7 @@ export default function Setup() {
                 <div className={`flex gap-2.5 mt-2 ${hasConfig ? '' : ''}`}>
                   {!hasConfig && (
                     <button type="button" onClick={() => setCurrentStep(1)}
-                      className="px-5 py-3 rounded-lg text-[#6B8A76] text-sm font-medium border border-[#1e2a3a] hover:border-[#2e3a4a] hover:text-[#8a9aae] transition-colors">
+                      className="px-5 py-3 rounded-lg text-[#6B8A76] text-sm font-medium border border-[#1E3829] hover:border-[#41A650]/30 hover:text-[#e2e8f0] transition-colors">
                       {t('common.back')}
                     </button>
                   )}

@@ -696,7 +696,7 @@ function CodexSubStep({ shell, onBackToProviders, onDone }: { shell: string; onB
           <div className={`rounded-lg p-3 text-xs ${authMessage.type === 'success' ? 'bg-[#41A650]/5 text-[#85F2A0]' : 'bg-[#1a0a0a] text-[#f87171]'}`}>
             {authMessage.text}
             {authMessage.type === 'error' && tab === 'device' && (
-              <p className="text-[10px] text-[#3d4f65] mt-1">{t('onboarding.providerCodex.deviceOrgWarning')}</p>
+              <p className="text-[10px] text-[#2d4a38] mt-1">{t('onboarding.providerCodex.deviceOrgWarning')}</p>
             )}
           </div>
         )}

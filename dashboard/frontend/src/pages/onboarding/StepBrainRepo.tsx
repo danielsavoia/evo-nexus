@@ -32,7 +32,7 @@ export default function StepBrainRepo({ onYes, onNo, onBack }: StepBrainRepoProp
           </div>
 
           <div className="px-7 py-6 space-y-5">
-            <p className="text-[13px] text-[#8a9ab0] leading-relaxed">
+            <p className="text-[13px] text-[#6B8A76] leading-relaxed">
               {t('onboarding.brainRepo.descriptionPart1')}
               <span className="text-[#e2e8f0] font-medium">{t('onboarding.brainRepo.descriptionEmphasis')}</span>
               {t('onboarding.brainRepo.descriptionPart2')}
