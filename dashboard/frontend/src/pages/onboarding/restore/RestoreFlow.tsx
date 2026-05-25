@@ -70,6 +70,9 @@ export default function RestoreFlow({ onComplete, onBack }: RestoreFlowProps) {
     return (
       <RestoreExecute
         snapshot={snapshot}
+        token={repoToken}
+        owner={repoOwner}
+        repoName={repoName}
         onComplete={onComplete}
         onRetry={() => setStep('confirm')}
       />

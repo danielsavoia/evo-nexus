@@ -17,13 +17,19 @@ interface RestoreStep {
 
 interface RestoreExecuteProps {
   snapshot: SelectedSnapshot
+  /** GitHub PAT for onboarding-restore mode (brain repo not yet persisted to DB). */
+  token?: string
+  /** GitHub owner/org for onboarding-restore mode. */
+  owner?: string
+  /** Repository name (without owner) for onboarding-restore mode. */
+  repoName?: string
   onComplete: () => void
   onRetry: () => void
 }
 
 const API = import.meta.env.DEV ? 'http://localhost:8080' : ''
 
-export default function RestoreExecute({ snapshot, onComplete, onRetry }: RestoreExecuteProps) {
+export default function RestoreExecute({ snapshot, token, owner, repoName, onComplete, onRetry }: RestoreExecuteProps) {
   const { t } = useTranslation()
   const [progress, setProgress] = useState(0)
   const [steps, setSteps] = useState<RestoreStep[]>([])
@@ -38,17 +44,44 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
 
     const run = async () => {
       try {
+        // Build body: always include ref + include_kb.
+        // Include token/owner/repo when present (onboarding-restore mode —
+        // brain repo not yet persisted to DB). Never display token in UI.
+        const bodyPayload: Record<string, unknown> = {
+          ref: snapshot.ref,
+          include_kb: snapshot.includeKb,
+        }
+        if (token && owner && repoName) {
+          bodyPayload.token   = token
+          bodyPayload.owner   = owner
+          bodyPayload.repo    = repoName
+        }
+
         const res = await fetch(`${API}/api/brain-repo/restore/start`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
           credentials: 'include',
-          body: JSON.stringify({ ref: snapshot.ref, include_kb: snapshot.includeKb }),
+          body: JSON.stringify(bodyPayload),
           signal: ctrl.signal,
         })
 
         if (!res.ok) {
           setFailed(true)
-          setStatusMessage(`${t('restore.execute.errorPrefix')}${res.status} ${res.statusText}`)
+          // Try to surface a friendly JSON error message from the backend.
+          // Fall back to a generic message for non-JSON responses.
+          let errorMsg = ''
+          try {
+            const errData = await res.clone().json() as { error?: string }
+            errorMsg = errData?.error || ''
+          } catch { /* non-JSON body */ }
+
+          if (!errorMsg) errorMsg = `${t('restore.execute.errorPrefix')}${res.status} ${res.statusText}`
+
+          // Map known backend messages to pt-BR friendly text.
+          if (errorMsg.toLowerCase().includes('brain repo not connected')) {
+            errorMsg = 'Não foi possível iniciar a restauração porque o Brain Repo ainda não foi conectado. Tente voltar e selecionar o repositório novamente.'
+          }
+          setStatusMessage(errorMsg)
           return
         }
 
@@ -135,6 +168,8 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
 
     run()
     return () => ctrl.abort()
+  // token/owner/repoName are stable across the execute step (set once in RestoreFlow)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snapshot, onComplete, t])
 
   return (

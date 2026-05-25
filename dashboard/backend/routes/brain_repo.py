@@ -592,16 +592,34 @@ def restore_start():
     if not ref:
         abort(400, description="ref required")
 
-    config = _get_config()
-    if not config or not config.github_token_encrypted:
-        abort(400, description="Brain repo not connected")
+    # Temporary / onboarding-restore mode: caller passes token + owner + repo
+    # in the request body so the restore can proceed before the brain repo is
+    # persisted to DB (i.e. still inside the onboarding wizard).
+    #
+    # SECURITY NOTE: the PAT travels in the POST body (not a query string), which
+    # is safer than the snapshots endpoint's query-param approach. Future hardening:
+    # migrate all temporary-mode endpoints to use a short-lived session secret or
+    # Authorization header instead of an in-body PAT.
+    body_token = data.get("token", "").strip()
+    body_owner = data.get("owner", "").strip()
+    body_repo  = data.get("repo", "").strip()
 
-    token = _decrypt_token(config)
-    if not token:
-        abort(400, description="Could not decrypt stored token")
+    if body_token and body_owner and body_repo:
+        # Temporary mode — use body params directly, skip DB lookup.
+        # Token is intentionally NOT logged anywhere in this path.
+        token    = body_token
+        repo_url = f"https://github.com/{body_owner}/{body_repo}"
+    else:
+        # Connected mode — read from persisted BrainRepoConfig.
+        config = _get_config()
+        if not config or not config.github_token_encrypted:
+            abort(400, description="Brain repo not connected")
+        token = _decrypt_token(config)
+        if not token:
+            abort(400, description="Could not decrypt stored token")
+        repo_url = config.repo_url
 
     # Capture needed values before entering generator (avoids app context issues)
-    repo_url = config.repo_url
     # install_dir is where SWAP_DIRS (memory/workspace/customizations/config-safe)
     # get replaced — i.e. the EvoNexus workspace root, NOT the brain-repo clone
     # path. Confusing these two is what broke the restore endpoint.
