@@ -140,12 +140,12 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
   return (
     <div className="min-h-screen bg-[#07130D] flex items-center justify-center px-4 font-[Inter,-apple-system,sans-serif]">
       <div className="w-full max-w-[480px] relative z-10">
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <h2 className="text-[16px] font-semibold text-[#e2e8f0]">
               {done ? t('restore.execute.titleDone') : failed ? t('restore.execute.titleFailed') : t('restore.execute.titleRunning')}
             </h2>
-            <p className="text-[11px] text-[#4a5a6e] mt-1">{snapshot.label}</p>
+            <p className="text-[11px] text-[#6B8A76] mt-1">{snapshot.label}</p>
           </div>
 
           <div className="px-7 py-6 space-y-4">
@@ -155,7 +155,7 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
                 <span className="text-[11px] text-[#6B8A76]">{statusMessage}</span>
                 <span className="text-[11px] text-[#6B8A76]">{progress}%</span>
               </div>
-              <div className="h-1.5 rounded-full bg-[#152030] overflow-hidden">
+              <div className="h-1.5 rounded-full bg-[#1E3829] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-300"
                   style={{
@@ -174,9 +174,9 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
                     {s.status === 'done' && <CheckCircle size={14} className="text-[#85F2A0] flex-shrink-0" />}
                     {s.status === 'error' && <XCircle size={14} className="text-[#f87171] flex-shrink-0" />}
                     {s.status === 'running' && <Loader2 size={14} className="text-[#6B8A76] animate-spin flex-shrink-0" />}
-                    {s.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border border-[#2d3d4f] flex-shrink-0" />}
+                    {s.status === 'pending' && <div className="w-3.5 h-3.5 rounded-full border border-[#2d4a38] flex-shrink-0" />}
                     <div className="min-w-0">
-                      <p className={`text-[12px] ${s.status === 'error' ? 'text-[#f87171]' : s.status === 'done' ? 'text-[#e2e8f0]' : 'text-[#8a9ab0]'}`}>
+                      <p className={`text-[12px] ${s.status === 'error' ? 'text-[#f87171]' : s.status === 'done' ? 'text-[#e2e8f0]' : 'text-[#6B8A76]'}`}>
                         {s.label}
                       </p>
                       {s.message && (
@@ -206,7 +206,7 @@ export default function RestoreExecute({ snapshot, onComplete, onRetry }: Restor
             {failed && (
               <button
                 onClick={onRetry}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 <RefreshCw size={14} />
                 {t('restore.execute.tryAgain')}
