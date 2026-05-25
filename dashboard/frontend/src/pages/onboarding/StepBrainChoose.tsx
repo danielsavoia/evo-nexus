@@ -5,7 +5,7 @@ import { api } from '../../lib/api'
 import { useAuth } from '../../context/AuthContext'
 import OnboardingHeader from './OnboardingHeader'
 
-const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
+const inp = "w-full px-4 py-3 rounded-lg bg-[#122018] border border-[#1E3829] text-[#e2e8f0] placeholder-[#2d4a38] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
 
 interface Repo {
   name: string
@@ -72,10 +72,10 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
       <div className="w-full max-w-[480px] relative z-10">
         <OnboardingHeader step="step2bOf3" filled={2} />
 
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <h2 className="text-[16px] font-semibold text-[#e2e8f0]">{t('onboarding.choose.title')}</h2>
-            <p className="text-[11px] text-[#4a5a6e] mt-1">{t('onboarding.choose.subtitle')}</p>
+            <p className="text-[11px] text-[#6B8A76] mt-1">{t('onboarding.choose.subtitle')}</p>
           </div>
 
           <div className="px-7 py-6 space-y-4">
@@ -92,7 +92,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                 className={`flex items-center gap-2 p-3 rounded-lg border text-left transition-all ${
                   mode === 'create'
                     ? 'border-[#41A650]/60 bg-[#41A650]/8'
-                    : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
+                    : 'border-[#1E3829] bg-[#122018] hover:border-[#1E3829]/60'
                 }`}
               >
                 <Plus size={14} className={mode === 'create' ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
@@ -106,7 +106,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                 className={`flex items-center gap-2 p-3 rounded-lg border text-left transition-all ${
                   mode === 'existing'
                     ? 'border-[#41A650]/60 bg-[#41A650]/8'
-                    : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
+                    : 'border-[#1E3829] bg-[#122018] hover:border-[#1E3829]/60'
                 }`}
               >
                 <GitBranch size={14} className={mode === 'existing' ? 'text-[#85F2A0]' : 'text-[#6B8A76]'} />
@@ -150,7 +150,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                 ) : repos.length === 0 ? (
                   <div className="py-4 text-center">
                     <p className="text-[12px] text-[#6B8A76]">{t('onboarding.choose.noReposFound')}</p>
-                    <p className="text-[11px] text-[#2d3d4f] mt-1">{t('onboarding.choose.noReposHint')}</p>
+                    <p className="text-[11px] text-[#2d4a38] mt-1">{t('onboarding.choose.noReposHint')}</p>
                   </div>
                 ) : (
                   <div className="space-y-1.5 max-h-48 overflow-y-auto">
@@ -161,7 +161,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
                         className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${
                           selectedRepo?.full_name === repo.full_name
                             ? 'border-[#41A650]/60 bg-[#41A650]/8'
-                            : 'border-[#1e2a3a] bg-[#0f1520] hover:border-[#2a3a4a]'
+                            : 'border-[#1E3829] bg-[#122018] hover:border-[#1E3829]/60'
                         }`}
                       >
                         <GitBranch size={13} className="text-[#6B8A76] flex-shrink-0" />
@@ -179,7 +179,7 @@ export default function StepBrainChoose({ token, onNext, onBack }: StepBrainChoo
             <div className="flex gap-3 pt-2">
               <button
                 onClick={onBack}
-                className="flex-none py-3 px-4 rounded-lg border border-[#152030] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
+                className="flex-none py-3 px-4 rounded-lg border border-[#1E3829] text-[#6B8A76] hover:border-[#41A650]/30 hover:text-[#e2e8f0] text-sm font-medium transition-colors"
               >
                 {t('onboarding.back')}
               </button>

@@ -169,7 +169,7 @@ export default function Setup() {
     </div>
   )
 
-  const inp = "w-full px-4 py-3 rounded-lg bg-[#0f1520] border border-[#1e2a3a] text-[#e2e8f0] placeholder-[#3d4f65] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
+  const inp = "w-full px-4 py-3 rounded-lg bg-[#122018] border border-[#1E3829] text-[#e2e8f0] placeholder-[#2d4a38] text-sm transition-colors duration-200 focus:outline-none focus:border-[#41A650]/60 focus:ring-1 focus:ring-[#85F2A0]/20"
   const lbl = "block text-[11px] font-semibold text-[#6B8A76] mb-1.5 tracking-[0.08em] uppercase"
 
   return (
@@ -178,13 +178,13 @@ export default function Setup() {
 
       <div className="w-full max-w-[420px] relative z-10">
         {/* ── Card ── */}
-        <div className="rounded-xl border border-[#152030] bg-[#0b1018] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
+        <div className="rounded-xl border border-[#1E3829] bg-[#0D1B12] shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
 
           {/* Header */}
-          <div className="px-7 pt-7 pb-5 border-b border-[#152030]">
+          <div className="px-7 pt-7 pb-5 border-b border-[#1E3829]">
             <div className="flex flex-col items-center gap-3 mb-4">
               <img src="/clever-agent-dark.svg" alt="Clever Agent" className="w-[180px] h-auto" />
-              <p className="text-[11px] text-[#4a5a6e]">{t('setup.appSubtitle')}</p>
+              <p className="text-[11px] text-[#6B8A76]">{t('setup.appSubtitle')}</p>
             </div>
 
             {/* Step nav */}
@@ -196,7 +196,7 @@ export default function Setup() {
                   className={`flex-1 py-1.5 text-[11px] font-medium rounded-md transition-colors ${
                     currentStep === 1
                       ? 'bg-[#41A650]/10 text-[#85F2A0]'
-                      : 'text-[#4a5a6e] hover:text-[#7a8a9e]'
+                      : 'text-[#6B8A76] hover:text-[#85F2A0]'
                   }`}
                 >
                   {t('setup.tabWorkspace')}
@@ -206,7 +206,7 @@ export default function Setup() {
                   className={`flex-1 py-1.5 text-[11px] font-medium rounded-md transition-colors ${
                     currentStep === 2
                       ? 'bg-[#41A650]/10 text-[#85F2A0]'
-                      : 'text-[#4a5a6e]'
+                      : 'text-[#6B8A76]'
                   }`}
                   disabled
                 >
@@ -316,8 +316,8 @@ export default function Setup() {
           </div>
 
           {/* Footer stats */}
-          <div className="px-7 py-3.5 border-t border-[#152030] flex items-center justify-between">
-            <div className="flex gap-4 text-[10px] text-[#3d4f65] font-medium tracking-wide uppercase">
+          <div className="px-7 py-3.5 border-t border-[#1E3829] flex items-center justify-between">
+            <div className="flex gap-4 text-[10px] text-[#2d4a38] font-medium tracking-wide uppercase">
               <span>38 Agents</span>
               <span>137 Skills</span>
               <span>Multi-AI</span>
@@ -327,8 +327,10 @@ export default function Setup() {
         </div>
 
         {/* Attribution */}
-        <p className="text-center mt-4 text-[10px] text-[#2d3d4f]">
-          Built on EvoNexus
+        <p className="text-center mt-4 text-[10px] text-[#2d4a38]">
+          <a href="https://cleverai.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-[#6B8A76] transition-colors">
+            Clever Agent
+          </a>
         </p>
       </div>
     </div>
