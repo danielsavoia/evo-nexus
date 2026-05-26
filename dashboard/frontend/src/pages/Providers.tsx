@@ -434,6 +434,10 @@ export default function Providers() {
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 shrink-0">
+                    {/* Hint visible only when CLI is absent and provider is inactive */}
+                    {!isInstalled && !isActive && (
+                      <span className="text-[9px] text-[#3d4f65] hidden sm:block whitespace-nowrap">CLI ausente</span>
+                    )}
                     {/* Codex OAuth login / logout — only on codex_auth card */}
                     {prov.id === 'codex_auth' && isInstalled && !codexAuth?.authenticated && (
                       <button onClick={() => { setAuthModal(true); setAuthMode('browser'); setAuthUrl(''); setCallbackUrl(''); setAuthMessage(null); setDeviceCode(null); setDevicePolling(false); startBrowserAuth() }}
@@ -460,10 +464,11 @@ export default function Providers() {
                       {testing === prov.id ? <RefreshCw size={11} className="animate-spin" /> : 'Test'}
                     </button>
 
-                    {/* Toggle switch */}
+                    {/* Toggle switch — active provider stays clickable even when CLI is absent
+                        so the user can deactivate it; inactive providers without CLI stay locked */}
                     <Toggle
                       on={isActive}
-                      disabled={!isInstalled || toggling === prov.id}
+                      disabled={toggling === prov.id || (!isInstalled && !isActive)}
                       onChange={(on) => handleToggle(prov.id, on)}
                     />
                   </div>
