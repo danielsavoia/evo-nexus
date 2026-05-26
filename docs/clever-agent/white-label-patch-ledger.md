@@ -1,7 +1,7 @@
 # Clever Agent White-label Patch Ledger
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-25 (brain repo restore snapshots fix)
+**Last updated:** 2026-05-26 (providers toggle fix)
 
 This file tracks every Clever Agent white-label patch applied on top of the upstream Evo Nexus codebase.
 **After every upstream/AppSpring/Evo Nexus merge into `clever-dev`, review each row and reapply as needed.**
@@ -24,6 +24,7 @@ This file tracks every Clever Agent white-label patch applied on top of the upst
 | Brain repo restore snapshots | `dashboard/backend/routes/brain_repo.py`, `restore/RestoreSelectRepo.tsx`, `restore/RestoreFlow.tsx`, `restore/RestoreSelectSnapshot.tsx`, i18n (3 locales) | *(beta.4)* | `/api/brain-repo/snapshots` required DB config; during onboarding restore flow config not yet persisted → 400. Fix: snapshots() now accepts `?token&owner&repo` query params for temporary mode; frontend propagates token/owner/repoName from SelectRepo through Flow to SelectSnapshot; URLSearchParams used to build correct URL | High — restore/ sub-flow may be touched upstream; brain_repo.py updated frequently | Restore flow: selecting repo → selecting snapshot works without "Brain repo not connected" error |
 | Brain repo github_api fixes | `dashboard/backend/brain_repo/github_api.py` | *(beta.5)* | Bug 1: `validate_pat_scopes` used case-sensitive dict lookup for `X-OAuth-Scopes` header — fixed to case-insensitive. Bug 2: `list_snapshots` returned early on 404 (repos with no tags) before fetching HEAD — fixed to treat 404 as empty tag list and continue to HEAD fetch | Medium — github_api.py stable but may be touched on brain repo feature updates | PAT validation works; repos with no tags show HEAD snapshot in restore flow |
 | Brain repo restore start | `dashboard/backend/routes/brain_repo.py`, `restore/RestoreFlow.tsx`, `restore/RestoreExecute.tsx` | *(beta.6)* | `restore_start()` required DB config; during onboarding restore flow config not yet persisted → 400. Fix: restore_start() now accepts `token`/`owner`/`repo` in POST body for temporary mode (safer than query params); RestoreFlow passes these to RestoreExecute; RestoreExecute builds dynamic body and improves `!res.ok` error handling with JSON parsing + pt-BR mapping | High — brain_repo.py and restore/ components touched frequently | Restore flow: selecting snapshot → confirming → executing restore works without "Brain repo not connected"; SSE stream starts |
+| Providers toggle fix | `dashboard/frontend/src/pages/Providers.tsx` | *(beta.7)* | Toggle `disabled` dependia de `cliInstalled` para todos os providers: `!isInstalled \|\| toggling===id`. Com `claude_installed=false`, todos os toggles ficavam disabled — inclusive o do provider ativo. Fix: `toggling===id \|\| (!isInstalled && !isActive)` — provider ativo permanece clicável para desativar mesmo sem CLI; provider inativo sem CLI continua locked. Adicionado hint "CLI ausente" inline para providers inativos sem CLI. Configure e Save & activate não alterados. | Medium — Providers.tsx pode ser tocado em atualizações de UI | Providers: toggle do provider ativo clicável com CLI ausente; providers inativos sem CLI mostram hint; Configure funciona; sem loading infinito |
 
 ---
 
