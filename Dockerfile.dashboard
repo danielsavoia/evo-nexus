@@ -21,10 +21,19 @@ RUN npm run build
 # --- Stage 2: Python backend ---
 FROM python:3.12-slim AS runtime
 
-# System deps: curl for healthcheck + git for brain-repo restore/clone flow.
+# System deps: curl/git for healthcheck + brain-repo; Node.js 22 via NodeSource for provider CLIs.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl git \
+        curl ca-certificates gnupg openssl git \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Provider CLIs — providers.py calls shutil.which("claude") / shutil.which("openclaude")
+# inside this container. Without these binaries every toggle stays disabled in the UI.
+RUN npm install -g \
+        @anthropic-ai/claude-code \
+        @gitlawb/openclaude@latest
 
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
