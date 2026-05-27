@@ -1,7 +1,8 @@
 # ============================================================
 # EvoNexus Dashboard — Multi-stage Dockerfile
 # Stage 1: Build React frontend
-# Stage 2: Python backend (Flask) serving built frontend
+# Stage 2: Build terminal-server (native node-pty requires python3/make/g++)
+# Stage 3: Python backend (Flask) + terminal-server + Node.js CLIs
 # ============================================================
 
 # --- Stage 1: Frontend build ---
@@ -18,7 +19,21 @@ COPY dashboard/frontend/ frontend/
 WORKDIR /workspace/frontend
 RUN npm run build
 
-# --- Stage 2: Python backend ---
+# --- Stage 2: Terminal-server build ---
+# node-pty requires native compilation (python3 + make + g++).
+# We compile node_modules here and copy only the result to the runtime stage.
+FROM node:22-slim AS terminal-build
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build/terminal-server
+COPY dashboard/terminal-server/package.json ./
+COPY dashboard/terminal-server/package-lock.json* ./
+RUN npm install --omit=dev
+
+# --- Stage 3: Python backend ---
 FROM python:3.12-slim AS runtime
 
 # System deps: curl/git for healthcheck + brain-repo; Node.js 22 via NodeSource for provider CLIs.
@@ -74,6 +89,10 @@ COPY config/heartbeats.example.yaml  _config_defaults/heartbeats.example.yaml
 # Copy built frontend from stage 1
 COPY --from=frontend-build /workspace/frontend/dist dashboard/frontend/dist
 
+# Copy terminal-server source + pre-compiled node_modules (with node-pty binaries)
+COPY dashboard/terminal-server/ dashboard/terminal-server/
+COPY --from=terminal-build /build/terminal-server/node_modules dashboard/terminal-server/node_modules
+
 # Create data directory for SQLite
 RUN mkdir -p dashboard/data
 
@@ -90,9 +109,16 @@ for src in /workspace/_config_defaults/*; do\n\
 done\n\
 exec "$@"\n' > /usr/local/bin/init-config.sh && chmod +x /usr/local/bin/init-config.sh
 
-# Default port
+# Default ports
 ENV EVONEXUS_PORT=8080
+ENV TERMINAL_SERVER_PORT=32352
 EXPOSE 8080
+EXPOSE 32352
 
+# Multi-process entrypoint: starts terminal-server (port 32352) + Flask (port 8080)
+COPY start-dashboard.sh /usr/local/bin/start-dashboard.sh
+RUN chmod +x /usr/local/bin/start-dashboard.sh
+
+# init-config.sh seeds the config volume on first boot, then hands off to start-dashboard.sh
 ENTRYPOINT ["/usr/local/bin/init-config.sh"]
-CMD ["uv", "run", "python", "dashboard/backend/app.py"]
+CMD ["/usr/local/bin/start-dashboard.sh"]
