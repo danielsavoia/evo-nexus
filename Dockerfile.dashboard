@@ -46,9 +46,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Provider CLIs — providers.py calls shutil.which("claude") / shutil.which("openclaude")
 # inside this container. Without these binaries every toggle stays disabled in the UI.
+# npm cache is cleaned in the same layer to avoid baking ~225 MB of download cache.
 RUN npm install -g \
         @anthropic-ai/claude-code \
-        @gitlawb/openclaude@latest
+        @gitlawb/openclaude@latest \
+    && npm cache clean --force \
+    && rm -rf /root/.npm
 
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -60,9 +63,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /workspace
 
-# Install Python deps
+# Install Python deps.
+# uv cache clean removes the ~5 GB download cache baked in /root/.cache/uv —
+# the installed .venv is unaffected; only the network-fetch cache is purged.
 COPY pyproject.toml uv.lock ./
-RUN uv venv .venv && uv sync --no-dev
+RUN uv venv .venv && uv sync --no-dev && uv cache clean
 
 # Copy backend code
 COPY dashboard/backend/ dashboard/backend/

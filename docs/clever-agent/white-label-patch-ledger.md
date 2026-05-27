@@ -1,7 +1,7 @@
 # Clever Agent White-label Patch Ledger
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-27 (terminal-server fix + scheduler CMD fix)
+**Last updated:** 2026-05-27 (terminal-server fix + scheduler CMD fix + Claude auth stack fix)
 
 This file tracks every Clever Agent white-label patch applied on top of the upstream Evo Nexus codebase.
 **After every upstream/AppSpring/Evo Nexus merge into `clever-dev`, review each row and reapply as needed.**
@@ -28,6 +28,7 @@ This file tracks every Clever Agent white-label patch applied on top of the upst
 | Providers CLI — dashboard image | `Dockerfile.dashboard` | *(beta.8)* | `providers.py` usa `shutil.which(cli)` no container dashboard; imagem era `python:3.12-slim` sem Node.js → `claude`/`openclaude` não encontrados → todos os providers apareciam como "not installed". Fix: instalar Node.js 22 via NodeSource + `@anthropic-ai/claude-code` + `@gitlawb/openclaude@latest` na stage runtime do Dockerfile.dashboard. `Dockerfile.swarm.dashboard` já possuía estes CLIs. | High — Dockerfile.dashboard pode ser tocado em qualquer release; NodeSource URL pode mudar | Container dashboard: `which claude` → `/usr/bin/claude`; `which openclaude` → `/usr/bin/openclaude`; Providers page: `claude_installed=true`; toggles clicáveis |
 | Terminal-server multi-process | `Dockerfile.dashboard`, `start-dashboard.sh` | *(beta.9)* | Chat de agentes mostrava "Could not reach terminal-server". Causa: CMD do Dockerfile.dashboard iniciava apenas Flask; `start-dashboard.sh` (que sobe terminal-server na porta 32352 + Flask) nunca era chamado. Fix: adicionar stage `terminal-build` para compilar `node-pty` (requer python3+make+g++); copiar source + node_modules para stage runtime; alterar CMD para `start-dashboard.sh`. | High — Dockerfile.dashboard tocado em qualquer release; stage terminal-build deve ser mantido | Container dashboard: porta 32352 responde WebSocket; chat de agente abre terminal sem erro |
 | Scheduler CMD fix | `Dockerfile.swarm` | *(beta.9)* | Serviço `runtime` no Swarm entrava em restart loop. Causa: `CMD ["bash"]` no Dockerfile.swarm — bash sai imediatamente em container sem TTY. Fix: `CMD ["uv", "run", "python", "scheduler.py"]`. | Medium — Dockerfile.swarm estável mas pode ser tocado em atualizações do scheduler | Serviço runtime no Swarm: container permanece up; `scheduler.py` inicia e processa tarefas |
+| Claude auth writable credentials + executable override | `clever-agent.stack.yml`, `docs/clever-agent/claude-auth-container-mount.md` | *(beta.10 — stack/doc only)* | Chat e terminal de todos os agentes não funcionavam. Causa 1: `.credentials.json` montado `:ro` → Claude Code trava silenciosamente no startup ao tentar refresh de token OAuth. Causa 2: SDK usava binário bundlado `v2.1.119` que falha silenciosamente dentro do container. Fix: `.credentials.json` → `:rw`; `CLAUDE_CODE_EXECUTABLE=/usr/bin/claude` (v2.1.152+) no serviço `dashboard`. Serviço `runtime` não recebe mounts de auth (não invoca Claude CLI). | **High** — stack file deve ser verificado após qualquer atualização de imagem; CLAUDE_CODE_EXECUTABLE deve ser revalidado após atualização do claude npm package | `docker exec <dashboard> /usr/bin/claude status` → conta autenticada; chat do Oracle retorna resposta; terminal do Oracle abre sem loading infinito |
 
 ---
 

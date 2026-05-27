@@ -1,0 +1,156 @@
+## ============================================================================
+## Clever Agent — Portainer / Docker Swarm deployment stack
+##
+## Stack name on VPS: clever_agent_beta
+## Deploy via:  Portainer > Stacks > clever_agent_beta > Editor (paste this file)
+##
+## Before deploying, check:
+##   * Image tags below match the release you want to run.
+##   * /home/claude/.claude/.credentials.json exists on the Swarm manager node.
+##   * /home/claude/.claude.json exists on the Swarm manager node.
+##   * The external Docker network name matches your Traefik stack (default: traefik-public).
+##
+## Auth volumes:
+##   .credentials.json — mounted :rw (REQUIRED).
+##     Claude Code writes to this file on startup to refresh OAuth tokens.
+##     Mounting :ro causes the TUI to hang silently before rendering
+##     and the SDK chat-bridge to return 0 messages.
+##   .claude.json — mounted :ro (safe).
+##     Contains global Claude config (model defaults, feature flags). Read-only is fine.
+##
+## CLAUDE_CODE_EXECUTABLE:
+##   Points the SDK to /usr/bin/claude (v2.1.152+, the system-installed binary).
+##   The bundled SDK binary (v2.1.119) fails silently inside the container.
+##   Without this var, resolveClaudeExecutable() picks the bundled binary
+##   and chat responses never arrive.
+##
+## Sensitive data (ANTHROPIC_API_KEY, provider tokens, etc.) is configured
+## through the dashboard UI after the first deploy — not in this file.
+## ============================================================================
+version: "3.7"
+
+services:
+
+  dashboard:
+    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.9
+
+    volumes:
+      ## Persistent data
+      - clever_agent_config:/workspace/config
+      - clever_agent_workspace:/workspace/workspace
+      - clever_agent_dashboard_data:/workspace/dashboard/data
+      - clever_agent_memory:/workspace/memory
+      - clever_agent_adw_logs:/workspace/ADWs/logs
+      - clever_agent_agent_memory:/workspace/.claude/agent-memory
+
+      ## Claude authentication — host bind mounts (manager node only).
+      ##
+      ## .credentials.json MUST be :rw.
+      ##   Claude Code rewrites this file on startup for OAuth token refresh.
+      ##   With :ro the TUI hangs silently and SDK chat returns 0 messages.
+      ##   See docs/clever-agent/claude-auth-container-mount.md.
+      - /home/claude/.claude/.credentials.json:/root/.claude/.credentials.json:rw
+
+      ## .claude.json is safe as :ro (global config, not a token store).
+      - /home/claude/.claude.json:/root/.claude.json:ro
+
+    networks:
+      - traefik-public
+
+    environment:
+      - TZ=America/Sao_Paulo
+      - EVONEXUS_PORT=8080
+      - TERMINAL_SERVER_PORT=32352
+      - FORWARDED_ALLOW_IPS=*
+
+      ## Use the system-installed Claude binary instead of the bundled SDK binary.
+      ## resolveClaudeExecutable() / chat-bridge picks the bundled v2.1.119 by default,
+      ## which fails silently. /usr/bin/claude (v2.1.152+) is the validated binary.
+      ## See docs/clever-agent/claude-auth-container-mount.md.
+      - CLAUDE_CODE_EXECUTABLE=/usr/bin/claude
+
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1536M
+      labels:
+        - traefik.enable=1
+        - traefik.docker.network=traefik-public
+
+        ## Primary router — Flask / SPA on port 8080
+        - traefik.http.routers.clever_agent_dashboard.rule=Host(`agent.cleverai.com.br`)
+        - traefik.http.routers.clever_agent_dashboard.entrypoints=websecure
+        - traefik.http.routers.clever_agent_dashboard.priority=1
+        - traefik.http.routers.clever_agent_dashboard.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.clever_agent_dashboard.service=clever_agent_dashboard
+        - traefik.http.services.clever_agent_dashboard.loadbalancer.server.port=8080
+        - traefik.http.services.clever_agent_dashboard.loadbalancer.passHostHeader=true
+
+        ## Terminal-server router — Node PTY (HTTP + WebSocket) on port 32352.
+        ## Priority 10 so /terminal/* wins over the primary router.
+        ## stripprefix removes /terminal before forwarding to the terminal-server root.
+        - traefik.http.routers.clever_agent_terminal.rule=Host(`agent.cleverai.com.br`) && PathPrefix(`/terminal`)
+        - traefik.http.routers.clever_agent_terminal.entrypoints=websecure
+        - traefik.http.routers.clever_agent_terminal.priority=10
+        - traefik.http.routers.clever_agent_terminal.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.clever_agent_terminal.service=clever_agent_terminal
+        - traefik.http.routers.clever_agent_terminal.middlewares=clever_agent_terminal_strip
+        - traefik.http.middlewares.clever_agent_terminal_strip.stripprefix.prefixes=/terminal
+        - traefik.http.services.clever_agent_terminal.loadbalancer.server.port=32352
+        - traefik.http.services.clever_agent_terminal.loadbalancer.passHostHeader=true
+
+  runtime:
+    image: ghcr.io/danielsavoia/clever-agent-runtime:0.33.0-clever-beta.9
+
+    ## Runtime runs scheduler.py (Python process only).
+    ## It does NOT invoke the Claude CLI and does NOT need OAuth token refresh.
+    ## Therefore no .credentials.json bind mount is added here.
+    ## CLAUDE_CODE_EXECUTABLE is also not needed.
+    ## If a future release adds a Claude CLI invocation to the runtime,
+    ## add the same auth bind mounts as the dashboard service above.
+
+    volumes:
+      - clever_agent_config:/workspace/config
+      - clever_agent_workspace:/workspace/workspace
+      - clever_agent_memory:/workspace/memory
+      - clever_agent_adw_logs:/workspace/ADWs/logs
+      - clever_agent_agent_memory:/workspace/.claude/agent-memory
+
+    networks:
+      - traefik-public
+
+    environment:
+      - TZ=America/Sao_Paulo
+      ## Waits for ANTHROPIC_API_KEY to appear in .env before starting.
+      ## Prevents crash-loop while the dashboard is still being configured.
+      - REQUIRE_ANTHROPIC_KEY=1
+
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1024M
+
+## ----------------------------------------------------------------------------
+## Named volumes — persistent data.
+## The auth files (/home/claude/...) are host bind mounts, not named volumes.
+## ----------------------------------------------------------------------------
+volumes:
+  clever_agent_config:
+  clever_agent_workspace:
+  clever_agent_dashboard_data:
+  clever_agent_memory:
+  clever_agent_adw_logs:
+  clever_agent_agent_memory:
+
+networks:
+  traefik-public:
+    external: true
+    name: traefik-public
