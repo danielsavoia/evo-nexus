@@ -15,8 +15,10 @@
 ##     Claude Code writes to this file on startup to refresh OAuth tokens.
 ##     Mounting :ro causes the TUI to hang silently before rendering
 ##     and the SDK chat-bridge to return 0 messages.
-##   .claude.json — mounted :ro (safe).
-##     Contains global Claude config (model defaults, feature flags). Read-only is fine.
+##   .claude.json — mounted :rw (REQUIRED).
+##     Claude Code 2.1.152+ writes session state, trust decisions, and timestamps
+##     to this file at runtime. Mounting :ro causes the TUI to render empty/blank
+##     and the terminal session to appear frozen.
 ##
 ## CLAUDE_CODE_EXECUTABLE:
 ##   Points the SDK to /usr/bin/claude (v2.1.152+, the system-installed binary).
@@ -51,8 +53,12 @@ services:
       ##   See docs/clever-agent/claude-auth-container-mount.md.
       - /home/claude/.claude/.credentials.json:/root/.claude/.credentials.json:rw
 
-      ## .claude.json is safe as :ro (global config, not a token store).
-      - /home/claude/.claude.json:/root/.claude.json:ro
+      ## .claude.json MUST be :rw.
+      ##   Claude Code 2.1.152+ writes session state, trust decisions, and
+      ##   timestamps to this file at runtime. With :ro the TUI renders blank
+      ##   and the terminal session appears frozen (validated on VPS 2026-05-27).
+      ##   See docs/clever-agent/claude-auth-container-mount.md.
+      - /home/claude/.claude.json:/root/.claude.json:rw
 
     networks:
       - traefik-public

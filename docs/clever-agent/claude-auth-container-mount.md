@@ -1,8 +1,9 @@
-# Clever Agent — Claude Auth em Container: Credenciais e Executável
+# Clever Agent — Claude Auth em Container: Credenciais, Config e Trust Prompt
 
 **Data:** 2026-05-27
 **Branch:** `clever-dev`
-**Patch:** beta.10 (operacional — stack/doc only, sem rebuild de imagem)
+**Patch:** beta.10 (operacional — stack + code fix, sem rebuild de imagem nova)
+**Validado na VPS:** 2026-05-27
 
 ---
 
@@ -10,37 +11,68 @@
 
 | Sintoma | Causa raiz |
 |---|---|
-| TUI do Claude Code trava silenciosamente antes de renderizar | `.credentials.json` montado `:ro` — Claude Code tenta reescrever o arquivo no startup para refresh de token OAuth e falha silenciosamente |
+| TUI do Claude Code em branco / trava silenciosamente antes de renderizar | `.credentials.json` ou `.claude.json` montado `:ro` — Claude Code 2.1.152 precisa escrever em ambos |
 | Chat do agente não responde (retorna 0 mensagens) | SDK usa binário bundlado `v2.1.119` que falha silenciosamente dentro do container |
 | Terminal do agente abre mas chat nunca retorna resposta | Ambas as causas acima combinadas |
+| TUI renderiza mas trust prompt não é aceito automaticamente | `claude-bridge.js` só detectava texto antigo do prompt |
 
 ---
 
-## 2. Causa raiz
+## 2. Causas raiz confirmadas na VPS
 
 ### 2.1 `.credentials.json` montado `:ro`
 
 O Claude Code reescreve `/root/.claude/.credentials.json` no startup para fazer refresh do token OAuth.
 
-- No host: arquivo em `/home/claude/.claude/.credentials.json`
-- No container: montado em `/root/.claude/.credentials.json`
-- Com `:ro`: a tentativa de escrita falha silenciosamente → TUI trava antes de renderizar → SDK chat-bridge recebe 0 mensagens
+- No host: `/home/claude/.claude/.credentials.json`
+- No container: `/root/.claude/.credentials.json`
+- Com `:ro`: escrita falha silenciosamente → TUI trava antes de renderizar → chat-bridge retorna 0 mensagens
 
-**Comportamento:** sem mensagem de erro visível. O container sobe normalmente, o terminal-server responde, mas o chat nunca funciona.
+**Sintoma:** container sobe normalmente, terminal-server responde, mas chat nunca funciona.
 
-### 2.2 Binário bundlado do SDK (`v2.1.119`) falha silenciosamente
+### 2.2 `.claude.json` montado `:ro` (validado na VPS 2026-05-27)
+
+O Claude Code 2.1.152 escreve **session state, decisões de trust e timestamps** em `/root/.claude.json` durante a sessão.
+
+Com `.claude.json:ro`:
+- A TUI renderiza **em branco** (sem o banner `╭───Claude Code v2.1.152`)
+- A sessão parece congelada
+- Não há mensagem de erro visível
+
+Com `.claude.json:rw`:
+- A TUI renderiza corretamente: `╭───Claude Code v2.1.152 ───╮`
+- O terminal do agente funciona
+
+**Esta foi a causa final confirmada na VPS.** A correção de `.credentials.json:rw` sozinha não era suficiente para o terminal TUI.
+
+### 2.3 Binário bundlado do SDK (`v2.1.119`) falha silenciosamente
 
 O `@anthropic-ai/agent-sdk` contém um binário bundlado em:
 ```
-node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude
+node_modules/@anthropic-ai/claude-agent-sdk-linux-x64/claude  (v2.1.119)
 ```
-Versão: `v2.1.119`
 
-Quando `CLAUDE_CODE_EXECUTABLE` não está definido, `resolveClaudeExecutable()` escolhe esse binário bundlado.
+Quando `CLAUDE_CODE_EXECUTABLE` não está definido, `resolveClaudeExecutable()` escolhe esse binário.
+Dentro do container ele falha silenciosamente — sem erro no log, mas o chat-bridge retorna 0 mensagens.
 
-Dentro do container, este binário falha silenciosamente — não há erro no log, mas o chat-bridge retorna 0 mensagens.
+O binário do sistema `/usr/bin/claude` (`v2.1.152+`, instalado via `npm install -g @anthropic-ai/claude-code`) é a versão validada.
 
-O binário do sistema `/usr/bin/claude` (instalado via `npm install -g @anthropic-ai/claude-code`) é a versão validada: `v2.1.152+`.
+### 2.4 Trust prompt — texto diferente no Claude 2.1.152
+
+O `claude-bridge.js` fazia auto-accept do trust prompt via detecção de string.
+
+**Claude 2.1.119 (antigo):**
+```
+Do you trust the files in this folder?
+```
+
+**Claude 2.1.152 (novo):**
+```
+Quick safety check
+Is this a project you created or one you trust?
+```
+
+Com apenas a detecção antiga, o trust prompt do Claude 2.1.152 não era auto-aceito.
 
 ---
 
@@ -48,25 +80,26 @@ O binário do sistema `/usr/bin/claude` (instalado via `npm install -g @anthropi
 
 ### 3.1 `clever-agent.stack.yml` — serviço `dashboard`
 
-**Volume `.credentials.json`: `:ro` → `:rw`**
+**Volume `.credentials.json`: `:rw` (REQUIRED)**
 
 ```yaml
-# ANTES (stack manual na VPS):
-- /home/claude/.claude/.credentials.json:/root/.claude/.credentials.json:ro
-
-# DEPOIS:
 - /home/claude/.claude/.credentials.json:/root/.claude/.credentials.json:rw
 ```
 
-**Motivo:** Claude Code precisa de escrita para refresh de token OAuth. `:ro` bloqueia silenciosamente.
+Motivo: Claude Code reescreve o arquivo no startup para OAuth token refresh.
 
-**Volume `.claude.json`: permanece `:ro`**
+**Volume `.claude.json`: `:rw` (REQUIRED — validado na VPS 2026-05-27)**
 
 ```yaml
+# ANTES (incorreto — TUI renderizava em branco):
 - /home/claude/.claude.json:/root/.claude.json:ro
+
+# DEPOIS (correto):
+- /home/claude/.claude.json:/root/.claude.json:rw
 ```
 
-**Motivo:** Arquivo de configuração global (model defaults, feature flags). Não é token store. Leitura suficiente.
+Motivo: Claude Code 2.1.152+ escreve session state, trust decisions e timestamps neste arquivo.
+Com `:ro` a TUI renderiza em branco e a sessão fica congelada.
 
 **Env `CLAUDE_CODE_EXECUTABLE`:**
 
@@ -75,31 +108,56 @@ environment:
   - CLAUDE_CODE_EXECUTABLE=/usr/bin/claude
 ```
 
-**Motivo:** Aponta `resolveClaudeExecutable()` para o binário do sistema (`v2.1.152+`) em vez do bundlado (`v2.1.119`).
+Motivo: Aponta `resolveClaudeExecutable()` para o binário do sistema (`v2.1.152+`) em vez do bundlado (`v2.1.119`).
 
-### 3.2 Serviço `runtime` — sem mounts de auth
+### 3.2 `dashboard/terminal-server/src/claude-bridge.js` — trust prompt
 
-O serviço `runtime` executa apenas `scheduler.py` (Python). **Não invoca o Claude CLI** e não precisa de refresh de token OAuth.
+Expansão da detecção para suportar texto antigo e novo:
 
-Portanto:
-- **Sem** `.credentials.json` bind mount no runtime
-- **Sem** `CLAUDE_CODE_EXECUTABLE` no runtime
+```js
+// ANTES — só suportava Claude 2.1.119:
+if (!trustPromptHandled && dataBuffer.includes('Do you trust the files in this folder?')) {
 
-> Se uma versão futura do runtime adicionar invocação do Claude CLI, adicionar os mesmos bind mounts do serviço `dashboard`.
+// DEPOIS — suporta 2.1.119 e 2.1.152+:
+const isTrustPrompt =
+  dataBuffer.includes('Do you trust the files in this folder?') ||
+  dataBuffer.includes('Is this a project you created or one you trust?') ||
+  dataBuffer.includes('Quick safety check');
+
+if (!trustPromptHandled && isTrustPrompt) {
+```
+
+O comportamento de auto-accept (enviar `\r` após 500 ms) não foi alterado.
+Ambos os prompts default-highlightam a opção 1 (trust/yes), então `Enter` confirma sem trocar a seleção.
+
+### 3.3 Serviço `runtime` — sem mounts de auth (mantido)
+
+O `runtime` executa apenas `scheduler.py` (Python). Não invoca o Claude CLI e não precisa de refresh de token.
+
+> Se uma versão futura do runtime adicionar invocação do Claude CLI, adicionar os mesmos bind mounts do dashboard.
 
 ---
 
-## 4. Por que o container usa `/root/.claude/` e não `/home/claude/.claude/`?
+## 4. Regra operacional consolidada
 
-O container roda como `root` (padrão Docker sem `USER` declarado).
-O `HOME` do processo root é `/root/`.
-O Claude Code sempre usa `$HOME/.claude/` para armazenar credenciais.
+### Serviço `dashboard`
 
-Portanto:
-- Host: `/home/claude/.claude/.credentials.json`
-- Container: `/root/.claude/.credentials.json`
+```yaml
+volumes:
+  - /home/claude/.claude/.credentials.json:/root/.claude/.credentials.json:rw  # MUST be rw
+  - /home/claude/.claude.json:/root/.claude.json:rw                             # MUST be rw
 
-O bind mount mapeia o arquivo do host para o path correto dentro do container.
+environment:
+  - CLAUDE_CODE_EXECUTABLE=/usr/bin/claude
+```
+
+### Por que o container usa `/root/.claude/` e não `/home/claude/.claude/`?
+
+O container roda como `root`. O `HOME` do processo root é `/root/`.
+O Claude Code sempre usa `$HOME/.claude/` para armazenar credenciais e config.
+
+- Host: `/home/claude/.claude/.credentials.json` e `/home/claude/.claude.json`
+- Container: `/root/.claude/.credentials.json` e `/root/.claude.json`
 
 ---
 
@@ -110,13 +168,15 @@ O bind mount mapeia o arquivo do host para o path correto dentro do container.
 | NÃO montar `/home/claude/` inteiro | Exposição desnecessária de arquivos do host |
 | NÃO montar `/home/claude/.claude/` como diretório | Expõe outros arquivos além das credenciais |
 | NÃO commitar `.credentials.json` no repositório | Contém tokens OAuth reais |
-| NÃO incluir conteúdo de `.credentials.json` em documentação | Idem |
-| NÃO logar o conteúdo do arquivo em CI/CD | Idem |
-| `.credentials.json` `:rw` é necessário | Claude Code só opera com token válido; sem refresh = falha silenciosa |
+| NÃO commitar `.claude.json` no repositório | Pode conter decisões de trust e state |
+| NÃO incluir conteúdo de `.credentials.json` ou `.claude.json` em documentação | Idem |
+| NÃO logar o conteúdo desses arquivos em CI/CD | Idem |
+| `:rw` em ambos é necessário | Claude Code 2.1.152 escreve em ambos; `:ro` em qualquer um causa falha silenciosa |
 
-### O que `.credentials.json` contém
+### O que cada arquivo contém
 
-OAuth tokens da conta Claude (access token + refresh token). **Não é a ANTHROPIC_API_KEY.**
+- **`.credentials.json`** — OAuth tokens da conta Claude (access token + refresh token). Não é a `ANTHROPIC_API_KEY`.
+- **`.claude.json`** — Config global (model defaults, feature flags) + session state + trust decisions (escrito pelo Claude Code 2.1.152+).
 
 A `ANTHROPIC_API_KEY` é configurada via dashboard UI após o primeiro deploy, não via bind mount.
 
@@ -125,32 +185,30 @@ A `ANTHROPIC_API_KEY` é configurada via dashboard UI após o primeiro deploy, n
 ## 6. Validação pós-deploy na VPS
 
 ```bash
-# 1. Verificar que o arquivo está montado como rw no container
-docker exec <dashboard_container> ls -la /root/.claude/.credentials.json
-# Esperado: arquivo existe (não importa permissões exatas — o que importa é que não está ro)
-
-# 2. Verificar que o Claude binary correto está sendo usado
+# 1. Verificar binário correto
 docker exec <dashboard_container> sh -c 'echo $CLAUDE_CODE_EXECUTABLE && $CLAUDE_CODE_EXECUTABLE --version'
-# Esperado: /usr/bin/claude, depois a versão (v2.1.152+)
+# Esperado: /usr/bin/claude + versão 2.1.152+
 
-# 3. Status do Claude Code
+# 2. Status do Claude Code
 docker exec <dashboard_container> /usr/bin/claude status
 # Esperado: conta autenticada, sem erro de permissão
 
-# 4. Chat funcional via UI
-# Agents → Oracle (ou qualquer agente) → Chat
-# Esperado: mensagem enviada → resposta recebida (não fica em loading infinito)
+# 3. Verificar que os arquivos estão montados como rw
+docker exec <dashboard_container> sh -c 'ls -la /root/.claude/.credentials.json && ls -la /root/.claude.json'
+# Esperado: ambos existem
 
-# 5. Terminal funcional via UI
+# 4. Chat funcional via UI
+# Agents → Oracle → Chat → enviar mensagem
+# Esperado: resposta recebida (não fica em loading infinito)
+
+# 5. Terminal TUI funcional via UI
 # Agents → Oracle → Terminal
-# Esperado: terminal abre e responde comandos
+# Esperado: banner "╭───Claude Code v2.1.152" renderiza corretamente
 ```
 
 ---
 
 ## 7. Pré-requisitos no nó manager do Swarm
-
-Antes do deploy, verificar que os arquivos existem no host:
 
 ```bash
 ls -la /home/claude/.claude/.credentials.json
@@ -160,7 +218,7 @@ ls -la /home/claude/.claude.json
 # Esperado: arquivo existe
 ```
 
-Se `.credentials.json` não existir, é preciso autenticar o Claude Code no host primeiro:
+Se `.credentials.json` não existir, autenticar no host:
 ```bash
 sudo -u claude claude
 # Realizar login OAuth na interface que aparecer
@@ -172,9 +230,12 @@ sudo -u claude claude
 
 Após qualquer atualização do stack, Dockerfile, ou Claude SDK:
 
-- [ ] `clever-agent.stack.yml` → `dashboard.volumes`: `.credentials.json` é `:rw` (não `:ro`)
-- [ ] `clever-agent.stack.yml` → `dashboard.volumes`: `.claude.json` é `:ro`
-- [ ] `clever-agent.stack.yml` → `dashboard.environment`: `CLAUDE_CODE_EXECUTABLE=/usr/bin/claude` presente
-- [ ] `clever-agent.stack.yml` → `runtime`: **sem** `.credentials.json` bind mount
-- [ ] Se `Dockerfile.dashboard` atualizar a instalação do `claude` CLI, verificar que `/usr/bin/claude` ainda é o path correto
-- [ ] Após redeploy: validar com `docker exec <dashboard_container> /usr/bin/claude status`
+- [ ] `clever-agent.stack.yml` → `dashboard.volumes`: `.credentials.json` é `:rw`
+- [ ] `clever-agent.stack.yml` → `dashboard.volumes`: `.claude.json` é `:rw` (não `:ro`)
+- [ ] `clever-agent.stack.yml` → `dashboard.environment`: `CLAUDE_CODE_EXECUTABLE=/usr/bin/claude`
+- [ ] `clever-agent.stack.yml` → `runtime`: **sem** bind mounts de auth (scheduler.py não usa Claude CLI)
+- [ ] `claude-bridge.js` → trust prompt detecta os três padrões: `Do you trust`, `Is this a project`, `Quick safety check`
+- [ ] Se `Dockerfile.dashboard` atualizar o `claude` CLI, verificar que `/usr/bin/claude` ainda é o path correto
+- [ ] Após redeploy: `docker exec <dashboard_container> /usr/bin/claude status`
+- [ ] Após redeploy: Oracle Terminal renderiza `╭───Claude Code v2.1.152`
+- [ ] NÃO montar home inteiro; NÃO expor tokens em docs ou logs

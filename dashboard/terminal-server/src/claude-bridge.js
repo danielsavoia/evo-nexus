@@ -243,12 +243,24 @@ class ClaudeBridge {
         // Buffer data to check for trust prompt
         dataBuffer += data;
         
-        // Check for trust prompt and auto-accept it
-        if (!trustPromptHandled && dataBuffer.includes('Do you trust the files in this folder?')) {
+        // Check for trust prompt and auto-accept it.
+        // Claude Code 2.1.119 and earlier used:
+        //   "Do you trust the files in this folder?"
+        // Claude Code 2.1.152+ uses:
+        //   "Is this a project you created or one you trust?" (body text)
+        //   "Quick safety check" (header)
+        // Both prompts default-highlight option 1 (Yes/Trust). Sending Enter
+        // confirms the highlighted option without changing selection.
+        const isTrustPrompt =
+          dataBuffer.includes('Do you trust the files in this folder?') ||
+          dataBuffer.includes('Is this a project you created or one you trust?') ||
+          dataBuffer.includes('Quick safety check');
+
+        if (!trustPromptHandled && isTrustPrompt) {
           trustPromptHandled = true;
           console.log(`Auto-accepting trust prompt for session ${sessionId}`);
-          // The prompt shows "Enter to confirm" which means option 1 is already selected
-          // Just send Enter to confirm
+          // The prompt default-highlights option 1 (trust/yes).
+          // Sending Enter confirms without changing the selection.
           setTimeout(() => {
             claudeProcess.write('\r');
             console.log(`Sent Enter to accept trust prompt for session ${sessionId}`);
