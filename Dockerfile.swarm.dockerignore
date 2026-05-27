@@ -1,0 +1,74 @@
+# ============================================================================
+# Dockerfile.swarm.dockerignore — build context exclusions for the runtime image.
+#
+# Docker 23+ automatically uses <Dockerfile>.dockerignore when present.
+# This file is MORE aggressive than the root .dockerignore because the runtime
+# (scheduler) does not need frontend assets, marketing site, brand images, or
+# test files — only Python source, .claude/ skills/agents, config, and entrypoints.
+# ============================================================================
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+coverage/
+
+# Git
+.git/
+.github/
+
+# Environment / secrets
+.env
+.env.*
+
+# Docker data
+dashboard/data/
+
+# Node — all node_modules at any depth
+**/node_modules
+
+# Dashboard frontend (React SPA): runtime scheduler doesn't serve web assets.
+# Only dashboard/backend/ is needed by scheduler.py imports.
+dashboard/frontend/
+dashboard/packages/
+
+# Marketing / docs site (not used at runtime)
+site/
+
+# Brand / avatar images (served by dashboard, not runtime scheduler)
+brand/
+
+# Tests
+tests/
+
+# User workspace / memory
+workspace/
+.claude/agent-memory/
+.claude/.env
+
+# Temp
+_tmp/
+tmp/
+
+# Legacy
+etus-boilerplate-agentic-engineer/
+social-media-skills/
+ADWs/logs/
+ADWs/__pycache__/
+
+# Archives
+*.zip
+*.tar
+*.tgz
+*.tar.gz
+
+# OS
+.DS_Store
+
+# Test outputs
+playwright-report/
+test-results/

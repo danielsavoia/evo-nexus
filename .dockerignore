@@ -1,16 +1,53 @@
+# Python
 .venv/
-.git/
-.env
 __pycache__/
 *.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+coverage/
+
+# Git
+.git/
+.github/
+
+# Environment / secrets
+.env
+.env.*
+
+# Docker data
 dashboard/data/
+
+# Node — exclude ALL node_modules at any depth.
+# Note: Dashboard Dockerfile uses explicit COPY + multi-stage for node_modules —
+# this pattern does not break those workflows.
+**/node_modules
+
+# User data / workspace
 workspace/
-ADWs/logs/
-ADWs/__pycache__/
 .claude/agent-memory/
 .claude/.env
+
+# Temp
+_tmp/
+tmp/
+
+# Legacy / large unused dirs
 etus-boilerplate-agentic-engineer/
 social-media-skills/
-node_modules/
-.DS_Store
+ADWs/logs/
+ADWs/__pycache__/
+
+# Archives
 *.zip
+*.tar
+*.tgz
+*.tar.gz
+
+# OS
+.DS_Store
+
+# Test outputs
+playwright-report/
+test-results/
