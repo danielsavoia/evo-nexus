@@ -81,4 +81,4 @@ LABEL org.opencontainers.image.title="evo-nexus-runtime" \
       org.opencontainers.image.licenses="MIT"
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["bash"]
+CMD ["uv", "run", "python", "scheduler.py"]
