@@ -1,0 +1,10 @@
+# Clever Agent — Git line ending rules
+# Shell scripts that run inside Linux containers MUST have LF endings.
+# Windows git.core.autocrlf would otherwise silently corrupt them.
+
+# Default: auto (text files get LF in repo, platform line endings in working tree)
+* text=auto
+
+# Shell scripts: always LF in repo AND working tree
+*.sh text eol=lf
+Dockerfile* text eol=lf
