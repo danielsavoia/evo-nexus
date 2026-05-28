@@ -34,7 +34,7 @@ version: "3.7"
 services:
 
   dashboard:
-    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.11
+    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.12
 
     volumes:
       ## Persistent data
