@@ -34,7 +34,7 @@ version: "3.7"
 services:
 
   dashboard:
-    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.9
+    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.10
 
     volumes:
       ## Persistent data
@@ -110,7 +110,7 @@ services:
         - traefik.http.services.clever_agent_terminal.loadbalancer.passHostHeader=true
 
   runtime:
-    image: ghcr.io/danielsavoia/clever-agent-runtime:0.33.0-clever-beta.9
+    image: ghcr.io/danielsavoia/clever-agent-runtime:0.33.0-clever-beta.10
 
     ## Runtime runs scheduler.py (Python process only).
     ## It does NOT invoke the Claude CLI and does NOT need OAuth token refresh.
