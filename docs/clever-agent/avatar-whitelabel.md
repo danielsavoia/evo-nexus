@@ -1,6 +1,6 @@
 # Clever Agent Avatar White-label
 
-**Date:** 2026-05-24
+**Date:** 2026-05-28 (atualizado: WebP optimization)
 **Branch:** `clever-dev`
 
 ---
@@ -38,9 +38,32 @@ C:\Users\agenc\Downloads\Avatares
 
 ## Formato
 
-- **Formato:** PNG
+### Master (source of truth)
+- **Formato:** PNG 1254×1254 px, RGB24
 - **Quantidade:** 38 arquivos
 - **Padrão de nome:** `avatar_{slug}.png`
+- **Path:** `brand/clever-agent/avatars/`
+- **Tamanho total:** ~63.9 MB
+
+### Servido pelo frontend (otimizado)
+- **Formato:** WebP 256×256 px, qualidade 85 (gerado com ffmpeg + libwebp)
+- **Quantidade:** 38 arquivos
+- **Padrão de nome:** `avatar_{slug}.webp`
+- **Path:** `dashboard/frontend/public/clever-agent/avatars/`
+- **Tamanho total:** ~458 KB (**redução de 99.3% vs PNG**)
+- **Maior arquivo:** ~14 KB (avatar_kai.webp)
+
+### Como regenerar WebP a partir dos PNGs master
+
+```bash
+FFMPEG=$(which ffmpeg)
+INPUT_DIR="brand/clever-agent/avatars"
+OUTPUT_DIR="dashboard/frontend/public/clever-agent/avatars"
+for png in "$INPUT_DIR"/avatar_*.png; do
+  slug=$(basename "$png" .png)
+  "$FFMPEG" -y -i "$png" -vf "scale=256:256:flags=lanczos" -c:v libwebp -q:v 85 "$OUTPUT_DIR/${slug}.webp"
+done
+```
 
 ---
 
@@ -93,11 +116,19 @@ C:\Users\agenc\Downloads\Avatares
 
 | Arquivo | Status |
 |---|---|
-| `dashboard/frontend/src/lib/agent-meta.ts` | Atualizado para `.png` |
-| `dashboard/backend/agent_meta_seed.py` | Atualizado para `.png` |
+| `dashboard/frontend/src/lib/agent-meta.ts` | Atualizado para `.webp` (38 referências) |
+| `dashboard/backend/agent_meta_seed.py` | Atualizado para `.webp` (38 referências) |
+
+**Reapply após atualizar PNGs master:**
+1. Rodar script ffmpeg acima para regenerar WebP
+2. `git add dashboard/frontend/public/clever-agent/avatars/*.webp`
 
 ---
 
 ## Observacao para novos agentes
 
-Novos agentes devem receber avatars no mesmo padrao visual Clever Agent (PNG, estilo consistente com os 38 existentes). O asset deve ser adicionado primeiro em `brand/clever-agent/avatars/` e depois em `dashboard/frontend/public/clever-agent/avatars/`. O mapeamento deve ser atualizado em `agent-meta.ts` e `agent_meta_seed.py`.
+Novos agentes devem receber avatars no mesmo padrão visual Clever Agent (PNG 1254×1254, estilo consistente com os 38 existentes):
+1. Adicionar PNG master em `brand/clever-agent/avatars/avatar_{slug}.png`
+2. Converter para WebP: `ffmpeg -y -i brand/clever-agent/avatars/avatar_{slug}.png -vf "scale=256:256:flags=lanczos" -c:v libwebp -q:v 85 dashboard/frontend/public/clever-agent/avatars/avatar_{slug}.webp`
+3. Adicionar entrada em `agent-meta.ts`: `avatar: '/clever-agent/avatars/avatar_{slug}.webp'`
+4. Adicionar entrada em `agent_meta_seed.py`: `"avatar_url": "/clever-agent/avatars/avatar_{slug}.webp"`
