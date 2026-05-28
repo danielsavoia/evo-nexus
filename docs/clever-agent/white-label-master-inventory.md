@@ -609,6 +609,16 @@ grep -n "isInstalled && !isActive" dashboard/frontend/src/pages/Providers.tsx
 # Provider CLIs in Dockerfile
 grep -n "claude-code\|openclaude" Dockerfile.dashboard
 # Expected: both present
+
+# Provider-aware terminal sessions
+grep -n "getProviderSignature" dashboard/terminal-server/src/provider-config.js
+# Expected: function definition present
+
+grep -n "providerSignature\|generation" dashboard/terminal-server/src/server.js
+# Expected: providerSignature stored after session.active = true; generation counter
+
+grep -n "providerSignature" dashboard/terminal-server/src/claude-bridge.js
+# Expected: defensive check in startSession() + stored in session object + onExit guard
 ```
 
 ### Step 4 — uv/npm cache cleanup still in same RUN layer
@@ -668,6 +678,7 @@ Reapply order (lowest risk first):
 12. Providers toggle fix
 13. Provider CLIs in Dockerfile
 14. Brain repo temporary-mode params
+15. Provider-aware terminal sessions (providerSignature + generation counter)
 
 ### Step 9 — Post-reapply validation
 

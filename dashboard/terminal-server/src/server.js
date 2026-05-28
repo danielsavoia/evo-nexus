@@ -9,7 +9,7 @@ const ClaudeBridge = require('./claude-bridge');
 const { ChatBridge } = require('./chat-bridge');
 const SessionStore = require('./utils/session-store');
 const ChatLogger = require('./utils/chat-logger');
-const { loadProviderConfig, getProviderMode } = require('./provider-config');
+const { loadProviderConfig, getProviderMode, getProviderSignature } = require('./provider-config');
 
 class TerminalServer {
   constructor(options = {}) {
@@ -954,15 +954,39 @@ class TerminalServer {
     if (!session) return;
 
     if (session.active) {
-      // Frontend may re-send start_claude on WebSocket reconnect (common
-      // through reverse proxies like Traefik). The session is already
-      // running — replay the buffer and tell the client it's attached
-      // instead of surfacing a misleading error toast.
-      this.sendToWebSocket(wsInfo.ws, { type: 'claude_started', sessionId: wsInfo.claudeSessionId });
-      return;
+      // Check whether the active provider changed since this PTY was started.
+      // If so, the wrong harness is running — kill it and restart with the correct one.
+      const currentProvider = loadProviderConfig();
+      const currentSig = getProviderSignature(currentProvider);
+      const storedSig = session.providerSignature;
+
+      if (storedSig && storedSig !== currentSig) {
+        console.log(
+          `[startClaude] Provider changed for session ${wsInfo.claudeSessionId}: ` +
+          `old=${storedSig} new=${currentSig} — restarting terminal`
+        );
+        await this.claudeBridge.stopSession(wsInfo.claudeSessionId);
+        session.active = false;
+        session.agent = null;
+        session.providerSignature = null;
+        // Fall through to start a fresh PTY with the new harness
+      } else {
+        // Same provider (or no stored signature on legacy session): this is a
+        // WebSocket reconnect through a reverse proxy — replay the buffer and
+        // reattach instead of surfacing a misleading error toast.
+        this.sendToWebSocket(wsInfo.ws, { type: 'claude_started', sessionId: wsInfo.claudeSessionId });
+        return;
+      }
     }
 
     const sessionId = wsInfo.claudeSessionId;
+
+    // Generation counter: incremented on every fresh PTY start.
+    // Callbacks capture this value so stale exit/error events from a
+    // superseded process (killed during a provider-change restart) are
+    // silently discarded instead of corrupting the new session's state.
+    const generation = (session.generation || 0) + 1;
+    session.generation = generation;
 
     try {
       // Ensure agent name from session is passed even if options don't include it
@@ -985,12 +1009,24 @@ class TerminalServer {
         },
         onExit: (code, signal) => {
           const currentSession = this.claudeSessions.get(sessionId);
-          if (currentSession) currentSession.active = false;
+          if (!currentSession) return;
+          // Discard stale exits from a PTY that was killed during a provider-change
+          // restart (generation mismatch means a newer PTY has taken over).
+          if (currentSession.generation !== generation) {
+            console.log(`[startClaude] Ignoring stale PTY exit for session ${sessionId} (gen ${generation} vs ${currentSession.generation})`);
+            return;
+          }
+          currentSession.active = false;
           this.broadcastToSession(sessionId, { type: 'exit', code, signal });
         },
         onError: (error) => {
           const currentSession = this.claudeSessions.get(sessionId);
-          if (currentSession) currentSession.active = false;
+          if (!currentSession) return;
+          if (currentSession.generation !== generation) {
+            console.log(`[startClaude] Ignoring stale PTY error for session ${sessionId} (gen ${generation} vs ${currentSession.generation})`);
+            return;
+          }
+          currentSession.active = false;
           this.broadcastToSession(sessionId, { type: 'error', message: error.message });
         },
       });
@@ -1000,6 +1036,13 @@ class TerminalServer {
       if (options && options.agent) session.agentName = options.agent;
       session.lastActivity = new Date();
       if (!session.sessionStartTime) session.sessionStartTime = new Date();
+
+      // Record provider signature so we can detect harness mismatches on reconnect.
+      try {
+        const prov = loadProviderConfig();
+        session.providerSignature = getProviderSignature(prov);
+        console.log(`[startClaude] Session ${sessionId} provider signature: ${session.providerSignature}`);
+      } catch (_) { /* non-fatal — signature check skipped on next connect */ }
 
       this.broadcastToSession(sessionId, { type: 'claude_started', sessionId });
     } catch (error) {
