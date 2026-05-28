@@ -5,7 +5,7 @@ description: Set up Telegram, Discord, or Slack webhooks for engineering layer a
 
 # Dev Configure Notifications
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Configure outbound notifications for engineering layer events: long-running task completion, build failures, critical security findings, etc.
 
@@ -15,7 +15,7 @@ Configure outbound notifications for engineering layer events: long-running task
 - You want `@vault-security` to ping you on CRITICAL findings
 
 ## Channels Supported
-- **Telegram** — via the existing EvoNexus `int-telegram` integration
+- **Telegram** — via the existing Clever Agent `int-telegram` integration
 - **Discord** — via webhook URL
 - **Slack** — via webhook URL
 
@@ -63,7 +63,7 @@ Save config notes to `workspace/development/research/[C]notifications-config-{da
 
 Notification message format:
 ```
-🤖 [EvoNexus Eng] {agent} {event}
+🤖 [Clever Agent Eng] {agent} {event}
 {summary}
 
 📁 {path to artifact}

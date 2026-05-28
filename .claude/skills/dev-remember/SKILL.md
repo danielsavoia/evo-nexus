@@ -5,7 +5,7 @@ description: Persist context across engineering sessions — save important deci
 
 # Dev Remember
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Quick context persistence for engineering sessions. Save decisions, gotchas, or patterns that should survive the current conversation but don't deserve a full memory entry in mempalace.
 

@@ -273,7 +273,7 @@ export default function TicketDetail() {
       const lines: string[] = []
       lines.push('## Thread Context')
       lines.push('')
-      lines.push('You are running inside a **persistent chat thread** on EvoNexus, not a fresh one-shot session. This means:')
+      lines.push('You are running inside a **persistent chat thread** on Clever Agent, not a fresh one-shot session. This means:')
       lines.push('')
       lines.push(`- **Thread title:** "${t.title}"`)
       if (t.description) lines.push(`- **Description:** ${t.description}`)

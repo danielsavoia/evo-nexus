@@ -1,6 +1,6 @@
 ---
 name: data-create-viz
-description: Cria visualizações de dados de qualidade profissional com Python no tema Evolution (fundo escuro, acento #00FFA7, fonte Inter). Use quando precisar transformar resultados de query ou um DataFrame em um gráfico, selecionar o tipo de gráfico correto para uma tendência ou comparação, gerar um plot para relatório ou apresentação, ou precisar de um gráfico interativo com hover e zoom. Fontes: Stripe, Omie, Licensing, Evo CRM, ou dados colados/CSV.
+description: Cria visualizações de dados de qualidade profissional com Python no tema Evolution (fundo escuro, acento #00FFA7, fonte Inter). Use quando precisar transformar resultados de query ou um DataFrame em um gráfico, selecionar o tipo de gráfico correto para uma tendência ou comparação, gerar um plot para relatório ou apresentação, ou precisar de um gráfico interativo com hover e zoom. Fontes: Stripe, Omie, Licensing, Clever AI, ou dados colados/CSV.
 argument-hint: "<fonte de dados> [tipo de gráfico] [instruções adicionais]"
 ---
 
@@ -27,7 +27,7 @@ Determinar:
 
 ### 2. Obter os Dados
 
-**Se fonte de dados do workspace (Stripe, Omie, Licensing, Evo CRM):**
+**Se fonte de dados do workspace (Stripe, Omie, Licensing, Clever AI):**
 1. Usar a skill correspondente para buscar os dados
 2. Carregar os resultados em um pandas DataFrame
 3. Limpar e preparar conforme necessário

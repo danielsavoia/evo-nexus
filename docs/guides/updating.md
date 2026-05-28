@@ -1,4 +1,4 @@
-# Updating EvoNexus
+# Updating Clever Agent
 
 ## Check your current version
 
@@ -39,14 +39,14 @@ python app.py &
 
 Starting with **v0.30.2**, official multi-arch images (amd64 + arm64) are published to Docker Hub under the `evoapicloud` namespace:
 
-- `evoapicloud/evo-nexus-dashboard` — Flask + React + embedded terminal + Claude CLI
-- `evoapicloud/evo-nexus-runtime` — Node/Python runtime for the Telegram bot and the scheduler
+- `evoapicloud/clever-agent-dashboard` — Flask + React + embedded terminal + Claude CLI
+- `evoapicloud/clever-agent-runtime` — Node/Python runtime for the Telegram bot and the scheduler
 
 The images are public — no `docker login` required.
 
 ### docker compose (single host, from Docker Hub)
 
-If you deployed with [`docker-compose.hub.yml`](https://github.com/EvolutionAPI/evo-nexus/blob/main/docker-compose.hub.yml) (the recommended flow documented in [Installing with Docker](./docker-install.md)):
+If you deployed with [`docker-compose.hub.yml`](https://github.com/EvolutionAPI/clever-agent/blob/main/docker-compose.hub.yml) (the recommended flow documented in [Installing with Docker](./docker-install.md)):
 
 ```bash
 docker compose -f docker-compose.hub.yml pull
@@ -60,12 +60,12 @@ Named volumes are preserved — all your configuration, providers, integrations,
 Bump the image tag in your stack (or leave `:latest` and force a redeploy). Example:
 
 ```bash
-docker service update --image evoapicloud/evo-nexus-dashboard:v0.30.4 evonexus_evonexus_dashboard
-docker service update --image evoapicloud/evo-nexus-runtime:v0.30.4   evonexus_evonexus_telegram
-docker service update --image evoapicloud/evo-nexus-runtime:v0.30.4   evonexus_evonexus_scheduler
+docker service update --image evoapicloud/clever-agent-dashboard:v0.30.4 clever-agent_clever-agent_dashboard
+docker service update --image evoapicloud/clever-agent-runtime:v0.30.4   clever-agent_clever-agent_telegram
+docker service update --image evoapicloud/clever-agent-runtime:v0.30.4   clever-agent_clever-agent_scheduler
 ```
 
-See [`README.swarm.md`](https://github.com/EvolutionAPI/evo-nexus/blob/main/README.swarm.md) for the full Swarm / Portainer deployment guide and the `evonexus.stack.yml` template.
+See [`README.swarm.md`](https://github.com/EvolutionAPI/clever-agent/blob/main/README.swarm.md) for the full Swarm / Portainer deployment guide and the `clever-agent.stack.yml` template.
 
 ### Local docker compose (building from source)
 
@@ -118,7 +118,7 @@ Returns:
   "current": "0.3.2",
   "latest": "0.4.0",
   "update_available": true,
-  "release_url": "https://github.com/EvolutionAPI/evo-nexus/releases/tag/v0.4.0",
+  "release_url": "https://github.com/EvolutionAPI/clever-agent/releases/tag/v0.4.0",
   "release_notes": "..."
 }
 ```
@@ -126,4 +126,4 @@ Returns:
 ## Changelog
 
 See all releases and changelogs on GitHub:
-https://github.com/EvolutionAPI/evo-nexus/releases
+https://github.com/EvolutionAPI/clever-agent/releases

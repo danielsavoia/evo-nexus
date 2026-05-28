@@ -46,7 +46,7 @@ It turns a single CLI installation into a team of **38 specialized agents** orga
 
 ## Part of the Evolution Foundation ecosystem
 
-EvoNexus is one of the projects maintained by Evolution Foundation. It is the operating layer that orchestrates the Foundation's own work — including the development of [Evo CRM Community](https://github.com/evolution-foundation/evo-crm-community), [Evolution API](https://github.com/evolution-foundation/evolution-api) and [Evolution Go](https://github.com/evolution-foundation/evolution-go).
+EvoNexus is one of the projects maintained by Evolution Foundation. It is the operating layer that orchestrates the Foundation's own work — including the development of [Clever AI Community](https://github.com/evolution-foundation/evo-crm-community), [Evolution API](https://github.com/evolution-foundation/evolution-api) and [Evolution Go](https://github.com/evolution-foundation/evolution-go).
 
 ### Why EvoNexus?
 
@@ -68,7 +68,7 @@ EvoNexus is one of the projects maintained by Evolution Foundation. It is the op
 - **190+ Skills + Custom** — organized by domain prefix (`social-`, `fin-`, `int-`, `prod-`, `mkt-`, `gog-`, `obs-`, `discord-`, `pulse-`, `sage-`, `hr-`, `legal-`, `ops-`, `cs-`, `data-`, `pm-`, `dev-`)
 - **7 Core + 20 Custom Routines** — daily, weekly, and monthly ADWs managed by a scheduler
 - **Web Dashboard** — React + Flask app with auth, roles, web terminal, service management
-- **19+ Integrations** — Google Calendar, Gmail, Linear, GitHub, Discord, Telegram, Stripe, Omie, Bling, Asaas, Fathom, Todoist, YouTube, Instagram, LinkedIn, Evolution API, Evolution Go, Evo CRM, and more
+- **19+ Integrations** — Google Calendar, Gmail, Linear, GitHub, Discord, Telegram, Stripe, Omie, Bling, Asaas, Fathom, Todoist, YouTube, Instagram, LinkedIn, Evolution API, Evolution Go, Clever AI, and more
 - **Persistent Memory** — two-tier system (CLAUDE.md + memory/) with LLM Wiki pattern
 - **Knowledge Base** — optional semantic search via [MemPalace](https://github.com/milla-jovovich/mempalace) (local ChromaDB vectors, one-click install)
 - **Full Observability** — JSONL logs, execution metrics, cost tracking per routine

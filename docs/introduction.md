@@ -1,6 +1,6 @@
-# What is EvoNexus
+# What is Clever Agent
 
-> **Note:** EvoNexus is an independent, **unofficial open-source project**. It is **not affiliated with, endorsed by, or sponsored by Anthropic**. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. This project integrates with Claude Code as a third-party tool and requires users to provide their own installation and credentials.
+> **Note:** Clever Agent is an independent, **unofficial open-source project**. It is **not affiliated with, endorsed by, or sponsored by Anthropic**. "Claude" and "Claude Code" are trademarks of Anthropic, PBC. This project integrates with Claude Code as a third-party tool and requires users to provide their own installation and credentials.
 
 ## The Problem
 
@@ -8,9 +8,9 @@ Running a business means juggling dozens of tools, dashboards, and communication
 
 Most "AI assistants" are chatbots. You ask a question, you get an answer, and then you're back to manually copying data between tools. That doesn't scale.
 
-## What EvoNexus Is
+## What Clever Agent Is
 
-EvoNexus is a multi-agent workspace compatible with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and other LLM tooling. It turns a single Claude Code installation into a team of **38 specialized agents** organized in two ortogonal layers — one for business operations, one for software engineering.
+Clever Agent is a multi-agent workspace compatible with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and other LLM tooling. It turns a single Claude Code installation into a team of **38 specialized agents** organized in two ortogonal layers — one for business operations, one for software engineering.
 
 The **Business Layer** has 17 agents that own distinct domains (finance, projects, community, social media, strategy, sales, courses, learning retention, personal wellness, marketing, HR, customer success, legal, product, data, knowledge) and produce real operational outputs: HTML reports, triaged inboxes, synced meeting notes, financial snapshots, community health checks.
 
@@ -29,7 +29,7 @@ A scheduler runs routines on a daily, weekly, and monthly cadence. Cross-layer h
 
 ## How It's Different
 
-| Chatbot | EvoNexus |
+| Chatbot | Clever Agent |
 |---------|------------|
 | You ask, it answers | Agents run routines on schedule |
 | Forgets between sessions | Persistent memory across sessions |
@@ -90,10 +90,10 @@ Two-tier persistence. `CLAUDE.md` holds working memory (who you are, active proj
 
 ### AI Providers
 
-EvoNexus runs on Anthropic's `claude` CLI by default, but can switch to any of 6 alternate LLM backends (OpenRouter, OpenAI, Gemini, AWS Bedrock, Google Vertex AI, Codex Auth) via [OpenClaude](https://www.npmjs.com/package/@gitlawb/openclaude). The active provider is stored in `config/providers.json` and can be changed from the Providers page in the dashboard — both the terminal-server and the ADW runner re-read the config on every session spawn, so switching takes effect immediately. No vendor lock-in, your choice of model, your keys. See [docs/dashboard/providers.md](dashboard/providers.md) for the full reference.
+Clever Agent runs on Anthropic's `claude` CLI by default, but can switch to any of 6 alternate LLM backends (OpenRouter, OpenAI, Gemini, AWS Bedrock, Google Vertex AI, Codex Auth) via [OpenClaude](https://www.npmjs.com/package/@gitlawb/openclaude). The active provider is stored in `config/providers.json` and can be changed from the Providers page in the dashboard — both the terminal-server and the ADW runner re-read the config on every session spawn, so switching takes effect immediately. No vendor lock-in, your choice of model, your keys. See [docs/dashboard/providers.md](dashboard/providers.md) for the full reference.
 
 ## Open Source
 
-EvoNexus is MIT-licensed, built by [Evolution Foundation](https://evolutionfoundation.com.br). The source is at [github.com/EvolutionAPI/evo-nexus](https://github.com/EvolutionAPI/evo-nexus). This is an unofficial community project — not affiliated with or endorsed by Anthropic.
+Clever Agent is MIT-licensed, built by [Evolution Foundation](https://evolutionfoundation.com.br). The source is at [github.com/EvolutionAPI/clever-agent](https://github.com/EvolutionAPI/clever-agent). This is an unofficial community project — not affiliated with or endorsed by Anthropic.
 
 It's designed to be forked and adapted. Add your own agents, skills, routines, and integrations. The architecture is markdown-first — no complex plugin systems, just files that Claude Code reads.

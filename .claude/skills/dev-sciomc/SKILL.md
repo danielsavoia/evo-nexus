@@ -5,7 +5,7 @@ description: Scientific method scaffolding — hypothesis → experiment → evi
 
 # Dev Sciomc (Scientific Method)
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Scientific method discipline applied to engineering investigations. Forces explicit hypothesis statement, experimental design, evidence collection, and provisional conclusions.
 

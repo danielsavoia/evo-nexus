@@ -1,11 +1,11 @@
 # __NAME__
 
-A v2 plugin for [EvoNexus](https://github.com/EvolutionAPI/evo-nexus).
+A v2 plugin for [Clever Agent](https://github.com/EvolutionAPI/evo-nexus).
 
 ## Development
 
 ```bash
-# Install dependencies (from monorepo root, or point the workspace to @evonexus/ui)
+# Install dependencies (from monorepo root, or point the workspace to @evoapi/evonexus-ui)
 npm install
 
 # Build once
@@ -14,7 +14,7 @@ npm run build
 # Watch mode (rebuild on save)
 npm run dev
 
-# Or use the EvoNexus CLI dev command from the plugin directory:
+# Or use the Clever Agent CLI dev command from the plugin directory:
 npx @evoapi/evo-nexus plugin dev
 ```
 
@@ -31,7 +31,7 @@ npx @evoapi/evo-nexus plugin pack
 # Produces: __SLUG__-0.1.0.tgz + __SLUG__-0.1.0.tgz.sha256
 ```
 
-## Install into EvoNexus
+## Install into Clever Agent
 
 ```bash
 npx @evoapi/evo-nexus plugin install https://github.com/your-org/__SLUG__

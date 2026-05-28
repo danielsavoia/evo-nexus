@@ -1,6 +1,6 @@
 ---
 name: data-write-query
-description: Escreve SQL otimizado para o stack Evolution (PostgreSQL primário) com boas práticas. Use quando precisar traduzir uma necessidade de dados em SQL, construir uma query com múltiplas CTEs, joins e agregações, otimizar uma query contra tabelas grandes, ou obter sintaxe específica para consultas no banco do Evo CRM, Evo AI, ou qualquer serviço do stack Evolution. Dialetos secundários disponíveis: Snowflake, BigQuery, MySQL, DuckDB.
+description: Escreve SQL otimizado para o stack Evolution (PostgreSQL primário) com boas práticas. Use quando precisar traduzir uma necessidade de dados em SQL, construir uma query com múltiplas CTEs, joins e agregações, otimizar uma query contra tabelas grandes, ou obter sintaxe específica para consultas no banco do Clever AI, Evo AI, ou qualquer serviço do stack Evolution. Dialetos secundários disponíveis: Snowflake, BigQuery, MySQL, DuckDB.
 argument-hint: "<descrição do que você precisa consultar>"
 ---
 
@@ -31,7 +31,7 @@ Analisar a descrição do usuário para identificar:
 
 **Dialeto primário do workspace:**
 
-- **PostgreSQL** — padrão para todo o stack Evolution (Evo CRM, Evo AI, serviços internos, Aurora RDS, Supabase, Neon)
+- **PostgreSQL** — padrão para todo o stack Evolution (Clever AI, Evo AI, serviços internos, Aurora RDS, Supabase, Neon)
 
 **Dialetos secundários (se explicitamente solicitados):**
 - Snowflake
@@ -206,7 +206,7 @@ SELECT
 FROM por_versao
 ORDER BY total DESC;
 
--- Padrão: Análise de funil (Evo CRM)
+-- Padrão: Análise de funil (Clever AI)
 WITH funil AS (
     SELECT
         DATE_TRUNC('week', criado_em) AS semana,

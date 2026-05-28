@@ -153,8 +153,8 @@ function proxyToOpenRouter(apiKey, model, bodyBuffer, timeoutMs) {
       'Content-Type': 'application/json',
       'Content-Length': payload.length,
       'Authorization': `Bearer ${apiKey}`,
-      'HTTP-Referer': 'https://evonexus.local',
-      'X-Title': 'EvoNexus Smart Router',
+      'HTTP-Referer': 'https://clever-agent.local',
+      'X-Title': 'Clever Agent Smart Router',
     };
 
     const req = https.request(url, { method: 'POST', headers }, (res) => {
@@ -433,7 +433,7 @@ function startSmartRouter(options = {}) {
 
       if (req.method === 'GET' && (pathname === '/health' || pathname === '/' || pathname === '')) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ status: 'ok', name: 'EvoNexus Smart Router' }));
+        res.end(JSON.stringify({ status: 'ok', name: 'Clever Agent Smart Router' }));
         return;
       }
 

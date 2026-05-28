@@ -174,10 +174,10 @@ def _initialize_remote_brain_repo(
         })
 
         # Commit author — use the GitHub username so the commit attributes correctly
-        author_name = github_username or owner_username or "EvoNexus"
+        author_name = github_username or owner_username or "clever-agent"
         author_email = (
             f"{github_username}@users.noreply.github.com"
-            if github_username else "evonexus@users.noreply.github.com"
+            if github_username else "clever-agent@users.noreply.github.com"
         )
         subprocess.run(
             ["git", "config", "user.name", author_name],

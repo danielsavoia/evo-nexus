@@ -5,7 +5,7 @@ description: Multi-perspective consensus planning with Planner/Architect/Critic 
 
 # Dev Ralplan
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Consensus mode planning: a Planner/Architect/Critic loop that produces a plan with explicit principles, decision drivers, viable options, and an ADR. Used for high-stakes or irreversible work.
 

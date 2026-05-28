@@ -1,6 +1,6 @@
 ---
 name: plugin-list
-description: List all installed EvoNexus plugins with status, version, and update availability. Use when the user asks about installed plugins, wants an inventory, or mentions plugins generally. Triggers on "quais plugins tenho", "list plugins", "plugins instalados", "o que tem instalado".
+description: List all installed Clever Agent plugins with status, version, and update availability. Use when the user asks about installed plugins, wants an inventory, or mentions plugins generally. Triggers on "quais plugins tenho", "list plugins", "plugins instalados", "o que tem instalado".
 metadata:
   category: plugins
   version: 1.0.0

@@ -1,6 +1,6 @@
 ---
 name: create-goal
-description: "Create a Mission, Project, or Goal (Mission → Project → Goal → Task hierarchy) in EvoNexus. Guides the user through picking a mission, choosing or creating a project, defining a measurable goal with metric_type and target_value. Writes to the SQLite goals tables via POST /api/goals. Use when the user says 'create a goal', 'add a mission', 'set a target', 'measure X', 'track Y towards Z', or wants to link work to a measurable outcome."
+description: "Create a Mission, Project, or Goal (Mission → Project → Goal → Task hierarchy) in Clever Agent. Guides the user through picking a mission, choosing or creating a project, defining a measurable goal with metric_type and target_value. Writes to the SQLite goals tables via POST /api/goals. Use when the user says 'create a goal', 'add a mission', 'set a target', 'measure X', 'track Y towards Z', or wants to link work to a measurable outcome."
 ---
 
 # Create Goal

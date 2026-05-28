@@ -56,5 +56,5 @@ Confirm with the user before revoking (the link becomes immediately inaccessible
 
 - Only files inside `workspace/` can be shared (no admin paths)
 - HTML files render natively in the browser (no login required)
-- Markdown and code files are rendered by the EvoNexus share viewer
+- Markdown and code files are rendered by the Clever Agent share viewer
 - Each view is counted and logged in the audit trail

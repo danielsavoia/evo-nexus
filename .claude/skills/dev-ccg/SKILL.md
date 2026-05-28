@@ -5,11 +5,11 @@ description: Tri-model orchestration — run the same task through Claude + Code
 
 # Dev CCG (Claude + Codex + Gemini)
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 **EXPERIMENTAL.** Tri-model orchestration: run the same prompt through Claude, Codex (OpenAI Codex / GPT-Code), and Gemini in parallel, then synthesize the best answer.
 
-> **Note:** This skill assumes external API access to Codex and Gemini, which may or may not be configured in EvoNexus. If only Claude is available, the skill degrades to single-model mode and warns the user.
+> **Note:** This skill assumes external API access to Codex and Gemini, which may or may not be configured in Clever Agent. If only Claude is available, the skill degrades to single-model mode and warns the user.
 
 ## Use When
 - High-stakes decision where single-model bias is a real concern

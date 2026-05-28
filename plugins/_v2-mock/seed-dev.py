@@ -23,7 +23,7 @@ manifest = {
     "name": "v2 Mock Plugin",
     "version": "0.1.0",
     "description": "Minimal v2 plugin for host renderer validation.",
-    "author": "EvoNexus Engineering",
+    "author": "Clever Agent",
     "license": "MIT",
     "min_evonexus_version": "0.34.0",
     "tier": "essential",

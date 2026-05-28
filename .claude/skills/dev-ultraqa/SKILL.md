@@ -5,7 +5,7 @@ description: QA cycling workflow — repeat build/lint/test/fix cycles up to 5 t
 
 # Dev UltraQA
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 QA cycling: keep running build/lint/test/fix loops until all checks pass — but with a circuit breaker. If the same error persists across 3 cycles, stop and report: it's a fundamental issue, not a fixable one.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-EvoNexus Scheduler
+Clever Agent Scheduler
 Runs core routines on schedule. Custom routines loaded from config/routines.yaml.
 In PostgreSQL mode, routine definitions are read from the routine_definitions table
 (pg-native-configs Fase 4); SIGHUP and LISTEN/NOTIFY both trigger hot-reload.
@@ -482,7 +482,7 @@ def main():
     if not acquire_lock():
         sys.exit(1)
 
-    print("EvoNexus Scheduler")
+    print("Clever Agent Scheduler")
     setup_schedule()
     total = len(schedule.get_jobs())
     print(f"  {total} routines scheduled")

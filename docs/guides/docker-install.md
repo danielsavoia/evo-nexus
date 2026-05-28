@@ -1,11 +1,11 @@
-# Installing EvoNexus with Docker
+# Installing Clever Agent with Docker
 
-The fastest way to run EvoNexus on any machine — Linux, macOS (Intel or Apple Silicon), Windows with WSL2, or a bare VPS. Pulls official images from Docker Hub, no source checkout or build step required.
+The fastest way to run Clever Agent on any machine — Linux, macOS (Intel or Apple Silicon), Windows with WSL2, or a bare VPS. Pulls official images from Docker Hub, no source checkout or build step required.
 
 ## TL;DR
 
 ```bash
-curl -O https://raw.githubusercontent.com/EvolutionAPI/evo-nexus/main/docker-compose.hub.yml
+curl -O https://raw.githubusercontent.com/EvolutionAPI/clever-agent/main/docker-compose.hub.yml
 docker compose -f docker-compose.hub.yml up -d
 open http://localhost:8080
 ```
@@ -37,10 +37,10 @@ You never pass `--platform`. Docker picks the right arch from the manifest list.
 
 ## Step 1 — Get the compose file
 
-Download the ready-to-run compose file. It pulls images from `evoapicloud/evo-nexus-{dashboard,runtime}` on Docker Hub — no git clone required.
+Download the ready-to-run compose file. It pulls images from `evoapicloud/clever-agent-{dashboard,runtime}` on Docker Hub — no git clone required.
 
 ```bash
-curl -O https://raw.githubusercontent.com/EvolutionAPI/evo-nexus/main/docker-compose.hub.yml
+curl -O https://raw.githubusercontent.com/EvolutionAPI/clever-agent/main/docker-compose.hub.yml
 ```
 
 Open it — it's commented and self-explanatory. Key things to know:
@@ -69,9 +69,9 @@ You should see:
 
 ```
 NAME                   STATUS
-evonexus-dashboard     Up (healthy)
-evonexus-telegram      Up
-evonexus-scheduler     Up
+clever-agent-dashboard     Up (healthy)
+clever-agent-telegram      Up
+clever-agent-scheduler     Up
 ```
 
 If the dashboard takes longer than 30 seconds to go healthy, check logs:
@@ -119,7 +119,7 @@ Your data volumes are preserved — everything you configured through the UI sta
 
 ### Pin to a specific version
 
-Edit `docker-compose.hub.yml` and replace `:latest` with `:vX.Y.Z` (e.g. `:v0.30.4`). Available tags: https://hub.docker.com/r/evoapicloud/evo-nexus-dashboard/tags
+Edit `docker-compose.hub.yml` and replace `:latest` with `:vX.Y.Z` (e.g. `:v0.30.4`). Available tags: https://hub.docker.com/r/evoapicloud/clever-agent-dashboard/tags
 
 Rolling back is just bumping the tag down and running `pull && up -d`.
 
@@ -131,20 +131,20 @@ Your configuration, workspace files, memory, and agent state live in 6 named vol
 
 ```bash
 # Backup
-mkdir -p evonexus-backup
+mkdir -p clever-agent-backup
 for vol in config workspace dashboard_data memory adw_logs agent_memory; do
   docker run --rm \
-    -v evonexus_${vol}:/src:ro \
-    -v "$PWD/evonexus-backup":/dst \
+    -v clever-agent_${vol}:/src:ro \
+    -v "$PWD/clever-agent-backup":/dst \
     alpine tar czf /dst/${vol}.tgz -C /src .
 done
 
 # Restore on a fresh host
 for vol in config workspace dashboard_data memory adw_logs agent_memory; do
-  docker volume create evonexus_${vol}
+  docker volume create clever-agent_${vol}
   docker run --rm \
-    -v evonexus_${vol}:/dst \
-    -v "$PWD/evonexus-backup":/src:ro \
+    -v clever-agent_${vol}:/dst \
+    -v "$PWD/clever-agent-backup":/src:ro \
     alpine tar xzf /src/${vol}.tgz -C /dst
 done
 ```
@@ -153,14 +153,14 @@ done
 
 ## Advanced: passing secrets via environment variables
 
-The default flow is "configure everything through the UI, which writes to a persisted `.env` inside the `evonexus_config` volume." Most users should stick with that.
+The default flow is "configure everything through the UI, which writes to a persisted `.env` inside the `clever-agent_config` volume." Most users should stick with that.
 
 If you prefer to keep secrets out of the volume (for CI/CD, Vault, Doppler, or immutable infra), you can pass any env var directly in the compose file. They **take precedence** over the volume's `.env`:
 
 ```yaml
 services:
   dashboard:
-    image: evoapicloud/evo-nexus-dashboard:latest
+    image: evoapicloud/clever-agent-dashboard:latest
     environment:
       - TZ=America/Sao_Paulo
       - EVONEXUS_PORT=8080
@@ -208,15 +208,15 @@ For production on a single-host VPS (not a Swarm cluster), put a reverse proxy i
 
 ```yaml
 # Caddyfile next to docker-compose.hub.yml
-evonexus.example.com {
+clever-agent.example.com {
     reverse_proxy /terminal/* localhost:32352
     reverse_proxy localhost:8080
 }
 ```
 
-Then `caddy run` and you have HTTPS with automatic Let's Encrypt certificates pointing at your EvoNexus stack.
+Then `caddy run` and you have HTTPS with automatic Let's Encrypt certificates pointing at your Clever Agent stack.
 
-For Docker Swarm with Traefik, see [README.swarm.md](https://github.com/EvolutionAPI/evo-nexus/blob/main/README.swarm.md) and [`evonexus.stack.yml`](https://github.com/EvolutionAPI/evo-nexus/blob/main/evonexus.stack.yml).
+For Docker Swarm with Traefik, see [README.swarm.md](https://github.com/EvolutionAPI/clever-agent/blob/main/README.swarm.md) and [`clever-agent.stack.yml`](https://github.com/EvolutionAPI/clever-agent/blob/main/clever-agent.stack.yml).
 
 ---
 
@@ -279,6 +279,6 @@ The `-v` flag also deletes the named volumes — **all your configuration and da
 
 ## See also
 
-- [Updating EvoNexus](./updating.md) — version bumps across all install methods
-- [README.swarm.md](https://github.com/EvolutionAPI/evo-nexus/blob/main/README.swarm.md) — production Swarm / Portainer deployments with Traefik
+- [Updating Clever Agent](./updating.md) — version bumps across all install methods
+- [README.swarm.md](https://github.com/EvolutionAPI/clever-agent/blob/main/README.swarm.md) — production Swarm / Portainer deployments with Traefik
 - [Environment variables reference](../reference/env-variables.md) — every variable the image recognizes

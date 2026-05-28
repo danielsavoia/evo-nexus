@@ -1,6 +1,6 @@
 # Postgres Mode
 
-EvoNexus runs on **SQLite by default** (file-based, zero-config) or **PostgreSQL**
+Clever Agent runs on **SQLite by default** (file-based, zero-config) or **PostgreSQL**
 (robust, multi-process, native backups). In Postgres mode, **all configuration
 lives in the database** — no YAML/JSON files are read at runtime for workspace
 state, providers, heartbeats, or routines.
@@ -25,7 +25,7 @@ git-friendly; everything just works without a server.
 
 ```bash
 # 1. Create the database (Supabase, Neon, or self-hosted)
-export DATABASE_URL=postgresql://user:password@host:5432/evonexus
+export DATABASE_URL=postgresql://user:password@host:5432/clever-agent
 
 # 2. Apply schema
 make db-upgrade
@@ -41,21 +41,21 @@ make dashboard-app
 
 ## Migration from SQLite
 
-If you already run EvoNexus on SQLite and want to move to PG:
+If you already run Clever Agent on SQLite and want to move to PG:
 
 ```bash
 # 1. Backup your SQLite DB just in case
-cp dashboard/data/evonexus.db dashboard/data/evonexus.db.bak
+cp dashboard/data/clever-agent.db dashboard/data/clever-agent.db.bak
 
-# 2. Point EvoNexus at PG
-export DATABASE_URL=postgresql://user:password@host:5432/evonexus
+# 2. Point Clever Agent at PG
+export DATABASE_URL=postgresql://user:password@host:5432/clever-agent
 
 # 3. Apply the schema
 make db-upgrade
 
 # 4. Copy data from SQLite to PG (idempotent, --dry-run available)
 make db-migrate \
-  SOURCE=sqlite:///dashboard/data/evonexus.db \
+  SOURCE=sqlite:///dashboard/data/clever-agent.db \
   TARGET=$DATABASE_URL
 
 # 5. Copy file-based configs (workspace.yaml, providers.json, heartbeats.yaml,
@@ -194,7 +194,7 @@ Schedule via cron or scheduler. Recommended cadence: daily 03:00 BRT.
 
 ### Backfill from existing files
 
-If you already had EvoNexus running on SQLite and migrated to PG, use:
+If you already had Clever Agent running on SQLite and migrated to PG, use:
 
 ```bash
 DATABASE_URL=postgresql://... make import-logs
@@ -225,7 +225,7 @@ DATABASE_URL=postgresql://... python backup.py restore <file.zip> --mode merge
 ```
 
 Backend mismatches abort with a clear error — you cannot restore a Postgres
-ZIP onto a SQLite host or vice versa. Use `evonexus-migrate` for cross-backend
+ZIP onto a SQLite host or vice versa. Use `clever-agent-migrate` for cross-backend
 data migration instead.
 
 The manifest records `db_backend: postgres` and `db_dump` metadata (size,

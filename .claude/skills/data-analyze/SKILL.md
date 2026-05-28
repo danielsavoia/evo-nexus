@@ -1,6 +1,6 @@
 ---
 name: data-analyze
-description: Responde perguntas sobre dados do workspace — de consultas rápidas a análises completas e relatórios formais. Use quando precisar buscar uma métrica específica (ex: MRR no Stripe, instâncias ativas no Licensing), investigar o que está causando uma variação de tendência, comparar segmentos ao longo do tempo, ou preparar um relatório de dados para stakeholders. Fontes disponíveis: Stripe (`int-stripe`), Omie (`int-omie`), Licensing (`int-licensing`), Evo CRM (`int-evo-crm`), Linear (`int-linear-review`).
+description: Responde perguntas sobre dados do workspace — de consultas rápidas a análises completas e relatórios formais. Use quando precisar buscar uma métrica específica (ex: MRR no Stripe, instâncias ativas no Licensing), investigar o que está causando uma variação de tendência, comparar segmentos ao longo do tempo, ou preparar um relatório de dados para stakeholders. Fontes disponíveis: Stripe (`int-stripe`), Omie (`int-omie`), Licensing (`int-licensing`), Clever AI (`int-evo-crm`), Linear (`int-linear-review`).
 argument-hint: "<pergunta em linguagem natural>"
 ---
 
@@ -36,7 +36,7 @@ Analisar a pergunta do usuário e determinar:
 | **Stripe** | `int-stripe` | Cobranças, assinaturas, MRR, churn, clientes |
 | **Omie** | `int-omie` | ERP — clientes, NF-e, contas a pagar/receber |
 | **Licensing** | `int-licensing` | Instâncias Evolution API, versões, geo, telemetria |
-| **Evo CRM** | `int-evo-crm` | Agentes, pipelines, conversas, usuários |
+| **Clever AI** | `int-evo-crm` | Agentes, pipelines, conversas, usuários |
 | **Linear** | `int-linear-review` | Issues, sprints, projetos, velocity |
 
 **Se a fonte de dados estiver disponível:**
@@ -113,7 +113,7 @@ Quando um gráfico comunicaria resultados mais efetivamente do que uma tabela:
 
 **Relatório formal:**
 ```
-/data-analyze Prepare uma análise de qualidade de dados da tabela de clientes do Evo CRM — completude, consistência e quaisquer problemas que devemos resolver.
+/data-analyze Prepare uma análise de qualidade de dados da tabela de clientes do Clever AI — completude, consistência e quaisquer problemas que devemos resolver.
 ```
 
 ## Dicas

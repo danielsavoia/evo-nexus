@@ -1,6 +1,6 @@
 ---
 name: data-validate
-description: Valida uma análise antes de compartilhar — metodologia, precisão e verificações de viés. Use quando revisar uma análise antes de uma apresentação para stakeholders, verificar cálculos e lógica de agregação, conferir se os resultados de uma query SQL parecem corretos, ou avaliar se as conclusões são de fato suportadas pelos dados. Sempre rodar esta skill antes de compartilhar análises baseadas em Stripe, Omie, Licensing ou Evo CRM.
+description: Valida uma análise antes de compartilhar — metodologia, precisão e verificações de viés. Use quando revisar uma análise antes de uma apresentação para stakeholders, verificar cálculos e lógica de agregação, conferir se os resultados de uma query SQL parecem corretos, ou avaliar se as conclusões são de fato suportadas pelos dados. Sempre rodar esta skill antes de compartilhar análises baseadas em Stripe, Omie, Licensing ou Clever AI.
 argument-hint: "<análise para revisar>"
 ---
 
@@ -378,7 +378,7 @@ Saída:
 ```
 
 ```
-/data-validate Aqui está uma query SQL e seus resultados para nosso funil de conversão do Evo CRM. A lógica parece certa? [query + resultados]
+/data-validate Aqui está uma query SQL e seus resultados para nosso funil de conversão do Clever AI. A lógica parece certa? [query + resultados]
 ```
 
 ## Dicas

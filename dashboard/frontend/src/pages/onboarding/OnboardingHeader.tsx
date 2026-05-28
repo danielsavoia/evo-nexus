@@ -12,7 +12,7 @@ interface OnboardingHeaderProps {
 /**
  * Shared header for the inner onboarding screens (Steps 1 → 3).
  *
- * Renders the EvoNexus logo above the step indicator so the user keeps the
+ * Renders the Clever Agent logo above the step indicator so the user keeps the
  * brand context throughout the wizard — the standalone Welcome screen has its
  * own larger header with the logo + welcome title, so it does NOT use this
  * component.

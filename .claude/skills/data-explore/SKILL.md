@@ -1,6 +1,6 @@
 ---
 name: data-explore
-description: Perfila e explora um dataset para entender sua forma, qualidade e padrões. Use ao encontrar uma nova tabela ou arquivo, verificar taxas de nulo e distribuições de colunas, identificar problemas de qualidade como duplicatas ou valores suspeitos, ou decidir quais dimensões e métricas analisar. Funciona com tabelas PostgreSQL do stack Evolution (Evo CRM, Evo AI), dados do Stripe, Omie, Licensing, ou arquivos CSV/Excel carregados.
+description: Perfila e explora um dataset para entender sua forma, qualidade e padrões. Use ao encontrar uma nova tabela ou arquivo, verificar taxas de nulo e distribuições de colunas, identificar problemas de qualidade como duplicatas ou valores suspeitos, ou decidir quais dimensões e métricas analisar. Funciona com tabelas PostgreSQL do stack Evolution (Clever AI, Evo AI), dados do Stripe, Omie, Licensing, ou arquivos CSV/Excel carregados.
 argument-hint: "<nome da tabela, fonte de dados ou arquivo>"
 ---
 
@@ -29,7 +29,7 @@ Gera um perfil de dados abrangente para uma tabela ou arquivo carregado. Entenda
 1. Ler o arquivo e carregar no dataset de trabalho
 2. Inferir tipos de colunas a partir dos dados
 
-**Se for uma fonte do workspace (Stripe, Omie, Licensing, Evo CRM):**
+**Se for uma fonte do workspace (Stripe, Omie, Licensing, Clever AI):**
 
 1. Usar a skill correspondente (`int-stripe`, `int-omie`, `int-licensing`, `int-evo-crm`)
 2. Extrair uma amostra representativa

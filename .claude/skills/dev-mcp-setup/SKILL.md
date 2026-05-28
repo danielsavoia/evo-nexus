@@ -5,20 +5,20 @@ description: Configure MCP servers for the workspace — web search, filesystem,
 
 # Dev MCP Setup
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Configure MCP (Model Context Protocol) servers for the workspace. When a new integration needs access at the MCP layer (rather than via skill-level API calls), this skill walks through the configuration.
 
 ## Use When
 - Adding a new MCP-backed integration (web search, GitHub, Notion, etc.)
 - Diagnosing why an existing MCP server isn't responding
-- Setting up a fresh EvoNexus workspace with all standard MCPs
+- Setting up a fresh Clever Agent workspace with all standard MCPs
 
 ## Do Not Use When
 - The integration is API-based (use the appropriate `int-*` skill instead)
 - You just need to invoke an existing MCP tool (just use it)
 
-## EvoNexus Standard MCPs
+## Clever Agent Standard MCPs
 
 These are typically configured in `~/.claude/settings.json` or `.claude/settings.json`:
 

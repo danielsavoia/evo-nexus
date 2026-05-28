@@ -257,8 +257,8 @@ Ao encontrar uma correlação, explicitamente considerar:
 - **Variáveis de confusão**: Talvez C cause tanto A quanto B
 - **Coincidência**: Com variáveis suficientes, correlações espúrias são inevitáveis
 
-**O que pode dizer**: "Clientes que usam o Evo CRM há mais de 6 meses têm 30% maior retenção"
-**O que não pode dizer sem mais evidências**: "O Evo CRM causa 30% maior retenção"
+**O que pode dizer**: "Clientes que usam o Clever AI há mais de 6 meses têm 30% maior retenção"
+**O que não pode dizer sem mais evidências**: "O Clever AI causa 30% maior retenção"
 
 ### Problema de Comparações Múltiplas
 

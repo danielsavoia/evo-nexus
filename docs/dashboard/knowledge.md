@@ -7,20 +7,20 @@ The Knowledge Base page provides **multi-server hybrid search** (vector + BM25) 
 ## Architecture at a glance
 
 ```
-EvoNexus (client-only)
+Clever Agent (client-only)
   ├── SQLite local: knowledge_connections (credentials encrypted at rest)
   ├── Flask API: /api/knowledge/*  (internal) + /api/knowledge/v1/*  (external, API keys)
   ├── Worker subprocess: parse → chunk → embed → enqueue classify
   ├── Classify worker: async LLM classification (content_type, difficulty, topics)
   └── Skills: knowledge-{query,summarize,ingest,reindex,browse,organize,admin}
 
-Your Postgres (not managed by EvoNexus)
+Your Postgres (not managed by Clever Agent)
   ├── pgvector extension
   ├── Tables: knowledge_{config,spaces,units,documents,chunks,api_keys,api_usage,classify_queue}
   └── Alembic-managed schema
 ```
 
-**EvoNexus does NOT install or run Postgres.** You bring your own (Supabase, Neon, RDS, self-hosted). EvoNexus connects, auto-migrates the schema, and uses it.
+**Clever Agent does NOT install or run Postgres.** You bring your own (Supabase, Neon, RDS, self-hosted). Clever Agent connects, auto-migrates the schema, and uses it.
 
 ## First-time setup
 
@@ -30,7 +30,7 @@ Since v0.26.0, `KNOWLEDGE_MASTER_KEY` is generated automatically on first setup 
 
 **Back up your `.env`** — losing `KNOWLEDGE_MASTER_KEY` loses access to all encrypted credentials.
 
-> Legacy: if you need to regenerate (lost key, rotated secrets), the CLI is still available: `make init-key` / `evonexus init-key`. Idempotent — preserves an existing key.
+> Legacy: if you need to regenerate (lost key, rotated secrets), the CLI is still available: `make init-key` / `clever-agent init-key`. Idempotent — preserves an existing key.
 
 ### 2. Prepare your Postgres
 
@@ -41,7 +41,7 @@ You need:
 - A **database** already created
 - A user with `CONNECT`, `CREATE`, and ideally `CREATE EXTENSION` permissions
 
-EvoNexus does NOT create databases — you must create the DB first.
+Clever Agent does NOT create databases — you must create the DB first.
 
 ### 3. Connect via UI or skill
 
@@ -93,7 +93,7 @@ Download takes a few minutes. Idempotent — re-running is a no-op.
 - **openai** (opt-in, 1536 dim): `text-embedding-3-small`. Costs ~$0.02 / 1M tokens. Requires `OPENAI_API_KEY`.
 - **gemini** (opt-in, 768 / 1536 / 3072 dim via MRL): `gemini-embedding-001` (stable, text-only, task-type aware) or `gemini-embedding-2-preview` (multimodal, 8192-token input). Requires `GEMINI_API_KEY` (free tier on [aistudio.google.com/apikey](https://aistudio.google.com/apikey)). Default dim is 768 to align storage cost with `local`.
 
-**Embedder is GLOBAL per EvoNexus instance.** Changing it after you have data requires removing all connections and recreating them (reindex skill planned for v0.25.1).
+**Embedder is GLOBAL per Clever Agent instance.** Changing it after you have data requires removing all connections and recreating them (reindex skill planned for v0.25.1).
 
 ## Search: hybrid + metadata boost
 
@@ -146,7 +146,7 @@ curl -H "Authorization: Bearer evo_k_abc.xyz..." \
      -H "Content-Type: application/json" \
      -H "X-Knowledge-Connection: academy" \
      -d '{"query": "how does onboarding work?", "space": "aulas-2026"}' \
-     https://evonexus.local/api/knowledge/v1/search
+     https://clever-agent.local/api/knowledge/v1/search
 ```
 
 ## Permissions
@@ -182,7 +182,7 @@ curl -H "Authorization: Bearer evo_k_abc.xyz..." \
 
 **"PgBouncer detected"** — Supabase pooler (port 6543) is not supported. Use direct connection (port 5432). Same for AWS RDS Proxy.
 
-**Connection status `needs_migration`** — EvoNexus was upgraded and remote schema is old. Click **Run migrations** in UI or `POST /connections/:id/migrate`.
+**Connection status `needs_migration`** — Clever Agent was upgraded and remote schema is old. Click **Run migrations** in UI or `POST /connections/:id/migrate`.
 
 **Marker timeout on large PDFs** — default 10min. Adjust `MARKER_TIMEOUT_SECONDS` in `.env`.
 

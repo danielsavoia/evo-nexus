@@ -70,7 +70,7 @@ Edit `config/heartbeats.yaml`, run `make heartbeat-lint` to validate, then resta
 ## How to Enable
 
 1. Set `enabled: true` on the entry in YAML
-2. Restart dashboard (`make dashboard-app` or `sudo systemctl restart evo-nexus`)
+2. Restart dashboard (`make dashboard-app` or `sudo systemctl restart clever-agent`)
 
 ## Debugging
 

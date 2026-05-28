@@ -1,5 +1,5 @@
 /**
- * i18n bootstrap for the EvoNexus dashboard.
+ * i18n bootstrap for the Clever Agent dashboard.
  *
  * Resolution order for the active locale:
  *   1. `workspace.language` from the backend config (applied by AuthContext

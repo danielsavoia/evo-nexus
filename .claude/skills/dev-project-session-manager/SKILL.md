@@ -5,7 +5,7 @@ description: Worktree-first development environment — create per-issue or per-
 
 # Dev Project Session Manager
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Worktree-first development. Create per-issue or per-PR git worktrees so multiple work streams (different bugs, different features) don't collide on the same checkout.
 

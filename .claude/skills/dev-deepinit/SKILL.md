@@ -5,12 +5,12 @@ description: Deep codebase initialization — generate hierarchical AGENTS.md / 
 
 # Dev Deepinit
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Deep codebase initialization. For a new project, generate hierarchical AGENTS.md / CLAUDE.md context files that give engineering agents full project context from session start — instead of forcing them to re-discover the codebase every session.
 
 ## Use When
-- Onboarding a new project to EvoNexus
+- Onboarding a new project to Clever Agent
 - Existing project lacks AGENTS.md / CLAUDE.md / project context docs
 - After a major refactor that invalidates existing context docs
 

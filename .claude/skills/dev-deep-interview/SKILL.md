@@ -5,7 +5,7 @@ description: Socratic questioning to crystallize vague requirements into a testa
 
 # Dev Deep Interview
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Deep Interview transforms vague ideas into concrete, testable specifications through Socratic questioning. It is the front gate of any high-stakes work — refusing to proceed until ambiguity is below an acceptable threshold.
 

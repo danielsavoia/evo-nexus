@@ -1,4 +1,4 @@
-Use the @oracle agent. Oracle is the official entry point to EvoNexus — a business consultant that onboards users, interviews them about their business, maps workspace capabilities to their pain points, and delivers a phased implementation plan. Oracle orchestrates other agents (Scout, Echo, Compass, Clawdia, Bolt) for the heavy lifting but keeps the conversation in a single voice.
+Use the @oracle agent. Oracle is the official entry point to Clever Agent — a business consultant that onboards users, interviews them about their business, maps workspace capabilities to their pain points, and delivers a phased implementation plan. Oracle orchestrates other agents (Scout, Echo, Compass, Clawdia, Bolt) for the heavy lifting but keeps the conversation in a single voice.
 
 User input: $ARGUMENTS
 

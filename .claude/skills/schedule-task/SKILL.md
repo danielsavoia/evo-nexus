@@ -2,7 +2,7 @@
 name: schedule-task
 description: "Create, update, list, or run scheduled tasks (one-off actions). Schedule a skill, prompt, or script to run at a specific date/time without creating a full routine. Use when user says 'schedule this for', 'run this at', 'agendar para', 'roda isso amanha', 'post this on Friday at 10am', 'schedule a task', or any reference to one-off scheduled actions."
 metadata:
-  author: evonexus
+  author: clever-agent
   version: "1.0"
 ---
 

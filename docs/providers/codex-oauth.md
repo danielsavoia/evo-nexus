@@ -8,7 +8,7 @@
 
 ### What is the Codex OAuth provider?
 
-The `codex_auth` provider lets EvoNexus run agents on **GPT-5.x via the ChatGPT Codex backend** — using your regular ChatGPT login, no API key required. It routes through [OpenClaude](https://github.com/Gitlawb/openclaude) (v0.3.0+), which reads `~/.codex/auth.json` and exchanges the OAuth token automatically.
+The `codex_auth` provider lets Clever Agent run agents on **GPT-5.x via the ChatGPT Codex backend** — using your regular ChatGPT login, no API key required. It routes through [OpenClaude](https://github.com/Gitlawb/openclaude) (v0.3.0+), which reads `~/.codex/auth.json` and exchanges the OAuth token automatically.
 
 This is distinct from the plain `openai` provider, which uses an `OPENAI_API_KEY` and hits the standard chat completions endpoint.
 
@@ -78,11 +78,11 @@ These environment variables are on the allowlist (see `dashboard/backend/routes/
 
 ### Troubleshooting
 
-**`openclaude` not found when running as `evonexus` service user**
+**`openclaude` not found when running as `clever-agent` service user**
 Setup v0.23.3+ installs OpenClaude for the service user under `~/.local`. If you upgraded from an older version, run:
 
 ```bash
-su - evonexus -c 'npm install -g @gitlawb/openclaude --prefix ~/.local'
+su - clever-agent -c 'npm install -g @gitlawb/openclaude --prefix ~/.local'
 ```
 
 **Session dies immediately, logs show "authentication failed"**
@@ -113,7 +113,7 @@ Check that `config/providers.json` lists `codex_auth` as `active_provider` and t
 
 ### O que é o provider Codex OAuth?
 
-O provider `codex_auth` faz o EvoNexus rodar agentes no **GPT-5.x via backend Codex do ChatGPT** — usando seu login normal do ChatGPT, sem API key. A chamada passa pelo [OpenClaude](https://github.com/Gitlawb/openclaude) (v0.3.0+), que lê o `~/.codex/auth.json` e troca o token OAuth automaticamente.
+O provider `codex_auth` faz o Clever Agent rodar agentes no **GPT-5.x via backend Codex do ChatGPT** — usando seu login normal do ChatGPT, sem API key. A chamada passa pelo [OpenClaude](https://github.com/Gitlawb/openclaude) (v0.3.0+), que lê o `~/.codex/auth.json` e troca o token OAuth automaticamente.
 
 É diferente do provider `openai` normal, que usa `OPENAI_API_KEY` e bate no endpoint padrão de chat completions.
 
@@ -183,11 +183,11 @@ Essas variáveis de ambiente estão no allowlist (ver `dashboard/backend/routes/
 
 ### Troubleshooting
 
-**`openclaude` não encontrado ao rodar como service user `evonexus`**
+**`openclaude` não encontrado ao rodar como service user `clever-agent`**
 Setup v0.23.3+ instala o OpenClaude pro service user em `~/.local`. Se você fez upgrade de uma versão antiga, rode:
 
 ```bash
-su - evonexus -c 'npm install -g @gitlawb/openclaude --prefix ~/.local'
+su - clever-agent -c 'npm install -g @gitlawb/openclaude --prefix ~/.local'
 ```
 
 **Sessão morre na hora, logs mostram "authentication failed"**

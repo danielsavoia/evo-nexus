@@ -1,11 +1,11 @@
 ---
 name: initial-setup
-description: "Welcome and onboard new EvoNexus users — introduce agents, skills, routines, and the dashboard. Triggers when the user says 'get started', 'how do I use this', 'what can you do', 'help me get started', 'onboarding', 'show me around', 'what agents do I have', 'how does this work', 'first time here', or seems unfamiliar with the workspace. Also trigger when the user opens Claude Code in an EvoNexus workspace for the first time."
+description: "Welcome and onboard new Clever Agent users — introduce agents, skills, routines, and the dashboard. Triggers when the user says 'get started', 'how do I use this', 'what can you do', 'help me get started', 'onboarding', 'show me around', 'what agents do I have', 'how does this work', 'first time here', or seems unfamiliar with the workspace. Also trigger when the user opens Claude Code in an Clever Agent workspace for the first time."
 ---
 
-# EvoNexus — Welcome & Onboarding
+# Clever Agent — Welcome & Onboarding
 
-The user already has EvoNexus installed and running. Your job is to welcome them, show what's available, and help them start using agents, skills, and routines right away.
+The user already has Clever Agent installed and running. Your job is to welcome them, show what's available, and help them start using agents, skills, and routines right away.
 
 ## Step 0: Bootstrap Workspace Structure (dynamic)
 
@@ -182,7 +182,7 @@ Read `config/routines.yaml` at runtime to list the actual routines installed in 
 
 Present as:
 
-> EvoNexus can run routines automatically on a schedule. You have **{N} routines** installed:
+> Clever Agent can run routines automatically on a schedule. You have **{N} routines** installed:
 >
 > **Daily:** {list top 5-6 by name}
 > **Weekly:** {list}

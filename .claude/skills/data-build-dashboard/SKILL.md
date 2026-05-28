@@ -1,6 +1,6 @@
 ---
 name: data-build-dashboard
-description: Constrói um dashboard HTML interativo com gráficos, filtros e tabelas no tema Evolution (fundo escuro, acento #00FFA7, fonte Inter). Use quando precisar de uma visão executiva com cards de KPI, transformar resultados de query em relatório compartilhável, construir um snapshot de monitoramento de time, ou precisar de múltiplos gráficos com filtros em um arquivo HTML abrível no browser. Fontes: Stripe (`int-stripe`), Omie (`int-omie`), Licensing (`int-licensing`), Evo CRM (`int-evo-crm`).
+description: Constrói um dashboard HTML interativo com gráficos, filtros e tabelas no tema Evolution (fundo escuro, acento #00FFA7, fonte Inter). Use quando precisar de uma visão executiva com cards de KPI, transformar resultados de query em relatório compartilhável, construir um snapshot de monitoramento de time, ou precisar de múltiplos gráficos com filtros em um arquivo HTML abrível no browser. Fontes: Stripe (`int-stripe`), Omie (`int-omie`), Licensing (`int-licensing`), Clever AI (`int-evo-crm`).
 argument-hint: "<descrição do dashboard> [fonte de dados]"
 ---
 

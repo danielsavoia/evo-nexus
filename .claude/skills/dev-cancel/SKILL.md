@@ -5,7 +5,7 @@ description: Cleanly stop an active engineering layer flow (dev-autopilot, dev-d
 
 # Dev Cancel
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer — simplified, runtime-free version.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer — simplified, runtime-free version.
 
 ## Use When
 - User says "cancel", "stop", "abort", "cancelomc", "stopomc"

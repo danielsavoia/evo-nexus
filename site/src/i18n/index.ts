@@ -20,7 +20,7 @@ i18n
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
-      lookupLocalStorage: "evonexus-language",
+      lookupLocalStorage: "clever-agent-language",
     },
     interpolation: {
       escapeValue: false,

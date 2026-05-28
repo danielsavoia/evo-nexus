@@ -5,7 +5,7 @@ description: Meta-skill — extract reusable skills from the current conversatio
 
 # Dev Learner
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Meta-skill: scan the current conversation for patterns that appeared 3+ times and propose extracting them as reusable skills. The "self-improving workspace" feedback loop.
 
