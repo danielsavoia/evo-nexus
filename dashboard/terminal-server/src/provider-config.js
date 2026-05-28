@@ -96,11 +96,26 @@ function loadProviderConfig() {
   }
 }
 
+/**
+ * Returns a compact string that uniquely identifies which harness binary and
+ * provider a terminal session was started with.  Used to detect stale PTY
+ * sessions after a provider switch.
+ *
+ * Format: "<active_provider_id>:<cli_command>"
+ * Examples: "anthropic:claude", "codex_auth:openclaude", "openrouter:openclaude"
+ */
+function getProviderSignature(providerConfig) {
+  const active = (providerConfig?.active || 'anthropic').trim();
+  const cli = (providerConfig?.cli_command || 'claude').trim();
+  return `${active}:${cli}`;
+}
+
 module.exports = {
   loadProviderConfig,
   resolveProviderModel,
   getProviderMode,
   isCodeModel,
   isChatCompletionModel,
+  getProviderSignature,
 };
 

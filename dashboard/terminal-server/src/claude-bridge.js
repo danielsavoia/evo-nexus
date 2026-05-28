@@ -5,6 +5,7 @@ const {
   loadProviderConfig,
   resolveProviderModel,
   getProviderMode,
+  getProviderSignature,
 } = require('./provider-config');
 
 class ClaudeBridge {
@@ -75,20 +76,36 @@ class ClaudeBridge {
     if (this.sessions.has(sessionId)) {
       const existing = this.sessions.get(sessionId);
       if (existing.active) {
-        // Idempotent: a duplicate startSession can arrive when the WebSocket
-        // reconnects through a reverse proxy (Traefik) and the frontend
-        // re-sends start_claude before learning the session is still alive.
-        // Returning the existing session instead of throwing prevents a
-        // confusing "Session already exists" toast on the user's terminal
-        // while keeping the original PTY intact.
-        console.log(`[bridge] startSession(${sessionId}) — already active, returning existing session`);
-        return existing;
+        // Defensive provider-signature check — server.js should have already
+        // called stopSession() before re-calling startSession() on a provider
+        // change, but guard here in case that path is bypassed.
+        const currentProvider = this._loadProviderConfig();
+        const currentSig = getProviderSignature(currentProvider);
+        if (existing.providerSignature && existing.providerSignature !== currentSig) {
+          console.log(
+            `[bridge] startSession(${sessionId}) — provider changed: ` +
+            `old=${existing.providerSignature} new=${currentSig}; killing stale PTY`
+          );
+          try { existing.process.kill('SIGKILL'); } catch (_) {}
+          this.sessions.delete(sessionId);
+          // Fall through to start a fresh session with the new harness
+        } else {
+          // Idempotent: a duplicate startSession can arrive when the WebSocket
+          // reconnects through a reverse proxy (Traefik) and the frontend
+          // re-sends start_claude before learning the session is still alive.
+          // Returning the existing session instead of throwing prevents a
+          // confusing "Session already exists" toast on the user's terminal
+          // while keeping the original PTY intact.
+          console.log(`[bridge] startSession(${sessionId}) — already active (${existing.providerSignature || 'no-sig'}), returning existing session`);
+          return existing;
+        }
+      } else {
+        // Orphaned dead session — clean up and restart
+        if (existing.process) {
+          try { existing.process.kill('SIGKILL'); } catch (_) {}
+        }
+        this.sessions.delete(sessionId);
       }
-      // Orphaned dead session — clean up and restart
-      if (existing.process) {
-        try { existing.process.kill('SIGKILL'); } catch (_) {}
-      }
-      this.sessions.delete(sessionId);
     }
 
     const {
@@ -226,7 +243,10 @@ class ClaudeBridge {
         workingDir,
         created: new Date(),
         active: true,
-        killTimeout: null
+        killTimeout: null,
+        // Provider signature at session-start time — used to detect harness
+        // mismatch when the user switches provider while a PTY is alive.
+        providerSignature: getProviderSignature(providerConfig),
       };
 
       this.sessions.set(sessionId, session);
@@ -283,7 +303,12 @@ class ClaudeBridge {
           session.killTimeout = null;
         }
         session.active = false;
-        this.sessions.delete(sessionId);
+        // Guard: only remove from Map if this PTY is still the registered one
+        // for this sessionId.  A provider-change restart may have already placed
+        // a new PTY in the Map — deleting it here would orphan that new session.
+        if (this.sessions.get(sessionId) === session) {
+          this.sessions.delete(sessionId);
+        }
         onExit(exitCode, signal);
       });
 
@@ -295,7 +320,10 @@ class ClaudeBridge {
           session.killTimeout = null;
         }
         session.active = false;
-        this.sessions.delete(sessionId);
+        // Same guard as onExit — don't evict a superseding session.
+        if (this.sessions.get(sessionId) === session) {
+          this.sessions.delete(sessionId);
+        }
         onError(error);
       });
 

@@ -146,8 +146,123 @@ spawn(cliCommand, args, { env: { ...cleanEnv, ...providerEnv } });
 
 ---
 
+---
+
+## Provider-aware terminal sessions (patch 2)
+
+### Sintoma
+
+Terminal mantinha o harness antigo após troca de provider:
+- Usuário ativa `codex_auth` → Terminal abre OpenClaude.
+- Usuário volta para `anthropic` → Terminal continua OpenClaude.
+
+### Causa raiz
+
+| Arquivo | Causa |
+|---|---|
+| `server.js` | `startClaude()` linha ~956: `if (session.active) { return early }` sem checar se o provider atual bate com o da sessão — reconexão de WebSocket e troca de provider eram tratados igual |
+| `claude-bridge.js` | `startSession()` linha ~75: `if (existing.active) { return existing }` sem checar provider — PTY vivo com harness antigo era reutilizado |
+
+### Correção — visão geral
+
+1. **`provider-config.js`** — novo helper `getProviderSignature(config)` retorna `"<active>:<cli_command>"` (ex: `"codex_auth:openclaude"`, `"anthropic:claude"`).
+
+2. **`server.js` `startClaude()`** — ao receber `start_claude` com sessão ativa, compara `session.providerSignature` com assinatura atual. Se diferente: chama `claudeBridge.stopSession()`, marca `session.active = false`, cai no caminho normal de início. Se igual: reconexão segura, reenvia `claude_started`.
+
+3. **`server.js` callbacks** — generation counter por invocação de `startSession`. `onExit`/`onError` callbacks comparam `currentSession.generation` com geração capturada — stale exits do PTY antigo são descartados silenciosamente, evitando que `session.active = false` do PTY antigo interfira com o novo PTY.
+
+4. **`claude-bridge.js`** — guarda defensiva na early-return de sessão ativa: compara `existing.providerSignature` com provider atual, mata PTY se diferente. Salva `providerSignature` no objeto de sessão. `onExit`/`error` handlers: `if (this.sessions.get(sessionId) === session)` antes de deletar — evita deletar o novo PTY do Map quando o antigo finalmente sai.
+
+### Snippets críticos
+
+#### `provider-config.js`
+```javascript
+function getProviderSignature(providerConfig) {
+  const active = (providerConfig?.active || 'anthropic').trim();
+  const cli   = (providerConfig?.cli_command || 'claude').trim();
+  return `${active}:${cli}`;
+}
+```
+
+#### `server.js` — bloco `if (session.active)` em `startClaude()`
+```javascript
+if (session.active) {
+  const currentProvider = loadProviderConfig();
+  const currentSig = getProviderSignature(currentProvider);
+  const storedSig  = session.providerSignature;
+
+  if (storedSig && storedSig !== currentSig) {
+    console.log(`[startClaude] Provider changed for session ${sessionId}: old=${storedSig} new=${currentSig} — restarting terminal`);
+    await this.claudeBridge.stopSession(wsInfo.claudeSessionId);
+    session.active = false;
+    session.agent  = null;
+    session.providerSignature = null;
+    // fall through — start fresh PTY
+  } else {
+    // WebSocket reconnect — same provider, reattach
+    this.sendToWebSocket(wsInfo.ws, { type: 'claude_started', sessionId: wsInfo.claudeSessionId });
+    return;
+  }
+}
+
+const generation = (session.generation || 0) + 1;
+session.generation = generation;
+```
+
+#### `server.js` — callbacks stale-safe
+```javascript
+onExit: (code, signal) => {
+  const s = this.claudeSessions.get(sessionId);
+  if (!s || s.generation !== generation) return; // stale
+  s.active = false;
+  this.broadcastToSession(sessionId, { type: 'exit', code, signal });
+},
+```
+
+#### `claude-bridge.js` — early return defensivo
+```javascript
+if (existing.active) {
+  const sig = getProviderSignature(this._loadProviderConfig());
+  if (existing.providerSignature && existing.providerSignature !== sig) {
+    existing.process.kill('SIGKILL');
+    this.sessions.delete(sessionId);
+    // fall through
+  } else {
+    return existing; // safe reconnect
+  }
+}
+```
+
+#### `claude-bridge.js` — guard no onExit
+```javascript
+if (this.sessions.get(sessionId) === session) {
+  this.sessions.delete(sessionId);
+}
+```
+
+### Validação
+
+| Cenário | Comportamento esperado |
+|---|---|
+| `codex_auth` → terminal abre | PTY com `/usr/bin/openclaude`; log `provider signature: codex_auth:openclaude` |
+| Troca para `anthropic` → terminal reabre | Log `Provider changed: old=codex_auth:openclaude new=anthropic:claude`; PTY reinicia com `/usr/bin/claude` |
+| Troca de volta para `codex_auth` | Log `Provider changed: old=anthropic:claude new=codex_auth:openclaude`; PTY reinicia com openclaude |
+| WebSocket reconecta sem trocar provider | Log `already active (anthropic:claude), returning existing session`; buffer replicado; sem reinício |
+| PTY antigo sai após kill | Log `Ignoring stale PTY exit for session ... (gen N vs N+1)`; nenhum `exit` enviado ao cliente |
+
+---
+
 ## Reapply checklist
 
+- [ ] `provider-config.js`: função `getProviderSignature` exportada
+- [ ] `server.js` `startClaude()`: bloco `if (session.active)` com comparação de `providerSignature`
+- [ ] `server.js` `startClaude()`: `generation` counter antes de `claudeBridge.startSession()`
+- [ ] `server.js` `startClaude()`: `onExit`/`onError` callbacks com `generation` guard
+- [ ] `server.js` `startClaude()`: `session.providerSignature = getProviderSignature(...)` após `session.active = true`
+- [ ] `claude-bridge.js` import: `getProviderSignature` importado de `provider-config`
+- [ ] `claude-bridge.js` `startSession()`: early-return ativo com guarda de assinatura
+- [ ] `claude-bridge.js` `startSession()`: `providerSignature` salvo no objeto da sessão
+- [ ] `claude-bridge.js` `onExit`/`error`: `if (this.sessions.get(sessionId) === session)` antes de `delete`
 - [ ] `chat-bridge.js` linha ~297: `let apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';`
 - [ ] `chat-bridge.js` logo após: bloco `if (!apiKey && providerConfig.active === 'codex_auth')` com leitura de `~/.codex/auth.json`
 - [ ] `chat-bridge.js` erro hint: mensagem específica para `codex_auth` vs outros providers
@@ -158,3 +273,6 @@ spawn(cliCommand, args, { env: { ...cleanEnv, ...providerEnv } });
 - [ ] Validar codex_auth: terminal usa `/usr/bin/openclaude`; chat lê OAuth token
 - [ ] Validar OpenRouter/openai: terminal usa `/usr/bin/openclaude`; chat usa API key
 - [ ] Validar UI: mensagens corretas por harness
+- [ ] Validar troca codex_auth → anthropic: terminal reinicia com claude
+- [ ] Validar troca anthropic → codex_auth: terminal reinicia com openclaude
+- [ ] Validar reconexão sem troca: sem reinício, buffer replicado
