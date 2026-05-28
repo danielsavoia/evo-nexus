@@ -1,6 +1,6 @@
 # Daily Workflow
 
-A practical guide to running your business day with EvoNexus — from morning briefing to end-of-day wrap-up.
+A practical guide to running your business day with Clever Agent — from morning briefing to end-of-day wrap-up.
 
 ## Morning (7:00 - 8:00)
 

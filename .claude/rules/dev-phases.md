@@ -115,7 +115,7 @@ Before starting work, every engineering agent should check for prior artifacts i
 3. **Inherit** constraints, decisions, and open questions — don't re-litigate them
 4. **If unclear** which feature this is, ask the user or call `@helm-conductor`
 
-This is how EvoNexus avoids each agent being an island: context flows forward through the feature folder.
+This is how Clever Agent avoids each agent being an island: context flows forward through the feature folder.
 
 ---
 

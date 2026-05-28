@@ -1,11 +1,11 @@
 ---
 name: prod-activation-plan
-description: "Create a phased activation plan using the EvoNexus standard structure — single index file + folder-per-phase + file-per-item, each item detailed with owner, dependencies, decisions pending, suggested agent team. Use when the user asks for an activation plan, implementation plan, rollout plan, or any phased plan for business/engineering initiatives. Also triggered by Oracle's Step 6 (implementation plan delivery) instead of writing an ad-hoc plan."
+description: "Create a phased activation plan using the Clever Agent standard structure — single index file + folder-per-phase + file-per-item, each item detailed with owner, dependencies, decisions pending, suggested agent team. Use when the user asks for an activation plan, implementation plan, rollout plan, or any phased plan for business/engineering initiatives. Also triggered by Oracle's Step 6 (implementation plan delivery) instead of writing an ad-hoc plan."
 ---
 
 # Activation Plan — Standard Structure
 
-This skill creates a **phased activation plan** using the EvoNexus standard structure that has been battle-tested: a single index file at the top, folders per phase, one file per item with a rich template. Every file declares its owner agent, decisions pending, dependencies, and suggested implementation team. Oracle uses this skill instead of inventing a plan structure.
+This skill creates a **phased activation plan** using the Clever Agent standard structure that has been battle-tested: a single index file at the top, folders per phase, one file per item with a rich template. Every file declares its owner agent, decisions pending, dependencies, and suggested implementation team. Oracle uses this skill instead of inventing a plan structure.
 
 **Always respond in the user's language (default: pt-BR if the workspace is pt-BR).**
 
@@ -274,7 +274,7 @@ status: pending
 
 ## Step 4 — Agent routing rules (for the "Agente sugerido" section)
 
-Use this table to pick the right team per item type. These rules are the canonical EvoNexus routing for activation plans:
+Use this table to pick the right team per item type. These rules are the canonical Clever Agent routing for activation plans:
 
 | Item type | Team | Notes |
 |---|---|---|

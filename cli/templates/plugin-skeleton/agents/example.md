@@ -8,4 +8,4 @@ Describe what this agent does here.
 
 ## Usage
 
-Invoke via `/your-agent-slug` in the EvoNexus dashboard.
+Invoke via `/your-agent-slug` in the Clever Agent dashboard.

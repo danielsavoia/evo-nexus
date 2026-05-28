@@ -1,6 +1,6 @@
 ---
 name: plugin-uninstall
-description: Uninstall an EvoNexus plugin, reverting the files it copied and running its uninstall.sql. Use when the user asks to remove, uninstall, or delete a plugin. Triggers on "desinstala plugin X", "remove plugin X", "uninstall plugin X", "tira o plugin Y".
+description: Uninstall an Clever Agent plugin, reverting the files it copied and running its uninstall.sql. Use when the user asks to remove, uninstall, or delete a plugin. Triggers on "desinstala plugin X", "remove plugin X", "uninstall plugin X", "tira o plugin Y".
 metadata:
   category: plugins
   version: 1.0.0

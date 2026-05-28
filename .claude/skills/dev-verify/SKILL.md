@@ -5,7 +5,7 @@ description: Verify that a change really works before claiming completion. Use w
 
 # Dev Verify
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Use this skill when the user wants confidence that a feature, fix, or refactor actually works.
 

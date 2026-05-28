@@ -1,6 +1,6 @@
 ---
 name: plugin-install
-description: Install an EvoNexus plugin from a git URL or uploaded archive. Use when the user asks to install a plugin, add a plugin, or mentions a plugin source URL (github:user/repo, https://..., or a ZIP/tar.gz upload). Triggers on phrases like "instala plugin", "install plugin X", "adicionar plugin", "quero instalar Y".
+description: Install an Clever Agent plugin from a git URL or uploaded archive. Use when the user asks to install a plugin, add a plugin, or mentions a plugin source URL (github:user/repo, https://..., or a ZIP/tar.gz upload). Triggers on phrases like "instala plugin", "install plugin X", "adicionar plugin", "quero instalar Y".
 metadata:
   category: plugins
   version: 1.0.0
@@ -8,7 +8,7 @@ metadata:
 
 # Plugin Install
 
-Install an EvoNexus plugin through the `/api/plugins/*` endpoints. Plugins execute arbitrary code (agents, skills, shell hooks, SQL migrations) — always surface the preview and require explicit confirmation before running the install.
+Install an Clever Agent plugin through the `/api/plugins/*` endpoints. Plugins execute arbitrary code (agents, skills, shell hooks, SQL migrations) — always surface the preview and require explicit confirmation before running the install.
 
 ## How to use
 

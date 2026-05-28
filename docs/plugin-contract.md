@@ -1,13 +1,13 @@
-# EvoNexus Plugin Contract
+# Clever Agent Plugin Contract
 
-This is the canonical reference for EvoNexus plugins shipping with **EvoNexus 1.0**.
+This is the canonical reference for Clever Agent plugins shipping with **Clever Agent 1.0**.
 It documents the `plugin.yaml` manifest, the auxiliary YAML files (`heartbeats.yaml`,
 `routines.yaml`), the host endpoints a plugin can call at runtime, and the
 filesystem layout the installer expects.
 
 For a working end-to-end example to clone, the **`evo-essentials`** plugin
 covers one of every capability:
-[github.com/EvolutionAPI/evonexus-plugin-evo-essentials](https://github.com/EvolutionAPI/evonexus-plugin-evo-essentials).
+[github.com/EvolutionAPI/clever-agent-plugin-evo-essentials](https://github.com/EvolutionAPI/clever-agent-plugin-evo-essentials).
 
 ---
 
@@ -52,7 +52,7 @@ description: >
 author: "Your Name <you@example.com>"
 license: MIT
 homepage: https://github.com/you/my-plugin    # optional
-min_evonexus_version: 0.34.0    # required; semver. Install fails if host < this.
+min_clever-agent_version: 0.34.0    # required; semver. Install fails if host < this.
 tier: essential                 # required; only "essential" supported in 1.0
 
 capabilities:                   # explicit allowlist; see §3
@@ -184,7 +184,7 @@ The handler receives the event payload as JSON on stdin and is expected to
 exit 0 on success.
 
 The reference plugin ships a working PostToolUse handler at
-[`hooks/log-tool-use.py`](https://github.com/EvolutionAPI/evonexus-plugin-evo-essentials/blob/main/hooks/log-tool-use.py)
+[`hooks/log-tool-use.py`](https://github.com/EvolutionAPI/clever-agent-plugin-evo-essentials/blob/main/hooks/log-tool-use.py)
 that appends a line to `plugins/<id>/.runtime/tool-use.log`.
 
 ---
@@ -344,7 +344,7 @@ readonly_data:
 
 ## 10. `sql_migrations` — `install.<dialect>.sql` / `uninstall.<dialect>.sql`
 
-EvoNexus 1.0 supports both SQLite and Postgres in a single deployment. Plugins
+Clever Agent 1.0 supports both SQLite and Postgres in a single deployment. Plugins
 that touch the database must ship **both** dialect variants:
 
 ```
@@ -427,7 +427,7 @@ and **default to disabled**. The host scheduler runs them via `make scheduler`.
 
 The script receives `EVONEXUS_HOME` in the environment and can use
 `from sdk_client import evo` to call the host API. See
-[`scripts/notes_cleanup.py`](https://github.com/EvolutionAPI/evonexus-plugin-evo-essentials/blob/main/scripts/notes_cleanup.py)
+[`scripts/notes_cleanup.py`](https://github.com/EvolutionAPI/clever-agent-plugin-evo-essentials/blob/main/scripts/notes_cleanup.py)
 in the reference plugin.
 
 ---
@@ -450,7 +450,7 @@ mcp_servers:
 Effective name in `~/.claude.json` is `plugin-<id>-<name>`. Supported
 interpolations in `args` and `env` values:
 
-- `${WORKSPACE}` — absolute path to the EvoNexus workspace
+- `${WORKSPACE}` — absolute path to the Clever Agent workspace
 - `${PLUGIN_DIR}` — absolute path to `plugins/<id>/`
 - `${ENV:VAR_NAME}` — value of `VAR_NAME` from `.env` (install fails if absent)
 
@@ -624,7 +624,7 @@ export default defineConfig({
 
 ### Don't depend on host React contexts you don't own
 
-The host's `ToastProvider` is **not** the same as `@evoapi/evonexus-ui`'s
+The host's `ToastProvider` is **not** the same as `@evoapi/clever-agent-ui`'s
 `ToastProvider`. Importing `useToast` from the lib without wrapping your page
 in the lib's own provider crashes with `useToast must be used within
 <ToastProvider>`. Either wrap your page yourself or skip the toast hook
@@ -651,7 +651,7 @@ entirely (the reference plugin uses `console.log`).
 The `evo-essentials` plugin is the canonical reference implementation. It
 exercises every capability in this document with the smallest viable example:
 
-[github.com/EvolutionAPI/evonexus-plugin-evo-essentials](https://github.com/EvolutionAPI/evonexus-plugin-evo-essentials)
+[github.com/EvolutionAPI/clever-agent-plugin-evo-essentials](https://github.com/EvolutionAPI/clever-agent-plugin-evo-essentials)
 
 When in doubt, copy from there.
 

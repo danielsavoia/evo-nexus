@@ -1,6 +1,6 @@
 ---
 name: plugin-marketplace
-description: Browse the EvoNexus plugin marketplace, searching for plugins by keyword, tag, or capability. Use when the user wants to find a plugin, asks what plugins are available, or describes a need that might have a plugin. Triggers on "procura plugin de X", "marketplace de plugins", "plugins disponíveis para Y", "tem algum plugin que faz Z".
+description: Browse the Clever Agent plugin marketplace, searching for plugins by keyword, tag, or capability. Use when the user wants to find a plugin, asks what plugins are available, or describes a need that might have a plugin. Triggers on "procura plugin de X", "marketplace de plugins", "plugins disponíveis para Y", "tem algum plugin que faz Z".
 metadata:
   category: plugins
   version: 1.0.0
@@ -8,7 +8,7 @@ metadata:
 
 # Plugin Marketplace
 
-Browse the curated `registry.json` from `github.com/EvolutionAPI/evonexus-plugins` plus community plugins. Help the user find what they need and hand off to `plugin-install` when they pick one.
+Browse the curated `registry.json` from `github.com/EvolutionAPI/clever-agent-plugins` plus community plugins. Help the user find what they need and hand off to `plugin-install` when they pick one.
 
 ## How to use
 
@@ -37,15 +37,15 @@ Default: don't filter, show everything ordered by `verified=true` first, then al
 ```
 ### 🟢 PM Essentials (verified)
 Agents, skills, routines para gestão de projetos com sincronização Linear.
-v1.0.0 · tags: pm, linear, showcase · MIT · @EvolutionAPI/evonexus-plugin-pm-essentials
+v1.0.0 · tags: pm, linear, showcase · MIT · @EvolutionAPI/clever-agent-plugin-pm-essentials
 
 ### 🟢 Pipedrive Suite (verified)
 CRM integrado: pipeline, deals, health scores.
-v0.4.1 · tags: crm, pipedrive · MIT · @user/evonexus-plugin-pipedrive
+v0.4.1 · tags: crm, pipedrive · MIT · @user/clever-agent-plugin-pipedrive
 
 ### Community: Custom Linear Sync
 Fork extendido com webhooks do Linear.
-v2.0.0 · tags: linear, webhooks · @community/evonexus-plugin-linear-webhooks
+v2.0.0 · tags: linear, webhooks · @community/clever-agent-plugin-linear-webhooks
 ```
 
 Use `🟢 verified` green badge, no badge for community.

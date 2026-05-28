@@ -245,7 +245,7 @@ class ChatBridge {
 
   _buildChatCompletionSystemPrompt(agentName, cwd, sessionId) {
     const lines = [
-      'You are running inside EvoNexus dashboard chat.',
+      'You are running inside Clever Agent dashboard chat.',
       `Current chat session id: ${sessionId}`,
     ];
     if (agentName) lines.push(`Current agent slug: ${agentName}`);
@@ -436,7 +436,7 @@ class ChatBridge {
         // Build runtime context block for ticket source attribution
         const runtimeLines = [
           '## Runtime context',
-          'You are running inside the EvoNexus dashboard.',
+          'You are running inside the Clever Agent dashboard.',
         ];
         if (agentName) {
           runtimeLines.push(`- Current agent slug: ${agentName}`);

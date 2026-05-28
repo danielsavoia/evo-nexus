@@ -311,11 +311,11 @@ def configure_connection(
                         "evonexus_dim": evonexus_dim,
                         "message": (
                             f"Remote Postgres was already initialized with vector_dim={remote_dim}. "
-                            f"EvoNexus is configured with vector_dim={evonexus_dim}. "
+                            f"Clever Agent is configured with vector_dim={evonexus_dim}. "
                             "Options: (i) use an empty database, or "
                             "(ii) manually execute `DROP TABLE knowledge_config CASCADE` "
                             "on the remote Postgres and click 'Connect & Configure' again. "
-                            "EvoNexus does not modify a non-empty knowledge_config."
+                            "Clever Agent does not modify a non-empty knowledge_config."
                         ),
                         "code": "vector_dim_mismatch",
                     }
@@ -424,8 +424,8 @@ def check_drift(connection_id: str, connection_string: str, host_conn) -> Dict[s
         if remote_rev > head:
             _update_connection_status(
                 host_conn, connection_id, "version_mismatch_future",
-                f"Remote schema ({remote_rev}) is newer than this EvoNexus ({head}). "
-                "Upgrade EvoNexus or use a different connection.",
+                f"Remote schema ({remote_rev}) is newer than this Clever Agent ({head}). "
+                "Upgrade Clever Agent or use a different connection.",
             )
             return {
                 "needs_migration": False,
@@ -508,7 +508,7 @@ def _ensure_database_exists(connection_string: str) -> None:
         )
     except psycopg2.OperationalError as exc:
         raise _DatabaseCreationError(
-            f"Database '{target_db}' does not exist, and EvoNexus could not reach "
+            f"Database '{target_db}' does not exist, and Clever Agent could not reach "
             f"the maintenance database 'postgres' to create it: {exc}. "
             "Create the database manually or use a user with access to 'postgres'."
         )

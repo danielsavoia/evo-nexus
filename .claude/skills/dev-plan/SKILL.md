@@ -5,7 +5,7 @@ description: Strategic planning with optional interview workflow. Use when the u
 
 # Dev Plan
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Plan creates comprehensive, actionable work plans through intelligent interaction. It auto-detects whether to interview the user (broad requests) or plan directly (detailed requests).
 

@@ -2,7 +2,7 @@
 name: trigger-registry
 description: "Create, manage, and test reactive triggers (webhook & event-based). Triggers execute skills or routines in response to external events (GitHub push, Stripe payment, Linear issue, etc.). Use when user says 'create trigger', 'list triggers', 'novo trigger', 'webhook para', 'quando acontecer', 'trigger list', 'test trigger', or any reference to reactive event triggers."
 metadata:
-  author: evonexus
+  author: clever-agent
   version: "1.0"
 ---
 

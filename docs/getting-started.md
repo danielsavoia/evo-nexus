@@ -1,11 +1,11 @@
-# Getting Started with EvoNexus
+# Getting Started with Clever Agent
 
 ## Choose your install method
 
 | Method | Best for | Requires |
 |---|---|---|
 | **[Docker](guides/docker-install.md)** | Anyone who wants a one-command install that works the same on every OS (Linux, macOS, Windows+WSL2, VPS) | Docker Engine 24+ |
-| **CLI (`npx`)** | Users who want to run EvoNexus alongside their existing Claude Code CLI | Claude Code, Python 3.11+, Node 18+, uv |
+| **CLI (`npx`)** | Users who want to run Clever Agent alongside their existing Claude Code CLI | Claude Code, Python 3.11+, Node 18+, uv |
 | **Manual clone** | Developers who want to modify source | git, Claude Code, Python 3.11+, Node 18+, uv |
 
 Pick the Docker flow if you're unsure. Keep reading for the CLI flow.
@@ -24,7 +24,7 @@ Pick the Docker flow if you're unsure. Keep reading for the CLI flow.
 Pulls the official multi-arch images and runs the wizard at http://localhost:8080. Full guide: [Installing with Docker](guides/docker-install.md).
 
 ```bash
-curl -O https://raw.githubusercontent.com/EvolutionAPI/evo-nexus/main/docker-compose.hub.yml
+curl -O https://raw.githubusercontent.com/EvolutionAPI/clever-agent/main/docker-compose.hub.yml
 docker compose -f docker-compose.hub.yml up -d
 open http://localhost:8080
 ```
@@ -34,7 +34,7 @@ Skip to [Start with /oracle](#6-use-claude-code--start-with-oracle) after the wi
 ### Option B — `npx` (CLI flow)
 
 ```bash
-npx @evoapi/evo-nexus
+npx @evoapi/clever-agent
 ```
 
 This downloads and runs the interactive setup wizard automatically.
@@ -42,8 +42,8 @@ This downloads and runs the interactive setup wizard automatically.
 ### Option C — Manual clone
 
 ```bash
-git clone --depth 1 https://github.com/EvolutionAPI/evo-nexus.git
-cd evo-nexus
+git clone --depth 1 https://github.com/EvolutionAPI/clever-agent.git
+cd clever-agent
 
 # Interactive setup wizard
 make setup
@@ -66,9 +66,9 @@ It generates:
 
 ### 2. Choose Your AI Provider
 
-The wizard asks which backend should power EvoNexus. **Anthropic is the default** — if you already have Claude Code authenticated, you don't need to do anything else.
+The wizard asks which backend should power Clever Agent. **Anthropic is the default** — if you already have Claude Code authenticated, you don't need to do anything else.
 
-For any other provider (OpenRouter, OpenAI, Gemini, AWS Bedrock, Vertex AI, Codex Auth), EvoNexus uses [OpenClaude](https://www.npmjs.com/package/@gitlawb/openclaude), a drop-in binary compatible with the Claude CLI protocol. Install it once:
+For any other provider (OpenRouter, OpenAI, Gemini, AWS Bedrock, Vertex AI, Codex Auth), Clever Agent uses [OpenClaude](https://www.npmjs.com/package/@gitlawb/openclaude), a drop-in binary compatible with the Claude CLI protocol. Install it once:
 
 ```bash
 npm install -g @gitlawb/openclaude
@@ -94,13 +94,13 @@ At minimum, you need:
 
 ### 4. Start the Dashboard
 
-**On a VPS (remote):** The setup wizard automatically creates a dedicated `evonexus` system user (Claude Code refuses `--dangerously-skip-permissions` as root) and installs a **systemd service** that starts on boot:
+**On a VPS (remote):** The setup wizard automatically creates a dedicated `clever-agent` system user (Claude Code refuses `--dangerously-skip-permissions` as root) and installs a **systemd service** that starts on boot:
 
 ```bash
-systemctl status evo-nexus      # check status
-systemctl restart evo-nexus     # restart
-journalctl -u evo-nexus -f      # follow logs
-su - evonexus                   # switch to service user
+systemctl status clever-agent      # check status
+systemctl restart clever-agent     # restart
+journalctl -u clever-agent -f      # follow logs
+su - clever-agent                   # switch to service user
 ```
 
 You can also install the systemd service manually on an existing installation:

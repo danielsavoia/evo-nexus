@@ -1,20 +1,20 @@
 ---
 name: dev-release
-description: Release preparation — changelog generation, version bump, tag creation. Generic version (not project-specific). For EvoNexus releases, use custom-release instead.
+description: Release preparation — changelog generation, version bump, tag creation. Generic version (not project-specific). For Clever Agent releases, use custom-release instead.
 ---
 
 # Dev Release
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
-Generic release preparation: changelog generation from git log, version bump, tag creation. **For EvoNexus-specific releases, use `custom-release`** (the existing skill that handles git-flow develop→main).
+Generic release preparation: changelog generation from git log, version bump, tag creation. **For Clever Agent-specific releases, use `custom-release`** (the existing skill that handles git-flow develop→main).
 
 ## Use When
-- Releasing a non-EvoNexus project (Evolution API, Evo AI, Evo Go, etc.)
+- Releasing a non-Clever Agent project (Evolution API, Evo AI, Evo Go, etc.)
 - Generic semver bump on a library you're maintaining
 
 ## Do Not Use When
-- Releasing EvoNexus itself → use `custom-release` instead
+- Releasing Clever Agent itself → use `custom-release` instead
 - Project has its own custom release process → follow that
 
 ## Workflow
@@ -56,6 +56,6 @@ Save release notes to `workspace/development/research/[C]release-{version}-{date
 - `@quill-writer` (changelog formatting)
 - `dev-verify` (pre-flight)
 
-## EvoNexus-Specific Note
+## Clever Agent-Specific Note
 
-EvoNexus has its own release skill (`custom-release`) that handles the git-flow develop→main workflow with EvoNexus-specific gates (CHANGELOG entry, version sync across files, GitHub release creation). Use `custom-release` for EvoNexus releases. Use `dev-release` only for projects in `workspace/projects/` that have their own release lifecycle.
+Clever Agent has its own release skill (`custom-release`) that handles the git-flow develop→main workflow with Clever Agent-specific gates (CHANGELOG entry, version sync across files, GitHub release creation). Use `custom-release` for Clever Agent releases. Use `dev-release` only for projects in `workspace/projects/` that have their own release lifecycle.

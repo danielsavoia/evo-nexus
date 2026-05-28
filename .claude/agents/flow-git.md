@@ -94,7 +94,7 @@ When a session has notable git operations worth recording, save a brief summary 
 
 ## Skills You Can Use
 
-- `custom-release` — full EvoNexus release workflow (changelog, version bump, tag, publish)
+- `custom-release` — full Clever Agent release workflow (changelog, version bump, tag, publish)
 - `dev-release` — generic release preparation (changelog generation, version bump, tag creation)
 
 ## Handoffs

@@ -1,6 +1,6 @@
 ---
 name: plugin-update
-description: Update an installed EvoNexus plugin to a newer version from its source. Use when the user asks to update, upgrade, or bump a plugin to the latest version. Triggers on "atualiza plugin X", "update plugin X", "upgrade plugin Y".
+description: Update an installed Clever Agent plugin to a newer version from its source. Use when the user asks to update, upgrade, or bump a plugin to the latest version. Triggers on "atualiza plugin X", "update plugin X", "upgrade plugin Y".
 metadata:
   category: plugins
   version: 1.0.0

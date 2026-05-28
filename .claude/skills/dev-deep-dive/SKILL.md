@@ -5,7 +5,7 @@ description: Two-stage investigation — causal trace (via @trail-tracer) follow
 
 # Dev Deep Dive
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 A two-stage investigation that combines causal tracing with requirements crystallization. Use when both the cause AND the scope of a problem are ambiguous.
 

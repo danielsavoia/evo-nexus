@@ -1,4 +1,4 @@
-# EvoNexus Workspace Configuration — Example / Template
+# Clever Agent Workspace Configuration — Example / Template
 # Copy to workspace.yaml (SQLite mode) or use as seed reference (PG mode).
 # In PG mode this file is seeded into runtime_configs by migration 0010.
 

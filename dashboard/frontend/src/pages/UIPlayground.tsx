@@ -147,7 +147,7 @@ export default function UIPlayground() {
       {/* Tailwind preset smoke test — bg-evo-green = #85F2A0 (Clever Agent green-300) from @theme in tokens.css */}
       <div className="bg-evo-green" style={{ width: 24, height: 4, borderRadius: 2, marginBottom: 16 }} />
       <h1 style={{ margin: '0 0 4px', fontSize: 22, fontWeight: 700 }}>
-        @evonexus/ui Playground
+        UI Playground
       </h1>
       <p style={{ margin: '0 0 40px', color: 'var(--text-muted)', fontSize: 13 }}>
         Internal dev-only page. All primitives from packages/ui.

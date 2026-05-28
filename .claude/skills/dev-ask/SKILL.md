@@ -5,7 +5,7 @@ description: Advisory router — query Claude, Codex, or Gemini for a quick seco
 
 # Dev Ask
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 **EXPERIMENTAL.** Quick advisory query to a specific LLM (Claude, Codex, Gemini) for a second opinion. Different from `dev-ccg` which runs all three in parallel — `dev-ask` is single-shot.
 

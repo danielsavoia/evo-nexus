@@ -5,7 +5,7 @@ description: Parallel external documentation lookup. Spawn multiple @scroll-docs
 
 # Dev External Context
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Parallel external research. When a task needs multiple unrelated external lookups (SDK A + Framework B + Standard C), spawn `@scroll-docs` instances in parallel instead of serial.
 

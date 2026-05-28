@@ -23,9 +23,9 @@ __pycache__/
 """
 
 _README_TEMPLATE = """\
-# EvoNexus Brain Repo
+# Clever Agent Brain Repo
 
-This repository is managed automatically by [EvoNexus](https://evonexus.ai).
+This repository is managed automatically by Clever Agent.
 It stores versioned snapshots of your workspace memory, customizations, and
 configuration so you can restore or audit any point in time.
 
@@ -41,7 +41,7 @@ configuration so you can restore or audit any point in time.
 
 ## Usage
 
-Managed automatically via EvoNexus dashboard.
+Managed automatically via Clever Agent dashboard.
 Do **not** store secrets in this repository.
 """
 

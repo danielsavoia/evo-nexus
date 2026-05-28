@@ -5,7 +5,7 @@ description: Visual regression testing — capture before/after screenshots of U
 
 # Dev Visual Verdict
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Visual regression testing. Capture before/after screenshots of UI components, compare them, and flag unintended visual impact.
 

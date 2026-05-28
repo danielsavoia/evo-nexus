@@ -1,6 +1,6 @@
 ---
 name: create-heartbeat
-description: "Create a new heartbeat (proactive agent scheduled with a decision prompt) for EvoNexus. Guides the user through picking an agent, setting interval, wake triggers, and the decision prompt that governs when the agent acts. Writes to config/heartbeats.yaml with pydantic validation. Use when the user says 'create a heartbeat', 'make X agent proactive', 'wake Y every 4h', 'automate X to check state and act', or wants to turn a manual state check into a scheduled protocol-run."
+description: "Create a new heartbeat (proactive agent scheduled with a decision prompt) for Clever Agent. Guides the user through picking an agent, setting interval, wake triggers, and the decision prompt that governs when the agent acts. Writes to config/heartbeats.yaml with pydantic validation. Use when the user says 'create a heartbeat', 'make X agent proactive', 'wake Y every 4h', 'automate X to check state and act', or wants to turn a manual state check into a scheduled protocol-run."
 ---
 
 # Create Heartbeat

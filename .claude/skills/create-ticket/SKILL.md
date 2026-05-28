@@ -1,6 +1,6 @@
 ---
 name: create-ticket
-description: "Create a new ticket (persistent conversation/work thread) in EvoNexus. Assigns to an agent, sets priority, optionally links to a goal or project. Writes via POST /api/tickets. Use when the user says 'create a ticket', 'open an issue', 'add to Zara's queue', 'track this topic for later', 'assign X to Y agent', or wants to turn an ad-hoc conversation into persistent work."
+description: "Create a new ticket (persistent conversation/work thread) in Clever Agent. Assigns to an agent, sets priority, optionally links to a goal or project. Writes via POST /api/tickets. Use when the user says 'create a ticket', 'open an issue', 'add to Zara's queue', 'track this topic for later', 'assign X to Y agent', or wants to turn an ad-hoc conversation into persistent work."
 ---
 
 # Create Ticket

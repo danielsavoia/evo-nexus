@@ -481,10 +481,10 @@ def run_bootstrap_pipeline(
                 "github_username": github_username or "",
             })
 
-            author_name = github_username or owner_username or "EvoNexus"
+            author_name = github_username or owner_username or "clever-agent"
             author_email = (
                 f"{github_username}@users.noreply.github.com"
-                if github_username else "evonexus@users.noreply.github.com"
+                if github_username else "clever-agent@users.noreply.github.com"
             )
             subprocess.run(
                 ["git", "config", "user.name", author_name],

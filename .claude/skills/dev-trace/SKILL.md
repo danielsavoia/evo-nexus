@@ -5,7 +5,7 @@ description: Evidence-driven causal tracing with competing hypotheses. Use when 
 
 # Dev Trace
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Causal investigation with multi-hypothesis discipline. Generate at least 2 explanations, collect evidence FOR and AGAINST, rank by strength, end with a discriminating probe.
 

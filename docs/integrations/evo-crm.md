@@ -1,6 +1,6 @@
 # Evo CRM Integration
 
-Evo CRM integration connects EvoNexus to the AI-powered CRM platform for managing contacts, conversations, pipelines, and labels.
+Evo CRM integration connects Clever Agent to the AI-powered CRM platform for managing contacts, conversations, pipelines, and labels.
 
 ## Setup
 

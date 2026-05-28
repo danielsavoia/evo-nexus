@@ -5,7 +5,7 @@ description: On-demand spawning of multiple engineering agents in parallel for l
 
 # Dev Team
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 On-demand parallel agent spawning. When a task is too big for one agent and the work can be split into independent streams, spin up multiple engineering agents working in parallel.
 

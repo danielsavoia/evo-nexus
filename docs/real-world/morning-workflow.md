@@ -1,6 +1,6 @@
-# A Morning with EvoNexus
+# A Morning with Clever Agent
 
-What does it actually look like to start your day with EvoNexus running? Here's a walkthrough of a typical morning, from waking up to being fully productive.
+What does it actually look like to start your day with Clever Agent running? Here's a walkthrough of a typical morning, from waking up to being fully productive.
 
 ## 7:00 AM — "Good morning"
 

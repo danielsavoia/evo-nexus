@@ -5,7 +5,7 @@ description: Persistence loop — keep working on a task until it's resolved or 
 
 # Dev Ralph
 
-Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the EvoNexus Engineering Layer.
+Derived from oh-my-claudecode (MIT, Yeachan Heo). Adapted for the Clever Agent Engineering Layer.
 
 Persistence loop. Keep iterating on a task until it's resolved, with a circuit breaker for safety. **Different from `/loop`** (which runs a prompt every N minutes) — ralph runs the same agent repeatedly until a goal is met.
 

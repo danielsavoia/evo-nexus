@@ -49,7 +49,7 @@ async function main() {
   let routerServer = null;
 
   try {
-    console.log('Starting EvoNexus terminal server...');
+    console.log('Starting Clever Agent terminal server...');
     console.log(`Port: ${port}`);
 
     if (shouldStartSmartRouter()) {
