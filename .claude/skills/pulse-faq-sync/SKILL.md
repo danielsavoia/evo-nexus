@@ -58,7 +58,7 @@ The file follows this format:
 
 ...
 
-## Evo CRM
+## Clever AI
 <!-- tag: crm, agents, pipeline, leads -->
 
 ...

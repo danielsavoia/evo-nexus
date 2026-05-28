@@ -1,12 +1,12 @@
-# Evo CRM Integration
+# Clever AI Integration
 
-Evo CRM integration connects Clever Agent to the AI-powered CRM platform for managing contacts, conversations, pipelines, and labels.
+Clever AI integration connects Clever Agent to the AI-powered CRM platform for managing contacts, conversations, pipelines, and labels.
 
 ## Setup
 
 ### 1. Get Your API Credentials
 
-1. Deploy or access your Evo CRM instance — see [github.com/EvolutionAPI/evo-crm-community](https://github.com/EvolutionAPI/evo-crm-community)
+1. Deploy or access your Clever AI instance — see [github.com/EvolutionAPI/evo-crm-community](https://github.com/EvolutionAPI/evo-crm-community)
 2. Generate an API token from the CRM admin settings
 3. Copy your **CRM URL** and **API Token**
 
@@ -29,7 +29,7 @@ Claude uses the `int-evo-crm` skill to query the CRM API and return your data.
 
 ## What It Does
 
-The Evo CRM integration provides:
+The Clever AI integration provides:
 
 | Feature | Description |
 |---|---|
@@ -40,7 +40,7 @@ The Evo CRM integration provides:
 | **Pipelines** | View and manage sales pipelines with stages and items |
 | **Labels** | Organize contacts and conversations with labels |
 
-## Skills That Use Evo CRM
+## Skills That Use Clever AI
 
 | Skill | What it does |
 |---|---|
@@ -66,11 +66,11 @@ The Evo CRM integration provides:
 > List all open conversations in the WhatsApp inbox
 ```
 
-## Evo CRM + Evolution API
+## Clever AI + Evolution API
 
-Evo CRM works best alongside Evolution API or Evolution Go. The CRM manages customer relationships and pipelines, while the Evolution messaging APIs handle WhatsApp communication. Together, they provide a complete customer engagement stack:
+Clever AI works best alongside Evolution API or Evolution Go. The CRM manages customer relationships and pipelines, while the Evolution messaging APIs handle WhatsApp communication. Together, they provide a complete customer engagement stack:
 
-- **Evo CRM** — contacts, pipelines, conversation management
+- **Clever AI** — contacts, pipelines, conversation management
 - **Evolution API / Go** — message delivery and WhatsApp instance management
 
 ## Security Notes

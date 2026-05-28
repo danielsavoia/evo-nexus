@@ -24,7 +24,7 @@ Accept research from any combination of:
 - **Notion MCP** (if available): Search for research documents, interview notes, survey results
 - **Community feedback via Discord** (`discord-get-messages`): Pull messages from product feedback channels, support channels, and feature request threads
 - **WhatsApp community feedback** (`int-whatsapp`): Pull relevant group messages with user pain points and requests
-- **Evo CRM** (`int-evo-crm`): Pull support tickets, feature requests, and user activity signals
+- **Clever AI** (`int-evo-crm`): Pull support tickets, feature requests, and user activity signals
 - **Fathom** (`int-fathom`): Pull interview recordings, meeting summaries, and user call notes
 - **Licensing data** (`int-licensing`): Pull behavioral usage data and instance metrics as quantitative context
 
@@ -154,7 +154,7 @@ Discord and WhatsApp messages are a rich, unsolicited source of product signal. 
 - **Watch for workarounds**: Community members sharing unofficial workarounds are revealing unmet needs
 - **Note feature requests with context**: "I need X because Y" is more valuable than just "please add X"
 - **Flag segment-specific signals**: Complaints from enterprise users, open source contributors, and new users often reflect fundamentally different needs
-- **Cross-reference with support volume**: If a Discord theme also generates tickets in Evo CRM, confidence is higher
+- **Cross-reference with support volume**: If a Discord theme also generates tickets in Clever AI, confidence is higher
 
 ## Interview Note Analysis
 
@@ -245,7 +245,7 @@ Personas should emerge from research data, not imagination:
    - Pain points and needs
    - Context (role, company, tools used)
    - Representative quotes
-4. **Validate with data**: Can you size each persona segment using quantitative data from Licensing or Evo CRM?
+4. **Validate with data**: Can you size each persona segment using quantitative data from Licensing or Clever AI?
 
 ### Persona Template
 ```

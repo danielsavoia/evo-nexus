@@ -14,7 +14,7 @@ metadata:
       - "scripts/*"
 ---
 
-# Evo CRM
+# Clever AI
 
 Interact with your Evo AI CRM instance directly via the REST API.
 

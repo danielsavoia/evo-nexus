@@ -43,7 +43,7 @@ Create positioning matrix:
 | Price | Freemium + plans | R$X/mês | R$X/mês |
 | WhatsApp Unofficial | ✅ Baileys | ❌ | ❌ |
 | WhatsApp Cloud API | ✅ | ✅ | ✅ |
-| Integrated CRM | ✅ Evo CRM | ❌ | ✅ |
+| Integrated CRM | ✅ Clever AI | ❌ | ✅ |
 | Community | ✅ Discord + open source | ❌ | ❌ |
 | IA/Agentes | ✅ Evo AI | Parcial | ❌ |
 

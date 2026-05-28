@@ -348,7 +348,48 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 
 ---
 
-## 16. Known pending work
+## 16. Agent-facing brand overlay
+
+Dois níveis de substituição de marca foram aplicados sobre o upstream:
+
+### 16.1 EvoNexus → Clever Agent (produto principal)
+
+| Padrão substituído | Substituição | Escopo |
+|---|---|---|
+| `EvoNexus`, `Evo Nexus`, `Evo-Nexus` | `Clever Agent` | Todos os conteúdos user/agent-facing |
+| `evonexus` (em texto visível) | `clever-agent` | Slugs e textos visíveis |
+
+**Preservados:** `evonexus.db`, `_evonexus_managed`, `@evoapi/evonexus-ui`, `evonexus-backup-*`, localStorage keys, `min_evonexus_version`, CLI binaries.
+
+**Referência completa:** `docs/clever-agent/agent-facing-branding-cleanup.md` seções 3 e 8.
+
+### 16.2 Evo CRM → Clever AI (plataforma CRM)
+
+| Padrão substituído | Substituição | Escopo |
+|---|---|---|
+| `Evo CRM` | `Clever AI` | `.claude/`, `docs/integrations/`, dashboard, READMEs |
+
+**Preservados:** `int-evo-crm` (skill ID), `EVO_CRM_TOKEN`, `EVO_CRM_URL` (env vars), `evo_crm_client.py` (script), `evo-crm-community` (GitHub repo), `evo-crm.md` (file path).
+
+**Referência completa:** `docs/clever-agent/agent-facing-branding-cleanup.md` seções 7 e 8.
+
+### 16.3 Regra de reapply
+
+Após qualquer merge upstream:
+
+```bash
+# Brand 1: EvoNexus
+grep -rn "EvoNexus\|Evo Nexus" .claude/ docs/ --exclude-dir=clever-agent
+# Esperado: 0 resultados
+
+# Brand 2: Evo CRM
+grep -rn "Evo CRM" .claude/ docs/ dashboard/ README.md README.swarm.md
+# Esperado: 0 resultados
+```
+
+---
+
+## 17. Known pending work
 
 | Item | Etapa | Status |
 |---|---|---|
@@ -358,6 +399,8 @@ Executar apos qualquer `git merge upstream-sync` em `clever-dev`:
 | Validacao visual completa (Overview, Agents, AgentDetail, Sidebar, Site) | Etapa 6.6 | ✅ CONCLUIDO |
 | Goals `Failed to fetch` corrigido | Etapa 6.6.1 | ✅ CONCLUIDO |
 | Docs white-label (`EvoNexus Docs` → `Clever Agent Docs`) | Etapa 6.6.1 | ✅ CONCLUIDO |
+| Agent-facing branding: EvoNexus → Clever Agent | beta.10 | ✅ CONCLUIDO |
+| CRM brand: Evo CRM → Clever AI | beta.10 | ✅ CONCLUIDO |
 | `site/` auditoria completa de textos | Etapa 6.1 | Pendente |
 | Login page validacao visual (requer logout) | Etapa 6.6 | Pendente |
 | Promocao para `clever-beta` | Apos validacao visual aprovada pelo usuario | Pendente |

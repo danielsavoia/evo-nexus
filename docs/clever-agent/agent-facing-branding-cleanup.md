@@ -149,7 +149,7 @@ grep -n "EvoNexus" dashboard/frontend/src/pages/TicketDetail.tsx
 
 ---
 
-## 6. Reapply checklist
+## 6. Reapply checklist — EvoNexus → Clever Agent
 
 Após qualquer merge upstream:
 
@@ -163,3 +163,161 @@ Após qualquer merge upstream:
 - [ ] NÃO substituir: `evonexus.db`, `_evonexus_managed`, `@evoapi/*`, `evonexus-backup-*`, localStorage keys, CLI binaries
 - [ ] Rodar `npm run build` no frontend após qualquer mudança em `.tsx`/`.ts`
 - [ ] Validar Oracle: primeira resposta não deve conter "EvoNexus"
+
+---
+
+## 7. Evo CRM → Clever AI
+
+**Data:** 2026-05-28
+**Patch:** beta.10 (consolidado)
+
+### 7.1 Sintoma
+
+A integração CRM aparecia como "Evo CRM" no dashboard de integrações e nos prompts/skills lidos pelos agentes. O produto white-label da plataforma CRM upstream é **Clever AI**.
+
+### 7.2 Causa
+
+Os arquivos em `.claude/` (agents, skills), `docs/integrations/`, `dashboard/backend/routes/integrations.py` e `dashboard/frontend/src/lib/integrationMeta.ts` ainda referenciavam "Evo CRM" como nome do produto — o nome upstream.
+
+### 7.3 Escopo corrigido
+
+**Padrão substituído:** `"Evo CRM"` → `"Clever AI"` (exato, case-sensitive, com espaço)
+
+Nenhuma variante `EVO CRM` / `Evolution CRM` / `EvoCRM` foi encontrada no repositório.
+
+#### Agentes (`.claude/agents/`)
+
+| Arquivo | Ocorrências | Mudança |
+|---|---|---|
+| `canvas-designer.md` | 1 | Exemplo de uso: "Evo CRM admin" → "Clever AI admin" |
+| `dex-data.md` | 2 | Descrição de fontes e tabela de integrações |
+| `zara-cs.md` | 1 | "You integrate with Evo CRM" → "You integrate with Clever AI" |
+
+#### Skills (`.claude/skills/`)
+
+| Arquivo | Ocorrências | Mudança |
+|---|---|---|
+| `int-evo-crm/SKILL.md` | 1 | H1 heading `# Evo CRM` → `# Clever AI` |
+| `data-analyze/SKILL.md` | 3 | description, tabela de fontes, exemplo de uso |
+| `data-build-dashboard/SKILL.md` | 2 | description, passo de execução |
+| `data-create-viz/SKILL.md` | 2 | description, condicional de fonte |
+| `data-explore/SKILL.md` | 2 | description, condicional de fonte |
+| `data-statistical-analysis/SKILL.md` | 2 | Exemplos de interpretação causal |
+| `data-validate/SKILL.md` | 2 | description, exemplo de uso |
+| `data-write-query/SKILL.md` | 3 | description, comentário de dialeto, exemplo de query |
+| `pm-metrics-review/SKILL.md` | 1 | Tabela de fontes `Evo CRM (int-evo-crm)` |
+| `pm-synthesize-research/SKILL.md` | 4 | Fontes de dados, validação com dados, sizing de persona |
+| `pulse-faq-sync/SKILL.md` | 1 | Heading `## Evo CRM` → `## Clever AI` |
+| `sage-competitive-analysis/SKILL.md` | 1 | Tabela competitiva "Integrated CRM" |
+
+#### Documentação (`docs/`)
+
+| Arquivo | Ocorrências | Mudança |
+|---|---|---|
+| `docs/integrations/evo-crm.md` | 9 | Título, descrição, todas as referências ao produto; env vars `EVO_CRM_URL`/`EVO_CRM_TOKEN` preservados |
+| `docs/integrations/overview.md` | 2 | Tabela de integrações e lista de links |
+
+#### Dashboard — backend e frontend
+
+| Arquivo | Ocorrências | Mudança |
+|---|---|---|
+| `dashboard/backend/routes/integrations.py` | 2 | `{"name": "Evo CRM", ...}` → `"Clever AI"`; comentário inline |
+| `dashboard/frontend/src/lib/integrationMeta.ts` | 2 | Hints de campo: "Token de acesso do Evo CRM" → "Clever AI"; "URL base da instância Evo CRM" → "Clever AI" |
+
+#### READMEs
+
+| Arquivo | Ocorrências | Mudança |
+|---|---|---|
+| `README.md` | 2 | Lista de integrações; link "[Evo CRM Community]" → "[Clever AI Community]" (URL GitHub preservada) |
+| `README.swarm.md` | 2 | Lista de integrações; tabela de requisitos de rede |
+
+**Total:** 21 arquivos, ~44 ocorrências substituídas.
+
+### 7.4 Ocorrências preservadas
+
+| Padrão | Motivo |
+|---|---|
+| `int-evo-crm` | Identificador técnico da skill (folder name, YAML `name:`, paths de script) — usado programaticamente |
+| `EVO_CRM_TOKEN`, `EVO_CRM_URL` | Nomes de variáveis de ambiente — mudar quebraria containers configurados |
+| `evo_crm_client.py` | Nome do script Python da skill — mudar requereria renomear o arquivo e atualizar todos os caminhos |
+| `evo-crm-community` | Repositório GitHub externo (Evolution Foundation) — URL real, não controlada pelo Clever Agent |
+| `evo-crm.md` | Nome do arquivo de documentação — links internos e externos apontam para este path |
+| `CHANGELOG.md` (linhas históricas) | Histórico de releases upstream — não lido pelos agentes em sessão normal |
+
+### 7.5 Reapply checklist — Evo CRM → Clever AI
+
+Após qualquer merge upstream:
+
+- [ ] `grep -rn "Evo CRM" .claude/ --include="*.md"` → zero resultados
+- [ ] `grep -rn "Evo CRM" docs/integrations/` → zero resultados
+- [ ] `grep -n "Evo CRM" dashboard/backend/routes/integrations.py` → zero resultados
+- [ ] `grep -n "Evo CRM" dashboard/frontend/src/lib/integrationMeta.ts` → zero resultados
+- [ ] Verificar `README.md` e `README.swarm.md` — listas de integrações
+- [ ] NÃO renomear: `int-evo-crm`, `EVO_CRM_TOKEN`, `EVO_CRM_URL`, `evo_crm_client.py`, `evo-crm-community`
+- [ ] Rodar `npm run build` após mudanças em `.ts`/`.tsx`
+- [ ] Validar: página de Integrações no dashboard mostra "Clever AI" (não "Evo CRM")
+
+---
+
+## 8. Tabelas granulares — EvoNexus → Clever Agent
+
+Abaixo a visão por arquivo de todas as substituições `EvoNexus / Evo Nexus / Evo-Nexus` → `Clever Agent` / `clever-agent` aplicadas no beta.10.
+
+### 8.1 `.claude/` — agent-facing direto
+
+| Arquivo | Padrão substituído | Contexto |
+|---|---|---|
+| `.claude/agents/oracle.md` | `EvoNexus` (7×) | Welcome template, discovery templates, descrição do agente |
+| `.claude/agents/apex-architect.md` | `EvoNexus` | Contexto do workspace |
+| `.claude/agents/flow-git.md` | `EvoNexus` | Contexto do workspace |
+| `.claude/commands/oracle.md` | `EvoNexus` | Definição de comando |
+| `.claude/rules/agents.md` | `EvoNexus` | Regras de comportamento de agentes |
+| `.claude/rules/dev-phases.md` | `EvoNexus` | Regras de fase de desenvolvimento |
+| `.claude/rules/heartbeats.md` | `EvoNexus` | Regras de heartbeat |
+| `.claude/skills/` (38 skills) | `EvoNexus` | Ocorrências em descriptions e corpos de SKILL.md |
+| `.claude/templates/html/morning-briefing.html` | `EvoNexus` | Template de briefing HTML |
+| `.claude/templates/html/weekly-review.html` | `EvoNexus` | Template de revisão semanal HTML |
+
+### 8.2 `docs/` — user-facing
+
+32 arquivos em `docs/` (exceto `docs/clever-agent/` e `docs/real-world/evolution-foundation.md` preservado):
+- `docs/agents/*.md` — definições de agentes
+- `docs/integrations/*.md` — guias de integração
+- `docs/getting-started.md`, `docs/skills.md`, `docs/commands.md`, etc.
+
+### 8.3 `site/src/i18n/`
+
+| Arquivo | Padrão substituído |
+|---|---|
+| `en.json` | `EvoNexus` / `Evo Nexus` |
+| `pt-BR.json` | `EvoNexus` / `Evo Nexus` |
+| `es.json` | `EvoNexus` / `Evo Nexus` |
+| `index.ts` | comentário de módulo |
+
+### 8.4 Frontend components
+
+| Arquivo | Mudança |
+|---|---|
+| `dashboard/frontend/src/pages/TicketDetail.tsx` | Prompt injetado no agente: "on EvoNexus" → "on Clever Agent" |
+| `dashboard/frontend/src/pages/Backups.tsx` | Hint visível: `backups/evonexus/` → `backups/clever-agent/` |
+| `dashboard/frontend/src/pages/UIPlayground.tsx` | Texto UI: `@evonexus/ui Playground` → `UI Playground` |
+
+### 8.5 Terminal server
+
+| Arquivo | Mudança |
+|---|---|
+| `dashboard/terminal-server/src/chat-bridge.js` | 2 contextos injetados: "inside EvoNexus dashboard" → "inside Clever Agent dashboard" |
+| `dashboard/terminal-server/src/utils/openrouter-smart-router.js` | HTTP header `X-Title` e status name |
+| `dashboard/terminal-server/bin/server.js` | Startup log |
+
+### 8.6 Backend
+
+| Arquivo | Mudança |
+|---|---|
+| `dashboard/backend/brain_repo/manifest.py` | Template README do brain repo |
+| `dashboard/backend/brain_repo/kb_mirror.py` | Texto gerado em arquivos do workspace |
+| `dashboard/backend/brain_repo/job_runner.py` | Autor de commits git |
+| `dashboard/backend/routes/brain_repo.py` | Autor de commits git |
+| `dashboard/backend/knowledge/auto_migrator.py` | Mensagens de erro |
+| `scheduler.py` | Docstring e print de startup |
+| `backup.py` | Docstring, argparse description, workspace name default |

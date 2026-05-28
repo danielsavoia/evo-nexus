@@ -28,7 +28,7 @@ Pull data from connected sources before asking the user:
 - Active instances, version distribution, geographic spread
 - Growth trends for open source usage
 
-**Evo CRM** (`int-evo-crm`):
+**Clever AI** (`int-evo-crm`):
 - Active agents, pipeline metrics, user activity
 - Activation and engagement signals
 
