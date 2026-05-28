@@ -483,10 +483,12 @@ export default function Providers() {
                   </div>
                 )}
 
-                {/* Logout warning */}
+                {/* Logout warning — contextual per harness */}
                 {prov.requires_logout && isActive && (
                   <div className="mx-5 mb-3 px-3 py-1.5 rounded bg-[#1a1500] text-[10px] text-[#FBBF24]">
-                    Run /logout in Claude Code if you were previously logged into Anthropic
+                    {prov.cli_command === 'openclaude'
+                      ? 'Run /logout in the OpenClaude terminal if you were previously authenticated with another provider'
+                      : 'Run /logout in Claude Code if you were previously logged into Anthropic'}
                   </div>
                 )}
               </div>
@@ -602,7 +604,11 @@ export default function Providers() {
 
                 {prov.requires_logout && (
                   <div className="rounded-lg bg-[#1a1500] border border-[#3a2a00] p-3">
-                    <p className="text-xs text-[#FBBF24]">After activating, run <code className="font-bold">/logout</code> in Claude Code if previously logged into Anthropic.</p>
+                    <p className="text-xs text-[#FBBF24]">
+                      {prov.cli_command === 'openclaude'
+                        ? <>After activating, run <code className="font-bold">/logout</code> in the OpenClaude terminal if previously authenticated with another provider.</>
+                        : <>After activating, run <code className="font-bold">/logout</code> in Claude Code if previously logged into Anthropic.</>}
+                    </p>
                   </div>
                 )}
 

@@ -294,13 +294,34 @@ class ChatBridge {
     const env = providerConfig.env_vars || {};
     const model = resolveProviderModel(providerConfig);
     const baseUrl = (env.OPENAI_BASE_URL || 'https://api.openai.com/v1').replace(/\/+$/, '');
-    const apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';
+    let apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';
+
+    // Codex OAuth: read access_token from ~/.codex/auth.json when no API key is present.
+    // The terminal path spawns openclaude which handles auth internally; the chat path
+    // must replicate the same Bearer token for OpenAI Chat Completions.
+    if (!apiKey && providerConfig.active === 'codex_auth') {
+      try {
+        const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
+        const codexAuth = JSON.parse(fs.readFileSync(codexAuthPath, 'utf8'));
+        apiKey = codexAuth?.tokens?.access_token
+          || codexAuth?.['openai-codex']?.access
+          || '';
+        if (apiKey) {
+          console.log('[chat-bridge] codex_auth: using OAuth access token from ~/.codex/auth.json');
+        }
+      } catch {
+        // auth.json absent or unreadable — will error below with clear message
+      }
+    }
 
     if (!model) {
       throw new Error(`Provider "${providerConfig.active}" sem modelo configurado. Defina o campo Model em Providers.`);
     }
     if (!apiKey) {
-      throw new Error(`Provider "${providerConfig.active}" sem API key configurada para Chat Completion.`);
+      const hint = providerConfig.active === 'codex_auth'
+        ? `Provider "codex_auth" requer autenticação OAuth. Vá em Providers e clique em Login para autenticar.`
+        : `Provider "${providerConfig.active}" sem API key configurada para Chat Completion.`;
+      throw new Error(hint);
     }
 
     const runtimePrompt = this._buildChatCompletionSystemPrompt(agentName, cwd, sessionId);
