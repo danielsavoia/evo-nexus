@@ -1,7 +1,10 @@
 # Clever Agent White-label Overlay
 
-**Date:** 2026-05-24
+**Date:** 2026-05-24 (updated 2026-05-28 — master reapply policy added)
 **Branch:** `clever-dev`
+
+> **Navigation:** For the full reapply workflow and per-file inventory, see `docs/clever-agent/white-label-master-inventory.md`.
+> For the patch quick-reference, see `docs/clever-agent/white-label-patch-ledger.md`.
 
 ---
 
@@ -401,6 +404,67 @@ grep -rn "Evo CRM" .claude/ docs/ dashboard/ README.md README.swarm.md
 | Docs white-label (`EvoNexus Docs` → `Clever Agent Docs`) | Etapa 6.6.1 | ✅ CONCLUIDO |
 | Agent-facing branding: EvoNexus → Clever Agent | beta.10 | ✅ CONCLUIDO |
 | CRM brand: Evo CRM → Clever AI | beta.10 | ✅ CONCLUIDO |
+| Master inventory document created | 2026-05-28 | ✅ CONCLUIDO |
 | `site/` auditoria completa de textos | Etapa 6.1 | Pendente |
 | Login page validacao visual (requer logout) | Etapa 6.6 | Pendente |
-| Promocao para `clever-beta` | Apos validacao visual aprovada pelo usuario | Pendente |
+| beta.10 image build + VPS deploy | Aguardando autorização | Pendente |
+
+---
+
+## 18. Master reapply policy
+
+This section defines the rules every future agent/developer must follow after any upstream merge.
+
+### 18.1 Inventory-first rule
+
+**Before writing any new code after an upstream merge, read `docs/clever-agent/white-label-master-inventory.md` §5 (Reapply Workflow) end-to-end.**
+
+Never try to remember what was patched. The inventory is the source of truth.
+
+### 18.2 Per-file inventory rule
+
+Every Clever Agent customization must be documented with:
+- The exact file(s) modified
+- The exact code change (inline rule or link to detail doc)
+- The commit SHA
+- The reapply risk level (High / Medium / Low)
+- A validation command or UI check
+
+Any new patch added in a future session must add a row to `white-label-patch-ledger.md` and a section to `white-label-master-inventory.md` before committing.
+
+### 18.3 Brand substitution rules
+
+| Rule | Detail |
+|---|---|
+| Pattern to replace | Exact strings only: `"EvoNexus"`, `"Evo Nexus"`, `"Evo-Nexus"`, `"Evo CRM"` |
+| Tool | `sed -i 's/PATTERN/REPLACEMENT/g'` on specific file lists — never `--exclude` broad patterns |
+| Verification | Run grep after every sed pass to confirm zero matches remain |
+| Never touch | All identifiers in `white-label-master-inventory.md §4` |
+| Scope | User-facing and agent-facing content only; skip test files, legal docs, CI/CD, Python package names |
+
+### 18.4 Preservation rule
+
+When in doubt whether to replace a term: **check §4 of the master inventory first.**
+
+If the identifier is in the preservation table → do NOT replace.
+If not listed → safe to replace in user/agent-facing contexts.
+
+### 18.5 Validation rule
+
+After any reapply, run all commands in `white-label-master-inventory.md §6` before committing.
+Minimum mandatory:
+1. Brand scan → 0 results
+2. Color scan → 0 results
+3. `npm run build` → passes
+4. JS syntax check on any modified `.js` file
+
+### 18.6 Documentation rule for new patches
+
+When a new upstream change requires a new fix:
+1. Create/update `docs/clever-agent/<area>-fix.md` with root cause, fix, and reapply checklist
+2. Add a row to `white-label-patch-ledger.md`
+3. Add a section to `white-label-master-inventory.md §3`
+4. Update `white-label-overlay.md §17` status table
+5. Commit docs in the same commit as the fix (or a follow-up docs commit on the same day)
+
+This ensures the next merge cycle starts with complete information.
