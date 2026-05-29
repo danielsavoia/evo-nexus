@@ -360,9 +360,10 @@ docker exec <dashboard_container> curl -s http://localhost:32352/health
 
 ### 3.9 Providers patches
 
-**Commits:** `bacfc49`, `573eae8`
-**Docs:** `docs/clever-agent/providers-page-toggle-fix.md`, `docs/clever-agent/providers-cli-dashboard-image-fix.md`
-**Reapply risk:** Medium-High
+**Commits:** `bacfc49`, `573eae8`, `69cd492`, `2b02624`, `25cbb62`, `315d2d8`
+**Docs:** `docs/clever-agent/providers-page-toggle-fix.md`, `docs/clever-agent/providers-cli-dashboard-image-fix.md`, `docs/clever-agent/provider-executable-routing.md`
+**Dossier consolidado:** `docs/clever-agent/provider-stabilization-beta10-to-beta14.md`
+**Reapply risk:** **Critical** — estes arquivos são tocados em quase toda release upstream; ver §3.9.3 para checklist completo
 
 #### `dashboard/frontend/src/pages/Providers.tsx` — toggle disabled logic
 
@@ -399,6 +400,58 @@ Without this, `providers.py`'s `shutil.which('claude')` returns `None` → all p
 docker exec <dashboard_container> which claude     # → /usr/bin/claude
 docker exec <dashboard_container> which openclaude  # → /usr/bin/openclaude
 # Providers page: claude_installed: true
+```
+
+#### 3.9.3 Provider/harness stabilization (beta.12–beta.14)
+
+For detailed code snippets, causa raiz, test plan and full reapply checklist, see:
+**[`docs/clever-agent/provider-stabilization-beta10-to-beta14.md`](provider-stabilization-beta10-to-beta14.md)**
+
+Summary of the three layers added across beta.12–beta.14:
+
+| Layer | File | Commit | Proteção |
+|---|---|---|---|
+| `getProviderSignature()` | `provider-config.js` | `2b02624` | Assinatura `"<active>:<cli_command>"` para identificar harness |
+| `startClaude()` providerSignature check + generation counter | `server.js` | `2b02624` | Mata PTY se provider mudou em start/reconnect |
+| `claude-bridge.js` early-return defensivo | `claude-bridge.js` | `2b02624` | Segunda linha de defesa no PTY bridge |
+| `_startCodexAuthChatSession()` + `SPAWN_SYSTEM_VARS` | `chat-bridge.js` | `25cbb62` | Chat Codex via `openclaude -p`; sem `codexplan` na API pública |
+| `POST /api/sessions/reset-provider` | `server.js` | `315d2d8` | Endpoint para matar todos os PTYs ativos |
+| `_reset_terminal_sessions()` | `providers.py` | `315d2d8` | providers.py notifica terminal-server ao salvar active_provider |
+| `joinClaudeSession()` providerSignature defense | `server.js` | `315d2d8` | Terceira linha de defesa: join reconhece harness stale |
+
+**Matriz provider → harness (estado atual):**
+
+| Provider ID | Terminal | Chat | Auth |
+|---|---|---|---|
+| `anthropic` | `/usr/bin/claude` | Claude Agent SDK | OAuth credentials.json |
+| `codex_auth` | `/usr/bin/openclaude` | `openclaude -p` headless | `~/.codex/auth.json` (volume) |
+| `openrouter` / `openai` / `omnirouter` | `/usr/bin/openclaude` | OpenAI Chat Completions | API key |
+
+**Reapply quick-check (provider subsystem):**
+```bash
+# providerSignature em server.js (4 pontos)
+grep -c "providerSignature" dashboard/terminal-server/src/server.js
+# Esperado: ≥4
+
+# reset-provider endpoint
+grep -n "reset-provider" dashboard/terminal-server/src/server.js
+# Esperado: 1 route definition
+
+# _reset_terminal_sessions em ambos os caminhos
+grep -c "_reset_terminal_sessions" dashboard/backend/routes/providers.py
+# Esperado: 3 (1 def + 2 call-sites)
+
+# _startCodexAuthChatSession
+grep -n "_startCodexAuthChatSession" dashboard/terminal-server/src/chat-bridge.js
+# Esperado: definition + call in startSession()
+
+# SPAWN_SYSTEM_VARS
+grep -n "SPAWN_SYSTEM_VARS" dashboard/terminal-server/src/chat-bridge.js
+# Esperado: constant definition
+
+# Volume Codex no stack
+grep -n "clever_agent_codex_auth" clever-agent.stack.yml
+# Esperado: volume mount + volumes section
 ```
 
 ---
@@ -795,16 +848,19 @@ grep "^CMD" Dockerfile.swarm
 
 ## 7. Pending work
 
+**Last updated:** 2026-05-29 — VPS beta.14 validation complete; dossier finalized.
+
 | Item | Priority | Notes |
 |---|---|---|
-| Publish beta.10 dashboard + runtime images | High | After auth stack fix + branding fixes; awaiting user authorization |
-| Terminal TUI validation post-deploy | High | Verify Oracle Terminal renders `╭───Claude Code v2.1.152` on VPS |
-| Oracle chat smoke test post-deploy | High | Verify first response says "Clever Agent" not "EvoNexus" |
-| `site/` full text audit (Etapa 6.1) | Medium | `site/src/` may still have upstream text in some components |
-| Login page visual validation | Low | Requires logout to see; pending VPS access |
-| `plugins_installed` migration | Low | Upstream schema change if still pending |
-| `docs/clever-agent/` cleanup | Low | Some beta-fixes docs could be consolidated |
-| Upstream v0.34+ merge | Future | When upstream releases next version, follow §5 workflow |
+| ~~Validação VPS post-beta.14~~ | ~~High~~ | ✅ **Concluído 2026-05-29** — Anthropic ↔ Codex switching validado na VPS. Multi-provider core aprovado. Ver `provider-stabilization-beta10-to-beta14.md §8.6`. |
+| Badge Provider/Harness/Model/Profile na UI | High | OpenClaude/Codex pode não expor o LLM exato ao agente. UI deve mostrar provider, harness e perfil explicitamente. Não bloqueante. Ver `provider-stabilization-beta10-to-beta14.md §13`. |
+| Login Codex OAuth pela UI | High | Hoje o fluxo de fallback requer `docker exec openclaude login` (plano B). Implementar OAuth flow na UI Providers para eliminar dependência de SSH. |
+| Testar OpenRouter/OpenAI/OMNIROUTER | Medium | Falta validação end-to-end com credenciais reais. Apenas Anthropic e Codex validados na VPS. |
+| `site/` full text audit | Medium | `site/src/` pode ter texto upstream remanescente em alguns componentes. |
+| Provider switching com múltiplas sessões | Medium | Validar comportamento concorrente quando múltiplos agentes têm terminais abertos. |
+| Login page visual validation | Low | Requer logout para ver; pending VPS access. |
+| `plugins_installed` migration | Low | Upstream schema change if still pending. |
+| Upstream v0.34+ merge | Future | Quando upstream liberar próxima versão, seguir §5 workflow. Arquivos de maior risco: ver §9 do dossiê provider. |
 
 ---
 
@@ -814,6 +870,8 @@ grep "^CMD" Dockerfile.swarm
 |---|---|
 | **This file** (`white-label-master-inventory.md`) | Single-source authoritative inventory; start here after any upstream merge |
 | `white-label-patch-ledger.md` | Quick-reference table of all patches with commits and risk levels |
+| `provider-stabilization-beta10-to-beta14.md` | **Provider subsystem dossier** — consolidated timeline, architecture, reapply checklist and test plan for all provider/harness/terminal fixes beta.10–beta.14 |
+| `provider-executable-routing.md` | Detailed code snippets and per-patch reapply checklists for provider routing |
 | `white-label-overlay.md` | Detailed code snippets and substitution rules |
 | `agent-facing-branding-cleanup.md` | Granular per-file tables for EvoNexus→Clever Agent and Evo CRM→Clever AI |
 | `theme-color-audit.md` | Every color token replaced, with before/after values |
