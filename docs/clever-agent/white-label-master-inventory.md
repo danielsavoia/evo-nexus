@@ -619,6 +619,16 @@ grep -n "providerSignature\|generation" dashboard/terminal-server/src/server.js
 
 grep -n "providerSignature" dashboard/terminal-server/src/claude-bridge.js
 # Expected: defensive check in startSession() + stored in session object + onExit guard
+
+# Codex OAuth chat via openclaude -p
+grep -n "_startCodexAuthChatSession" dashboard/terminal-server/src/chat-bridge.js
+# Expected: method definition + call in startSession()
+
+grep -n "findOpenClaudeCommand\|SPAWN_SYSTEM_VARS" dashboard/terminal-server/src/chat-bridge.js
+# Expected: both defined before ChatBridge class
+
+grep -n "codex_auth" dashboard/terminal-server/src/chat-bridge.js
+# Expected: branch in startSession() routing to _startCodexAuthChatSession; NOT in _startOpenAICompatibleSession
 ```
 
 ### Step 4 — uv/npm cache cleanup still in same RUN layer
@@ -679,6 +689,7 @@ Reapply order (lowest risk first):
 13. Provider CLIs in Dockerfile
 14. Brain repo temporary-mode params
 15. Provider-aware terminal sessions (providerSignature + generation counter)
+16. Codex OAuth chat routing (`_startCodexAuthChatSession` + `findOpenClaudeCommand` + `SPAWN_SYSTEM_VARS`)
 
 ### Step 9 — Post-reapply validation
 
