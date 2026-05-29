@@ -20,6 +20,12 @@
 ##     to this file at runtime. Mounting :ro causes the TUI to render empty/blank
 ##     and the terminal session to appear frozen.
 ##
+## clever_agent_codex_auth volume:
+##   Persists ~/.codex/auth.json across container restarts for Codex OAuth.
+##   openclaude -p reads this file automatically for Codex OAuth tokens.
+##   After first deploy with codex_auth provider, run `openclaude login`
+##   inside the container to populate the volume.
+##
 ## CLAUDE_CODE_EXECUTABLE:
 ##   Points the SDK to /usr/bin/claude (v2.1.152+, the system-installed binary).
 ##   The bundled SDK binary (v2.1.119) fails silently inside the container.
@@ -34,7 +40,7 @@ version: "3.7"
 services:
 
   dashboard:
-    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.12
+    image: ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.13
 
     volumes:
       ## Persistent data
@@ -59,6 +65,12 @@ services:
       ##   and the terminal session appears frozen (validated on VPS 2026-05-27).
       ##   See docs/clever-agent/claude-auth-container-mount.md.
       - /home/claude/.claude.json:/root/.claude.json:rw
+
+      ## Codex OAuth — persistent named volume for ~/.codex/auth.json.
+      ##   openclaude reads ~/.codex/auth.json for Codex OAuth tokens.
+      ##   Named volume persists auth state across container restarts.
+      ##   User must run `openclaude login` once after initial deploy.
+      - clever_agent_codex_auth:/root/.codex
 
     networks:
       - traefik-public
@@ -155,6 +167,7 @@ volumes:
   clever_agent_memory:
   clever_agent_adw_logs:
   clever_agent_agent_memory:
+  clever_agent_codex_auth:
 
 networks:
   traefik-public:
