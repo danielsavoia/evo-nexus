@@ -4,6 +4,10 @@
 **Branch:** `clever-dev`
 **Reapply risk:** High — provider/terminal/chat files tocados em quase toda release
 
+> **Dossiê completo:** Para a visão consolidada de todos os patches beta.10–beta.14 com
+> linha do tempo, decisões de produto e test plan completo, ver:
+> [`docs/clever-agent/provider-stabilization-beta10-to-beta14.md`](provider-stabilization-beta10-to-beta14.md)
+
 ---
 
 ## Sintoma
