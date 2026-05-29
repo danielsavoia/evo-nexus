@@ -629,6 +629,16 @@ grep -n "findOpenClaudeCommand\|SPAWN_SYSTEM_VARS" dashboard/terminal-server/src
 
 grep -n "codex_auth" dashboard/terminal-server/src/chat-bridge.js
 # Expected: branch in startSession() routing to _startCodexAuthChatSession; NOT in _startOpenAICompatibleSession
+
+# Provider change terminal reset (patch 4)
+grep -n "reset-provider" dashboard/terminal-server/src/server.js
+# Expected: POST /api/sessions/reset-provider route present
+
+grep -n "_reset_terminal_sessions" dashboard/backend/routes/providers.py
+# Expected: helper function defined + called in set_active_provider()
+
+grep -n "provider_changed" dashboard/terminal-server/src/server.js
+# Expected: in reset-provider endpoint AND in joinClaudeSession() defense
 ```
 
 ### Step 4 — uv/npm cache cleanup still in same RUN layer
@@ -690,6 +700,7 @@ Reapply order (lowest risk first):
 14. Brain repo temporary-mode params
 15. Provider-aware terminal sessions (providerSignature + generation counter)
 16. Codex OAuth chat routing (`_startCodexAuthChatSession` + `findOpenClaudeCommand` + `SPAWN_SYSTEM_VARS`)
+17. Provider change terminal reset (`POST /api/sessions/reset-provider` + `_reset_terminal_sessions()` + `joinClaudeSession()` defense)
 
 ### Step 9 — Post-reapply validation
 

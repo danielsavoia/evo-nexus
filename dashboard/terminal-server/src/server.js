@@ -433,6 +433,46 @@ class TerminalServer {
       });
     });
 
+    // Reset all active PTY sessions — called by providers.py after active_provider changes.
+    // Ensures the next terminal open/reconnect creates a fresh PTY with the correct harness.
+    this.app.post('/api/sessions/reset-provider', async (req, res) => {
+      const { reason = 'provider_changed', provider_id = null } = req.body || {};
+      let stopped = 0;
+
+      for (const [sessionId, session] of this.claudeSessions.entries()) {
+        if (!session.active) continue;
+
+        console.log(
+          `[terminal] reset-provider: stopping session ${sessionId} ` +
+          `signature=${session.providerSignature || 'none'}`
+        );
+
+        // Bump generation so the stale onExit/onError callbacks from the killed PTY
+        // are silently discarded — same guard used by startClaude().
+        session.generation = (session.generation || 0) + 1;
+
+        try {
+          await this.claudeBridge.stopSession(sessionId);
+        } catch (err) {
+          console.warn(
+            `[terminal] reset-provider: stopSession failed for ${sessionId}: ${err.message}`
+          );
+        }
+
+        session.active = false;
+        session.agent = null;
+        session.providerSignature = null;
+
+        this.broadcastToSession(sessionId, { type: 'claude_stopped', reason: 'provider_changed' });
+        stopped++;
+      }
+
+      console.log(
+        `[terminal] reset-provider reason=${reason} provider=${provider_id || 'unknown'} stopped=${stopped}`
+      );
+      res.json({ status: 'ok', stopped, reason });
+    });
+
     this.app.get('/api/sessions/:sessionId', (req, res) => {
       const session = this.claudeSessions.get(req.params.sessionId);
       if (!session) return res.status(404).json({ error: 'Session not found' });
@@ -895,6 +935,31 @@ class TerminalServer {
     if (!session) {
       this.sendToWebSocket(wsInfo.ws, { type: 'error', message: 'Session not found' });
       return;
+    }
+
+    // Defensive provider-signature check (GAP 2).
+    // If the session is active but running the wrong harness — because the provider
+    // was switched via the UI without going through startClaude — stop the stale PTY
+    // before rejoining so the frontend receives a clean inactive state and can prompt
+    // the user to reopen the terminal with the new harness.
+    if (session.active && session.providerSignature) {
+      try {
+        const currentProvider = loadProviderConfig();
+        const currentSig = getProviderSignature(currentProvider);
+        if (session.providerSignature !== currentSig) {
+          console.log(
+            `[joinClaudeSession] Provider changed for session ${claudeSessionId}: ` +
+            `old=${session.providerSignature} new=${currentSig} — stopping stale PTY before rejoin`
+          );
+          // Bump generation so the stale onExit callback is silently discarded.
+          session.generation = (session.generation || 0) + 1;
+          await this.claudeBridge.stopSession(claudeSessionId);
+          session.active = false;
+          session.agent = null;
+          session.providerSignature = null;
+          this.broadcastToSession(claudeSessionId, { type: 'claude_stopped', reason: 'provider_changed' });
+        }
+      } catch (_) { /* non-fatal — proceed with join */ }
     }
 
     if (wsInfo.claudeSessionId) await this.leaveClaudeSession(wsId);

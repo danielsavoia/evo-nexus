@@ -17,7 +17,7 @@ import time
 import urllib.parse
 from pathlib import Path
 
-from flask import Blueprint, jsonify, redirect, request, session
+from flask import Blueprint, current_app, jsonify, redirect, request, session
 from flask_login import login_required
 
 from routes._helpers import WORKSPACE
@@ -171,6 +171,42 @@ def _save_codex_auth(tokens: dict):
     CODEX_AUTH_FILE.write_text(json.dumps(auth_data, indent=2), encoding="utf-8")
 
 
+def _reset_terminal_sessions(provider_id: str) -> None:
+    """Notify terminal-server to reset active PTY sessions after provider change.
+
+    Called after set_active_provider() writes the new active_provider.
+    This is best-effort: any failure is logged as a warning and MUST NOT
+    block the provider save or the HTTP response to the frontend.
+
+    The terminal-server kills active PTYs and broadcasts claude_stopped so the
+    frontend can prompt the user to reopen the terminal with the new harness.
+    """
+    import urllib.request as _urlreq
+
+    terminal_port = os.environ.get("TERMINAL_SERVER_PORT", "32352")
+    url = f"http://127.0.0.1:{terminal_port}/api/sessions/reset-provider"
+    body = json.dumps({"reason": "provider_changed", "provider_id": provider_id}).encode("utf-8")
+    req = _urlreq.Request(
+        url,
+        data=body,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with _urlreq.urlopen(req, timeout=3) as resp:
+            current_app.logger.info(
+                "[providers] active provider changed to %s; terminal sessions reset (HTTP %s)",
+                provider_id,
+                resp.status,
+            )
+    except Exception as exc:
+        current_app.logger.warning(
+            "[providers] Could not reset terminal sessions after provider change to %s: %s",
+            provider_id,
+            exc,
+        )
+
+
 # ── Endpoints ──────────────────────────────────────────────
 
 
@@ -263,6 +299,7 @@ def set_active_provider():
             _pstore.set_active_provider(provider_id)
         except ValueError as exc:
             return jsonify({"error": str(exc)}), 400
+        _reset_terminal_sessions(provider_id)
         return jsonify({"status": "ok", "active_provider": provider_id})
 
     config = _read_config()
@@ -272,6 +309,7 @@ def set_active_provider():
 
     config["active_provider"] = provider_id
     _write_config(config)
+    _reset_terminal_sessions(provider_id)
 
     return jsonify({"status": "ok", "active_provider": provider_id})
 
