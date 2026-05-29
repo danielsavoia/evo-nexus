@@ -848,13 +848,13 @@ grep "^CMD" Dockerfile.swarm
 
 ## 7. Pending work
 
-**Last updated:** 2026-05-29 — items concluídos até beta.14 removidos.
+**Last updated:** 2026-05-29 — VPS beta.14 validation complete; dossier finalized.
 
 | Item | Priority | Notes |
 |---|---|---|
-| Badge de harness na UI | High | Mostrar provider ativo + harness (Claude Code / OpenClaude) + model em tempo real no terminal/chat. Ver §13 do dossiê provider. |
-| Login Codex OAuth pela UI | High | Hoje requer `docker exec openclaude login`. Implementar OAuth flow na UI Providers. |
-| Validação VPS post-beta.14 | High | Confirmar switching Codex ↔ Anthropic na VPS com logs `reset-provider stopped=1`. Ver test plan em `provider-stabilization-beta10-to-beta14.md §11`. |
+| ~~Validação VPS post-beta.14~~ | ~~High~~ | ✅ **Concluído 2026-05-29** — Anthropic ↔ Codex switching validado na VPS. Multi-provider core aprovado. Ver `provider-stabilization-beta10-to-beta14.md §8.6`. |
+| Badge Provider/Harness/Model/Profile na UI | High | OpenClaude/Codex pode não expor o LLM exato ao agente. UI deve mostrar provider, harness e perfil explicitamente. Não bloqueante. Ver `provider-stabilization-beta10-to-beta14.md §13`. |
+| Login Codex OAuth pela UI | High | Hoje o fluxo de fallback requer `docker exec openclaude login` (plano B). Implementar OAuth flow na UI Providers para eliminar dependência de SSH. |
 | Testar OpenRouter/OpenAI/OMNIROUTER | Medium | Falta validação end-to-end com credenciais reais. Apenas Anthropic e Codex validados na VPS. |
 | `site/` full text audit | Medium | `site/src/` pode ter texto upstream remanescente em alguns componentes. |
 | Provider switching com múltiplas sessões | Medium | Validar comportamento concorrente quando múltiplos agentes têm terminais abertos. |

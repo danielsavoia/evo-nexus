@@ -454,7 +454,7 @@ async _startCodexAuthChatSession(sessionId, options, providerConfig) {
   // 1. Validar ~/.codex/auth.json por EXISTÊNCIA apenas (nunca ler/logar)
   const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
   if (!fs.existsSync(codexAuthPath)) {
-    throw new Error('Provider "codex_auth" requer autenticação OAuth. Execute openclaude login...');
+    throw new Error('Provider "codex_auth" requer autenticação OAuth. Autentique pela UI Providers (Codex OAuth → Login).');
   }
 
   // 2. Montar prompt: systemCtx + "\n\n---\n\n" + userContent
@@ -510,9 +510,18 @@ volumes:
   clever_agent_codex_auth:  # ← criado automaticamente pelo Swarm no primeiro deploy
 ```
 
-**Nota de instalação:** O volume será vazio no primeiro deploy. Executar
-`docker exec <container> openclaude login` uma vez para popular o volume.
-Nos deploys subsequentes, o volume persiste automaticamente.
+**Fluxo oficial de autenticação Codex:**
+O usuário autentica o OpenAI Codex OAuth pela **UI Providers** (Providers → OpenAI Codex OAuth → Login).
+O flow OAuth da UI deve criar e persistir `/root/.codex/auth.json` no volume `clever_agent_codex_auth`.
+Nos deploys e restarts subsequentes, o volume persiste automaticamente — sem ação adicional.
+
+**Plano B (somente troubleshooting):**
+Se o OAuth pela UI falhar ou o volume precisar ser populado manualmente em ambiente de debug:
+```bash
+docker exec <container> openclaude login
+```
+Este comando **não** é o procedimento normal de instalação. É aceito apenas como recurso técnico
+de troubleshooting enquanto o fluxo OAuth pela UI não estiver disponível ou falhar.
 
 ### 7.5 Fluxos preservados (inalterados)
 
@@ -645,6 +654,27 @@ if (session.active && session.providerSignature) {
 | Nenhuma sessão ativa → troca provider | Nenhuma ação no terminal | `reset-provider stopped=0` |
 | Falha no reset (terminal offline) | Provider salvo; warning no Flask log | `Could not reset terminal sessions: ...` |
 | Usuário recarrega página após trocar provider | joinClaudeSession pega assinatura diferente; broadcast `claude_stopped` | `Provider changed for session ... old=X new=Y` |
+
+### 8.6 Validação final manual na VPS
+
+**Data:** 2026-05-29
+**Ambiente:** `agent.cleverai.com.br`
+**Dashboard:** `0.33.0-clever-beta.14`
+**Runtime:** `0.33.0-clever-beta.10`
+**Site:** `0.33.0-clever-beta.1`
+
+| Cenário | Resultado |
+|---|---|
+| Codex OAuth ativo → Chat | ✅ OK — respondeu via OpenClaude/Codex |
+| Codex OAuth ativo → Terminal | ✅ OK — renderizou OpenClaude |
+| Codex OAuth → trocar para Anthropic | ✅ OK — Terminal deixou OpenClaude e voltou para Claude Code |
+| Anthropic ativo → Chat | ✅ OK — respondeu via Claude/Anthropic |
+| Anthropic ativo → Terminal | ✅ OK — renderizou Claude Code |
+| Anthropic → trocar para Codex OAuth | ✅ OK — Terminal voltou para OpenClaude |
+
+**Conclusão:** Multi-provider core aprovado para Anthropic e OpenAI Codex OAuth.
+O reset de terminal sessions (beta.14) fechou o bug de PTY stale após mudança de provider.
+A partir desta release, a troca de provider reflete corretamente no harness do terminal.
 
 ---
 
@@ -840,9 +870,14 @@ grep -n "trust the files\|project you created\|Quick safety check" \
 ### 11.3 Codex OAuth
 
 ```
-1. docker exec <container> openclaude login
-   (ou UI Providers se suportado)
+Fluxo oficial:
+1. UI Providers → OpenAI Codex OAuth → Login
+   Verificar: /root/.codex/auth.json criado no volume clever_agent_codex_auth
+
+Plano B (somente se OAuth pela UI falhar):
+   docker exec <container> openclaude login
    Verificar: /root/.codex/auth.json existe no volume clever_agent_codex_auth
+
 2. Ativar codex_auth no dashboard
 3. Oracle → Chat → mensagem qualquer
    Esperado: resposta via OpenClaude headless
@@ -932,9 +967,9 @@ docker logs <dashboard_container> 2>&1 | grep "REDACTED" | head -5
 
 | Item | Prioridade | Contexto |
 |---|---|---|
-| **Badge de harness na UI** | Alta | Mostrar provider ativo + harness (Claude Code / OpenClaude) + model/profile em tempo real no terminal/chat. Útil para debugging e transparência para o usuário. |
-| **Login Codex OAuth pela UI** | Alta | Hoje requer `docker exec openclaude login`. Implementar flow OAuth na UI Providers eliminaria o plano B de SSH. |
-| **Mensagem OpenClaude não identifica LLM exato** | Média | Banner "Claude Code v2.x" no terminal quando OpenClaude é usado pode confundir usuários — é o TUI do wrapper, não o provider real. Melhorar com override de banner ou badge explícita. |
+| **Badge Provider/Harness/Model/Profile na UI** | Alta | OpenClaude/Codex pode não expor ao agente o identificador exato do LLM subjacente. A UI deve mostrar explicitamente o provider ativo, o harness em uso (Claude Code / OpenClaude) e o perfil/modelo configurado. Não é bloqueante para uso — o harness correto e o provider correto funcionam independentemente do agente conseguir inferir verbalmente qual LLM está respondendo. Prioridade alta para transparência e debugging. |
+| **Login Codex OAuth pela UI** | Alta | Hoje o fluxo de fallback requer `docker exec openclaude login` (plano B). Implementar OAuth flow completo na UI Providers (Providers → OpenAI Codex OAuth → Login) tornaria o fluxo oficial funcional sem SSH. |
+| **Identificador LLM exato via OpenClaude** | Média | OpenClaude/Codex pode não expor ao agente o identificador do LLM exato ao responder. Isso não bloqueia o uso: o provider e harness corretos estão ativos e funcionando. A badge UI (item acima) é a solução recomendada para eliminar a ambiguidade sem exigir mudanças no protocolo OpenClaude. |
 | **Testar OpenRouter/OpenAI/OMNIROUTER** | Média | Falta validação end-to-end com credenciais reais desses providers. Apenas Anthropic e Codex foram validados na VPS. |
 | **Provider switching com múltiplas sessões simultâneas** | Média | Validar comportamento quando múltiplos agentes têm terminais abertos e o provider é trocado. `reset-provider` itera todas as sessões, mas o comportamento concorrente precisa de teste. |
 | **Migrar docs CRM em contexto agent-facing** | Baixa | Se ainda houver referências "Evo CRM" em contextos agent-facing após upstream merges, o reapply deste patch precisa ser executado. |
