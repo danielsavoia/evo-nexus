@@ -33,7 +33,7 @@ OpenAI Codex OAuth ativo, mas:
 | `openrouter` | `openclaude` | `/usr/bin/openclaude` | OpenAI Chat Completions + `OPENAI_API_KEY` | Requires logout de auth Anthropic anterior |
 | `omnirouter` | `openclaude` | `/usr/bin/openclaude` | OpenAI Chat Completions + `OPENAI_API_KEY` | URL customizado |
 | `openai` | `openclaude` | `/usr/bin/openclaude` | OpenAI Chat Completions + `OPENAI_API_KEY` | gpt-4.x |
-| `codex_auth` | `openclaude` | `/usr/bin/openclaude` | OpenAI Chat Completions + OAuth token de `~/.codex/auth.json` | OAuth sem API key; terminal spawna openclaude diretamente |
+| `codex_auth` | `openclaude` | `/usr/bin/openclaude` | `openclaude -p "<prompt>"` (headless) | OAuth via `~/.codex/auth.json`; openclaude roteia internamente para Codex backend; `codexplan` não é modelo válido na API pública OpenAI |
 | `gemini` | `openclaude` | `/usr/bin/openclaude` | (em breve) | |
 | `bedrock` | `openclaude` | `/usr/bin/openclaude` | (em breve) | |
 | `vertex` | `openclaude` | `/usr/bin/openclaude` | (em breve) | |
@@ -44,44 +44,94 @@ OpenAI Codex OAuth ativo, mas:
 
 | Arquivo | Patch | Motivo |
 |---|---|---|
-| `dashboard/terminal-server/src/chat-bridge.js` | `_startOpenAICompatibleSession`: lê OAuth token de `~/.codex/auth.json` quando `active === 'codex_auth'` e sem API key; mensagem de erro clara se auth.json ausente | `codex_auth` não tem API key — usa OAuth |
+| `dashboard/terminal-server/src/chat-bridge.js` | `findOpenClaudeCommand()` helper + `SPAWN_SYSTEM_VARS` whitelist; `_startCodexAuthChatSession()`: valida `~/.codex/auth.json` (sem logar conteúdo), spawna `openclaude -p "<prompt>"` em modo headless, streams stdout como `text_delta`, redacta tokens em stderr, timeout 120s, suporte a abort signal; `startSession()` roteia `codex_auth` para `_startCodexAuthChatSession` antes de `_startOpenAICompatibleSession`; `_startOpenAICompatibleSession` simplificado (bloco codex_auth OAuth removido) | `codexplan` alias inválido na API pública OpenAI (`/v1/chat/completions` → 404); openclaude roteia internamente para Codex backend via `openclaude -p` |
 | `dashboard/frontend/src/pages/Providers.tsx` | 2 mensagens de logout: condicionais por `prov.cli_command === 'openclaude'` | Texto "Claude Code" incorreto para providers OpenClaude |
 
 ---
 
-## Detalhes da correção — chat-bridge.js
+## Detalhes da correção — chat-bridge.js (codex_auth via openclaude -p)
 
 **Arquivo:** `dashboard/terminal-server/src/chat-bridge.js`
 
-**Função:** `_startOpenAICompatibleSession`
+**Causa raiz:** `codexplan` é um alias interno do `openclaude` que roteia para `chatgpt.com/backend-api/codex`. Não é um modelo válido na API pública da OpenAI (`/v1/chat/completions` → HTTP 404 `model_not_found`). A abordagem de leitura de `auth.json` + chamada à API pública não funciona.
 
-**Patch:**
+**Solução:** `codex_auth` usa `openclaude -p "<prompt>"` (modo headless não-interativo) — o mesmo mecanismo que o terminal usa internamente para processar prompts.
+
+**Novas adições:**
+
 ```javascript
-let apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';
+// Antes da classe ChatBridge:
 
-// Codex OAuth: read access_token from ~/.codex/auth.json when no API key is present.
-if (!apiKey && providerConfig.active === 'codex_auth') {
+function findOpenClaudeCommand() {
   try {
-    const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
-    const codexAuth = JSON.parse(fs.readFileSync(codexAuthPath, 'utf8'));
-    apiKey = codexAuth?.tokens?.access_token
-      || codexAuth?.['openai-codex']?.access
-      || '';
-    if (apiKey) {
-      console.log('[chat-bridge] codex_auth: using OAuth access token from ~/.codex/auth.json');
-    }
-  } catch { /* auth.json absent — will error below */ }
+    const resolved = execFileSync('which', ['openclaude'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (resolved) return resolved;
+  } catch { /* fall through */ }
+  const candidates = [
+    '/usr/bin/openclaude',
+    '/usr/local/bin/openclaude',
+    path.join(os.homedir(), '.local', 'bin', 'openclaude'),
+  ];
+  for (const p of candidates) {
+    try { if (fs.existsSync(p)) return p; } catch { /* skip */ }
+  }
+  console.warn('[chat-bridge] openclaude not found at known paths, using bare command name');
+  return 'openclaude';
 }
 
-if (!apiKey) {
-  const hint = providerConfig.active === 'codex_auth'
-    ? `Provider "codex_auth" requer autenticação OAuth. Vá em Providers e clique em Login para autenticar.`
-    : `Provider "${providerConfig.active}" sem API key configurada para Chat Completion.`;
-  throw new Error(hint);
+const SPAWN_SYSTEM_VARS = [
+  'HOME', 'USER', 'SHELL', 'PATH', 'LANG', 'LC_ALL', 'LC_CTYPE',
+  'LOGNAME', 'HOSTNAME', 'XDG_RUNTIME_DIR', 'XDG_DATA_HOME',
+  'XDG_CONFIG_HOME', 'XDG_CACHE_HOME', 'TMPDIR',
+  'SSH_AUTH_SOCK', 'SSH_AGENT_PID',
+  'NVM_DIR', 'NVM_BIN', 'NVM_INC',
+  'CODEX_HOME', 'CLAUDE_CONFIG_DIR',
+];
+```
+
+**Método `_startCodexAuthChatSession` (novo):**
+
+```javascript
+async _startCodexAuthChatSession(sessionId, options, providerConfig) {
+  // 1. Validate auth.json exists (NEVER read/log contents — security rule)
+  const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
+  if (!fs.existsSync(codexAuthPath)) {
+    throw new Error('Provider "codex_auth" requer autenticação OAuth. ...');
+  }
+
+  // 2. Build prompt: systemCtx + "\n\n---\n\n" + userContent
+  // 3. Spawn: nodeSpawn(openclaude, ['-p', fullPrompt], { cwd, env: spawnEnv, stdio: ['ignore','pipe','pipe'] })
+  //    spawnEnv = clean whitelist (SPAWN_SYSTEM_VARS only) + providerEnv
+  //    + CLAUDE_CODE_USE_OPENAI='1' + OPENAI_MODEL='codexplan' + TERM='dumb'
+  //    NEVER spreads process.env (avoids leaking OPENAI_API_KEY)
+  
+  // 4. Stream stdout as text_delta events
+  // 5. Redact tokens in stderr: raw.replace(/[A-Za-z0-9+/=_\-]{40,}/g, '[REDACTED]')
+  // 6. 120s timeout, abort signal support
+  // 7. exit code != 0 → friendly error message
 }
 ```
 
-**Nota:** Para `codex_auth`, o modelo `codexplan`/`codexspark` é roteado pelo `openclaude` no terminal. No chat, esses aliases podem não ser reconhecidos pelo endpoint `/chat/completions` da OpenAI diretamente — nesse caso, o erro virá da API OpenAI (HTTP 404 de model). O terminal `openclaude` lida com o mapeamento internamente.
+**Routing em `startSession()`:**
+
+```javascript
+const providerConfig = loadProviderConfig();
+if (providerConfig.active !== 'anthropic') {
+  if (providerConfig.active === 'codex_auth') {
+    return this._startCodexAuthChatSession(sessionId, options, providerConfig);
+  }
+  return this._startOpenAICompatibleSession(sessionId, options, providerConfig);
+}
+```
+
+**Regras de segurança aplicadas:**
+- `auth.json` validado pela existência, nunca lido/logado
+- `spawnEnv` usa whitelist (`SPAWN_SYSTEM_VARS`) em vez de `process.env` (evita vazar `OPENAI_API_KEY`)
+- Tokens redactados em stderr (`[REDACTED]`)
+- `TERM=dumb` previne códigos ANSI no output
 
 ---
 
@@ -254,6 +304,8 @@ if (this.sessions.get(sessionId) === session) {
 
 ## Reapply checklist
 
+### Provider-aware terminal sessions (patch 2)
+
 - [ ] `provider-config.js`: função `getProviderSignature` exportada
 - [ ] `server.js` `startClaude()`: bloco `if (session.active)` com comparação de `providerSignature`
 - [ ] `server.js` `startClaude()`: `generation` counter antes de `claudeBridge.startSession()`
@@ -263,16 +315,22 @@ if (this.sessions.get(sessionId) === session) {
 - [ ] `claude-bridge.js` `startSession()`: early-return ativo com guarda de assinatura
 - [ ] `claude-bridge.js` `startSession()`: `providerSignature` salvo no objeto da sessão
 - [ ] `claude-bridge.js` `onExit`/`error`: `if (this.sessions.get(sessionId) === session)` antes de `delete`
-- [ ] `chat-bridge.js` linha ~297: `let apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';`
-- [ ] `chat-bridge.js` logo após: bloco `if (!apiKey && providerConfig.active === 'codex_auth')` com leitura de `~/.codex/auth.json`
-- [ ] `chat-bridge.js` erro hint: mensagem específica para `codex_auth` vs outros providers
+- [ ] Validar troca codex_auth → anthropic: terminal reinicia com claude
+- [ ] Validar troca anthropic → codex_auth: terminal reinicia com openclaude
+- [ ] Validar reconexão sem troca: sem reinício, buffer replicado
+
+### Codex OAuth chat via openclaude -p (patch 3)
+
+- [ ] `chat-bridge.js` import: `{ spawn: nodeSpawn, execFileSync }` de `child_process`
+- [ ] `chat-bridge.js`: função `findOpenClaudeCommand()` antes da classe `ChatBridge`
+- [ ] `chat-bridge.js`: constante `SPAWN_SYSTEM_VARS` (whitelist de variáveis de ambiente)
+- [ ] `chat-bridge.js`: método `_startCodexAuthChatSession()` na classe `ChatBridge`
+- [ ] `chat-bridge.js` `startSession()`: branch `if (providerConfig.active === 'codex_auth')` antes de `_startOpenAICompatibleSession`
+- [ ] `chat-bridge.js` `_startOpenAICompatibleSession`: bloco codex_auth OAuth removido (dead code)
 - [ ] `Providers.tsx` card ativo (~linha 487): mensagem de logout condicional `prov.cli_command === 'openclaude'`
 - [ ] `Providers.tsx` modal config (~linha 605): idem
 - [ ] Verificar: `providers.json` — todos providers não-Anthropic têm `cli_command: "openclaude"`
 - [ ] Validar Anthropic: terminal usa `/usr/bin/claude`; chat usa Claude Agent SDK
-- [ ] Validar codex_auth: terminal usa `/usr/bin/openclaude`; chat lê OAuth token
-- [ ] Validar OpenRouter/openai: terminal usa `/usr/bin/openclaude`; chat usa API key
+- [ ] Validar codex_auth: terminal usa `/usr/bin/openclaude`; chat usa `openclaude -p`
+- [ ] Validar OpenRouter/openai: terminal usa `/usr/bin/openclaude`; chat usa API key via Chat Completions
 - [ ] Validar UI: mensagens corretas por harness
-- [ ] Validar troca codex_auth → anthropic: terminal reinicia com claude
-- [ ] Validar troca anthropic → codex_auth: terminal reinicia com openclaude
-- [ ] Validar reconexão sem troca: sem reinício, buffer replicado

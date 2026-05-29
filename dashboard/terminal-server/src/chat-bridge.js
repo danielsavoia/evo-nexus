@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { spawn: nodeSpawn, execFileSync } = require('child_process');
 const {
   loadProviderConfig,
   resolveProviderModel,
@@ -238,6 +239,41 @@ function detectCreatedTicketId(text) {
   return _regexScanForTicket(text);
 }
 
+/**
+ * Resolve the path to the openclaude binary.
+ * Mirrors the logic in claude-bridge.js findClaudeCommand('openclaude').
+ * Used by the Codex OAuth chat path to spawn openclaude in print (-p) mode.
+ */
+function findOpenClaudeCommand() {
+  try {
+    const resolved = execFileSync('which', ['openclaude'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (resolved) return resolved;
+  } catch { /* fall through to hardcoded paths */ }
+  const candidates = [
+    '/usr/bin/openclaude',
+    '/usr/local/bin/openclaude',
+    path.join(os.homedir(), '.local', 'bin', 'openclaude'),
+  ];
+  for (const p of candidates) {
+    try { if (fs.existsSync(p)) return p; } catch { /* skip */ }
+  }
+  console.warn('[chat-bridge] openclaude not found at known paths, using bare command name');
+  return 'openclaude';
+}
+
+/** System env vars that are safe to forward to spawned CLI processes. */
+const SPAWN_SYSTEM_VARS = [
+  'HOME', 'USER', 'SHELL', 'PATH', 'LANG', 'LC_ALL', 'LC_CTYPE',
+  'LOGNAME', 'HOSTNAME', 'XDG_RUNTIME_DIR', 'XDG_DATA_HOME',
+  'XDG_CONFIG_HOME', 'XDG_CACHE_HOME', 'TMPDIR',
+  'SSH_AUTH_SOCK', 'SSH_AGENT_PID',
+  'NVM_DIR', 'NVM_BIN', 'NVM_INC',
+  'CODEX_HOME', 'CLAUDE_CONFIG_DIR',
+];
+
 class ChatBridge {
   constructor() {
     this.sessions = new Map(); // sessionId -> { query, abortController, active, sdkSessionId }
@@ -274,6 +310,182 @@ class ChatBridge {
     return '';
   }
 
+  /**
+   * Chat via openclaude print (-p) mode for the codex_auth provider.
+   *
+   * Background: `codexplan` is an internal OpenClaude alias that routes to
+   * `chatgpt.com/backend-api/codex` — it does NOT exist in the public
+   * OpenAI API (api.openai.com/v1/chat/completions returns 404 model_not_found).
+   * Solution: delegate to the openclaude binary in print mode so it handles
+   * the routing internally, exactly as the terminal path already does.
+   *
+   * Auth: openclaude reads ~/.codex/auth.json automatically — we never touch
+   * the token content here.
+   */
+  async _startCodexAuthChatSession(sessionId, options, providerConfig) {
+    const {
+      agentName,
+      workingDir,
+      prompt,
+      files,
+      onMessage,
+      onError,
+      onComplete,
+    } = options;
+
+    if (this.sessions.has(sessionId)) {
+      await this.stopSession(sessionId);
+    }
+
+    const cwd = workingDir || process.cwd();
+
+    // Validate auth file exists — never read or log its contents.
+    const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
+    if (!fs.existsSync(codexAuthPath)) {
+      throw new Error(
+        'Provider "codex_auth" requer autenticação OAuth. ' +
+        'Vá em Providers e clique em Login para autenticar.'
+      );
+    }
+
+    // Build system context + user content.
+    const systemCtx = this._buildChatCompletionSystemPrompt(agentName, cwd, sessionId);
+    let userContent = prompt || '';
+    if (files && files.length > 0) {
+      const names = files.map((f) => `- ${f.name}`).join('\n');
+      userContent += `\n\n[Attached files]\n${names}\n`;
+    }
+
+    // Combine into a single prompt for openclaude -p (print/non-interactive) mode.
+    // We inline the system context rather than using --system-prompt to avoid
+    // flag-compatibility differences across openclaude versions.
+    const fullPrompt = systemCtx
+      ? `${systemCtx}\n\n---\n\n${userContent}`
+      : userContent;
+
+    const openclaude = findOpenClaudeCommand();
+
+    // Build a clean env — mirrors claude-bridge.js to avoid leaking process.env
+    // vars (OPENAI_API_KEY, etc.) that would override Codex OAuth auth.json.
+    const cleanEnv = {};
+    for (const key of SPAWN_SYSTEM_VARS) {
+      if (process.env[key]) cleanEnv[key] = process.env[key];
+    }
+    const providerEnv = providerConfig.env_vars || {};
+    const spawnEnv = {
+      ...cleanEnv,
+      ...providerEnv,
+      // Ensure Codex routing vars are present even if absent from providers.json.
+      CLAUDE_CODE_USE_OPENAI: providerEnv.CLAUDE_CODE_USE_OPENAI || '1',
+      OPENAI_MODEL: providerEnv.OPENAI_MODEL || 'codexplan',
+      // Suppress ANSI/interactive prompts from the spawned CLI.
+      TERM: 'dumb',
+    };
+
+    const abortController = new AbortController();
+    const session = { active: true, abortController, sdkSessionId: null };
+    this.sessions.set(sessionId, session);
+
+    console.log(`[chat-bridge] codex_auth: openclaude print mode — session=${sessionId} agent=${agentName || 'none'} model=${spawnEnv.OPENAI_MODEL}`);
+
+    (async () => {
+      let proc = null;
+      let finished = false;
+      let timeoutHandle = null;
+      const TIMEOUT_MS = 120_000;
+
+      try {
+        if (onMessage) {
+          onMessage({ type: 'message_start' });
+          onMessage({ type: 'text_start' });
+        }
+
+        // Spawn openclaude in non-interactive print mode.
+        // Args are passed as an array — no shell interpolation, prompt is safe regardless of content.
+        proc = nodeSpawn(openclaude, ['-p', fullPrompt], {
+          cwd,
+          env: spawnEnv,
+          stdio: ['ignore', 'pipe', 'pipe'],
+        });
+
+        // Honour abort signal (user clicks Stop).
+        abortController.signal.addEventListener('abort', () => {
+          if (!finished && proc) {
+            try { proc.kill('SIGTERM'); } catch { /* ignore */ }
+          }
+        }, { once: true });
+
+        // Hard timeout so the session never hangs indefinitely.
+        timeoutHandle = setTimeout(() => {
+          if (!finished && proc) {
+            console.warn(`[chat-bridge] codex_auth: timeout after ${TIMEOUT_MS}ms — killing openclaude for session ${sessionId}`);
+            try { proc.kill('SIGTERM'); } catch { /* ignore */ }
+          }
+        }, TIMEOUT_MS);
+
+        // Stream stdout as text deltas so the UI renders progressively.
+        proc.stdout.on('data', (chunk) => {
+          if (!session.active) return;
+          const text = chunk.toString('utf8');
+          if (onMessage) onMessage({ type: 'text_delta', text });
+        });
+
+        // Log stderr with token redaction — never expose raw auth content.
+        proc.stderr.on('data', (chunk) => {
+          const raw = chunk.toString('utf8');
+          const safe = raw.replace(/[A-Za-z0-9+/=_\-]{40,}/g, '[REDACTED]');
+          console.log(`[chat-bridge] codex_auth stderr: ${safe.slice(0, 300)}`);
+        });
+
+        await new Promise((resolve, reject) => {
+          proc.on('close', (code) => {
+            finished = true;
+            clearTimeout(timeoutHandle);
+            if (!session.active) {
+              // Session was stopped by user — treat as clean.
+              resolve(0);
+              return;
+            }
+            if (code === 0) {
+              resolve(0);
+            } else {
+              reject(new Error(
+                `OpenClaude/Codex não conseguiu responder (saiu com código ${code}). ` +
+                'Verifique autenticação OAuth em Providers.'
+              ));
+            }
+          });
+          proc.on('error', (err) => {
+            finished = true;
+            clearTimeout(timeoutHandle);
+            reject(new Error(`Falha ao iniciar openclaude: ${err.message}`));
+          });
+        });
+
+        if (onMessage) {
+          onMessage({ type: 'message_stop' });
+          onMessage({ type: 'result', subtype: 'success', isError: false });
+        }
+        session.active = false;
+        this.sessions.delete(sessionId);
+        if (onComplete) onComplete({ sdkSessionId: null });
+      } catch (err) {
+        finished = true;
+        if (timeoutHandle) clearTimeout(timeoutHandle);
+        if (proc) { try { proc.kill('SIGKILL'); } catch { /* ignore */ } }
+        session.active = false;
+        this.sessions.delete(sessionId);
+        if (err.name === 'AbortError') {
+          if (onComplete) onComplete({ sdkSessionId: null });
+        } else {
+          if (onError) onError(err);
+        }
+      }
+    })();
+
+    return { sessionId, sdkSessionId: null };
+  }
+
   async _startOpenAICompatibleSession(sessionId, options, providerConfig) {
     const {
       agentName,
@@ -294,34 +506,16 @@ class ChatBridge {
     const env = providerConfig.env_vars || {};
     const model = resolveProviderModel(providerConfig);
     const baseUrl = (env.OPENAI_BASE_URL || 'https://api.openai.com/v1').replace(/\/+$/, '');
-    let apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';
+    const apiKey = env.OPENAI_API_KEY || env.CODEX_API_KEY || '';
 
-    // Codex OAuth: read access_token from ~/.codex/auth.json when no API key is present.
-    // The terminal path spawns openclaude which handles auth internally; the chat path
-    // must replicate the same Bearer token for OpenAI Chat Completions.
-    if (!apiKey && providerConfig.active === 'codex_auth') {
-      try {
-        const codexAuthPath = path.join(os.homedir(), '.codex', 'auth.json');
-        const codexAuth = JSON.parse(fs.readFileSync(codexAuthPath, 'utf8'));
-        apiKey = codexAuth?.tokens?.access_token
-          || codexAuth?.['openai-codex']?.access
-          || '';
-        if (apiKey) {
-          console.log('[chat-bridge] codex_auth: using OAuth access token from ~/.codex/auth.json');
-        }
-      } catch {
-        // auth.json absent or unreadable — will error below with clear message
-      }
-    }
+    // Note: codex_auth is handled upstream by _startCodexAuthChatSession and
+    // never reaches this path — codexplan is not a public OpenAI API model.
 
     if (!model) {
       throw new Error(`Provider "${providerConfig.active}" sem modelo configurado. Defina o campo Model em Providers.`);
     }
     if (!apiKey) {
-      const hint = providerConfig.active === 'codex_auth'
-        ? `Provider "codex_auth" requer autenticação OAuth. Vá em Providers e clique em Login para autenticar.`
-        : `Provider "${providerConfig.active}" sem API key configurada para Chat Completion.`;
-      throw new Error(hint);
+      throw new Error(`Provider "${providerConfig.active}" sem API key configurada para Chat Completion.`);
     }
 
     const runtimePrompt = this._buildChatCompletionSystemPrompt(agentName, cwd, sessionId);
@@ -430,6 +624,9 @@ class ChatBridge {
 
     const providerConfig = loadProviderConfig();
     if (providerConfig.active !== 'anthropic') {
+      if (providerConfig.active === 'codex_auth') {
+        return this._startCodexAuthChatSession(sessionId, options, providerConfig);
+      }
       return this._startOpenAICompatibleSession(sessionId, options, providerConfig);
     }
 
