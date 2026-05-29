@@ -334,3 +334,135 @@ if (this.sessions.get(sessionId) === session) {
 - [ ] Validar codex_auth: terminal usa `/usr/bin/openclaude`; chat usa `openclaude -p`
 - [ ] Validar OpenRouter/openai: terminal usa `/usr/bin/openclaude`; chat usa API key via Chat Completions
 - [ ] Validar UI: mensagens corretas por harness
+
+---
+
+## Provider change terminal reset (patch 4)
+
+### Sintoma confirmado na VPS
+
+- Chat mudava corretamente para o provider novo.
+- Terminal mantinha PTY antigo/harness antigo após troca de provider.
+- Codex OAuth ativo → troca para Anthropic → Chat usa Claude SDK, Terminal continua preso no OpenClaude.
+
+### Causa raiz — três gaps
+
+| Gap | Arquivo | Causa |
+|---|---|---|
+| GAP 1 | `dashboard/backend/routes/providers.py` | `set_active_provider()` grava `active_provider` e retorna 200 — nunca notifica o terminal-server |
+| GAP 2 | `dashboard/terminal-server/src/server.js` | `joinClaudeSession()` reconecta a sessão existente sem checar `providerSignature` — só `startClaude()` fazia essa verificação |
+| GAP 3 | `dashboard/terminal-server/src/server.js` | Não havia endpoint externo para forçar reset de sessões PTY |
+
+### Correção — visão geral
+
+1. **`server.js` `setupExpress()`** — novo endpoint `POST /api/sessions/reset-provider`:
+   - Itera todas as sessões ativas em `this.claudeSessions`
+   - Por sessão: incrementa generation, chama `claudeBridge.stopSession()`, marca `active=false`, limpa `providerSignature`, broadcast `claude_stopped`
+   - Retorna `{ status: "ok", stopped: N, reason }`
+
+2. **`providers.py` `set_active_provider()`** — chama `_reset_terminal_sessions(provider_id)` após salvar com sucesso (ambos os caminhos: file e PostgreSQL)
+   - Helper `_reset_terminal_sessions`: `urllib.request` POST para `http://127.0.0.1:{TERMINAL_SERVER_PORT}/api/sessions/reset-provider`
+   - Falha silenciosa (except + logger.warning) — nunca bloqueia o provider save
+
+3. **`server.js` `joinClaudeSession()`** — defesa adicional (GAP 2):
+   - Se sessão ativa com `providerSignature` diferente da atual: mata PTY, limpa estado, broadcast `claude_stopped` antes de rejoin
+   - Guard `try/except` — não-fatal
+
+### Snippets críticos
+
+#### `providers.py` — helper
+```python
+def _reset_terminal_sessions(provider_id: str) -> None:
+    import urllib.request as _urlreq
+    terminal_port = os.environ.get("TERMINAL_SERVER_PORT", "32352")
+    url = f"http://127.0.0.1:{terminal_port}/api/sessions/reset-provider"
+    body = json.dumps({"reason": "provider_changed", "provider_id": provider_id}).encode("utf-8")
+    req = _urlreq.Request(url, data=body, headers={"Content-Type": "application/json"}, method="POST")
+    try:
+        with _urlreq.urlopen(req, timeout=3) as resp:
+            current_app.logger.info("[providers] terminal sessions reset (HTTP %s)", resp.status)
+    except Exception as exc:
+        current_app.logger.warning("[providers] Could not reset terminal sessions: %s", exc)
+```
+
+#### `providers.py` — chamada em `set_active_provider()`
+```python
+config["active_provider"] = provider_id
+_write_config(config)
+_reset_terminal_sessions(provider_id)   # <-- new
+return jsonify({"status": "ok", "active_provider": provider_id})
+```
+
+#### `server.js` — endpoint
+```javascript
+this.app.post('/api/sessions/reset-provider', async (req, res) => {
+  const { reason = 'provider_changed', provider_id = null } = req.body || {};
+  let stopped = 0;
+  for (const [sessionId, session] of this.claudeSessions.entries()) {
+    if (!session.active) continue;
+    session.generation = (session.generation || 0) + 1;
+    try { await this.claudeBridge.stopSession(sessionId); } catch (err) { /* warn */ }
+    session.active = false;
+    session.agent = null;
+    session.providerSignature = null;
+    this.broadcastToSession(sessionId, { type: 'claude_stopped', reason: 'provider_changed' });
+    stopped++;
+  }
+  console.log(`[terminal] reset-provider reason=${reason} provider=${provider_id||'unknown'} stopped=${stopped}`);
+  res.json({ status: 'ok', stopped, reason });
+});
+```
+
+#### `server.js` — defesa `joinClaudeSession()`
+```javascript
+if (session.active && session.providerSignature) {
+  try {
+    const currentProvider = loadProviderConfig();
+    const currentSig = getProviderSignature(currentProvider);
+    if (session.providerSignature !== currentSig) {
+      session.generation = (session.generation || 0) + 1;
+      await this.claudeBridge.stopSession(claudeSessionId);
+      session.active = false;
+      session.agent = null;
+      session.providerSignature = null;
+      this.broadcastToSession(claudeSessionId, { type: 'claude_stopped', reason: 'provider_changed' });
+    }
+  } catch (_) { /* non-fatal */ }
+}
+```
+
+### Fluxo corrigido
+
+```
+Providers UI → POST /api/providers/active
+  → providers.py: salva active_provider
+  → providers.py: POST /api/sessions/reset-provider (localhost)
+  → terminal-server: mata PTYs ativos → broadcast claude_stopped
+  → frontend: terminal mostra "inactive"
+  → usuário abre terminal → start_claude → startClaude()
+  → PTY novo com harness correto
+```
+
+### Validação esperada
+
+| Cenário | Comportamento |
+|---|---|
+| Anthropic ativo → abrir terminal | PTY `/usr/bin/claude`; signature `anthropic:claude` |
+| Codex ativo → abrir terminal | PTY `/usr/bin/openclaude`; signature `codex_auth:openclaude` |
+| Codex → troca para Anthropic | Log `reset-provider ... stopped=1`; terminal mostra inativo; reabre com `/usr/bin/claude` |
+| Anthropic → troca para Codex | Log `reset-provider ... stopped=1`; terminal mostra inativo; reabre com `/usr/bin/openclaude` |
+| Terminal sem sessão ativa | `stopped=0`; nenhum efeito |
+| Falha no reset (terminal-server offline) | Warning no Flask log; provider save OK |
+
+### Reapply checklist (patch 4)
+
+- [ ] `providers.py`: import `current_app` do Flask
+- [ ] `providers.py`: função `_reset_terminal_sessions(provider_id)` com `urllib.request`
+- [ ] `providers.py` `set_active_provider()`: chamada `_reset_terminal_sessions(provider_id)` em AMBOS os caminhos (file + postgresql)
+- [ ] `server.js` `setupExpress()`: rota `POST /api/sessions/reset-provider`
+- [ ] `server.js` `joinClaudeSession()`: defesa de providerSignature com `try/except`
+- [ ] Falha no reset não bloqueia provider save
+- [ ] Logs sem tokens/secrets
+- [ ] Validar Codex → Anthropic: terminal reinicia com Claude Code
+- [ ] Validar Anthropic → Codex: terminal reinicia com OpenClaude
+- [ ] Validar logs `reset-provider stopped=N`
