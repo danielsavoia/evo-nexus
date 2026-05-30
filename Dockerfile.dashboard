@@ -63,23 +63,32 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /workspace
 
-# Install Python deps — CPU-only PyTorch.
+# Install Python deps — force CPU-only torch to eliminate ~2.5 GB of CUDA GPU libs.
 #
-# marker-pdf and sentence-transformers both depend on torch. Without
-# the explicit CPU-only pre-install, uv/pip resolves the default torch
-# wheel which bundles ~2.5 GB of NVIDIA CUDA GPU libraries that are
-# completely useless in a container running on CPU (no GPU on the VPS).
+# uv.lock pins torch with the CUDA wheel for Linux (because the lock was
+# generated without an explicit CPU-only source override). The CUDA wheel
+# ships ~2.5 GB of GPU libraries useless in a CPU-only VPS container, and
+# torch 2.11+ raises an error on import if CUDA libs are missing — so simply
+# deleting nvidia/ dirs after install breaks torch entirely.
 #
-# Strategy: create the venv, install CPU-only torch first so that the
-# subsequent `uv sync` resolves all torch-dependent packages against the
-# already-installed CPU wheel instead of pulling the CUDA wheel.
+# Strategy:
+#   1. uv sync --no-dev   → installs all packages from lock (CUDA torch + nvidia-*)
+#   2. pip install torch --cpu --force-reinstall --no-deps
+#                         → replaces CUDA torch wheel with CPU wheel in-place;
+#                           CPU wheel's __init__.py does NOT require libcublasLt
+#   3. rm -rf nvidia/ triton/ → removes now-orphaned CUDA runtime packages
+#   4. uv cache clean + pip cache purge → removes download caches
 #
-# uv cache clean removes the download cache from /root/.cache/uv —
-# the installed .venv is unaffected; only the network-fetch cache is purged.
+# Result: torch importable in CPU mode, ~1.5 GB .venv instead of 5.1 GB.
 COPY pyproject.toml uv.lock ./
 RUN uv venv .venv \
-    && uv pip install torch --index-url https://download.pytorch.org/whl/cpu \
     && uv sync --no-dev \
+    && uv pip install torch \
+         --index-url https://download.pytorch.org/whl/cpu \
+         --force-reinstall --no-deps \
+    && find /workspace/.venv/lib -maxdepth 5 \
+         \( -name "nvidia" -o -name "triton" \) -type d \
+         -exec rm -rf {} + 2>/dev/null; true \
     && uv cache clean
 
 # Copy backend code
@@ -130,6 +139,14 @@ exec "$@"\n' > /usr/local/bin/init-config.sh && chmod +x /usr/local/bin/init-con
 # Default ports
 ENV EVONEXUS_PORT=8080
 ENV TERMINAL_SERVER_PORT=32352
+
+# Prevent uv run from re-syncing the .venv against uv.lock at container startup.
+# The .venv is built at image build time with CPU-only torch (instead of the
+# CUDA torch pinned in uv.lock). Without this flag, `uv run` would detect the
+# mismatch and re-download the CUDA torch wheel on every container start,
+# negating the build-time optimization and causing a 500+ MB download at runtime.
+ENV UV_NO_SYNC=1
+
 EXPOSE 8080
 EXPOSE 32352
 

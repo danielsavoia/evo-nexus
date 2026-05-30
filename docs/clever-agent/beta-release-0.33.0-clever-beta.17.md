@@ -41,8 +41,8 @@ RUN uv venv .venv \
 
 | Branch | HEAD |
 |---|---|
-| `clever-dev` | _(pending commit)_ — opt: use CPU-only PyTorch in Clever Agent images |
-| `clever-beta` | _(pending merge)_ |
+| `clever-dev` | `37dcccd` — opt: use CPU-only PyTorch in Clever Agent images |
+| `clever-beta` | `244bf83` — opt: add UV_NO_SYNC=1 to prevent uv from restoring CUDA torch at runtime |
 | Tag | `clever-agent-v0.33.0-clever-beta.17` |
 | `clever-prod` | preservada |
 | `upstream-sync` | preservada |
@@ -56,20 +56,20 @@ RUN uv venv .venv \
 | Campo | Valor |
 |---|---|
 | Tag | `ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.17` |
-| Digest index | _(registrar após push)_ |
-| Digest linux/amd64 | _(registrar após push)_ |
+| Digest index | `sha256:0fdf6f3b947630e70ae9989c331107d4effb534433ff3a92116623a481001c11` |
+| Digest linux/amd64 | `sha256:b900461af5e25aba7edda75b8d0c6bc5fd40d08aad0de19dd50f6b5d7b6013cc` |
 | Tamanho antes (beta.16) | 3.15 GB uncompressed / 10.4 GB virtual |
-| Tamanho depois (beta.17) | _(registrar após build)_ |
+| Tamanho depois (beta.17) | **0.80 GB uncompressed / 3.93 GB virtual** (-75%) |
 
 ### Runtime
 
 | Campo | Valor |
 |---|---|
 | Tag | `ghcr.io/danielsavoia/clever-agent-runtime:0.33.0-clever-beta.17` |
-| Digest index | _(registrar após push)_ |
-| Digest linux/amd64 | _(registrar após push)_ |
+| Digest index | `sha256:8fb1be043697d5aef2fb619dd89f57df75d88cde0d8c05a42c3ea5040a2498c1` |
+| Digest linux/amd64 | `sha256:7ee1be83f97a612c287da4ee71a5c371bec46920ee4cbd3afce4506289b160ad` |
 | Tamanho antes (beta.10) | 2.99 GB uncompressed / 9.61 GB virtual |
-| Tamanho depois (beta.17) | _(registrar após build)_ |
+| Tamanho depois (beta.17) | **0.64 GB uncompressed / 691 MB virtual** (-79%) |
 
 ### Site
 
@@ -95,13 +95,19 @@ RUN uv venv .venv \
 
 | Teste | Resultado |
 |---|---|
-| `torch.__version__` | _(registrar)_ |
+| `torch.__version__` | `2.12.0+cpu` ✅ |
 | `torch.cuda.is_available()` | `False` ✅ |
-| `sentence_transformers` import | _(registrar)_ |
-| CUDA libs na imagem | _(registrar — esperado: zero ou apenas stubs CPU)_ |
-| Dashboard health (`:8080`) | _(registrar)_ |
-| Terminal-server health (`:32352`) | _(registrar)_ |
-| Runtime smoke | _(registrar)_ |
+| `sentence_transformers` import | OK ✅ |
+| CUDA libs na imagem (`nvidia/`, `triton/`) | REMOVIDAS ✅ |
+| `libtorch_cuda*.so` | NÃO ENCONTRADO ✅ |
+| `.venv` total dashboard | 1.4 GB (era 5.1 GB) ✅ |
+| `.venv` total runtime | 1.4 GB (era 5.1 GB) ✅ |
+| `UV_NO_SYNC=1` (sem re-sync ao startup) | ✅ dashboard + runtime |
+| Dashboard health (`:8080`) | HTTP 200 ✅ |
+| Terminal-server health (`:32352`) | HTTP 200 ✅ |
+| `reset-provider` fix (beta.14) | ✅ |
+| `RH / Pessoas` pt-BR (beta.16) | ✅ |
+| `Usuário ou e-mail` login (beta.15) | ✅ |
 
 ---
 
