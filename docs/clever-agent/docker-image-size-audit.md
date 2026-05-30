@@ -414,17 +414,20 @@ instalar o wheel padrão (CUDA). Resultado: zero CUDA libs na imagem final.
 
 ### Resultados de validação (beta.17)
 
-| Teste | Antes (beta.16) | Depois (beta.17) |
+| Teste | Antes (beta.16/beta.10) | Depois (beta.17) |
 |---|---:|---:|
-| `docker image ls` virtual | 10.4 GB | _(registrar)_ |
-| `docker inspect .Size` | 3.15 GB | _(registrar)_ |
-| `.venv` total | 5.1 GB | _(registrar)_ |
-| `nvidia/` CUDA libs | 2.7 GB | _(esperado: 0)_ |
-| `torch/lib/libtorch_cuda.so` | 435 MB | _(esperado: ausente)_ |
-| `triton/` | 639 MB | _(esperado: ausente)_ |
-| `torch.cuda.is_available()` | True | `False` ✅ |
-| `sentence_transformers` import | OK | OK ✅ |
-| `marker_pdf` import | OK | OK ✅ |
+| Dashboard `docker image ls` virtual | 10.4 GB | **3.93 GB** (−62%) |
+| Dashboard `docker inspect .Size` | 3.15 GB | **0.80 GB** (−75%) |
+| Runtime `docker image ls` virtual | 9.61 GB | **691 MB** (−93%!) |
+| Runtime `docker inspect .Size` | 2.99 GB | **0.64 GB** (−79%) |
+| `.venv` total (dashboard + runtime) | 5.1 GB | **1.4 GB** (−73%) |
+| `nvidia/` CUDA libs | 2.7 GB | ✅ **REMOVIDO** |
+| `torch/lib/libtorch_cuda.so` | 435 MB | ✅ **AUSENTE** |
+| `triton/` CUDA JIT | 639 MB | ✅ **REMOVIDO** |
+| `torch.cuda.is_available()` | True | ✅ **False** |
+| `torch.__version__` | 2.11.0 | ✅ **2.12.0+cpu** |
+| `sentence_transformers` import | OK | ✅ **OK** |
+| `UV_NO_SYNC=1` (sem re-sync startup) | N/A | ✅ |
 
 ### Risco e rollback
 
