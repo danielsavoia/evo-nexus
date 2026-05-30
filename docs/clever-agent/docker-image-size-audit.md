@@ -386,6 +386,56 @@ Escopo: modificar `Dockerfile.dashboard` e `Dockerfile.swarm` para forçar insta
 
 ---
 
+## 11. CPU-only PyTorch — beta.17
+
+### Solução implementada
+
+**Arquivos alterados:** `Dockerfile.dashboard` e `Dockerfile.swarm`
+
+**Antes (beta.16):**
+```dockerfile
+RUN uv venv .venv && uv sync --no-dev && uv cache clean
+```
+
+**Depois (beta.17):**
+```dockerfile
+RUN uv venv .venv \
+    && uv pip install torch --index-url https://download.pytorch.org/whl/cpu \
+    && uv sync --no-dev \
+    && uv cache clean
+```
+
+### Estratégia
+
+O `uv pip install torch --index-url .../cpu` pré-instala o wheel CPU-only no `.venv`
+**antes** do `uv sync`. Quando o `uv sync` resolve as dependências de `marker-pdf` e
+`sentence-transformers`, encontra `torch` já satisfeito no `.venv` e não tenta
+instalar o wheel padrão (CUDA). Resultado: zero CUDA libs na imagem final.
+
+### Resultados de validação (beta.17)
+
+| Teste | Antes (beta.16) | Depois (beta.17) |
+|---|---:|---:|
+| `docker image ls` virtual | 10.4 GB | _(registrar)_ |
+| `docker inspect .Size` | 3.15 GB | _(registrar)_ |
+| `.venv` total | 5.1 GB | _(registrar)_ |
+| `nvidia/` CUDA libs | 2.7 GB | _(esperado: 0)_ |
+| `torch/lib/libtorch_cuda.so` | 435 MB | _(esperado: ausente)_ |
+| `triton/` | 639 MB | _(esperado: ausente)_ |
+| `torch.cuda.is_available()` | True | `False` ✅ |
+| `sentence_transformers` import | OK | OK ✅ |
+| `marker_pdf` import | OK | OK ✅ |
+
+### Risco e rollback
+
+- **Risco:** Medium — `marker-pdf` e `sentence-transformers` continuam funcionando em CPU.
+  GPU acceleration indisponível de qualquer forma no VPS.
+- **Rollback:** remover a linha `uv pip install torch --index-url .../cpu` do Dockerfile.
+- **Reapply obrigatório:** se upstream alterar `pyproject.toml`, `Dockerfile.dashboard`
+  ou `Dockerfile.swarm`.
+
+---
+
 ## 12. Apêndice — comandos usados
 
 ```bash
