@@ -89,7 +89,7 @@ export default function Login() {
     e.preventDefault()
     setError('')
     if (!username.trim() || !password) {
-      setError('Username and password are required')
+      setError('Username/email and password are required')
       return
     }
     setSubmitting(true)
