@@ -17,8 +17,8 @@ Sem alterar runtime, system prompts ou `.claude/agents`.
 
 | Branch | HEAD |
 |---|---|
-| `clever-dev` | _(pending commit)_ — feat: localize agent display labels to pt-BR |
-| `clever-beta` | _(pending merge)_ — chore: promote Clever Agent dashboard beta.16 |
+| `clever-dev` | `1e99e2a` — feat: localize agent display labels to pt-BR |
+| `clever-beta` | `80564e1` — chore: promote Clever Agent dashboard beta.16 |
 | Tag | `clever-agent-v0.33.0-clever-beta.16` |
 | `clever-prod` | preservada (não tocada) |
 | `upstream-sync` | preservada (não tocada) |
@@ -32,9 +32,9 @@ Sem alterar runtime, system prompts ou `.claude/agents`.
 | Campo | Valor |
 |---|---|
 | Tag | `ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.16` |
-| Digest index | _(registrar após push)_ |
-| Digest linux/amd64 | _(registrar após push)_ |
-| Tamanho local | _(registrar após build)_ |
+| Digest index | `sha256:fd6e61366d14181de640536832f9a67a04280d6fffa84a6d57719c1e273f7e04` |
+| Digest linux/amd64 | `sha256:bbe5e564373b481019a5ec6a790dca0296a403f173612dce84aa9045a46e0809` |
+| Tamanho local | 10.4 GB |
 
 ### Runtime
 
