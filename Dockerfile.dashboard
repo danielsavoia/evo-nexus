@@ -63,11 +63,24 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 WORKDIR /workspace
 
-# Install Python deps.
-# uv cache clean removes the ~5 GB download cache baked in /root/.cache/uv —
+# Install Python deps — CPU-only PyTorch.
+#
+# marker-pdf and sentence-transformers both depend on torch. Without
+# the explicit CPU-only pre-install, uv/pip resolves the default torch
+# wheel which bundles ~2.5 GB of NVIDIA CUDA GPU libraries that are
+# completely useless in a container running on CPU (no GPU on the VPS).
+#
+# Strategy: create the venv, install CPU-only torch first so that the
+# subsequent `uv sync` resolves all torch-dependent packages against the
+# already-installed CPU wheel instead of pulling the CUDA wheel.
+#
+# uv cache clean removes the download cache from /root/.cache/uv —
 # the installed .venv is unaffected; only the network-fetch cache is purged.
 COPY pyproject.toml uv.lock ./
-RUN uv venv .venv && uv sync --no-dev && uv cache clean
+RUN uv venv .venv \
+    && uv pip install torch --index-url https://download.pytorch.org/whl/cpu \
+    && uv sync --no-dev \
+    && uv cache clean
 
 # Copy backend code
 COPY dashboard/backend/ dashboard/backend/

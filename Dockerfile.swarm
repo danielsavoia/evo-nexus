@@ -57,12 +57,21 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo "${TZ}" > /etc/time
 
 WORKDIR /workspace
 
-# Python deps (cache-friendly layer).
-# --no-dev skips pytest and other dev-only packages (not needed in prod).
-# uv cache clean removes the ~5 GB download cache in /root/.cache/uv —
+# Python deps — CPU-only PyTorch.
+#
+# marker-pdf and sentence-transformers both depend on torch. Without
+# the explicit CPU-only pre-install, uv/pip resolves the default torch
+# wheel which bundles ~2.5 GB of NVIDIA CUDA GPU libraries useless on CPU.
+#
+# Strategy: install CPU-only torch first, then uv sync inherits that wheel.
+# --no-dev skips pytest and other dev-only packages.
+# uv cache clean removes the download cache from /root/.cache/uv —
 # the installed .venv is unaffected; only the network-fetch cache is purged.
 COPY pyproject.toml uv.lock ./
-RUN uv venv .venv && uv sync --no-dev && uv cache clean
+RUN uv venv .venv \
+    && uv pip install torch --index-url https://download.pytorch.org/whl/cpu \
+    && uv sync --no-dev \
+    && uv cache clean
 
 # Application code — everything else
 COPY . .
