@@ -120,7 +120,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(96,165,250,0.12)',
     glowColor: 'rgba(96,165,250,0.15)',
     command: '',
-    label: 'Projects',
+    label: 'Projetos',
   },
   'clawdia-assistant': {
     icon: Brain,
@@ -128,7 +128,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(34,211,238,0.12)',
     glowColor: 'rgba(34,211,238,0.15)',
     command: '/clawdia',
-    label: 'Operations',
+    label: 'Operações',
   },
   'flux-finance': {
     icon: DollarSign,
@@ -136,7 +136,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(52,211,153,0.12)',
     glowColor: 'rgba(52,211,153,0.15)',
     command: '/flux',
-    label: 'Finance',
+    label: 'Financeiro',
   },
   'kai-personal-assistant': {
     icon: Heart,
@@ -144,7 +144,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(244,114,182,0.12)',
     glowColor: 'rgba(244,114,182,0.15)',
     command: '/kai',
-    label: 'Personal',
+    label: 'Pessoal',
   },
   'mentor-courses': {
     icon: GraduationCap,
@@ -152,7 +152,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(251,191,36,0.12)',
     glowColor: 'rgba(251,191,36,0.15)',
     command: '/mentor',
-    label: 'Courses',
+    label: 'Cursos',
   },
   'nex-sales': {
     icon: Target,
@@ -160,7 +160,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(251,146,60,0.12)',
     glowColor: 'rgba(251,146,60,0.15)',
     command: '/nex',
-    label: 'Sales',
+    label: 'Vendas',
   },
   'pixel-social-media': {
     icon: Camera,
@@ -176,7 +176,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(45,212,191,0.12)',
     glowColor: 'rgba(45,212,191,0.15)',
     command: '/pulse',
-    label: 'Community',
+    label: 'Comunidade',
   },
   'sage-strategy': {
     icon: Compass,
@@ -184,7 +184,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(129,140,248,0.12)',
     glowColor: 'rgba(129,140,248,0.15)',
     command: '/sage',
-    label: 'Strategy',
+    label: 'Estratégia',
   },
   'oracle': {
     icon: BookOpen,
@@ -192,7 +192,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(245,158,11,0.12)',
     glowColor: 'rgba(245,158,11,0.15)',
     command: '/oracle',
-    label: 'Knowledge',
+    label: 'Conhecimento',
   },
   'mako-marketing': {
     icon: Megaphone,
@@ -208,7 +208,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(244,114,182,0.12)',
     glowColor: 'rgba(244,114,182,0.15)',
     command: '/aria',
-    label: 'HR / People',
+    label: 'RH / Pessoas',
   },
   'zara-cs': {
     icon: Headphones,
@@ -216,7 +216,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(34,211,238,0.12)',
     glowColor: 'rgba(34,211,238,0.15)',
     command: '/zara',
-    label: 'Customer Success',
+    label: 'Sucesso do Cliente',
   },
   'lex-legal': {
     icon: Scale,
@@ -224,7 +224,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(192,132,252,0.12)',
     glowColor: 'rgba(192,132,252,0.15)',
     command: '/lex',
-    label: 'Legal',
+    label: 'Jurídico',
   },
   'nova-product': {
     icon: Lightbulb,
@@ -232,7 +232,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(96,165,250,0.12)',
     glowColor: 'rgba(96,165,250,0.15)',
     command: '/nova',
-    label: 'Product',
+    label: 'Produto',
   },
   'dex-data': {
     icon: BarChart3,
@@ -240,7 +240,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(251,191,36,0.12)',
     glowColor: 'rgba(251,191,36,0.15)',
     command: '/dex',
-    label: 'Data / BI',
+    label: 'Dados / BI',
   },
   'helm-conductor': {
     icon: Navigation,
@@ -248,7 +248,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(20,184,166,0.12)',
     glowColor: 'rgba(20,184,166,0.15)',
     command: '/helm-conductor',
-    label: 'Cycle Orchestration',
+    label: 'Orq. de Ciclos',
   },
   'mirror-retro': {
     icon: History,
@@ -256,7 +256,7 @@ const AGENT_META: Record<string, AgentMeta> = {
     colorMuted: 'rgba(148,163,184,0.12)',
     glowColor: 'rgba(148,163,184,0.15)',
     command: '/mirror-retro',
-    label: 'Retrospective',
+    label: 'Retrospectiva',
   },
 }
 
@@ -266,7 +266,7 @@ const DEFAULT_META: AgentMeta = {
   colorMuted: 'rgba(133, 242, 160,0.12)',
   glowColor: 'rgba(133, 242, 160,0.15)',
   command: '',
-  label: 'Agent',
+  label: 'Agente',
 }
 
 function getMeta(name: string, agent?: Agent): AgentMeta {
@@ -331,7 +331,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
 
         {/* Description */}
         <p className="relative mb-3 text-[11px] leading-relaxed text-[#6B8A76] line-clamp-2">
-          {agent.description || 'No description available.'}
+          {agent.description || 'Sem descrição disponível.'}
         </p>
 
         {/* Bottom row */}
@@ -378,7 +378,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#41A650] opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#41A650]" />
               </span>
-              Running
+              Em execução
             </span>
           )}
           <span
@@ -422,7 +422,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
 
       {/* Description */}
       <p className="relative mb-3 text-[11px] leading-relaxed text-[#6B8A76] line-clamp-2">
-        {agent.description || 'No description available.'}
+        {agent.description || 'Sem descrição disponível.'}
       </p>
 
       {/* Bottom row: command badge + memory badge */}
@@ -510,7 +510,7 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
             <span className="rounded-full bg-[#F2CB05]/12 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em] text-[#F2CB05] border border-[#F2CB05]/28">
-              Start Here
+              Comece Aqui
             </span>
             {isRunning && (
               <span className="flex items-center gap-1 rounded-full bg-[#41A650]/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#85F2A0] border border-[#41A650]/20">
@@ -518,7 +518,7 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#41A650] opacity-75" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#41A650]" />
                 </span>
-                Running
+                Em execução
               </span>
             )}
             <code className="ml-auto sm:ml-0 font-mono text-[11px] text-[#F2CB05]/75">/oracle</code>
@@ -527,13 +527,13 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
             Oracle
           </h2>
           <p className="text-[12.5px] text-[#C8D5CE] leading-snug">
-            Your entry point to Clever Agent. Interviews you, maps workspace capabilities to your pain points, and delivers a phased implementation plan.
+            Seu ponto de entrada no Clever Agent. Entrevista você, mapeia as capacidades do workspace para suas dores e entrega um plano de implementação em fases.
           </p>
         </div>
 
         {/* CTA arrow */}
         <div className="hidden sm:flex flex-shrink-0 items-center gap-1.5 text-[11px] uppercase tracking-[0.14em] font-semibold text-[#F2CB05]/65 group-hover:text-[#F2CB05] transition-colors">
-          Open
+          Abrir
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
         </div>
       </div>
@@ -544,34 +544,34 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
 type FilterValue = 'all' | Category
 
 const FILTERS: { value: FilterValue; label: string; icon: LucideIcon }[] = [
-  { value: 'all', label: 'All', icon: Bot },
-  { value: 'business', label: 'Business', icon: Building2 },
-  { value: 'engineering', label: 'Engineering', icon: Code2 },
-  { value: 'custom', label: 'Custom', icon: Sparkles },
+  { value: 'all', label: 'Todos', icon: Bot },
+  { value: 'business', label: 'Negócios', icon: Building2 },
+  { value: 'engineering', label: 'Engenharia', icon: Code2 },
+  { value: 'custom', label: 'Personalizado', icon: Sparkles },
 ]
 
 const CATEGORY_META: Record<Category, { label: string; color: string; description: string }> = {
   business: {
-    label: 'Business',
+    label: 'Negócios',
     color: '#85F2A0',
-    description: 'Operations, finance, marketing, HR, legal, product, data',
+    description: 'Operações, finanças, marketing, RH, jurídico, produto, dados',
   },
   engineering: {
-    label: 'Engineering',
+    label: 'Engenharia',
     color: '#818CF8',
-    description: 'Software development — reasoning, execution, speed tiers',
+    description: 'Desenvolvimento de software — raciocínio, execução, velocidade',
   },
   custom: {
-    label: 'Custom',
+    label: 'Personalizado',
     color: '#C084FC',
-    description: 'Personal agents (gitignored)',
+    description: 'Agentes pessoais (gitignored)',
   },
 }
 
 const TIER_LABELS: Record<EngTier, string> = {
-  reasoning: 'Reasoning · opus',
-  execution: 'Execution · sonnet',
-  speed: 'Speed · haiku',
+  reasoning: 'Raciocínio · opus',
+  execution: 'Execução · sonnet',
+  speed: 'Velocidade · haiku',
 }
 
 function SectionHeader({
@@ -748,32 +748,32 @@ export default function Agents() {
                 style={{ boxShadow: '0 0 6px rgba(65, 166, 80,0.5)' }}
               />
               <span className="text-[#C8D5CE]">
-                <span className="font-medium text-[#F7F9F8]">{activeCount}</span> active
+                <span className="font-medium text-[#F7F9F8]">{activeCount}</span> ativos
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Brain size={14} className="text-[#6B8A76]" />
               <span className="text-[#C8D5CE]">
-                <span className="font-medium text-[#F7F9F8]">{totalMemories}</span> total memories
+                <span className="font-medium text-[#F7F9F8]">{totalMemories}</span> memórias
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Building2 size={14} className="text-[#85F2A0]" />
               <span className="text-[#C8D5CE]">
-                <span className="font-medium text-[#F7F9F8]">{counts.business}</span> business
+                <span className="font-medium text-[#F7F9F8]">{counts.business}</span> negócios
               </span>
             </div>
             <div className="flex items-center gap-2">
               <Code2 size={14} className="text-[#818CF8]" />
               <span className="text-[#C8D5CE]">
-                <span className="font-medium text-[#F7F9F8]">{counts.engineering}</span> engineering
+                <span className="font-medium text-[#F7F9F8]">{counts.engineering}</span> engenharia
               </span>
             </div>
             {counts.custom > 0 && (
               <div className="flex items-center gap-2">
                 <Sparkles size={14} className="text-[#C084FC]" />
                 <span className="text-[#C8D5CE]">
-                  <span className="font-medium text-[#F7F9F8]">{counts.custom}</span> custom
+                  <span className="font-medium text-[#F7F9F8]">{counts.custom}</span> personalizado
                 </span>
               </div>
             )}
@@ -786,7 +786,7 @@ export default function Agents() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <History size={13} className="text-[#6B8A76]" />
-            <h2 className="text-[11px] font-medium uppercase tracking-wider text-[#6B8A76]">Recent</h2>
+            <h2 className="text-[11px] font-medium uppercase tracking-wider text-[#6B8A76]">Recentes</h2>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {recentNames
@@ -861,7 +861,7 @@ export default function Agents() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search agents..."
+              placeholder="Buscar agentes..."
               className="w-full rounded-full border border-[#1E3829] bg-[#122018] py-1.5 pl-9 pr-3 text-[12px] text-[#F7F9F8] placeholder:text-[#6B8A76] focus:border-[#41A650]/40 focus:outline-none"
             />
           </div>
@@ -879,14 +879,14 @@ export default function Agents() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#122018] border border-[#1E3829]">
             <Bot size={32} className="text-[#3D5445]" />
           </div>
-          <p className="text-[#6B8A76] text-lg">No agents found</p>
+          <p className="text-[#6B8A76] text-lg">Nenhum agente encontrado</p>
           <p className="text-[#3D5445] text-sm mt-1">
-            Add agent files to .claude/agents/ to get started
+            Adicione arquivos de agente em .claude/agents/ para começar
           </p>
         </div>
       ) : filtered.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-[#6B8A76] text-sm">No agents match your filters.</p>
+          <p className="text-[#6B8A76] text-sm">Nenhum agente corresponde aos filtros.</p>
         </div>
       ) : (
         <div className="space-y-10">
