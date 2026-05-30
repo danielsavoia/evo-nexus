@@ -46,7 +46,7 @@ O problema é que cada nova versão do dashboard (~3-10 GB) se acumula com as an
 | Clever dashboard | beta.15 | 10.4 GB | 3.15 GB | Idêntico |
 | Clever runtime | beta.10 | 9.61 GB | 2.99 GB | Mesma `.venv` PyTorch |
 | Upstream dashboard | latest | 10.9 GB | **3.26 GB** | uv sync sem cache clean = 5.45 GB; npm sem cache clean = 827 MB — **maior que a nossa** |
-| Upstream runtime | latest | pull em andamento | estimado ≥ 3 GB | Mesma pyproject, sem `uv cache clean` |
+| Upstream runtime | latest | 10.2 GB | **3.14 GB** | uv sync sem `--no-dev` nem cache clean; npm sem cache clean (827 MB CLIs) — **maior que a nossa** |
 
 > **Nota sobre tamanho "virtual"**: o `docker image ls` mostra o tamanho virtual que inclui camadas da base image compartilhadas entre todas as imagens locais. O número relevante para decisão de otimização é o `docker inspect .Size` (layers próprios da imagem) e o que é transferido ao VPS.
 
@@ -189,6 +189,23 @@ O runtime carrega a mesma `.venv` que o dashboard, incluindo todo o PyTorch/CUDA
 |---|---:|
 | `claude.exe` (global npm, claude-code) | 229 MB |
 | `claude` (global npm, nested linux-x64) | 229 MB |
+
+---
+
+## 6b. Conteúdo interno — upstream runtime (confirmado)
+
+| Componente | Upstream runtime | Clever runtime beta.10 | Delta |
+|---|---:|---:|---:|
+| `/workspace/.venv` | 5.1 GB | 5.1 GB | idêntico |
+| `nvidia` (CUDA libs) | 2.7 GB | 2.7 GB | idêntico |
+| `/root/.cache/uv` | 🔴 **5.1 GB** | ✅ 0 (limpo) | -5.1 GB* |
+| `/root/.npm` | 🔴 **247 MB** | ✅ 0 (limpo) | -247 MB |
+| npm installs (claude + openclaude) | **827 MB** (sem cache clean) | **470 MB** (com cache clean) | -357 MB |
+| `docker inspect .Size` | **3.14 GB** | **2.99 GB** | **-150 MB** |
+
+\* Hardlinks — mesmo impacto de inodes; ver nota §4.3 sobre uv cache.
+
+**Upstream runtime adicional vs nosso:** sem `--no-dev` no uv sync (instala pytest etc.) + `CMD ["bash"]` ao invés do correto `CMD ["uv", "run", "python", "scheduler.py"]`.
 
 ---
 
