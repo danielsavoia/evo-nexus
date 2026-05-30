@@ -83,14 +83,13 @@ WORKDIR /workspace
 COPY pyproject.toml uv.lock ./
 RUN uv venv .venv \
     && uv sync --no-dev \
-    && uv run pip install torch \
+    && uv pip install torch \
          --index-url https://download.pytorch.org/whl/cpu \
-         --force-reinstall --no-deps --quiet \
+         --force-reinstall --no-deps \
     && find /workspace/.venv/lib -maxdepth 5 \
          \( -name "nvidia" -o -name "triton" \) -type d \
          -exec rm -rf {} + 2>/dev/null; true \
-    && uv cache clean \
-    && uv run pip cache purge 2>/dev/null; true
+    && uv cache clean
 
 # Copy backend code
 COPY dashboard/backend/ dashboard/backend/
@@ -140,6 +139,14 @@ exec "$@"\n' > /usr/local/bin/init-config.sh && chmod +x /usr/local/bin/init-con
 # Default ports
 ENV EVONEXUS_PORT=8080
 ENV TERMINAL_SERVER_PORT=32352
+
+# Prevent uv run from re-syncing the .venv against uv.lock at container startup.
+# The .venv is built at image build time with CPU-only torch (instead of the
+# CUDA torch pinned in uv.lock). Without this flag, `uv run` would detect the
+# mismatch and re-download the CUDA torch wheel on every container start,
+# negating the build-time optimization and causing a 500+ MB download at runtime.
+ENV UV_NO_SYNC=1
+
 EXPOSE 8080
 EXPOSE 32352
 

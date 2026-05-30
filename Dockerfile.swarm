@@ -66,14 +66,13 @@ WORKDIR /workspace
 COPY pyproject.toml uv.lock ./
 RUN uv venv .venv \
     && uv sync --no-dev \
-    && uv run pip install torch \
+    && uv pip install torch \
          --index-url https://download.pytorch.org/whl/cpu \
-         --force-reinstall --no-deps --quiet \
+         --force-reinstall --no-deps \
     && find /workspace/.venv/lib -maxdepth 5 \
          \( -name "nvidia" -o -name "triton" \) -type d \
          -exec rm -rf {} + 2>/dev/null; true \
-    && uv cache clean \
-    && uv run pip cache purge 2>/dev/null; true
+    && uv cache clean
 
 # Application code — everything else
 COPY . .
@@ -98,6 +97,11 @@ LABEL org.opencontainers.image.title="evo-nexus-runtime" \
       org.opencontainers.image.description="EvoNexus runtime for Swarm (telegram/scheduler/ad-hoc routines)" \
       org.opencontainers.image.source="https://github.com/EvolutionAPI/evo-nexus" \
       org.opencontainers.image.licenses="MIT"
+
+# Prevent uv run from re-syncing the .venv against uv.lock at container startup.
+# The .venv contains CPU-only torch; uv.lock has CUDA torch. Without UV_NO_SYNC,
+# `uv run` would download CUDA torch on every container start.
+ENV UV_NO_SYNC=1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["uv", "run", "python", "scheduler.py"]
