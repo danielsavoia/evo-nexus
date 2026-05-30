@@ -183,27 +183,36 @@ def login():
     if not data:
         abort(400)
 
-    username = _as_text(data.get("username")).strip()
+    identifier = _as_text(data.get("username")).strip()
     password = _as_text(data.get("password"))
-    normalized_username = normalize_login_key(username)
+    normalized_identifier = normalize_login_key(identifier)
+    identifier_lower = identifier.lower()
 
-    if not username or not password:
-        abort(400, description="Username and password are required")
+    if not identifier or not password:
+        abort(400, description="Username/email and password are required")
 
-    lock_until = get_active_login_lockout(normalized_username, request.remote_addr)
+    lock_until = get_active_login_lockout(normalized_identifier, request.remote_addr)
     if lock_until and lock_until > datetime.now(timezone.utc):
         audit(
             None,
             "login_locked",
-            detail=f"username={normalized_username or '<empty>'}; ip={request.remote_addr or '<unknown>'}",
+            detail=f"identifier={normalized_identifier or '<empty>'}; ip={request.remote_addr or '<unknown>'}",
         )
         abort(429, description=_lockout_description(lock_until))
 
-    user = User.query.filter_by(username=username, is_active=True).first()
+    # Accept username (exact) OR email (case-insensitive).
+    # NULL email columns never match the email branch, so NULL safety is automatic.
+    user = User.query.filter(
+        User.is_active == True,  # noqa: E712
+        db.or_(
+            User.username == identifier,
+            db.func.lower(User.email) == identifier_lower,
+        ),
+    ).first()
     if not user or not user.check_password(password):
-        lock_until = record_login_failure(normalized_username, request.remote_addr)
+        lock_until = record_login_failure(normalized_identifier, request.remote_addr)
         entry = AuditLog(
-            username=username,
+            username=identifier,
             action="login_failed",
             ip_address=request.remote_addr,
         )
@@ -211,7 +220,7 @@ def login():
         if lock_until and lock_until > datetime.now(timezone.utc):
             db.session.add(
                 AuditLog(
-                    username=username,
+                    username=identifier,
                     action="login_locked",
                     ip_address=request.remote_addr,
                     detail=_lockout_description(lock_until),
@@ -220,11 +229,11 @@ def login():
             db.session.commit()
             abort(429, description=_lockout_description(lock_until))
         db.session.commit()
-        abort(401, description="Invalid username or password")
+        abort(401, description="Invalid username/email or password")
 
     login_user(user, remember=True)
     user.last_login = datetime.now(timezone.utc)
-    clear_login_throttles(normalized_username, request.remote_addr)
+    clear_login_throttles(normalized_identifier, request.remote_addr)
     db.session.commit()
 
     audit(user, "login")

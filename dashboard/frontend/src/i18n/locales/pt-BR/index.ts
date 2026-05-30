@@ -208,11 +208,11 @@ const translations = {
     login: {
       title: 'Entrar',
       subtitle: 'Acesse o painel do Clever Agent',
-      username: 'Usuário',
+      username: 'Usuário ou e-mail',
       password: 'Senha',
       submit: 'Entrar',
       signingIn: 'Entrando…',
-      invalidCredentials: 'Usuário ou senha inválidos',
+      invalidCredentials: 'Usuário/e-mail ou senha inválidos',
       forgotPassword: 'Esqueceu a senha?',
     },
 

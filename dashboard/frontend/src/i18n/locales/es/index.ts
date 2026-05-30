@@ -201,11 +201,11 @@ const translations = {
     login: {
       title: 'Iniciar sesión',
       subtitle: 'Accede a tu panel de Clever Agent',
-      username: 'Usuario',
+      username: 'Usuario o correo electrónico',
       password: 'Contraseña',
       submit: 'Entrar',
       signingIn: 'Entrando…',
-      invalidCredentials: 'Usuario o contraseña inválidos',
+      invalidCredentials: 'Usuario/correo o contraseña inválidos',
       forgotPassword: '¿Olvidaste la contraseña?',
     },
 
