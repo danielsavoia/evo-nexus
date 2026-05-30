@@ -57,21 +57,23 @@ RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo "${TZ}" > /etc/time
 
 WORKDIR /workspace
 
-# Python deps — CPU-only PyTorch.
+# Python deps — force CPU-only torch to eliminate ~2.5 GB of CUDA GPU libs.
 #
-# marker-pdf and sentence-transformers both depend on torch. Without
-# the explicit CPU-only pre-install, uv/pip resolves the default torch
-# wheel which bundles ~2.5 GB of NVIDIA CUDA GPU libraries useless on CPU.
-#
-# Strategy: install CPU-only torch first, then uv sync inherits that wheel.
+# Same strategy as Dockerfile.dashboard — see that file for full explanation.
+# Summary: uv sync installs CUDA torch (from lock), then pip force-reinstalls
+# with CPU wheel (no CUDA deps in __init__.py), then nvidia/triton dirs deleted.
 # --no-dev skips pytest and other dev-only packages.
-# uv cache clean removes the download cache from /root/.cache/uv —
-# the installed .venv is unaffected; only the network-fetch cache is purged.
 COPY pyproject.toml uv.lock ./
 RUN uv venv .venv \
-    && uv pip install torch --index-url https://download.pytorch.org/whl/cpu \
     && uv sync --no-dev \
-    && uv cache clean
+    && uv run pip install torch \
+         --index-url https://download.pytorch.org/whl/cpu \
+         --force-reinstall --no-deps --quiet \
+    && find /workspace/.venv/lib -maxdepth 5 \
+         \( -name "nvidia" -o -name "triton" \) -type d \
+         -exec rm -rf {} + 2>/dev/null; true \
+    && uv cache clean \
+    && uv run pip cache purge 2>/dev/null; true
 
 # Application code — everything else
 COPY . .
