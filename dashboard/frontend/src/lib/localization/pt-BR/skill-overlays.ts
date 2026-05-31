@@ -28,12 +28,9 @@
  *
  * COVERAGE STATUS
  * ───────────────
- * ✅ ai-image-creator  — full translation (title, description, body)
- * ✅ create-agent       — description only
- * ✅ create-goal        — description only
- * ✅ create-routine     — description only
- * ✅ create-ticket      — description only
- * 📋 remaining skills  — description only (body pending)
+ * ✅ 193/193 UI skills — title, description, and body overlays
+ * ✅ curated overlays remain in SKILL_PT_BR_OVERLAYS / SKILL_BODY_PT_BR_OVERLAYS
+ * ✅ generated coverage for remaining real UI skills lives in AUTO_SKILL_PT_BR_OVERLAYS
  */
 
 export interface SkillOverlay {
@@ -889,6 +886,5329 @@ for (const [skillId, body] of Object.entries(SKILL_BODY_PT_BR_OVERLAYS)) {
   SKILL_PT_BR_OVERLAYS[skillId] = {
     ...SKILL_PT_BR_OVERLAYS[skillId],
     body,
+  }
+}
+
+const AUTO_SKILL_PT_BR_OVERLAYS: Record<string, SkillOverlay> = {
+  'db-mongo': {
+    title: 'Banco de Dados MongoDB',
+    description: 'Executa o fluxo de Banco de Dados MongoDB no domínio de bancos de dados. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Banco de Dados MongoDB
+
+Overlay pt-BR frontend-only para a skill 'db-mongo'. O runtime continua lendo a definição original em inglês em '.claude/skills/db-mongo/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Banco de Dados MongoDB no domínio de bancos de dados. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'db-mysql': {
+    title: 'Banco de Dados MySQL',
+    description: 'Executa o fluxo de Banco de Dados MySQL no domínio de bancos de dados. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Banco de Dados MySQL
+
+Overlay pt-BR frontend-only para a skill 'db-mysql'. O runtime continua lendo a definição original em inglês em '.claude/skills/db-mysql/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Banco de Dados MySQL no domínio de bancos de dados. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'db-postgres': {
+    title: 'Banco de Dados Postgres',
+    description: 'Executa o fluxo de Banco de Dados Postgres no domínio de bancos de dados. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Banco de Dados Postgres
+
+Overlay pt-BR frontend-only para a skill 'db-postgres'. O runtime continua lendo a definição original em inglês em '.claude/skills/db-postgres/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Banco de Dados Postgres no domínio de bancos de dados. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'db-redis': {
+    title: 'Banco de Dados Redis',
+    description: 'Executa o fluxo de Banco de Dados Redis no domínio de bancos de dados. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Banco de Dados Redis
+
+Overlay pt-BR frontend-only para a skill 'db-redis'. O runtime continua lendo a definição original em inglês em '.claude/skills/db-redis/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Banco de Dados Redis no domínio de bancos de dados. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-ai-slop-cleaner': {
+    title: 'Dev IA Slop Cleaner',
+    description: 'Executa o fluxo de Dev IA Slop Cleaner no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev IA Slop Cleaner
+
+Overlay pt-BR frontend-only para a skill 'dev-ai-slop-cleaner'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-ai-slop-cleaner/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev IA Slop Cleaner no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-cancel': {
+    title: 'Dev Cancelar',
+    description: 'Executa o fluxo de Dev Cancelar no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Cancelar
+
+Overlay pt-BR frontend-only para a skill 'dev-cancel'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-cancel/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Cancelar no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-ccg': {
+    title: 'Dev CCG',
+    description: 'Executa o fluxo de Dev CCG no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev CCG
+
+Overlay pt-BR frontend-only para a skill 'dev-ccg'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-ccg/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev CCG no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-configure-notifications': {
+    title: 'Dev Configurar Notificações',
+    description: 'Executa o fluxo de Dev Configurar Notificações no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Configurar Notificações
+
+Overlay pt-BR frontend-only para a skill 'dev-configure-notifications'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-configure-notifications/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Configurar Notificações no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-deep-interview': {
+    title: 'Dev Análise Profunda Entrevista',
+    description: 'Executa o fluxo de Dev Análise Profunda Entrevista no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Análise Profunda Entrevista
+
+Overlay pt-BR frontend-only para a skill 'dev-deep-interview'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-deep-interview/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Análise Profunda Entrevista no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-deepinit': {
+    title: 'Dev Deep Init',
+    description: 'Executa o fluxo de Dev Deep Init no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Deep Init
+
+Overlay pt-BR frontend-only para a skill 'dev-deepinit'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-deepinit/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Deep Init no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-external-context': {
+    title: 'Dev Contexto Externo Contexto',
+    description: 'Executa o fluxo de Dev Contexto Externo Contexto no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Contexto Externo Contexto
+
+Overlay pt-BR frontend-only para a skill 'dev-external-context'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-external-context/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Contexto Externo Contexto no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-learner': {
+    title: 'Dev Aprendiz',
+    description: 'Executa o fluxo de Dev Aprendiz no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Aprendiz
+
+Overlay pt-BR frontend-only para a skill 'dev-learner'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-learner/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Aprendiz no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-mcp-setup': {
+    title: 'Dev MCP Setup',
+    description: 'Executa o fluxo de Dev MCP Setup no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev MCP Setup
+
+Overlay pt-BR frontend-only para a skill 'dev-mcp-setup'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-mcp-setup/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev MCP Setup no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-project-session-manager': {
+    title: 'Dev Projeto Sessão Gerenciador',
+    description: 'Executa o fluxo de Dev Projeto Sessão Gerenciador no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Projeto Sessão Gerenciador
+
+Overlay pt-BR frontend-only para a skill 'dev-project-session-manager'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-project-session-manager/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Projeto Sessão Gerenciador no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-ralph': {
+    title: 'Dev Ralph',
+    description: 'Executa o fluxo de Dev Ralph no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Ralph
+
+Overlay pt-BR frontend-only para a skill 'dev-ralph'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-ralph/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Ralph no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-ralplan': {
+    title: 'Dev Ralplan',
+    description: 'Executa o fluxo de Dev Ralplan no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Ralplan
+
+Overlay pt-BR frontend-only para a skill 'dev-ralplan'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-ralplan/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Ralplan no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-sciomc': {
+    title: 'Dev SciOMC',
+    description: 'Executa o fluxo de Dev SciOMC no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev SciOMC
+
+Overlay pt-BR frontend-only para a skill 'dev-sciomc'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-sciomc/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev SciOMC no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-skillify': {
+    title: 'Dev Skillify',
+    description: 'Executa o fluxo de Dev Skillify no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Skillify
+
+Overlay pt-BR frontend-only para a skill 'dev-skillify'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-skillify/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Skillify no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-team': {
+    title: 'Dev Time',
+    description: 'Executa o fluxo de Dev Time no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Time
+
+Overlay pt-BR frontend-only para a skill 'dev-team'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-team/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Time no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-trace': {
+    title: 'Dev Rastrear',
+    description: 'Executa o fluxo de Dev Rastrear no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Rastrear
+
+Overlay pt-BR frontend-only para a skill 'dev-trace'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-trace/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Rastrear no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-ultraqa': {
+    title: 'Dev Ultra QA',
+    description: 'Executa o fluxo de Dev Ultra QA no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Ultra QA
+
+Overlay pt-BR frontend-only para a skill 'dev-ultraqa'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-ultraqa/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Ultra QA no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'dev-visual-verdict': {
+    title: 'Dev Visual Veredito',
+    description: 'Executa o fluxo de Dev Visual Veredito no domínio de desenvolvimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Dev Visual Veredito
+
+Overlay pt-BR frontend-only para a skill 'dev-visual-verdict'. O runtime continua lendo a definição original em inglês em '.claude/skills/dev-visual-verdict/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Dev Visual Veredito no domínio de desenvolvimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'discord-create-channel': {
+    title: 'Discord Criar Canal',
+    description: 'Executa o fluxo de Discord Criar Canal no domínio de Discord. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Discord Criar Canal
+
+Overlay pt-BR frontend-only para a skill 'discord-create-channel'. O runtime continua lendo a definição original em inglês em '.claude/skills/discord-create-channel/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Discord Criar Canal no domínio de Discord. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'discord-get-messages': {
+    title: 'Discord Get Mensagens',
+    description: 'Executa o fluxo de Discord Get Mensagens no domínio de Discord. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Discord Get Mensagens
+
+Overlay pt-BR frontend-only para a skill 'discord-get-messages'. O runtime continua lendo a definição original em inglês em '.claude/skills/discord-get-messages/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Discord Get Mensagens no domínio de Discord. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'discord-list-channels': {
+    title: 'Discord Listar Channels',
+    description: 'Executa o fluxo de Discord Listar Channels no domínio de Discord. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Discord Listar Channels
+
+Overlay pt-BR frontend-only para a skill 'discord-list-channels'. O runtime continua lendo a definição original em inglês em '.claude/skills/discord-list-channels/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Discord Listar Channels no domínio de Discord. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'discord-manage-channel': {
+    title: 'Discord Gerenciar Canal',
+    description: 'Executa o fluxo de Discord Gerenciar Canal no domínio de Discord. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Discord Gerenciar Canal
+
+Overlay pt-BR frontend-only para a skill 'discord-manage-channel'. O runtime continua lendo a definição original em inglês em '.claude/skills/discord-manage-channel/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Discord Gerenciar Canal no domínio de Discord. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'discord-send-message': {
+    title: 'Discord Enviar Message',
+    description: 'Executa o fluxo de Discord Enviar Message no domínio de Discord. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Discord Enviar Message
+
+Overlay pt-BR frontend-only para a skill 'discord-send-message'. O runtime continua lendo a definição original em inglês em '.claude/skills/discord-send-message/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Discord Enviar Message no domínio de Discord. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-audit-support': {
+    title: 'Financeiro Auditoria Suporte',
+    description: 'Executa o fluxo de Financeiro Auditoria Suporte no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Auditoria Suporte
+
+Overlay pt-BR frontend-only para a skill 'fin-audit-support'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-audit-support/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Auditoria Suporte no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-close-management': {
+    title: 'Financeiro Fechamento Gestão',
+    description: 'Executa o fluxo de Financeiro Fechamento Gestão no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Fechamento Gestão
+
+Overlay pt-BR frontend-only para a skill 'fin-close-management'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-close-management/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Fechamento Gestão no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-daily-pulse': {
+    title: 'Financeiro Diário Pulse',
+    description: 'Executa o fluxo de Financeiro Diário Pulse no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Diário Pulse
+
+Overlay pt-BR frontend-only para a skill 'fin-daily-pulse'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-daily-pulse/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Diário Pulse no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-financial-statements': {
+    title: 'Financeiro Financeiras Demonstrações',
+    description: 'Executa o fluxo de Financeiro Financeiras Demonstrações no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Financeiras Demonstrações
+
+Overlay pt-BR frontend-only para a skill 'fin-financial-statements'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-financial-statements/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Financeiras Demonstrações no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-journal-entry': {
+    title: 'Financeiro Lançamento Contábil',
+    description: 'Executa o fluxo de Financeiro Lançamento Contábil no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Lançamento Contábil
+
+Overlay pt-BR frontend-only para a skill 'fin-journal-entry'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-journal-entry/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Lançamento Contábil no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-journal-entry-prep': {
+    title: 'Financeiro Lançamento Contábil Preparação',
+    description: 'Executa o fluxo de Financeiro Lançamento Contábil Preparação no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Lançamento Contábil Preparação
+
+Overlay pt-BR frontend-only para a skill 'fin-journal-entry-prep'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-journal-entry-prep/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Lançamento Contábil Preparação no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-monthly-close-kickoff': {
+    title: 'Financeiro Mensal Fechamento Kickoff',
+    description: 'Executa o fluxo de Financeiro Mensal Fechamento Kickoff no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Mensal Fechamento Kickoff
+
+Overlay pt-BR frontend-only para a skill 'fin-monthly-close-kickoff'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-monthly-close-kickoff/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Mensal Fechamento Kickoff no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-reconciliation': {
+    title: 'Financeiro Reconciliação',
+    description: 'Executa o fluxo de Financeiro Reconciliação no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Reconciliação
+
+Overlay pt-BR frontend-only para a skill 'fin-reconciliation'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-reconciliation/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Reconciliação no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-sox-testing': {
+    title: 'Financeiro SOX Testes',
+    description: 'Executa o fluxo de Financeiro SOX Testes no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro SOX Testes
+
+Overlay pt-BR frontend-only para a skill 'fin-sox-testing'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-sox-testing/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro SOX Testes no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-variance-analysis': {
+    title: 'Financeiro Variação Análise',
+    description: 'Executa o fluxo de Financeiro Variação Análise no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Variação Análise
+
+Overlay pt-BR frontend-only para a skill 'fin-variance-analysis'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-variance-analysis/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Variação Análise no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'fin-weekly-report': {
+    title: 'Financeiro Semanal Relatório',
+    description: 'Executa o fluxo de Financeiro Semanal Relatório no domínio de finanças. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Financeiro Semanal Relatório
+
+Overlay pt-BR frontend-only para a skill 'fin-weekly-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/fin-weekly-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Financeiro Semanal Relatório no domínio de finanças. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-calendar': {
+    title: 'Google Calendar',
+    description: 'Executa o fluxo de Google Calendar no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Calendar
+
+Overlay pt-BR frontend-only para a skill 'gog-calendar'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-calendar/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Calendar no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-email-draft': {
+    title: 'Google Email Rascunhar',
+    description: 'Executa o fluxo de Google Email Rascunhar no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Email Rascunhar
+
+Overlay pt-BR frontend-only para a skill 'gog-email-draft'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-email-draft/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Email Rascunhar no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-email-send': {
+    title: 'Google Email Enviar',
+    description: 'Executa o fluxo de Google Email Enviar no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Email Enviar
+
+Overlay pt-BR frontend-only para a skill 'gog-email-send'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-email-send/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Email Enviar no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-email-triage': {
+    title: 'Google Email Triagem',
+    description: 'Executa o fluxo de Google Email Triagem no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Email Triagem
+
+Overlay pt-BR frontend-only para a skill 'gog-email-triage'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-email-triage/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Email Triagem no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-followups': {
+    title: 'Google Follow-ups',
+    description: 'Executa o fluxo de Google Follow-ups no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Follow-ups
+
+Overlay pt-BR frontend-only para a skill 'gog-followups'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-followups/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Follow-ups no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'gog-tasks': {
+    title: 'Google Tasks',
+    description: 'Executa o fluxo de Google Tasks no domínio de Google Workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Google Tasks
+
+Overlay pt-BR frontend-only para a skill 'gog-tasks'. O runtime continua lendo a definição original em inglês em '.claude/skills/gog-tasks/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Google Tasks no domínio de Google Workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-comp-analysis': {
+    title: 'RH Remuneração Análise',
+    description: 'Executa o fluxo de RH Remuneração Análise no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Remuneração Análise
+
+Overlay pt-BR frontend-only para a skill 'hr-comp-analysis'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-comp-analysis/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Remuneração Análise no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-draft-offer': {
+    title: 'RH Rascunhar Oferta',
+    description: 'Executa o fluxo de RH Rascunhar Oferta no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Rascunhar Oferta
+
+Overlay pt-BR frontend-only para a skill 'hr-draft-offer'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-draft-offer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Rascunhar Oferta no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-interview-prep': {
+    title: 'RH Entrevista Preparação',
+    description: 'Executa o fluxo de RH Entrevista Preparação no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Entrevista Preparação
+
+Overlay pt-BR frontend-only para a skill 'hr-interview-prep'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-interview-prep/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Entrevista Preparação no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-onboarding': {
+    title: 'RH Onboarding',
+    description: 'Executa o fluxo de RH Onboarding no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Onboarding
+
+Overlay pt-BR frontend-only para a skill 'hr-onboarding'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-onboarding/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Onboarding no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-org-planning': {
+    title: 'RH Organização Planejamento',
+    description: 'Executa o fluxo de RH Organização Planejamento no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Organização Planejamento
+
+Overlay pt-BR frontend-only para a skill 'hr-org-planning'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-org-planning/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Organização Planejamento no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-people-report': {
+    title: 'RH Pessoas Relatório',
+    description: 'Executa o fluxo de RH Pessoas Relatório no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Pessoas Relatório
+
+Overlay pt-BR frontend-only para a skill 'hr-people-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-people-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Pessoas Relatório no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-performance-review': {
+    title: 'RH Performance Revisão',
+    description: 'Executa o fluxo de RH Performance Revisão no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Performance Revisão
+
+Overlay pt-BR frontend-only para a skill 'hr-performance-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-performance-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Performance Revisão no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-policy-lookup': {
+    title: 'RH Política Consulta',
+    description: 'Executa o fluxo de RH Política Consulta no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Política Consulta
+
+Overlay pt-BR frontend-only para a skill 'hr-policy-lookup'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-policy-lookup/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Política Consulta no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'hr-recruiting-pipeline': {
+    title: 'RH Recrutamento Pipeline',
+    description: 'Executa o fluxo de RH Recrutamento Pipeline no domínio de RH. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# RH Recrutamento Pipeline
+
+Overlay pt-BR frontend-only para a skill 'hr-recruiting-pipeline'. O runtime continua lendo a definição original em inglês em '.claude/skills/hr-recruiting-pipeline/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de RH Recrutamento Pipeline no domínio de RH. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'initial-setup': {
+    title: 'Inicial Setup',
+    description: 'Executa o fluxo de Inicial Setup no domínio de configuração inicial. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Inicial Setup
+
+Overlay pt-BR frontend-only para a skill 'initial-setup'. O runtime continua lendo a definição original em inglês em '.claude/skills/initial-setup/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Inicial Setup no domínio de configuração inicial. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-asaas': {
+    title: 'Integração Asaas',
+    description: 'Executa o fluxo de Integração Asaas no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Asaas
+
+Overlay pt-BR frontend-only para a skill 'int-asaas'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-asaas/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Asaas no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-bling': {
+    title: 'Integração Bling',
+    description: 'Executa o fluxo de Integração Bling no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Bling
+
+Overlay pt-BR frontend-only para a skill 'int-bling'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-bling/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Bling no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-evo-crm': {
+    title: 'Integração Evo CRM',
+    description: 'Executa o fluxo de Integração Evo CRM no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Evo CRM
+
+Overlay pt-BR frontend-only para a skill 'int-evo-crm'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-evo-crm/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Evo CRM no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-evolution-api': {
+    title: 'Integração Evolution API',
+    description: 'Executa o fluxo de Integração Evolution API no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Evolution API
+
+Overlay pt-BR frontend-only para a skill 'int-evolution-api'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-evolution-api/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Evolution API no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-evolution-go': {
+    title: 'Integração Evolution Go',
+    description: 'Executa o fluxo de Integração Evolution Go no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Evolution Go
+
+Overlay pt-BR frontend-only para a skill 'int-evolution-go'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-evolution-go/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Evolution Go no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-fathom': {
+    title: 'Integração Fathom',
+    description: 'Executa o fluxo de Integração Fathom no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Fathom
+
+Overlay pt-BR frontend-only para a skill 'int-fathom'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-fathom/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Fathom no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-github-review': {
+    title: 'Integração GitHub Revisão',
+    description: 'Executa o fluxo de Integração GitHub Revisão no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração GitHub Revisão
+
+Overlay pt-BR frontend-only para a skill 'int-github-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-github-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração GitHub Revisão no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-instagram': {
+    title: 'Integração Instagram',
+    description: 'Executa o fluxo de Integração Instagram no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Instagram
+
+Overlay pt-BR frontend-only para a skill 'int-instagram'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-instagram/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Instagram no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-linear-review': {
+    title: 'Integração Linear Revisão',
+    description: 'Executa o fluxo de Integração Linear Revisão no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Linear Revisão
+
+Overlay pt-BR frontend-only para a skill 'int-linear-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-linear-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Linear Revisão no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-linkedin': {
+    title: 'Integração LinkedIn',
+    description: 'Executa o fluxo de Integração LinkedIn no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração LinkedIn
+
+Overlay pt-BR frontend-only para a skill 'int-linkedin'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-linkedin/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração LinkedIn no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-omie': {
+    title: 'Integração Omie',
+    description: 'Executa o fluxo de Integração Omie no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Omie
+
+Overlay pt-BR frontend-only para a skill 'int-omie'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-omie/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Omie no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-stripe': {
+    title: 'Integração Stripe',
+    description: 'Executa o fluxo de Integração Stripe no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Stripe
+
+Overlay pt-BR frontend-only para a skill 'int-stripe'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-stripe/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Stripe no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-sync-meetings': {
+    title: 'Integração Sincronizar Reuniões',
+    description: 'Executa o fluxo de Integração Sincronizar Reuniões no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Sincronizar Reuniões
+
+Overlay pt-BR frontend-only para a skill 'int-sync-meetings'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-sync-meetings/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Sincronizar Reuniões no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-telegram': {
+    title: 'Integração Telegram',
+    description: 'Executa o fluxo de Integração Telegram no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Telegram
+
+Overlay pt-BR frontend-only para a skill 'int-telegram'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-telegram/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Telegram no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-todoist': {
+    title: 'Integração Todoist',
+    description: 'Executa o fluxo de Integração Todoist no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração Todoist
+
+Overlay pt-BR frontend-only para a skill 'int-todoist'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-todoist/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração Todoist no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'int-youtube': {
+    title: 'Integração YouTube',
+    description: 'Executa o fluxo de Integração YouTube no domínio de integrações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Integração YouTube
+
+Overlay pt-BR frontend-only para a skill 'int-youtube'. O runtime continua lendo a definição original em inglês em '.claude/skills/int-youtube/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Integração YouTube no domínio de integrações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-admin': {
+    title: 'Conhecimento Administração',
+    description: 'Executa o fluxo de Conhecimento Administração no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Administração
+
+Overlay pt-BR frontend-only para a skill 'knowledge-admin'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-admin/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Administração no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-browse': {
+    title: 'Conhecimento Navegar',
+    description: 'Executa o fluxo de Conhecimento Navegar no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Navegar
+
+Overlay pt-BR frontend-only para a skill 'knowledge-browse'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-browse/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Navegar no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-ingest': {
+    title: 'Conhecimento Ingerir',
+    description: 'Executa o fluxo de Conhecimento Ingerir no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Ingerir
+
+Overlay pt-BR frontend-only para a skill 'knowledge-ingest'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-ingest/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Ingerir no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-organize': {
+    title: 'Conhecimento Organizar',
+    description: 'Executa o fluxo de Conhecimento Organizar no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Organizar
+
+Overlay pt-BR frontend-only para a skill 'knowledge-organize'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-organize/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Organizar no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-query': {
+    title: 'Conhecimento Query',
+    description: 'Executa o fluxo de Conhecimento Query no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Query
+
+Overlay pt-BR frontend-only para a skill 'knowledge-query'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-query/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Query no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'knowledge-summarize': {
+    title: 'Conhecimento Resumir',
+    description: 'Executa o fluxo de Conhecimento Resumir no domínio de conhecimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Conhecimento Resumir
+
+Overlay pt-BR frontend-only para a skill 'knowledge-summarize'. O runtime continua lendo a definição original em inglês em '.claude/skills/knowledge-summarize/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Conhecimento Resumir no domínio de conhecimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'learn-capture': {
+    title: 'Aprendizagem Capturar',
+    description: 'Executa o fluxo de Aprendizagem Capturar no domínio de aprendizagem. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Aprendizagem Capturar
+
+Overlay pt-BR frontend-only para a skill 'learn-capture'. O runtime continua lendo a definição original em inglês em '.claude/skills/learn-capture/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Aprendizagem Capturar no domínio de aprendizagem. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'learn-quiz': {
+    title: 'Aprendizagem Quiz',
+    description: 'Executa o fluxo de Aprendizagem Quiz no domínio de aprendizagem. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Aprendizagem Quiz
+
+Overlay pt-BR frontend-only para a skill 'learn-quiz'. O runtime continua lendo a definição original em inglês em '.claude/skills/learn-quiz/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Aprendizagem Quiz no domínio de aprendizagem. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'learn-review': {
+    title: 'Aprendizagem Revisão',
+    description: 'Executa o fluxo de Aprendizagem Revisão no domínio de aprendizagem. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Aprendizagem Revisão
+
+Overlay pt-BR frontend-only para a skill 'learn-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/learn-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Aprendizagem Revisão no domínio de aprendizagem. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'learn-stats': {
+    title: 'Aprendizagem Estatísticas',
+    description: 'Executa o fluxo de Aprendizagem Estatísticas no domínio de aprendizagem. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Aprendizagem Estatísticas
+
+Overlay pt-BR frontend-only para a skill 'learn-stats'. O runtime continua lendo a definição original em inglês em '.claude/skills/learn-stats/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Aprendizagem Estatísticas no domínio de aprendizagem. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-brief': {
+    title: 'Jurídico Briefing',
+    description: 'Executa o fluxo de Jurídico Briefing no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Briefing
+
+Overlay pt-BR frontend-only para a skill 'legal-brief'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-brief/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Briefing no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-compliance-check': {
+    title: 'Jurídico Compliance Checagem',
+    description: 'Executa o fluxo de Jurídico Compliance Checagem no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Compliance Checagem
+
+Overlay pt-BR frontend-only para a skill 'legal-compliance-check'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-compliance-check/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Compliance Checagem no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-meeting-briefing': {
+    title: 'Jurídico Reunião Briefing',
+    description: 'Executa o fluxo de Jurídico Reunião Briefing no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Reunião Briefing
+
+Overlay pt-BR frontend-only para a skill 'legal-meeting-briefing'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-meeting-briefing/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Reunião Briefing no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-response': {
+    title: 'Jurídico Resposta',
+    description: 'Executa o fluxo de Jurídico Resposta no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Resposta
+
+Overlay pt-BR frontend-only para a skill 'legal-response'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-response/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Resposta no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-review-contract': {
+    title: 'Jurídico Revisão Contrato',
+    description: 'Executa o fluxo de Jurídico Revisão Contrato no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Revisão Contrato
+
+Overlay pt-BR frontend-only para a skill 'legal-review-contract'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-review-contract/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Revisão Contrato no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-risk-assessment': {
+    title: 'Jurídico Risco Avaliação',
+    description: 'Executa o fluxo de Jurídico Risco Avaliação no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Risco Avaliação
+
+Overlay pt-BR frontend-only para a skill 'legal-risk-assessment'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-risk-assessment/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Risco Avaliação no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-signature-request': {
+    title: 'Jurídico Assinatura Solicitação',
+    description: 'Executa o fluxo de Jurídico Assinatura Solicitação no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Assinatura Solicitação
+
+Overlay pt-BR frontend-only para a skill 'legal-signature-request'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-signature-request/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Assinatura Solicitação no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-triage-nda': {
+    title: 'Jurídico Triagem NDA',
+    description: 'Executa o fluxo de Jurídico Triagem NDA no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Triagem NDA
+
+Overlay pt-BR frontend-only para a skill 'legal-triage-nda'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-triage-nda/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Triagem NDA no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'legal-vendor-check': {
+    title: 'Jurídico Fornecedor Checagem',
+    description: 'Executa o fluxo de Jurídico Fornecedor Checagem no domínio de jurídico. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Jurídico Fornecedor Checagem
+
+Overlay pt-BR frontend-only para a skill 'legal-vendor-check'. O runtime continua lendo a definição original em inglês em '.claude/skills/legal-vendor-check/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Jurídico Fornecedor Checagem no domínio de jurídico. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'manage-heartbeats': {
+    title: 'Gerenciar Heartbeats',
+    description: 'Executa o fluxo de Gerenciar Heartbeats no domínio de rotinas. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Gerenciar Heartbeats
+
+Overlay pt-BR frontend-only para a skill 'manage-heartbeats'. O runtime continua lendo a definição original em inglês em '.claude/skills/manage-heartbeats/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Gerenciar Heartbeats no domínio de rotinas. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-autoresearch': {
+    title: 'Marketing Pesquisa Automática',
+    description: 'Executa o fluxo de Marketing Pesquisa Automática no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Pesquisa Automática
+
+Overlay pt-BR frontend-only para a skill 'mkt-autoresearch'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-autoresearch/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Pesquisa Automática no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-brand-review': {
+    title: 'Marketing Marca Revisão',
+    description: 'Executa o fluxo de Marketing Marca Revisão no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Marca Revisão
+
+Overlay pt-BR frontend-only para a skill 'mkt-brand-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-brand-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Marca Revisão no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-campaign-plan': {
+    title: 'Marketing Campanha Planejar',
+    description: 'Executa o fluxo de Marketing Campanha Planejar no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Campanha Planejar
+
+Overlay pt-BR frontend-only para a skill 'mkt-campaign-plan'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-campaign-plan/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Campanha Planejar no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-competitive-brief': {
+    title: 'Marketing Competitivo Briefing',
+    description: 'Executa o fluxo de Marketing Competitivo Briefing no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Competitivo Briefing
+
+Overlay pt-BR frontend-only para a skill 'mkt-competitive-brief'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-competitive-brief/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Competitivo Briefing no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-content-creation': {
+    title: 'Marketing Conteúdo Criação',
+    description: 'Executa o fluxo de Marketing Conteúdo Criação no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Conteúdo Criação
+
+Overlay pt-BR frontend-only para a skill 'mkt-content-creation'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-content-creation/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Conteúdo Criação no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-draft-content': {
+    title: 'Marketing Rascunhar Conteúdo',
+    description: 'Executa o fluxo de Marketing Rascunhar Conteúdo no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Rascunhar Conteúdo
+
+Overlay pt-BR frontend-only para a skill 'mkt-draft-content'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-draft-content/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Rascunhar Conteúdo no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-email-sequence': {
+    title: 'Marketing Email Sequence',
+    description: 'Executa o fluxo de Marketing Email Sequence no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Email Sequence
+
+Overlay pt-BR frontend-only para a skill 'mkt-email-sequence'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-email-sequence/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Email Sequence no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-experiment': {
+    title: 'Marketing Experimento',
+    description: 'Executa o fluxo de Marketing Experimento no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Experimento
+
+Overlay pt-BR frontend-only para a skill 'mkt-experiment'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-experiment/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Experimento no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-performance-report': {
+    title: 'Marketing Performance Relatório',
+    description: 'Executa o fluxo de Marketing Performance Relatório no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Performance Relatório
+
+Overlay pt-BR frontend-only para a skill 'mkt-performance-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-performance-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Performance Relatório no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-quality-gate': {
+    title: 'Marketing Qualidade Gate',
+    description: 'Executa o fluxo de Marketing Qualidade Gate no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing Qualidade Gate
+
+Overlay pt-BR frontend-only para a skill 'mkt-quality-gate'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-quality-gate/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing Qualidade Gate no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-seo-audit': {
+    title: 'Marketing SEO Auditoria',
+    description: 'Executa o fluxo de Marketing SEO Auditoria no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing SEO Auditoria
+
+Overlay pt-BR frontend-only para a skill 'mkt-seo-audit'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-seo-audit/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing SEO Auditoria no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'mkt-seo-ops': {
+    title: 'Marketing SEO Operações',
+    description: 'Executa o fluxo de Marketing SEO Operações no domínio de marketing. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Marketing SEO Operações
+
+Overlay pt-BR frontend-only para a skill 'mkt-seo-ops'. O runtime continua lendo a definição original em inglês em '.claude/skills/mkt-seo-ops/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Marketing SEO Operações no domínio de marketing. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'obs-defuddle': {
+    title: 'Obsidian Defuddle',
+    description: 'Executa o fluxo de Obsidian Defuddle no domínio de Obsidian. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Obsidian Defuddle
+
+Overlay pt-BR frontend-only para a skill 'obs-defuddle'. O runtime continua lendo a definição original em inglês em '.claude/skills/obs-defuddle/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Obsidian Defuddle no domínio de Obsidian. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'obs-json-canvas': {
+    title: 'Obsidian JSON Canvas',
+    description: 'Executa o fluxo de Obsidian JSON Canvas no domínio de Obsidian. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Obsidian JSON Canvas
+
+Overlay pt-BR frontend-only para a skill 'obs-json-canvas'. O runtime continua lendo a definição original em inglês em '.claude/skills/obs-json-canvas/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Obsidian JSON Canvas no domínio de Obsidian. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'obs-obsidian-bases': {
+    title: 'Obsidian Obsidian Bases',
+    description: 'Executa o fluxo de Obsidian Obsidian Bases no domínio de Obsidian. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Obsidian Obsidian Bases
+
+Overlay pt-BR frontend-only para a skill 'obs-obsidian-bases'. O runtime continua lendo a definição original em inglês em '.claude/skills/obs-obsidian-bases/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Obsidian Obsidian Bases no domínio de Obsidian. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'obs-obsidian-cli': {
+    title: 'Obsidian Obsidian CLI',
+    description: 'Executa o fluxo de Obsidian Obsidian CLI no domínio de Obsidian. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Obsidian Obsidian CLI
+
+Overlay pt-BR frontend-only para a skill 'obs-obsidian-cli'. O runtime continua lendo a definição original em inglês em '.claude/skills/obs-obsidian-cli/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Obsidian Obsidian CLI no domínio de Obsidian. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'obs-obsidian-markdown': {
+    title: 'Obsidian Obsidian Markdown',
+    description: 'Executa o fluxo de Obsidian Obsidian Markdown no domínio de Obsidian. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Obsidian Obsidian Markdown
+
+Overlay pt-BR frontend-only para a skill 'obs-obsidian-markdown'. O runtime continua lendo a definição original em inglês em '.claude/skills/obs-obsidian-markdown/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Obsidian Obsidian Markdown no domínio de Obsidian. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-capacity-plan': {
+    title: 'Operações Capacidade Planejar',
+    description: 'Executa o fluxo de Operações Capacidade Planejar no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Capacidade Planejar
+
+Overlay pt-BR frontend-only para a skill 'ops-capacity-plan'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-capacity-plan/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Capacidade Planejar no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-change-request': {
+    title: 'Operações Mudança Solicitação',
+    description: 'Executa o fluxo de Operações Mudança Solicitação no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Mudança Solicitação
+
+Overlay pt-BR frontend-only para a skill 'ops-change-request'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-change-request/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Mudança Solicitação no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-compliance-tracking': {
+    title: 'Operações Compliance Tracking',
+    description: 'Executa o fluxo de Operações Compliance Tracking no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Compliance Tracking
+
+Overlay pt-BR frontend-only para a skill 'ops-compliance-tracking'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-compliance-tracking/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Compliance Tracking no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-process-doc': {
+    title: 'Operações Processo Documento',
+    description: 'Executa o fluxo de Operações Processo Documento no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Processo Documento
+
+Overlay pt-BR frontend-only para a skill 'ops-process-doc'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-process-doc/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Processo Documento no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-process-optimization': {
+    title: 'Operações Processo Otimização',
+    description: 'Executa o fluxo de Operações Processo Otimização no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Processo Otimização
+
+Overlay pt-BR frontend-only para a skill 'ops-process-optimization'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-process-optimization/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Processo Otimização no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-risk-assessment': {
+    title: 'Operações Risco Avaliação',
+    description: 'Executa o fluxo de Operações Risco Avaliação no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Risco Avaliação
+
+Overlay pt-BR frontend-only para a skill 'ops-risk-assessment'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-risk-assessment/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Risco Avaliação no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-runbook': {
+    title: 'Operações Runbook',
+    description: 'Executa o fluxo de Operações Runbook no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Runbook
+
+Overlay pt-BR frontend-only para a skill 'ops-runbook'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-runbook/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Runbook no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-status-report': {
+    title: 'Operações Status Relatório',
+    description: 'Executa o fluxo de Operações Status Relatório no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Status Relatório
+
+Overlay pt-BR frontend-only para a skill 'ops-status-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-status-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Status Relatório no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'ops-vendor-review': {
+    title: 'Operações Fornecedor Revisão',
+    description: 'Executa o fluxo de Operações Fornecedor Revisão no domínio de operações. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Operações Fornecedor Revisão
+
+Overlay pt-BR frontend-only para a skill 'ops-vendor-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/ops-vendor-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Operações Fornecedor Revisão no domínio de operações. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-health': {
+    title: 'Plugin Saúde',
+    description: 'Executa o fluxo de Plugin Saúde no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Saúde
+
+Overlay pt-BR frontend-only para a skill 'plugin-health'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-health/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Saúde no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-install': {
+    title: 'Plugin Instalar',
+    description: 'Executa o fluxo de Plugin Instalar no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Instalar
+
+Overlay pt-BR frontend-only para a skill 'plugin-install'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-install/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Instalar no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-list': {
+    title: 'Plugin Listar',
+    description: 'Executa o fluxo de Plugin Listar no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Listar
+
+Overlay pt-BR frontend-only para a skill 'plugin-list'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-list/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Listar no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-marketplace': {
+    title: 'Plugin Marketplace',
+    description: 'Executa o fluxo de Plugin Marketplace no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Marketplace
+
+Overlay pt-BR frontend-only para a skill 'plugin-marketplace'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-marketplace/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Marketplace no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-security-scan': {
+    title: 'Plugin Segurança Scan',
+    description: 'Executa o fluxo de Plugin Segurança Scan no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Segurança Scan
+
+Overlay pt-BR frontend-only para a skill 'plugin-security-scan'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-security-scan/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Segurança Scan no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-uninstall': {
+    title: 'Plugin Desinstalar',
+    description: 'Executa o fluxo de Plugin Desinstalar no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Desinstalar
+
+Overlay pt-BR frontend-only para a skill 'plugin-uninstall'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-uninstall/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Desinstalar no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'plugin-update': {
+    title: 'Plugin Atualizar',
+    description: 'Executa o fluxo de Plugin Atualizar no domínio de plugins. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Plugin Atualizar
+
+Overlay pt-BR frontend-only para a skill 'plugin-update'. O runtime continua lendo a definição original em inglês em '.claude/skills/plugin-update/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Plugin Atualizar no domínio de plugins. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-metrics-review': {
+    title: 'Produto Métricas Revisão',
+    description: 'Executa o fluxo de Produto Métricas Revisão no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Métricas Revisão
+
+Overlay pt-BR frontend-only para a skill 'pm-metrics-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-metrics-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Métricas Revisão no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-product-brainstorming': {
+    title: 'Produto Produto Brainstorming',
+    description: 'Executa o fluxo de Produto Produto Brainstorming no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Produto Brainstorming
+
+Overlay pt-BR frontend-only para a skill 'pm-product-brainstorming'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-product-brainstorming/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Produto Brainstorming no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-roadmap-update': {
+    title: 'Produto Roadmap Atualizar',
+    description: 'Executa o fluxo de Produto Roadmap Atualizar no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Roadmap Atualizar
+
+Overlay pt-BR frontend-only para a skill 'pm-roadmap-update'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-roadmap-update/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Roadmap Atualizar no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-stakeholder-update': {
+    title: 'Produto Stakeholder Atualizar',
+    description: 'Executa o fluxo de Produto Stakeholder Atualizar no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Stakeholder Atualizar
+
+Overlay pt-BR frontend-only para a skill 'pm-stakeholder-update'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-stakeholder-update/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Stakeholder Atualizar no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-synthesize-research': {
+    title: 'Produto Sintetizar Pesquisa',
+    description: 'Executa o fluxo de Produto Sintetizar Pesquisa no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Sintetizar Pesquisa
+
+Overlay pt-BR frontend-only para a skill 'pm-synthesize-research'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-synthesize-research/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Sintetizar Pesquisa no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pm-write-spec': {
+    title: 'Produto Escrever Spec',
+    description: 'Executa o fluxo de Produto Escrever Spec no domínio de produto. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produto Escrever Spec
+
+Overlay pt-BR frontend-only para a skill 'pm-write-spec'. O runtime continua lendo a definição original em inglês em '.claude/skills/pm-write-spec/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produto Escrever Spec no domínio de produto. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-activation-plan': {
+    title: 'Produtividade Ativação Planejar',
+    description: 'Executa o fluxo de Produtividade Ativação Planejar no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Ativação Planejar
+
+Overlay pt-BR frontend-only para a skill 'prod-activation-plan'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-activation-plan/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Ativação Planejar no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-dashboard': {
+    title: 'Produtividade Dashboard',
+    description: 'Executa o fluxo de Produtividade Dashboard no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Dashboard
+
+Overlay pt-BR frontend-only para a skill 'prod-dashboard'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-dashboard/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Dashboard no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-end-of-day': {
+    title: 'Produtividade Fim de Dia',
+    description: 'Executa o fluxo de Produtividade Fim de Dia no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Fim de Dia
+
+Overlay pt-BR frontend-only para a skill 'prod-end-of-day'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-end-of-day/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Fim de Dia no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-good-morning': {
+    title: 'Produtividade Bom Dia',
+    description: 'Executa o fluxo de Produtividade Bom Dia no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Bom Dia
+
+Overlay pt-BR frontend-only para a skill 'prod-good-morning'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-good-morning/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Bom Dia no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-memory-management': {
+    title: 'Produtividade Memória Gestão',
+    description: 'Executa o fluxo de Produtividade Memória Gestão no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Memória Gestão
+
+Overlay pt-BR frontend-only para a skill 'prod-memory-management'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-memory-management/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Memória Gestão no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-review-todoist': {
+    title: 'Produtividade Revisão Todoist',
+    description: 'Executa o fluxo de Produtividade Revisão Todoist no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Revisão Todoist
+
+Overlay pt-BR frontend-only para a skill 'prod-review-todoist'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-review-todoist/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Revisão Todoist no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'prod-trends': {
+    title: 'Produtividade Tendências',
+    description: 'Executa o fluxo de Produtividade Tendências no domínio de produtividade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Produtividade Tendências
+
+Overlay pt-BR frontend-only para a skill 'prod-trends'. O runtime continua lendo a definição original em inglês em '.claude/skills/prod-trends/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Produtividade Tendências no domínio de produtividade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pulse-daily': {
+    title: 'Pulse Diário',
+    description: 'Executa o fluxo de Pulse Diário no domínio de comunidade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Pulse Diário
+
+Overlay pt-BR frontend-only para a skill 'pulse-daily'. O runtime continua lendo a definição original em inglês em '.claude/skills/pulse-daily/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Pulse Diário no domínio de comunidade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pulse-faq-sync': {
+    title: 'Pulse FAQ Sincronizar',
+    description: 'Executa o fluxo de Pulse FAQ Sincronizar no domínio de comunidade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Pulse FAQ Sincronizar
+
+Overlay pt-BR frontend-only para a skill 'pulse-faq-sync'. O runtime continua lendo a definição original em inglês em '.claude/skills/pulse-faq-sync/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Pulse FAQ Sincronizar no domínio de comunidade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pulse-monthly': {
+    title: 'Pulse Mensal',
+    description: 'Executa o fluxo de Pulse Mensal no domínio de comunidade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Pulse Mensal
+
+Overlay pt-BR frontend-only para a skill 'pulse-monthly'. O runtime continua lendo a definição original em inglês em '.claude/skills/pulse-monthly/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Pulse Mensal no domínio de comunidade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'pulse-weekly': {
+    title: 'Pulse Semanal',
+    description: 'Executa o fluxo de Pulse Semanal no domínio de comunidade. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Pulse Semanal
+
+Overlay pt-BR frontend-only para a skill 'pulse-weekly'. O runtime continua lendo a definição original em inglês em '.claude/skills/pulse-weekly/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Pulse Semanal no domínio de comunidade. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'sage-competitive-analysis': {
+    title: 'Estratégia Competitivo Análise',
+    description: 'Executa o fluxo de Estratégia Competitivo Análise no domínio de estratégia. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Estratégia Competitivo Análise
+
+Overlay pt-BR frontend-only para a skill 'sage-competitive-analysis'. O runtime continua lendo a definição original em inglês em '.claude/skills/sage-competitive-analysis/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Estratégia Competitivo Análise no domínio de estratégia. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'sage-okr-review': {
+    title: 'Estratégia OKR Revisão',
+    description: 'Executa o fluxo de Estratégia OKR Revisão no domínio de estratégia. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Estratégia OKR Revisão
+
+Overlay pt-BR frontend-only para a skill 'sage-okr-review'. O runtime continua lendo a definição original em inglês em '.claude/skills/sage-okr-review/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Estratégia OKR Revisão no domínio de estratégia. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'sage-strategy-digest': {
+    title: 'Estratégia Estratégia Digest',
+    description: 'Executa o fluxo de Estratégia Estratégia Digest no domínio de estratégia. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Estratégia Estratégia Digest
+
+Overlay pt-BR frontend-only para a skill 'sage-strategy-digest'. O runtime continua lendo a definição original em inglês em '.claude/skills/sage-strategy-digest/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Estratégia Estratégia Digest no domínio de estratégia. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'salve': {
+    title: 'Salve',
+    description: 'Executa o fluxo de Salve no domínio de atendimento. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Salve
+
+Overlay pt-BR frontend-only para a skill 'salve'. O runtime continua lendo a definição original em inglês em '.claude/skills/salve/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Salve no domínio de atendimento. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'schedule-task': {
+    title: 'Agendar Tarefa',
+    description: 'Executa o fluxo de Agendar Tarefa no domínio de agenda. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Agendar Tarefa
+
+Overlay pt-BR frontend-only para a skill 'schedule-task'. O runtime continua lendo a definição original em inglês em '.claude/skills/schedule-task/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Agendar Tarefa no domínio de agenda. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-analytics-report': {
+    title: 'Social Media Analytics Relatório',
+    description: 'Executa o fluxo de Social Media Analytics Relatório no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Analytics Relatório
+
+Overlay pt-BR frontend-only para a skill 'social-analytics-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-analytics-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Analytics Relatório no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-audience-growth-tracker': {
+    title: 'Social Media Audiência Crescimento Tracker',
+    description: 'Executa o fluxo de Social Media Audiência Crescimento Tracker no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Audiência Crescimento Tracker
+
+Overlay pt-BR frontend-only para a skill 'social-audience-growth-tracker'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-audience-growth-tracker/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Audiência Crescimento Tracker no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-carousel-writer': {
+    title: 'Social Media Carrossel Writer',
+    description: 'Executa o fluxo de Social Media Carrossel Writer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Carrossel Writer
+
+Overlay pt-BR frontend-only para a skill 'social-carousel-writer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-carousel-writer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Carrossel Writer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-content-calendar': {
+    title: 'Social Media Conteúdo Calendar',
+    description: 'Executa o fluxo de Social Media Conteúdo Calendar no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Conteúdo Calendar
+
+Overlay pt-BR frontend-only para a skill 'social-content-calendar'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-content-calendar/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Conteúdo Calendar no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-content-pattern-analyzer': {
+    title: 'Social Media Conteúdo Padrão Analyzer',
+    description: 'Executa o fluxo de Social Media Conteúdo Padrão Analyzer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Conteúdo Padrão Analyzer
+
+Overlay pt-BR frontend-only para a skill 'social-content-pattern-analyzer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-content-pattern-analyzer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Conteúdo Padrão Analyzer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-content-repurposer': {
+    title: 'Social Media Conteúdo Reaproveitamento',
+    description: 'Executa o fluxo de Social Media Conteúdo Reaproveitamento no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Conteúdo Reaproveitamento
+
+Overlay pt-BR frontend-only para a skill 'social-content-repurposer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-content-repurposer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Conteúdo Reaproveitamento no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-content-strategy': {
+    title: 'Social Media Conteúdo Estratégia',
+    description: 'Executa o fluxo de Social Media Conteúdo Estratégia no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Conteúdo Estratégia
+
+Overlay pt-BR frontend-only para a skill 'social-content-strategy'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-content-strategy/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Conteúdo Estratégia no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-context': {
+    title: 'Social Media Contexto',
+    description: 'Executa o fluxo de Social Media Contexto no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Contexto
+
+Overlay pt-BR frontend-only para a skill 'social-context'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-context/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Contexto no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-hook-writer': {
+    title: 'Social Media Hook Writer',
+    description: 'Executa o fluxo de Social Media Hook Writer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Hook Writer
+
+Overlay pt-BR frontend-only para a skill 'social-hook-writer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-hook-writer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Hook Writer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-instagram-report': {
+    title: 'Social Media Instagram Relatório',
+    description: 'Executa o fluxo de Social Media Instagram Relatório no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Instagram Relatório
+
+Overlay pt-BR frontend-only para a skill 'social-instagram-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-instagram-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Instagram Relatório no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-linkedin-report': {
+    title: 'Social Media LinkedIn Relatório',
+    description: 'Executa o fluxo de Social Media LinkedIn Relatório no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media LinkedIn Relatório
+
+Overlay pt-BR frontend-only para a skill 'social-linkedin-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-linkedin-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media LinkedIn Relatório no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-optimization-advisor': {
+    title: 'Social Media Otimização Advisor',
+    description: 'Executa o fluxo de Social Media Otimização Advisor no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Otimização Advisor
+
+Overlay pt-BR frontend-only para a skill 'social-optimization-advisor'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-optimization-advisor/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Otimização Advisor no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-performance-analyzer': {
+    title: 'Social Media Performance Analyzer',
+    description: 'Executa o fluxo de Social Media Performance Analyzer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Performance Analyzer
+
+Overlay pt-BR frontend-only para a skill 'social-performance-analyzer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-performance-analyzer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Performance Analyzer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-platform-strategy': {
+    title: 'Social Media Plataforma Estratégia',
+    description: 'Executa o fluxo de Social Media Plataforma Estratégia no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Plataforma Estratégia
+
+Overlay pt-BR frontend-only para a skill 'social-platform-strategy'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-platform-strategy/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Plataforma Estratégia no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-post-writer': {
+    title: 'Social Media Post Writer',
+    description: 'Executa o fluxo de Social Media Post Writer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Post Writer
+
+Overlay pt-BR frontend-only para a skill 'social-post-writer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-post-writer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Post Writer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-thread-writer': {
+    title: 'Social Media Thread Writer',
+    description: 'Executa o fluxo de Social Media Thread Writer no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media Thread Writer
+
+Overlay pt-BR frontend-only para a skill 'social-thread-writer'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-thread-writer/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media Thread Writer no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-x-longform': {
+    title: 'Social Media X Longform',
+    description: 'Executa o fluxo de Social Media X Longform no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media X Longform
+
+Overlay pt-BR frontend-only para a skill 'social-x-longform'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-x-longform/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media X Longform no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-youtube-report': {
+    title: 'Social Media YouTube Relatório',
+    description: 'Executa o fluxo de Social Media YouTube Relatório no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media YouTube Relatório
+
+Overlay pt-BR frontend-only para a skill 'social-youtube-report'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-youtube-report/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media YouTube Relatório no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'social-yt-competitive': {
+    title: 'Social Media YouTube Competitivo',
+    description: 'Executa o fluxo de Social Media YouTube Competitivo no domínio de social media. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Social Media YouTube Competitivo
+
+Overlay pt-BR frontend-only para a skill 'social-yt-competitive'. O runtime continua lendo a definição original em inglês em '.claude/skills/social-yt-competitive/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Social Media YouTube Competitivo no domínio de social media. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'trigger-registry': {
+    title: 'Gatilho Registro',
+    description: 'Executa o fluxo de Gatilho Registro no domínio de gatilhos. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Gatilho Registro
+
+Overlay pt-BR frontend-only para a skill 'trigger-registry'. O runtime continua lendo a definição original em inglês em '.claude/skills/trigger-registry/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Gatilho Registro no domínio de gatilhos. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+  'workspace-share': {
+    title: 'Workspace Compartilhar',
+    description: 'Executa o fluxo de Workspace Compartilhar no domínio de workspace. Use esta skill quando o usuário precisar desse trabalho na UI, mantendo comandos, arquivos e integrações técnicas preservados no runtime.',
+    body: `# Workspace Compartilhar
+
+Overlay pt-BR frontend-only para a skill 'workspace-share'. O runtime continua lendo a definição original em inglês em '.claude/skills/workspace-share/SKILL.md'.
+
+## Quando usar
+
+Use esta skill quando o usuário precisar de Workspace Compartilhar no domínio de workspace. A UI mostra este texto em português, mas comandos, arquivos, integrações e comportamento interno continuam preservados no runtime original.
+
+## Fluxo
+
+1. Entenda o objetivo do usuário e o contexto mínimo necessário.
+2. Identifique entradas, fontes, arquivos, integrações ou sistemas envolvidos.
+3. Execute o fluxo de trabalho da skill mantendo nomes técnicos literais.
+4. Entregue resultado claro, acionável e verificável.
+5. Registre próximos passos, riscos ou validações quando aplicável.
+
+## Preservar literalmente
+
+- comandos CLI, flags e argumentos
+- paths e nomes de arquivos
+- JSON, YAML, XML e blocos de código
+- variáveis de ambiente e secrets redigidos
+- URLs, nomes de APIs, modelos e provedores
+- OpenRouter, Claude, Anthropic, OpenAI, Codex, Gemini, GPT, Flux, Seedream, Riverflow, Google AI Studio e Cloudflare AI Gateway BYOK
+
+## Observação de arquitetura
+
+Este conteúdo existe apenas para exibição no frontend. Não edite a skill original, frontmatter, routing, providers, backend ou system prompts para localizar a UI.`,
+  },
+}
+
+for (const [skillId, overlay] of Object.entries(AUTO_SKILL_PT_BR_OVERLAYS)) {
+  SKILL_PT_BR_OVERLAYS[skillId] = {
+    ...overlay,
+    ...SKILL_PT_BR_OVERLAYS[skillId],
+    body: SKILL_PT_BR_OVERLAYS[skillId]?.body ?? overlay.body,
   }
 }
 
