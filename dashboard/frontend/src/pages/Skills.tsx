@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { api } from '../lib/api'
 import { useTranslation } from 'react-i18next'
+import { getSkillTitlePtBR, getSkillDescriptionPtBR } from '../lib/localization/pt-BR/skill-overlays'
 
 interface Skill {
   name: string
@@ -126,7 +127,7 @@ function SkillCard({ skill }: { skill: Skill }) {
       {/* Name */}
       <div className="relative mb-1.5">
         <h3 className="text-[15px] font-semibold text-[#F7F9F8] transition-colors duration-200 group-hover:text-white">
-          {skill.name}
+          {getSkillTitlePtBR(skill.name) || skill.name}
         </h3>
         <code className="mt-1 inline-block text-[11px] font-mono text-[#6B8A76]">
           {skill.prefix}-*
@@ -135,7 +136,7 @@ function SkillCard({ skill }: { skill: Skill }) {
 
       {/* Description */}
       <p className="relative text-[13px] leading-relaxed text-[#6B8A76] line-clamp-2">
-        {skill.description || 'No description available.'}
+        {getSkillDescriptionPtBR(skill.name) || skill.description || 'Sem descrição disponível.'}
       </p>
     </Link>
   )

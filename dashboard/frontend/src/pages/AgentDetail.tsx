@@ -11,6 +11,7 @@ import { trackAgentVisit } from './Agents'
 import { AgentAvatar } from '../components/AgentAvatar'
 import { useAuth } from '../context/AuthContext'
 import { useNotificationBadge } from '../hooks/useNotificationBadge'
+import { getAgentProfilePtBR } from '../lib/localization/pt-BR/agent-overlays'
 
 interface MemoryFile {
   name: string
@@ -385,8 +386,11 @@ export default function AgentDetail() {
     )
   }
 
-  const profileBody = extractProfileBody(content)
-  const profileLead = extractProfileLead(content)
+  // Use pt-BR overlay if available, otherwise fall back to original English content.
+  // The overlay is display-only — the runtime always receives the original English file.
+  const ptBRProfile = name ? getAgentProfilePtBR(name) : undefined
+  const profileBody = ptBRProfile ?? extractProfileBody(content)
+  const profileLead = ptBRProfile ? extractProfileLead(ptBRProfile) : extractProfileLead(content)
 
   return (
     <div className="clever-app-shell flex h-full w-full flex-col">
