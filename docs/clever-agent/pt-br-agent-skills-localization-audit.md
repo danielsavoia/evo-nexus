@@ -367,22 +367,37 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 
 Após cada fase de implementação:
 
-- [ ] `npm run build` — 0 erros TypeScript
-- [ ] `/agents` — labels das categorias em pt-BR
-- [ ] `/agents` — descriptions dos cards em pt-BR
-- [ ] `/agents/{name}` — aba Profile em pt-BR (somente se overlay criado)
+- [x] `npm run build` — 0 erros TypeScript
+- [x] `/agents` — labels das categorias em pt-BR
+- [x] `/agents` — descriptions dos cards em pt-BR
+- [x] `/agents/oracle` — aba Profile em pt-BR
 - [ ] Runtime intacto — chat com Oracle responde normalmente
 - [ ] Runtime intacto — chat com Aria responde normalmente
-- [ ] `/skills` — cards com descriptions em pt-BR
-- [ ] `/skills/{name}` — detalhe mostra instrução original (não traduzida) ou overlay pt-BR
+- [x] `/skills` — cards com descriptions em pt-BR
+- [x] `/skills/ai-image-creator` — detalhe mostra body pt-BR completo
 - [ ] Mudar idioma para en-US — conteúdo original restaurado
-- [ ] Nenhum arquivo `.claude/agents/*.md` alterado
-- [ ] Nenhum arquivo `.claude/skills/*/SKILL.md` alterado
-- [ ] Nenhum script Python nos skills alterado
+- [x] Nenhum arquivo `.claude/agents/*.md` alterado
+- [x] Nenhum arquivo `.claude/skills/*/SKILL.md` alterado
+- [x] Nenhum script Python nos skills alterado
 
 ---
 
-## 10. Próximo prompt recomendado
+## 10. Status beta.18
+
+Publicado no dashboard `0.33.0-clever-beta.18`.
+
+- Agent cards: 38/38 descriptions em pt-BR.
+- Agent Profile: Oracle completo em pt-BR.
+- Skills: 28/28 title + description em pt-BR.
+- Skill body: `ai-image-creator` completo em pt-BR.
+- Runtime: `.claude/agents` e `.claude/skills` intocados.
+- Pendências: 37 agent profiles completos e 26 skill bodies restantes.
+
+Release notes: `docs/clever-agent/beta-release-0.33.0-clever-beta.18.md`.
+
+---
+
+## 11. Próximo prompt recomendado
 
 O prompt abaixo implementa a **Fase 1** (labels e categories) — baixo risco, sem tocar runtime:
 

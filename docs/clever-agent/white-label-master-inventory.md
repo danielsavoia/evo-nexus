@@ -1,7 +1,7 @@
 # Clever Agent — White-label Master Inventory
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-28
+**Last updated:** 2026-05-31
 **Purpose:** Authoritative single-source inventory of every Clever Agent customization on top of upstream Evo Nexus.
 After any upstream merge into `clever-dev`, follow §5 (Reapply Workflow) and verify every row in this document.
 
@@ -555,6 +555,41 @@ Never publish `latest`. Always use the explicit beta tag.
 - Worker nodes do NOT cache images between deployments.
 - There is no local rollback. Rollback by changing the stack tag to a previous published GHCR tag.
 - Old images accumulate on worker nodes; periodic `docker image prune` is required.
+
+---
+
+### 3.14 pt-BR frontend-only overlay for agents and skills
+
+**Commit:** `737dcac`
+**Release:** dashboard `0.33.0-clever-beta.18`
+**Docs:** `docs/clever-agent/pt-br-agent-skill-overlay.md`, `docs/clever-agent/pt-br-agent-skills-localization-audit.md`, `docs/clever-agent/beta-release-0.33.0-clever-beta.18.md`
+**Reapply risk:** Medium — display-only, but `Agents.tsx`, `AgentDetail.tsx`, `Skills.tsx`, and `SkillDetail.tsx` may be touched by upstream UI changes.
+
+| File | Patch | Rule |
+|---|---|---|
+| `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` | 38/38 agent card descriptions and Oracle profile translated to pt-BR | Never edit `.claude/agents`; this is frontend display only |
+| `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` | 28 skill titles/descriptions; `ai-image-creator` body translated completely | Never edit `.claude/skills`; preserve command flags and provider names |
+| `dashboard/frontend/src/pages/Agents.tsx` | Agent cards call `getAgentDescriptionPtBR()` with fallback to API description | Fallback to English/original must remain |
+| `dashboard/frontend/src/pages/AgentDetail.tsx` | Profile tab uses `getAgentProfilePtBR()` when available | Only Oracle has full profile in beta.18 |
+| `dashboard/frontend/src/pages/Skills.tsx` | Skill cards call `getSkillTitlePtBR()` and `getSkillDescriptionPtBR()` | Fallback to original metadata must remain |
+| `dashboard/frontend/src/pages/SkillDetail.tsx` | Skill detail body uses `getSkillBodyPtBR()` when available | Only `ai-image-creator` has body in beta.18 |
+
+**Coverage beta.18:**
+- Agent card descriptions: 38/38.
+- Agent profiles: Oracle complete; 37 remaining pending.
+- Skill titles/descriptions: 28/28.
+- Skill bodies: `ai-image-creator` complete; 26 remaining pending.
+- Runtime `.claude/agents` and `.claude/skills`: untouched.
+
+**Validation:**
+```bash
+cd dashboard/frontend
+npm run build
+
+grep -R "Criador de Imagens com IA\|Você é Oracle\|Seu ponto de entrada" dist/
+git diff --name-only | grep ".claude/agents\|.claude/skills"
+# Expected: no .claude results
+```
 
 ---
 
