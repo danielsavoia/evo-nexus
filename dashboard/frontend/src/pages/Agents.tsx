@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import OracleWelcomeBanner from '../components/OracleWelcomeBanner'
+import { getAgentDescriptionPtBR } from '../lib/localization/pt-BR/agent-overlays'
 import {
   Bot,
   Brain,
@@ -331,7 +332,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
 
         {/* Description */}
         <p className="relative mb-3 text-[11px] leading-relaxed text-[#6B8A76] line-clamp-2">
-          {agent.description || 'Sem descrição disponível.'}
+          {getAgentDescriptionPtBR(agent.name) || agent.description || 'Sem descrição disponível.'}
         </p>
 
         {/* Bottom row */}
@@ -527,7 +528,7 @@ function OracleHeroCard({ agent, isRunning }: { agent: Agent; isRunning: boolean
             Oracle
           </h2>
           <p className="text-[12.5px] text-[#C8D5CE] leading-snug">
-            Seu ponto de entrada no Clever Agent. Entrevista você, mapeia as capacidades do workspace para suas dores e entrega um plano de implementação em fases.
+            {getAgentDescriptionPtBR('oracle')?.split('.')[0] || 'Seu ponto de entrada no Clever Agent. Entrevista você, mapeia as capacidades do workspace para suas dores e entrega um plano de implementação em fases.'}
           </p>
         </div>
 

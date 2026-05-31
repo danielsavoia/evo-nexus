@@ -288,7 +288,7 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 
 ## 8. Plano de implementação
 
-### Fase 1 — Labels e categories (baixo risco, alto impacto visual)
+### Fase 1 — Labels e categories ✅ IMPLEMENTADO (beta.16)
 
 **O que:** traduzir labels de agentes, categorias, tiers e filter tabs na UI.
 
@@ -300,31 +300,45 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 
 **Risco:** Baixo — campos puramente display.
 
-**Validação:** abrir /agents, verificar cards com labels em pt-BR; abrir /agents/{name}, verificar header; confirmar que agentes respondem normalmente.
+**Status:** ✅ Concluído em `1e99e2a` (beta.16). 38 labels + categorias + tiers + filter tabs.
 
-### Fase 2 — Descriptions dos cards (risco médio)
+### Fase 2 — Overlay frontend-only: descriptions + profiles + skills ✅ IMPLEMENTADO (beta.18 planejado)
 
-**O que:** criar arquivo de overlay `agents-display-pt-BR.ts` com descriptions traduzidas dos cards.
+**O que:** overlay frontend-only com descriptions de cards de agentes, profile do Oracle, e descriptions/bodies de skills.
 
-**Onde:** `dashboard/frontend/src/lib/clever-agent/agents-display-pt-BR.ts` (novo arquivo)
+**Implementação real (diverge do plano original):**
+- Arquitetura escolhida: overlay TypeScript puro no frontend, sem fetch adicional ao backend.
+- `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` — 38 descriptions + Oracle profile completo
+- `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` — 27 skills com title+description, `ai-image-creator` com body completo
+- Integração em 4 páginas: `Agents.tsx`, `AgentDetail.tsx`, `Skills.tsx`, `SkillDetail.tsx`
+- Fallback automático para inglês quando overlay ausente
 
-**Mudança no Agents.tsx:** 3 linhas — import + lang check + fallback.
+**Cobertura:**
+- 38/38 agent descriptions ✅
+- 1/38 agent profiles (Oracle) ✅
+- 27 skills com title+description ✅
+- 1 skill com body completo (ai-image-creator) ✅
+- `.claude/agents` e `.claude/skills` intocados ✅
 
-**Risco:** Médio — as descriptions de cards são longas (incluem exemplos). Tradução imprecisa pode confundir, mas não quebra runtime.
+**Risco:** Médio — display-only; runtime nunca recebe traduções.
 
-**Validação:** cards mostram description em pt-BR; mudar idioma para en-US mostra description original; agentes funcionam normalmente.
+**Ver:** `docs/clever-agent/pt-br-agent-skill-overlay.md`
 
-### Fase 3 — Profile tabs (risco médio-alto, opcional)
+### Fase 3 — Completar profiles de agentes (pendente)
 
-**O que:** criar arquivos `.md` de overlay pt-BR para a aba Profile de cada agente.
+**O que:** adicionar profiles pt-BR completos para os demais 37 agentes (além de Oracle).
 
-**Onde:** `brand/clever-agent/i18n/pt-BR/profiles/{slug}.md`
+**Onde:** `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` — adicionar campo `profile` por agente.
 
-**Precisa:** mecanismo no backend para servir o overlay, ou no frontend para fazer fetch condicional.
+**Risco:** Baixo — mesmo mecanismo da Fase 2, apenas mais conteúdo.
 
-**Risco:** Médio-alto — se o overlay descreve capacidades incorretamente pode confundir o usuário. O sistema prompt real (runtime) permanece em inglês.
+### Fase 4 — Completar bodies de skills (pendente)
 
-**Recomendação:** implementar somente para Oracle (mais visitado) inicialmente. Validar antes de escalar.
+**O que:** adicionar bodies pt-BR completos para as skills pendentes (atualmente só `ai-image-creator` tem body).
+
+**Onde:** `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` — adicionar campo `body` por skill.
+
+**Risco:** Baixo — mesmo mecanismo da Fase 2, apenas mais conteúdo.
 
 ### Fase 4 — Skill descriptions (cards)
 
