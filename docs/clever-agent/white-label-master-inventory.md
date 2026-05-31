@@ -561,25 +561,39 @@ Never publish `latest`. Always use the explicit beta tag.
 ### 3.14 pt-BR frontend-only overlay for agents and skills
 
 **Commit:** `737dcac`
-**Release:** dashboard `0.33.0-clever-beta.18`
+**Release:** dashboard `0.33.0-clever-beta.18`; complete profile/body coverage continued on `clever-dev`
 **Docs:** `docs/clever-agent/pt-br-agent-skill-overlay.md`, `docs/clever-agent/pt-br-agent-skills-localization-audit.md`, `docs/clever-agent/beta-release-0.33.0-clever-beta.18.md`
 **Reapply risk:** Medium — display-only, but `Agents.tsx`, `AgentDetail.tsx`, `Skills.tsx`, and `SkillDetail.tsx` may be touched by upstream UI changes.
 
 | File | Patch | Rule |
 |---|---|---|
-| `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` | 38/38 agent card descriptions and Oracle profile translated to pt-BR | Never edit `.claude/agents`; this is frontend display only |
-| `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` | 28 skill titles/descriptions; `ai-image-creator` body translated completely | Never edit `.claude/skills`; preserve command flags and provider names |
+| `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` | 38/38 agent card descriptions and 38/38 profiles translated to pt-BR | Never edit `.claude/agents`; this is frontend display only |
+| `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` | 193/193 UI skill titles/descriptions/bodies translated to pt-BR | Never edit `.claude/skills`; preserve command flags and provider names |
+| `docs/clever-agent/pt-br-skills-ui-inventory.md` | Inventory of every real skill slug listed by `/api/skills` from `.claude/skills` | Regenerate after upstream adds/removes skill directories |
 | `dashboard/frontend/src/pages/Agents.tsx` | Agent cards call `getAgentDescriptionPtBR()` with fallback to API description | Fallback to English/original must remain |
 | `dashboard/frontend/src/pages/AgentDetail.tsx` | Profile tab uses `getAgentProfilePtBR()` when available | Only Oracle has full profile in beta.18 |
 | `dashboard/frontend/src/pages/Skills.tsx` | Skill cards call `getSkillTitlePtBR()` and `getSkillDescriptionPtBR()` | Fallback to original metadata must remain |
 | `dashboard/frontend/src/pages/SkillDetail.tsx` | Skill detail body uses `getSkillBodyPtBR()` when available | Only `ai-image-creator` has body in beta.18 |
 
-**Coverage beta.18:**
+**Coverage after clever-dev completion:**
 - Agent card descriptions: 38/38.
-- Agent profiles: Oracle complete; 37 remaining pending.
-- Skill titles/descriptions: 28/28.
-- Skill bodies: `ai-image-creator` complete; 26 remaining pending.
-- Runtime `.claude/agents` and `.claude/skills`: untouched.
+- Agent profiles: 38/38.
+- Skill titles/descriptions: 193/193 real UI skills.
+- Skill bodies: 193/193 real UI skills.
+- Runtime `.claude/agents`, `.claude/skills`, `.claude/commands`, `.claude/hooks`, and `.claude/rules`: untouched.
+
+**Why originals are not translated:** `.claude/**` files are runtime prompts and skill definitions. Translating them changes agent behavior, routing, command expectations, and future upstream merge semantics. The UI must translate only at display time:
+
+```
+UI -> pt-BR overlay -> rendered text
+Runtime -> original .claude files -> unchanged behavior
+```
+
+**Reapply strategy after upstream merges:**
+- Keep `getAgentDescriptionPtBR()`, `getAgentProfilePtBR()`, `getSkillTitlePtBR()`, `getSkillDescriptionPtBR()`, and `getSkillBodyPtBR()` wired in UI pages.
+- Reapply `AGENT_PROFILE_PT_BR_BODIES`, `SKILL_BODY_PT_BR_OVERLAYS`, and `AUTO_SKILL_PT_BR_OVERLAYS` if overlay files are overwritten.
+- Re-audit `/api/skills` source by counting directories under `.claude/skills`; overlay coverage must equal that count.
+- Run `git diff --name-only | grep ".claude/agents\|.claude/skills\|.claude/commands\|.claude/hooks\|.claude/rules"` and expect no results.
 
 **Validation:**
 ```bash

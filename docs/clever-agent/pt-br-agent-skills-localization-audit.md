@@ -302,22 +302,23 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 
 **Status:** ✅ Concluído em `1e99e2a` (beta.16). 38 labels + categorias + tiers + filter tabs.
 
-### Fase 2 — Overlay frontend-only: descriptions + profiles + skills ✅ IMPLEMENTADO (beta.18 planejado)
+### Fase 2 — Overlay frontend-only: descriptions + profiles + skills ✅ IMPLEMENTADO (beta.18)
 
 **O que:** overlay frontend-only com descriptions de cards de agentes, profile do Oracle, e descriptions/bodies de skills.
 
 **Implementação real (diverge do plano original):**
 - Arquitetura escolhida: overlay TypeScript puro no frontend, sem fetch adicional ao backend.
 - `dashboard/frontend/src/lib/localization/pt-BR/agent-overlays.ts` — 38 descriptions + Oracle profile completo
-- `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` — 27 skills com title+description, `ai-image-creator` com body completo
+- `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` — cobertura real da UI expandida para 193/193 skills com title, description e body via overlay
 - Integração em 4 páginas: `Agents.tsx`, `AgentDetail.tsx`, `Skills.tsx`, `SkillDetail.tsx`
 - Fallback automático para inglês quando overlay ausente
+- Inventário real da UI: `docs/clever-agent/pt-br-skills-ui-inventory.md`
 
 **Cobertura:**
 - 38/38 agent descriptions ✅
 - 1/38 agent profiles (Oracle) ✅
-- 27 skills com title+description ✅
-- 1 skill com body completo (ai-image-creator) ✅
+- 193/193 skills reais da UI com title+description ✅
+- 193/193 skills reais da UI com body pt-BR ✅
 - `.claude/agents` e `.claude/skills` intocados ✅
 
 **Risco:** Médio — display-only; runtime nunca recebe traduções.
@@ -332,6 +333,8 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 
 **Risco:** Baixo — mesmo mecanismo da Fase 2, apenas mais conteúdo.
 
+**Status clever-dev:** ✅ Concluído. 38/38 agent profiles cobertos em `agent-overlays.ts` via `AGENT_PROFILE_PT_BR_BODIES`, sem tocar `.claude/agents`.
+
 ### Fase 4 — Completar bodies de skills (pendente)
 
 **O que:** adicionar bodies pt-BR completos para as skills pendentes (atualmente só `ai-image-creator` tem body).
@@ -339,6 +342,8 @@ Lista explícita de campos que **NUNCA** devem ser traduzidos:
 **Onde:** `dashboard/frontend/src/lib/localization/pt-BR/skill-overlays.ts` — adicionar campo `body` por skill.
 
 **Risco:** Baixo — mesmo mecanismo da Fase 2, apenas mais conteúdo.
+
+**Status clever-dev:** ✅ Corrigido. A UI mostra 193 Total Skills; `skill-overlays.ts` cobre 193/193 usando overlays curados + `AUTO_SKILL_PT_BR_OVERLAYS`, sem tocar `.claude/skills`.
 
 ### Fase 4 — Skill descriptions (cards)
 
@@ -371,10 +376,12 @@ Após cada fase de implementação:
 - [x] `/agents` — labels das categorias em pt-BR
 - [x] `/agents` — descriptions dos cards em pt-BR
 - [x] `/agents/oracle` — aba Profile em pt-BR
+- [x] `/agents/{name}` — 38/38 profiles com overlay pt-BR
 - [ ] Runtime intacto — chat com Oracle responde normalmente
 - [ ] Runtime intacto — chat com Aria responde normalmente
 - [x] `/skills` — cards com descriptions em pt-BR
 - [x] `/skills/ai-image-creator` — detalhe mostra body pt-BR completo
+- [x] `/skills/{name}` — 193/193 skill bodies da UI com pt-BR
 - [ ] Mudar idioma para en-US — conteúdo original restaurado
 - [x] Nenhum arquivo `.claude/agents/*.md` alterado
 - [x] Nenhum arquivo `.claude/skills/*/SKILL.md` alterado
@@ -388,16 +395,31 @@ Publicado no dashboard `0.33.0-clever-beta.18`.
 
 - Agent cards: 38/38 descriptions em pt-BR.
 - Agent Profile: Oracle completo em pt-BR.
-- Skills: 28/28 title + description em pt-BR.
+- Skills beta.18: 27/27 title + description em pt-BR.
 - Skill body: `ai-image-creator` completo em pt-BR.
 - Runtime: `.claude/agents` e `.claude/skills` intocados.
-- Pendências: 37 agent profiles completos e 26 skill bodies restantes.
+- Pendências beta.18 resolvidas em `clever-dev`: 37 agent profiles restantes, 26 skill bodies do overlay inicial e as demais 166 skills reais da UI agora cobertas por overlay.
 
 Release notes: `docs/clever-agent/beta-release-0.33.0-clever-beta.18.md`.
 
 ---
 
-## 11. Próximo prompt recomendado
+## 11. Status clever-dev — cobertura completa de overlay
+
+Implementação complementar em `clever-dev`, sem promoção para `clever-beta`, sem imagem e sem tag.
+
+- Técnica utilizada: overlay frontend-only nos arquivos `agent-overlays.ts` e `skill-overlays.ts`.
+- Motivo de não tocar originais: os arquivos `.claude/**` são runtime inputs de agentes, skills, commands, hooks e rules; traduzi-los altera prompts, routing e comportamento interno.
+- Estratégia de reapply: após merges upstream, preservar imports/getters nas páginas de UI e reaplicar os mapas `AGENT_PROFILE_PT_BR_BODIES` e `SKILL_BODY_PT_BR_OVERLAYS` se os arquivos de overlay forem sobrescritos.
+- Agentes traduzidos: 38/38 profiles em pt-BR via overlay.
+- Skills traduzidas: 193/193 bodies das skills reais exibidas na UI em pt-BR.
+- Inventário completo: `docs/clever-agent/pt-br-skills-ui-inventory.md`.
+- Fallback: mantido; se um slug não existir no overlay, a UI usa o conteúdo original em inglês.
+- Runtime: `.claude/agents`, `.claude/skills`, `.claude/commands`, `.claude/hooks` e `.claude/rules` permanecem intocados.
+
+---
+
+## 12. Próximo prompt recomendado
 
 O prompt abaixo implementa a **Fase 1** (labels e categories) — baixo risco, sem tocar runtime:
 
