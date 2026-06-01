@@ -1035,18 +1035,44 @@ for (const [slug, profile] of Object.entries(AGENT_PROFILE_PT_BR_BODIES)) {
   }
 }
 
+const AGENT_OVERLAY_ALIASES: Record<string, string> = {
+  aria: 'aria-hr',
+  atlas: 'atlas-project',
+  clawdia: 'clawdia-assistant',
+  flux: 'flux-finance',
+  kai: 'kai-personal-assistant',
+  lex: 'lex-legal',
+  mako: 'mako-marketing',
+  mentor: 'mentor-courses',
+  mirror: 'mirror-retro',
+  nex: 'nex-sales',
+  nova: 'nova-product',
+  pixel: 'pixel-social-media',
+  pulse: 'pulse-community',
+  sage: 'sage-strategy',
+  zara: 'zara-cs',
+}
+
+export function normalizeAgentOverlaySlug(slug: string | null | undefined): string | undefined {
+  const normalized = slug?.trim().replace(/^\/+/, '').toLowerCase()
+  if (!normalized) return undefined
+  return AGENT_OVERLAY_ALIASES[normalized] || normalized
+}
+
 /**
  * Returns the pt-BR description overlay for an agent, or undefined if not available.
  * UI should fall back to the original English description when undefined.
  */
-export function getAgentDescriptionPtBR(slug: string): string | undefined {
-  return AGENT_PT_BR_OVERLAYS[slug]?.description
+export function getAgentDescriptionPtBR(slug: string | null | undefined): string | undefined {
+  const normalized = normalizeAgentOverlaySlug(slug)
+  return normalized ? AGENT_PT_BR_OVERLAYS[normalized]?.description : undefined
 }
 
 /**
  * Returns the pt-BR profile (markdown body) overlay for an agent, or undefined if not available.
  * UI should fall back to the original English profile markdown when undefined.
  */
-export function getAgentProfilePtBR(slug: string): string | undefined {
-  return AGENT_PT_BR_OVERLAYS[slug]?.profile
+export function getAgentProfilePtBR(slug: string | null | undefined): string | undefined {
+  const normalized = normalizeAgentOverlaySlug(slug)
+  return normalized ? AGENT_PT_BR_OVERLAYS[normalized]?.profile : undefined
 }
