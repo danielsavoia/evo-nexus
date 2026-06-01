@@ -416,6 +416,7 @@ Implementação complementar em `clever-dev`, sem promoção para `clever-beta`,
 - Inventário completo: `docs/clever-agent/pt-br-skills-ui-inventory.md`.
 - Fallback: mantido; se um slug não existir no overlay, a UI usa o conteúdo original em inglês.
 - Runtime: `.claude/agents`, `.claude/skills`, `.claude/commands`, `.claude/hooks` e `.claude/rules` permanecem intocados.
+- Fix pós-beta.19 em `clever-dev`: o caminho normal do card em `/agents` ainda renderizava `agent.description` direto, enquanto o caminho locked já usava overlay. `Agents.tsx` agora usa `getAgentDescriptionPtBR(agent.slug || agent.id || agent.name)` com fallback para a descrição original, e `agent-overlays.ts` normaliza slugs/aliases como `/aria` ou `aria` -> `aria-hr`.
 
 ---
 

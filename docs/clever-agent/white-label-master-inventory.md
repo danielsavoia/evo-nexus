@@ -591,6 +591,7 @@ Runtime -> original .claude files -> unchanged behavior
 
 **Reapply strategy after upstream merges:**
 - Keep `getAgentDescriptionPtBR()`, `getAgentProfilePtBR()`, `getSkillTitlePtBR()`, `getSkillDescriptionPtBR()`, and `getSkillBodyPtBR()` wired in UI pages.
+- In `/agents`, both locked and normal card paths must render the localized description, not raw `agent.description`; keep slug normalization/aliases in `agent-overlays.ts` for command-style ids such as `/aria`.
 - Reapply `AGENT_PROFILE_PT_BR_BODIES`, `SKILL_BODY_PT_BR_OVERLAYS`, and `AUTO_SKILL_PT_BR_OVERLAYS` if overlay files are overwritten.
 - Re-audit `/api/skills` source by counting directories under `.claude/skills`; overlay coverage must equal that count.
 - Run `git diff --name-only | grep ".claude/agents\|.claude/skills\|.claude/commands\|.claude/hooks\|.claude/rules"` and expect no results.

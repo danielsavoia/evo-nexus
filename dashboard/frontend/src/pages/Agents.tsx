@@ -96,6 +96,8 @@ function getEngineeringTier(name: string): EngTier | null {
 }
 
 interface Agent {
+  id?: string
+  slug?: string
   name: string
   description: string
   memory_count: number
@@ -293,11 +295,20 @@ function formatAgentName(name: string): string {
     .join(' ')
 }
 
+function getAgentOverlayKey(agent: Agent): string | undefined {
+  return agent.slug || agent.id || agent.name
+}
+
+function getLocalizedAgentDescription(agent: Agent): string {
+  return getAgentDescriptionPtBR(getAgentOverlayKey(agent)) || agent.description || 'Sem descrição disponível.'
+}
+
 function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
   const meta = getMeta(agent.name, agent)
   const isActive = agent.memory_count > 0
   const tier = getEngineeringTier(agent.name)
   const locked = agent.locked === true
+  const localizedDescription = getLocalizedAgentDescription(agent)
 
   if (locked) {
     return (
@@ -332,7 +343,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
 
         {/* Description */}
         <p className="relative mb-3 text-[11px] leading-relaxed text-[#6B8A76] line-clamp-2">
-          {getAgentDescriptionPtBR(agent.name) || agent.description || 'Sem descrição disponível.'}
+          {localizedDescription}
         </p>
 
         {/* Bottom row */}
@@ -423,7 +434,7 @@ function AgentCard({ agent, isRunning }: { agent: Agent; isRunning: boolean }) {
 
       {/* Description */}
       <p className="relative mb-3 text-[11px] leading-relaxed text-[#6B8A76] line-clamp-2">
-        {agent.description || 'Sem descrição disponível.'}
+        {localizedDescription}
       </p>
 
       {/* Bottom row: command badge + memory badge */}
@@ -685,7 +696,7 @@ export default function Agents() {
       if (!q) return true
       return (
         a.name.toLowerCase().includes(q) ||
-        (a.description || '').toLowerCase().includes(q)
+        getLocalizedAgentDescription(a).toLowerCase().includes(q)
       )
     })
   }, [agents, filter, query])
