@@ -1,7 +1,7 @@
 # Clever Agent dashboard beta.21
 
-**Data:** 2026-06-01
-**Branch:** `clever-beta` @ `f0c43b6`
+**Data:** 2026-06-02
+**Branch:** `clever-beta` @ `5509c0c`
 **Base:** `clever-agent-v0.33.0-clever-beta.20` @ `485972f`
 
 ---
@@ -31,9 +31,9 @@ Alinhar o balão de mensagem do usuário no chat dos agentes à paleta Clever Ag
 
 | Item | Valor |
 |---|---|
-| clever-dev HEAD | `11fc61d` — fix: align chat user bubble with Clever Agent palette |
-| clever-beta HEAD | `f0c43b6` — chore: promote Clever Agent dashboard beta.21 chat bubble palette |
-| tag | `clever-agent-v0.33.0-clever-beta.21` |
+| clever-dev HEAD | `f64b307` — chore: sync Clever Agent dashboard beta.21 release docs |
+| clever-beta HEAD | `5509c0c` — chore: release Clever Agent dashboard beta.21 chat bubble palette |
+| tag | `clever-agent-v0.33.0-clever-beta.21` ✅ publicada |
 | clever-prod | preservada — não tocada |
 | upstream-sync | preservada — não tocada |
 
@@ -51,10 +51,10 @@ Alinhar o balão de mensagem do usuário no chat dos agentes à paleta Clever Ag
 | Item | Valor |
 |---|---|
 | dashboard tag | `ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.21` |
-| digest index | _(pendente — preencher após push GHCR)_ |
-| digest linux/amd64 | _(pendente — preencher após push GHCR)_ |
-| size local | 3.93 GB (862 MB comprimido) |
-| latest publicado | **Não** |
+| digest index | `sha256:4919b5ba0040acc26607678ed271e21b7f6fb308fb229dbe692c19b521e5ee3b` |
+| digest linux/amd64 | `sha256:5fca88e951249c0ad01fc55f429465e82142b544793b614d3bea3a24eb80d72b` |
+| size local | 3.93 GB (862 MB comprimido) — idêntico a beta.17/beta.20 |
+| latest publicado | **Não** ✅ |
 
 ---
 
@@ -91,10 +91,16 @@ Alinhar o balão de mensagem do usuário no chat dos agentes à paleta Clever Ag
 
 ---
 
+## Push GHCR
+
+✅ **Concluído em 2026-06-02**
+
+```
+0.33.0-clever-beta.21: digest: sha256:4919b5ba0040acc26607678ed271e21b7f6fb308fb229dbe692c19b521e5ee3b size: 856
+```
+
 ## Pendências
 
-- [ ] Push GHCR: `docker push ghcr.io/danielsavoia/clever-agent-dashboard:0.33.0-clever-beta.21`
-- [ ] Capturar digest real e atualizar campos acima.
 - [ ] Validação visual VPS: deploy dashboard beta.21, confirmar balão verde no chat.
 
 ---
