@@ -1,7 +1,7 @@
 # Clever Agent White-label Patch Ledger
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-31 (clever-dev: fix /agents card descriptions to use pt-BR overlay)
+**Last updated:** 2026-06-01 (clever-beta: beta.21 chat bubble palette — clever-dev: fix align chat user bubble)
 
 This file tracks every Clever Agent white-label patch applied on top of the upstream Evo Nexus codebase.
 **After every upstream/AppSpring/Evo Nexus merge into `clever-dev`, review each row and reapply as needed.**
