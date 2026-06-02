@@ -1057,7 +1057,7 @@ export default function AgentChat({ agent, sessionId, accentColor = '#85F2A0', e
           <div key={i}>
             {msg.role === 'user' && editingUuid && msg.uuid === editingUuid && (
               <div className="flex justify-end">
-                <div className="w-full max-w-[85%] rounded-2xl border bg-[#1a2744] px-3 py-2" style={{ borderColor: accentColor + '60' }}>
+                <div className="w-full max-w-[85%] rounded-2xl border bg-[#19402A] px-3 py-2" style={{ borderColor: accentColor + '60' }}>
                   <textarea
                     value={editingText}
                     onChange={(e) => setEditingText(e.target.value)}
@@ -1145,7 +1145,7 @@ export default function AgentChat({ agent, sessionId, accentColor = '#85F2A0', e
                   )}
                   {/* Text bubble */}
                   {(msg as any).text && (
-                    <div className="px-4 py-2.5 rounded-2xl rounded-br-md bg-[#1a2744] border border-[#1E3829] text-[#F7F9F8] text-sm leading-relaxed">
+                    <div className="px-4 py-2.5 rounded-2xl rounded-br-md bg-[#255938] border border-[#85F2A0]/20 text-[#F7F9F8] text-sm leading-relaxed">
                       {(msg as any).text}
                     </div>
                   )}

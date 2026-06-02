@@ -143,6 +143,35 @@ Files that also needed palette fix (created upstream after the initial palette p
 - `dashboard/frontend/src/pages/restore/RestoreExecute.tsx`
 - `dashboard/frontend/src/pages/restore/RestoreConfirm.tsx`
 
+#### Chat user bubble (`AgentChat.tsx`)
+
+**Commit:** clever-dev HEAD (2026-06-01)
+**Reapply risk:** Low
+
+O balão de mensagem do usuário no chat dos agentes estava usando `bg-[#1a2744]` (navy upstream). Corrigido para paleta Clever Agent:
+
+| Localização | Classe antiga | Classe nova | Contexto |
+|---|---|---|---|
+| `AgentChat.tsx` linha ~1148 | `bg-[#1a2744] border border-[#1E3829]` | `bg-[#255938] border border-[#85F2A0]/20` | Balão de texto principal do usuário |
+| `AgentChat.tsx` linha ~1060 | `bg-[#1a2744]` | `bg-[#19402A]` | Bubble de edição inline do usuário |
+
+**Reapply check:**
+```bash
+# Zero cor navy no componente de chat
+grep -n "1a2744" dashboard/frontend/src/components/AgentChat.tsx
+# Expected: 0 results
+
+# Confirmar verde Clever presente
+grep -n "255938\|19402A" dashboard/frontend/src/components/AgentChat.tsx
+# Expected: 2 results (linhas ~1060 e ~1148)
+```
+
+**Validação visual:**
+- Abrir chat de qualquer agente; enviar mensagem como usuário; confirmar balão verde (não azul/navy).
+- Clicar no lápis para editar mensagem; confirmar bubble de edição em verde escuro.
+- Mensagens do agente: inalteradas.
+- Provider/terminal/backend: inalterados.
+
 ---
 
 ### 3.4 Text / UI branding patches
