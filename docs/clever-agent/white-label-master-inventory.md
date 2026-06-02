@@ -1,7 +1,7 @@
 # Clever Agent — White-label Master Inventory
 
 **Branch:** `clever-dev`
-**Last updated:** 2026-05-31
+**Last updated:** 2026-06-01 (beta.21 — chat user bubble palette)
 **Purpose:** Authoritative single-source inventory of every Clever Agent customization on top of upstream Evo Nexus.
 After any upstream merge into `clever-dev`, follow §5 (Reapply Workflow) and verify every row in this document.
 
